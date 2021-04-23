@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
-import algoliasearch from 'algoliasearch';
 import { InstantSearch, Hits, Configure } from 'react-instantsearch-dom';
 
-const searchClient = algoliasearch(
-  'HYDY1KWTWB',
-  '08327e386e629b2f082259c959d509d2'
-);
-
-const getRecommendedObjectID = (recoIndex, objectID) => {
+const getRecommendedObjectID = (recoIndex, objectID, searchClient) => {
   return searchClient
     .initIndex(recoIndex)
     .getObject(objectID)
-    .then(r => {
+    .then((r) => {
       return Promise.resolve(r);
     })
     .catch(() => {
@@ -25,7 +19,7 @@ function transformRecommendations(res, t) {
   if (res.recommendations) {
     recoFilters = res.recommendations
       .reverse()
-      .filter(reco => reco.score > t.state.aiScoreThreshold)
+      .filter((reco) => reco.score > t.state.aiScoreThreshold)
       .map(
         (reco, i) =>
           `objectID:${reco.objectID}<score=${Math.round(reco.score * 100) + i}>`
@@ -33,7 +27,6 @@ function transformRecommendations(res, t) {
   }
 
   const fallbackFilters = props.fallbackFilters ? props.fallbackFilters : '';
-
   t.setState({
     optionalFilters: [...recoFilters, ...fallbackFilters],
     filters: 'NOT objectID:' + props.objectID,
@@ -51,16 +44,18 @@ function configWidget(t) {
     case 'bought-together':
       return getRecommendedObjectID(
         `ai_recommend_bought-together_${props.indexName}`,
-        props.objectID
-      ).then(res => {
+        props.objectID,
+        props.searchClient
+      ).then((res) => {
         return transformRecommendations(res, t);
       });
       break;
     case 'related-products':
       return getRecommendedObjectID(
         `ai_recommend_related-products_${props.indexName}`,
-        props.objectID
-      ).then(res => {
+        props.objectID,
+        props.searchClient
+      ).then((res) => {
         return transformRecommendations(res, t);
       });
       break;
@@ -76,6 +71,7 @@ export default class Recommendations extends Component {
       optionalFilters: [],
       clickAnalytics: this.props.clickAnalytics || false,
       analytics: this.props.analytics || false,
+      searchClient: this.props.searchClient,
     };
   }
 
@@ -106,12 +102,13 @@ export default class Recommendations extends Component {
                 filters={this.state.filters}
                 facetFilters={this.state.facetFilters}
                 typoTolerance={false}
-                analyticsTags={[`alg#recommend_${this.props.typeReco}`]}
+                analyticsTags={[`alg-recommend_${this.props.typeReco}`]}
                 ruleContexts={[
-                  `recommend_${this.props.typeReco}_${this.props.objectID}`,
+                  `alg-recommend_${this.props.typeReco}_${this.props.objectID}`,
                 ]}
                 clickAnalytics={this.state.clickAnalytics}
                 analytics={this.state.analytics}
+                enableABTest={false}
               />
               <Hits
                 hitComponent={({ hit }) =>
