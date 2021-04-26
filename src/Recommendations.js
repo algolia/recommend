@@ -1,77 +1,76 @@
-import React, { Component } from 'react';
-import { InstantSearch, Hits, Configure } from 'react-instantsearch-dom';
+import React, { Component } from "react";
+import { InstantSearch, Hits, Configure } from "react-instantsearch-dom";
 
-const getRecommendedObjectID = (recoIndex, objectID, searchClient) => {
+const getRecommendedObject = (recoIndex, objectID, searchClient) => {
   return searchClient
     .initIndex(recoIndex)
     .getObject(objectID)
-    .then((r) => {
-      return Promise.resolve(r);
-    })
     .catch(() => {
-      return Promise.resolve({});
+      // not fatal, no recommendations for this object
+      return {};
     });
 };
 
-function transformRecommendations(res, t) {
-  const { props } = t;
+function buildSearchParamsFromRecommendations(record, props) {
   let recoFilters = [];
-  if (res.recommendations) {
-    recoFilters = res.recommendations
+  let hitsPerPage = props.hitsPerPage;
+  const threshold = props.aiScoreThreshold || 0;
+
+  if (record.recommendations) {
+    recoFilters = record.recommendations
       .reverse()
-      .filter((reco) => reco.score > t.state.aiScoreThreshold)
+      .filter((reco) => reco.score > threshold)
       .map(
         (reco, i) =>
           `objectID:${reco.objectID}<score=${Math.round(reco.score * 100) + i}>`
       );
+
+    if (!hitsPerPage) {
+      hitsPerPage = record.recommendations.length;
+    }
   }
 
-  const fallbackFilters = props.fallbackFilters ? props.fallbackFilters : '';
-  t.setState({
-    optionalFilters: [...recoFilters, ...fallbackFilters],
-    filters: 'NOT objectID:' + props.objectID,
+  return {
+    optionalFilters: [...recoFilters, ...(props.fallbackFilters || [])],
+    filters: "NOT objectID:" + props.objectID,
     facetFilters: props.facetFilters,
-    hitsPerPage: props.hitsPerPage
-      ? props.hitsPerPage
-      : res.recommendations.length,
-    res: res,
-  });
+    hitsPerPage: hitsPerPage,
+  };
 }
 
 function configWidget(t) {
   const { props } = t;
-  switch (props.typeReco) {
-    case 'bought-together':
-      return getRecommendedObjectID(
-        `ai_recommend_bought-together_${props.indexName}`,
-        props.objectID,
-        props.searchClient
-      ).then((res) => {
-        return transformRecommendations(res, t);
-      });
-      break;
-    case 'related-products':
-      return getRecommendedObjectID(
-        `ai_recommend_related-products_${props.indexName}`,
-        props.objectID,
-        props.searchClient
-      ).then((res) => {
-        return transformRecommendations(res, t);
-      });
-      break;
-    default:
+  let index;
+
+  if (props.model === "bought-together") {
+    index = `ai_recommend_bought-together_${props.indexName}`;
+  } else if (props.model === "related-products") {
+    index = `ai_recommend_related-products_${props.indexName}`;
+  } else {
+    throw new Error(`Unknown model '${props.model}'.`);
   }
+
+  return getRecommendedObject(index, props.objectID, props.searchClient).then(
+    (record) => {
+      const params = buildSearchParamsFromRecommendations(record, props);
+      t.setState({ ...t.state, params });
+    }
+  );
 }
+
 export default class Recommendations extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      aiScoreThreshold: this.props.aiScoreThreshold || 0,
-      selectedProduct: this.props.objectID,
-      optionalFilters: [],
-      clickAnalytics: this.props.clickAnalytics || false,
-      analytics: this.props.analytics || false,
+      params: {
+        optionalFilters: [],
+        filters: [],
+        facetFilters: [],
+        hitsPerPage: this.props.hitsPerPage,
+      },
       searchClient: this.props.searchClient,
+      objectID: this.props.objectID,
     };
   }
 
@@ -79,12 +78,10 @@ export default class Recommendations extends Component {
     configWidget(this);
   }
 
-  componentDidUpdate() {
-    if (this.props.objectID === this.state.selectedProduct) {
-      return;
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      configWidget(this);
     }
-    configWidget(this);
-    this.setState({ selectedProduct: this.props.objectID });
   }
 
   render() {
@@ -94,35 +91,21 @@ export default class Recommendations extends Component {
           searchClient={this.props.searchClient}
           indexName={this.props.indexName}
         >
-          {this.state.optionalFilters.length > 0 ? (
-            <div>
-              <Configure
-                optionalFilters={this.state.optionalFilters}
-                hitsPerPage={this.state.hitsPerPage}
-                filters={this.state.filters}
-                facetFilters={this.state.facetFilters}
-                typoTolerance={false}
-                analyticsTags={[`alg-recommend_${this.props.typeReco}`]}
-                ruleContexts={[
-                  `alg-recommend_${this.props.typeReco}_${this.props.objectID}`,
-                ]}
-                clickAnalytics={this.state.clickAnalytics}
-                analytics={this.state.analytics}
-                enableABTest={false}
-              />
-              <Hits
-                hitComponent={({ hit }) =>
-                  this.props.hitComponent({
-                    setSelectedProduct: this.props.setSelectedProduct,
-                    hit,
-                    recommendations: this.state.res.recommendations,
-                  })
-                }
-              />
-            </div>
-          ) : (
-            ''
-          )}
+          <Configure
+            optionalFilters={this.state.params.optionalFilters}
+            hitsPerPage={this.state.params.hitsPerPage}
+            filters={this.state.params.filters}
+            facetFilters={this.state.params.facetFilters}
+            typoTolerance={false}
+            analyticsTags={[`alg-recommend_${this.props.model}`]}
+            ruleContexts={[
+              `alg-recommend_${this.props.model}_${this.props.objectID}`,
+            ]}
+            clickAnalytics={this.props.clickAnalytics || false}
+            analytics={this.props.analytics || false}
+            enableABTest={false}
+          />
+          <Hits hitComponent={this.props.hitComponent} />
         </InstantSearch>
       </div>
     );
