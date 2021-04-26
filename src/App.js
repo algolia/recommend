@@ -1,31 +1,31 @@
 // Import components
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   InstantSearch,
   Highlight,
   Configure,
   connectHitInsights,
-} from 'react-instantsearch-dom';
-import algoliasearch from 'algoliasearch/lite';
-import Recommendations from './Recommendations';
-import Autocomplete from './Autocomplete';
+} from "react-instantsearch-dom";
+import algoliasearch from "algoliasearch/lite";
+import Recommendations from "./Recommendations";
+import Autocomplete from "./Autocomplete";
 
-const aa = require('search-insights');
-aa('init', {
-  appId: 'HYDY1KWTWB',
-  apiKey: '28cf6d38411215e2eef188e635216508',
+const aa = require("search-insights");
+aa("init", {
+  appId: "HYDY1KWTWB",
+  apiKey: "28cf6d38411215e2eef188e635216508",
 });
 
 const searchClient = algoliasearch(
-  'HYDY1KWTWB',
-  '28cf6d38411215e2eef188e635216508'
+  "HYDY1KWTWB",
+  "28cf6d38411215e2eef188e635216508"
 );
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedProduct: '',
+      selectedProduct: "",
     };
   }
   onSuggestionSelected = (_, { suggestion }) => {
@@ -36,7 +36,7 @@ class App extends Component {
 
   onSuggestionCleared = () => {
     this.setState({
-      query: '',
+      query: "",
     });
   };
   render() {
@@ -61,9 +61,9 @@ class App extends Component {
               Frequently Bought Together
             </h3>
             <Recommendations
-              typeReco={'bought-together'}
+              model="bought-together"
               searchClient={searchClient}
-              indexName={'gstar_demo_test'}
+              indexName={"gstar_demo_test"}
               objectID={this.state.selectedProduct.objectID}
               hitComponent={(props) => HitWithInsights(props)}
               hitsPerPage={3}
@@ -74,9 +74,9 @@ class App extends Component {
               Related Products
             </h3>
             <Recommendations
-              typeReco={'related-products'}
+              model="related-products"
               searchClient={searchClient}
-              indexName={'gstar_demo_test'}
+              indexName={"gstar_demo_test"}
               objectID={this.state.selectedProduct.objectID}
               hitComponent={(props) => HitWithInsights(props)}
               hitsPerPage={5}
@@ -91,20 +91,14 @@ class App extends Component {
             />
           </div>
         ) : (
-          ''
+          ""
         )}
       </div>
     );
   }
 }
 
-const RecoHits = ({ hit, recommendations }) => {
-  const recommendation = recommendations
-    ? recommendations.find((r) => r.objectID === hit.objectID)
-    : '';
-  const aiScore =
-    recommendation && recommendation.score ? recommendation.score : '';
-
+const RecoHitsWithInsights = ({ hit, insights }) => {
   return (
     <div>
       <img src={hit.image_link} align="left" alt={hit.name} width={100} />
@@ -115,33 +109,10 @@ const RecoHits = ({ hit, recommendations }) => {
         <p>{hit.objectID}</p>
       </div>
       <div className="hit-price">${hit.price}</div>
-      <div className="hit-aiScore">{aiScore}</div>
-    </div>
-  );
-};
-
-const RecoHitsWithInsights = ({ hit, insights, recommendations }) => {
-  const recommendation = recommendations
-    ? recommendations.find((r) => r.objectID === hit.objectID)
-    : '';
-  const aiScore =
-    recommendation && recommendation.score ? recommendation.score : '';
-
-  return (
-    <div>
-      <img src={hit.image_link} align="left" alt={hit.name} width={100} />
-      <div className="hit-name">
-        <Highlight attribute="name" hit={hit} />
-      </div>
-      <div className="hit-objectID">
-        <p>{hit.objectID}</p>
-      </div>
-      <div className="hit-price">${hit.price}</div>
-      <div className="hit-aiScore">{aiScore}</div>
       <button
         onClick={() =>
-          insights('clickedObjectIDsAfterSearch', {
-            eventName: 'Product Clicked',
+          insights("clickedObjectIDsAfterSearch", {
+            eventName: "Product Clicked",
           })
         }
       >
@@ -149,8 +120,8 @@ const RecoHitsWithInsights = ({ hit, insights, recommendations }) => {
       </button>
       <button
         onClick={() =>
-          insights('convertedObjectIDsAfterSearch', {
-            eventName: 'Product Added To Cart',
+          insights("convertedObjectIDsAfterSearch", {
+            eventName: "Product Added To Cart",
           })
         }
       >
