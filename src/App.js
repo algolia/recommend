@@ -106,7 +106,9 @@ const RecoHitsWithInsights = ({ hit, insights }) => {
         <Highlight attribute="name" hit={hit} />
       </div>
       <div className="hit-objectID">
-        <p>{hit.objectID}</p>
+        <p>
+          {hit.objectID} (score={hit._recommendScore})
+        </p>
       </div>
       <div className="hit-price">${hit.price}</div>
       <button

@@ -54,7 +54,11 @@ function configWidget(t) {
   return getRecommendedObject(index, props.objectID, props.searchClient).then(
     (record) => {
       const params = buildSearchParamsFromRecommendations(record, props);
-      t.setState({ ...t.state, params });
+      t.setState({
+        ...t.state,
+        params,
+        recommendations: record.recommendations || [],
+      });
     }
   );
 }
@@ -72,6 +76,7 @@ export default class Recommendations extends Component {
       },
       searchClient: this.props.searchClient,
       objectID: this.props.objectID,
+      recommendations: [],
     };
   }
 
@@ -106,7 +111,15 @@ export default class Recommendations extends Component {
             analytics={this.props.analytics || false}
             enableABTest={false}
           />
-          <Hits hitComponent={this.props.hitComponent} />
+          <Hits
+            hitComponent={({ hit }) => {
+              const recommendation = this.state.recommendations.find(
+                (e) => e.objectID === hit.objectID
+              );
+              hit._recommendScore = recommendation && recommendation.score;
+              return this.props.hitComponent({ hit });
+            }}
+          />
         </InstantSearch>
       </div>
     );
