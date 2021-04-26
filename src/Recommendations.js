@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { InstantSearch, Hits, Configure } from "react-instantsearch-dom";
 
 const getRecommendedObject = (recoIndex, objectID, searchClient) => {
@@ -14,7 +15,7 @@ const getRecommendedObject = (recoIndex, objectID, searchClient) => {
 function buildSearchParamsFromRecommendations(record, props) {
   let recoFilters = [];
   let hitsPerPage = props.hitsPerPage;
-  const threshold = props.aiScoreThreshold || 0;
+  const threshold = props.threshold || 0;
 
   if (record.recommendations) {
     recoFilters = record.recommendations
@@ -111,3 +112,15 @@ export default class Recommendations extends Component {
     );
   }
 }
+
+Recommendations.propTypes = {
+  model: PropTypes.string.isRequired,
+  searchClient: PropTypes.object.isRequired,
+  indexName: PropTypes.string.isRequired,
+  objectID: PropTypes.string.isRequired,
+  hitComponent: PropTypes.elementType.isRequired,
+  hitsPerPage: PropTypes.number,
+  clickAnalytics: PropTypes.bool,
+  analytics: PropTypes.bool,
+  threshold: PropTypes.number,
+};
