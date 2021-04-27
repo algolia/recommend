@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Highlight, connectAutoComplete } from 'react-instantsearch-dom';
-import AutoSuggest from 'react-autosuggest';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Highlight, connectAutoComplete } from "react-instantsearch-dom";
+import AutoSuggest from "react-autosuggest";
+import "./Autocomplete.css";
 
 class AutoComplete extends Component {
   static propTypes = {
@@ -17,10 +18,6 @@ class AutoComplete extends Component {
   };
 
   onChange = (_, { newValue }) => {
-    if (!newValue) {
-      this.props.onSuggestionCleared();
-    }
-
     this.setState({
       value: newValue,
     });
@@ -35,11 +32,15 @@ class AutoComplete extends Component {
   };
 
   getSuggestionValue(hit) {
-    return hit.name;
+    return `${hit.name} (${hit.objectID})`;
   }
 
   renderSuggestion(hit) {
-    return <Highlight attribute="name" hit={hit} tagName="mark" />;
+    return (
+      <>
+        <Highlight attribute="name" hit={hit} tagName="mark" /> ({hit.objectID})
+      </>
+    );
   }
 
   render() {
@@ -47,7 +48,7 @@ class AutoComplete extends Component {
     const { value } = this.state;
 
     const inputProps = {
-      placeholder: 'Search for a product...',
+      placeholder: "Search for a product...",
       onChange: this.onChange,
       value,
     };

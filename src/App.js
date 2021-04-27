@@ -9,6 +9,7 @@ import {
 import algoliasearch from "algoliasearch/lite";
 import Recommendations from "./Recommendations";
 import Autocomplete from "./Autocomplete";
+import "./App.css";
 
 const aa = require("search-insights");
 aa("init", {
@@ -24,42 +25,33 @@ const searchClient = algoliasearch(
 class App extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      selectedProduct: "",
+      selectedProduct: undefined,
     };
   }
+
   onSuggestionSelected = (_, { suggestion }) => {
     this.setState({
       selectedProduct: suggestion,
     });
   };
 
-  onSuggestionCleared = () => {
-    this.setState({
-      query: "",
-    });
-  };
   render() {
     return (
       <div className="ais-InstantSearch">
         <h1>React InstantSearch Algolia Recommend Demo</h1>
         <InstantSearch indexName="gstar_demo_test" searchClient={searchClient}>
           <Configure hitsPerPage={5} />
-          <h3 className="text-lg mb-4 font-medium text-gray-900">
-            Looking for Recommendations?
-          </h3>
+          <h3>Looking for Recommendations?</h3>
           <Autocomplete
             onSuggestionSelected={this.onSuggestionSelected}
             onSuggestionCleared={this.onSuggestionCleared}
           />
         </InstantSearch>
-        {this.state.selectedProduct ? (
-          <div>
-            <h3 className="text-lg mb-4 font-medium text-gray-900">Product</h3>
-            <p>{this.state.selectedProduct.name}</p>
-            <h3 className="text-lg mb-4 font-medium text-gray-900">
-              Frequently Bought Together
-            </h3>
+        {this.state.selectedProduct && (
+          <>
+            <h3>Frequently Bought Together</h3>
             <Recommendations
               model="bought-together"
               searchClient={searchClient}
@@ -70,9 +62,8 @@ class App extends Component {
               clickAnalytics={true}
               analytics={true}
             />
-            <h3 className="text-lg mb-4 font-medium text-gray-900">
-              Related Products
-            </h3>
+
+            <h3>Related Products</h3>
             <Recommendations
               model="related-products"
               searchClient={searchClient}
@@ -89,9 +80,7 @@ class App extends Component {
               clickAnalytics={true}
               analytics={true}
             />
-          </div>
-        ) : (
-          ""
+          </>
         )}
       </div>
     );
