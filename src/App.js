@@ -1,4 +1,3 @@
-// Import components
 import React, { Component } from "react";
 import {
   InstantSearch,
@@ -6,8 +5,8 @@ import {
   Configure,
   connectHitInsights,
 } from "react-instantsearch-dom";
-import algoliasearch from "algoliasearch/lite";
-import Recommendations from "./Recommendations";
+import algoliasearch from "algoliasearch";
+import Recommendations from "./Recommendations.js";
 import Autocomplete from "./Autocomplete";
 import "./App.css";
 
