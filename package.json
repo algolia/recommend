@@ -8,9 +8,7 @@
   ],
   "scripts": {
     "start": "react-scripts start",
-    "prepublish": "babel src/Recommendations.js > index.js",
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix"
+    "prepublish": "babel src/Recommendations.js > index.js"
   },
   "dependencies": {
     "prop-types": "^15",
