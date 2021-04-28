@@ -33,13 +33,7 @@ const getRecommendedObject_TEMPORARY_BETA = (
     });
 };
 
-const composeFilters = (recoFilters) => {
-  let compose = '';
-  if (recoFilters.length > 0) {
-    compose += `(${recoFilters.join(' OR ')})`;
-  }
-  return compose;
-};
+const composeFilters = (recoFilters) => recoFilters.length ? `(${recoFilters.join(' OR ')})` : '';
 
 const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
   let recoFilters = [];
