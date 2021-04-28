@@ -60,7 +60,7 @@ const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
   };
 };
 
-export default class Recommendations extends Component {
+export class Recommendations extends Component {
   constructor(props) {
     super(props);
 

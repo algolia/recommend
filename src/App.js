@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import {
   InstantSearch,
-  Highlight,
   Configure,
   connectHitInsights,
 } from "react-instantsearch-dom";
 import algoliasearch from "algoliasearch";
-import Recommendations from "./Recommendations.js";
+import { Recommendations } from "./Recommendations.js";
 import Autocomplete from "./Autocomplete";
 import "./App.css";
 
@@ -90,9 +89,7 @@ const RecoHitsWithInsights = ({ hit, insights }) => {
   return (
     <div>
       <img src={hit.image_link} align="left" alt={hit.name} width={100} />
-      <div className="hit-name">
-        <Highlight attribute="name" hit={hit} />
-      </div>
+      <div className="hit-name">{hit.name}</div>
       <div className="hit-objectID">
         <p>
           {hit.objectID} (score={hit._recommendScore})

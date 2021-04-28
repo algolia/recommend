@@ -7,13 +7,13 @@ This is the repository packaging the Algolia Recommend React component as well a
 ## Install
 
 ```sh
-npm install --save @algolia/react-recommendations@1.0.0-beta.7
+npm install --save @algolia/react-recommendations@1.0.0-beta.8
 ```
 
 ## Usage
 
 ```js
-import Recommendations from "@algolia/recommendations";
+import { Recommendations } from "@algolia/react-recommendations";
 ```
 
 ### Props
