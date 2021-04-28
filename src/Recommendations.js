@@ -129,10 +129,10 @@ export class Recommendations extends Component {
   }
 
   render() {
-    if (this.state.recommendations.length === 0) {
+    if (this.props.model ==="bought-together" && this.state.recommendations.length === 0) {
       return (
         <div className="text-indigo-500 text-sm text-italic">
-          No match in recommend model {this.props.model}
+          Nothing yet...
         </div>
       );
     }
