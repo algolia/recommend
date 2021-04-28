@@ -33,30 +33,56 @@ const getRecommendedObject_TEMPORARY_BETA = (
     });
 };
 
+const scoredObjectID = (objectID, score) =>
+  `objectID:${objectID}<score=${score}>`;
+
 const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
-  let recoFilters = [];
-  let hitsPerPage = props.hitsPerPage;
+  let recoFilters;
+  let hitsPerPage;
+  const maxRecommendations = props.maxRecommendations || 0;
   const threshold = props.threshold || 0;
+  const fallbackFilters = props.fallbackFilters || [];
+  const hasFallback = fallbackFilters.length > 0;
 
   if (record.recommendations) {
     recoFilters = record.recommendations
       .reverse()
       .filter((reco) => reco.score > threshold)
-      .map(
-        (reco, i) =>
-          `objectID:${reco.objectID}<score=${Math.round(reco.score * 100) + i}>`
+      .map((reco, i) =>
+        scoredObjectID(reco.objectID, Math.round(reco.score * 100) + i)
       );
 
-    if (!hitsPerPage) {
-      hitsPerPage = record.recommendations.length;
+    // recommendations and fallback, force to retrieve maxRecommendations hits
+    if (hasFallback) {
+      hitsPerPage = maxRecommendations;
+    } else {
+      // otherwise max the hits retrieved with maxRecommendations
+      if (maxRecommendations > 0) {
+        hitsPerPage = Math.min(
+          record.recommendations.length,
+          maxRecommendations
+        );
+      } else {
+        hitsPerPage = record.recommendations.length;
+      }
+    }
+  } else {
+    recoFilters = [];
+
+    // no recommendations but fallback, force to retrieve maxRecommendations hits
+    if (hasFallback) {
+      hitsPerPage = maxRecommendations;
+    } else {
+      // otherwise, don't retrieve anything
+      hitsPerPage = 0;
     }
   }
 
   return {
-    optionalFilters: [...recoFilters, ...(props.fallbackFilters || [])],
-    filters: "NOT objectID:" + props.objectID,
+    optionalFilters: [...recoFilters, ...fallbackFilters],
+    filters: `NOT objectID:${props.objectID}`,
     facetFilters: props.facetFilters,
-    hitsPerPage: hitsPerPage,
+    hitsPerPage,
   };
 };
 
@@ -69,7 +95,7 @@ export class Recommendations extends Component {
         optionalFilters: [],
         filters: [],
         facetFilters: [],
-        hitsPerPage: this.props.hitsPerPage,
+        hitsPerPage: 0,
       },
       searchClient: this.props.searchClient,
       objectID: this.props.objectID,
@@ -150,7 +176,7 @@ Recommendations.propTypes = {
   indexName: PropTypes.string.isRequired,
   objectID: PropTypes.string.isRequired,
   hitComponent: PropTypes.elementType.isRequired,
-  hitsPerPage: PropTypes.number,
+  maxRecommendations: PropTypes.number,
   clickAnalytics: PropTypes.bool,
   analytics: PropTypes.bool,
   threshold: PropTypes.number,
