@@ -25,7 +25,7 @@ Available props:
 - `indexName`: the name of the products index
 - `objectID`: the objectID of the product to get recommendations from
 - `hitComponent`: the InstantSearch-compatible `Hit` widget
-- (optional) `hitsPerPage`: the number of recommendations to retrieve (default: max recommendations available)
+- (optional) `maxRecommendations`: the number of recommendations to retrieve (default: max recommendations available)
 - (optional) `facetFilters`: additional facet filters
 - (optional) `fallbackFilters`: additional filters to use as fallback should there not be enough recommendations
 - (optional) `analytics`: whether you want Search Analytics to be turned on or not (default: `false`)
@@ -38,7 +38,7 @@ Available props:
   indexName={"your_source_index_name"}
   objectID={currentObjectID}
   hitComponent={Hit}
-  hitsPerPage={5}
+  maxRecommendations={5}
   facetFilters={[]}
   fallbackFilters={[]}
   analytics={true | false}

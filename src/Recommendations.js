@@ -33,39 +33,46 @@ const getRecommendedObject_TEMPORARY_BETA = (
     });
 };
 
-const composeFilters = (recoFilters) => recoFilters.length ? `(${recoFilters.join(' OR ')})` : '';
+const scoredObjectID = (objectID, score) =>
+  `objectID:${objectID}<score=${score}>`;
 
 const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
-  let recoFilters = [];
-  let hitsPerPage = props.hitsPerPage;
+  let recoFilters;
+  let hitsPerPage;
+  const maxRecommendations = props.maxRecommendations || 0;
   const threshold = props.threshold || 0;
+  const fallbackFilters = props.fallbackFilters || [];
+  const hasFallback = fallbackFilters.length > 0;
 
   if (record.recommendations) {
     recoFilters = record.recommendations
       .reverse()
       .filter((reco) => reco.score > threshold)
-      .map(
-        (reco, i) =>
-          `objectID:${reco.objectID}<score=${Math.round(reco.score * 100) + i}>`
+      .map((reco, i) =>
+        scoredObjectID(reco.objectID, Math.round(reco.score * 100) + i)
       );
 
-    if (!hitsPerPage) {
-      hitsPerPage = record.recommendations.length;
+    // recommendations and fallback, force to retrieve maxRecommendations hits
+    if (hasFallback) {
+      hitsPerPage = maxRecommendations;
+    } else {
+      // otherwise max the hits retrieved with maxRecommendations
+      hitsPerPage = Math.min(record.recommendations.length, maxRecommendations);
+    }
+  } else {
+    recoFilters = [];
+
+    // no recommendations but fallback, force to retrieve maxRecommendations hits
+    if (hasFallback) {
+      hitsPerPage = maxRecommendations;
+    } else {
+      // otherwise, don't retrieve anything
+      hitsPerPage = 0;
     }
   }
-  if (this.model === 'bought-together') {
-    return {
-      optionalFilters: [],
-      filters:
-        (recoFilters.length > 0 &&
-          composeFilters(recoFilters)) ||
-        null,
-      facetFilters: (recoFilters.length > 0 && props.facetFilters) || [],
-      hitsPerPage,
-    };
-  }
+
   return {
-    optionalFilters: [...recoFilters, ...(props.fallbackFilters || [])],
+    optionalFilters: [...recoFilters, ...fallbackFilters],
     filters: `NOT objectID:${props.objectID}`,
     facetFilters: props.facetFilters,
     hitsPerPage,
@@ -81,7 +88,7 @@ export class Recommendations extends Component {
         optionalFilters: [],
         filters: [],
         facetFilters: [],
-        hitsPerPage: this.props.hitsPerPage,
+        hitsPerPage: 0,
       },
       searchClient: this.props.searchClient,
       objectID: this.props.objectID,
@@ -121,13 +128,6 @@ export class Recommendations extends Component {
   }
 
   render() {
-    if (this.props.model ==="bought-together" && this.state.recommendations.length === 0) {
-      return (
-        <div className="text-indigo-500 text-sm text-italic">
-          Nothing yet...
-        </div>
-      );
-    }
     return (
       <div>
         <InstantSearch
@@ -169,7 +169,7 @@ Recommendations.propTypes = {
   indexName: PropTypes.string.isRequired,
   objectID: PropTypes.string.isRequired,
   hitComponent: PropTypes.elementType.isRequired,
-  hitsPerPage: PropTypes.number,
+  maxRecommendations: PropTypes.number,
   clickAnalytics: PropTypes.bool,
   analytics: PropTypes.bool,
   threshold: PropTypes.number,

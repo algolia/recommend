@@ -42,10 +42,7 @@ class App extends Component {
         <InstantSearch indexName="gstar_demo_test" searchClient={searchClient}>
           <Configure hitsPerPage={5} />
           <h3>Looking for Recommendations?</h3>
-          <Autocomplete
-            onSuggestionSelected={this.onSuggestionSelected}
-            onSuggestionCleared={this.onSuggestionCleared}
-          />
+          <Autocomplete onSuggestionSelected={this.onSuggestionSelected} />
         </InstantSearch>
         {this.state.selectedProduct && (
           <>
@@ -56,7 +53,7 @@ class App extends Component {
               indexName={"gstar_demo_test"}
               objectID={this.state.selectedProduct.objectID}
               hitComponent={HitWithInsights}
-              hitsPerPage={3}
+              maxRecommendations={3}
               clickAnalytics={true}
               analytics={true}
             />
@@ -68,7 +65,7 @@ class App extends Component {
               indexName={"gstar_demo_test"}
               objectID={this.state.selectedProduct.objectID}
               hitComponent={HitWithInsights}
-              hitsPerPage={5}
+              maxRecommendations={5}
               facetFilters={[
                 `hierarchical_categories.lvl0:${this.state.selectedProduct.hierarchical_categories.lvl0}`,
               ]}
