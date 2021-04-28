@@ -33,10 +33,19 @@ const getRecommendedObject_TEMPORARY_BETA = (
     });
 };
 
+const composeFilters = (recoFilters) => {
+  let compose = '';
+  if (recoFilters.length > 0) {
+    compose += `(${recoFilters.join(' OR ')})`;
+  }
+  return compose;
+};
+
 const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
   let recoFilters = [];
   let hitsPerPage = props.hitsPerPage;
   const threshold = props.threshold || 0;
+  const model = props.model;
 
   if (record.recommendations) {
     recoFilters = record.recommendations
@@ -51,13 +60,24 @@ const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
       hitsPerPage = record.recommendations.length;
     }
   }
-
-  return {
-    optionalFilters: [...recoFilters, ...(props.fallbackFilters || [])],
-    filters: "NOT objectID:" + props.objectID,
-    facetFilters: props.facetFilters,
-    hitsPerPage: hitsPerPage,
-  };
+  if (model === 'bought-together') {
+    return {
+      optionalFilters: [],
+      filters:
+        (recoFilters.length > 0 &&
+          composeFilters(recoFilters, props.objectID)) ||
+        null,
+      facetFilters: (recoFilters.length > 0 && props.facetFilters) || [],
+      hitsPerPage,
+    };
+  } else if (model === 'related-products') {
+    return {
+      optionalFilters: [...recoFilters, ...(props.fallbackFilters || [])],
+      filters: `NOT objectID:${props.objectID}`,
+      facetFilters: props.facetFilters,
+      hitsPerPage,
+    };
+  }
 };
 
 export class Recommendations extends Component {
@@ -109,6 +129,13 @@ export class Recommendations extends Component {
   }
 
   render() {
+    if (this.state.recommendations.length === 0) {
+      return (
+        <div className="text-indigo-500 text-sm text-italic">
+          No match in recommend model {this.props.model}
+        </div>
+      );
+    }
     return (
       <div>
         <InstantSearch
