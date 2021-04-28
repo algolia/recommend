@@ -57,7 +57,14 @@ const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
       hitsPerPage = maxRecommendations;
     } else {
       // otherwise max the hits retrieved with maxRecommendations
-      hitsPerPage = Math.min(record.recommendations.length, maxRecommendations);
+      if (maxRecommendations > 0) {
+        hitsPerPage = Math.min(
+          record.recommendations.length,
+          maxRecommendations
+        );
+      } else {
+        hitsPerPage = record.recommendations.length;
+      }
     }
   } else {
     recoFilters = [];
