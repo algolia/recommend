@@ -59,7 +59,7 @@ const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
       optionalFilters: [],
       filters:
         (recoFilters.length > 0 &&
-          composeFilters(recoFilters, props.objectID)) ||
+          composeFilters(recoFilters)) ||
         null,
       facetFilters: (recoFilters.length > 0 && props.facetFilters) || [],
       hitsPerPage,
