@@ -55,7 +55,7 @@ class App extends Component {
               searchClient={searchClient}
               indexName={"gstar_demo_test"}
               objectID={this.state.selectedProduct.objectID}
-              hitComponent={(props) => HitWithInsights(props)}
+              hitComponent={HitWithInsights}
               hitsPerPage={3}
               clickAnalytics={true}
               analytics={true}
@@ -67,7 +67,7 @@ class App extends Component {
               searchClient={searchClient}
               indexName={"gstar_demo_test"}
               objectID={this.state.selectedProduct.objectID}
-              hitComponent={(props) => HitWithInsights(props)}
+              hitComponent={HitWithInsights}
               hitsPerPage={5}
               facetFilters={[
                 `hierarchical_categories.lvl0:${this.state.selectedProduct.hierarchical_categories.lvl0}`,

@@ -37,7 +37,7 @@ Available props:
   model={"related-products" | "bought-together"}
   indexName={"your_source_index_name"}
   objectID={currentObjectID}
-  hitComponent={(props) => Hit(props)}
+  hitComponent={Hit}
   hitsPerPage={5}
   facetFilters={[]}
   fallbackFilters={[]}
