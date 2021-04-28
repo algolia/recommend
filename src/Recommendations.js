@@ -64,14 +64,13 @@ const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
       facetFilters: (recoFilters.length > 0 && props.facetFilters) || [],
       hitsPerPage,
     };
-  } else if (model === 'related-products') {
-    return {
-      optionalFilters: [...recoFilters, ...(props.fallbackFilters || [])],
-      filters: `NOT objectID:${props.objectID}`,
-      facetFilters: props.facetFilters,
-      hitsPerPage,
-    };
   }
+  return {
+    optionalFilters: [...recoFilters, ...(props.fallbackFilters || [])],
+    filters: `NOT objectID:${props.objectID}`,
+    facetFilters: props.facetFilters,
+    hitsPerPage,
+  };
 };
 
 export class Recommendations extends Component {
