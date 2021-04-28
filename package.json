@@ -21,10 +21,10 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "prettier": "1.19.1",
-    "react": "16.12.0",
+    "prettier": "^2.2.1",
+    "react": "^16.12.0",
     "react-autosuggest": "^10.1.0",
-    "react-scripts": "2.1.1",
+    "react-scripts": "^4.0.3",
     "search-insights": "^1.7.1"
   },
   "browserslist": [
