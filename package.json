@@ -1,6 +1,6 @@
 {
   "name": "@algolia/react-recommendations",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0-beta.7",
   "files": [
     "/LICENSE",
     "/README.md",
@@ -12,9 +12,12 @@
     "prepublish": "babel src/Recommendations.js > index.js"
   },
   "dependencies": {
-    "prop-types": "^15",
-    "react-dom": "^16",
     "react-instantsearch-dom": "^6"
+  },
+  "peerDependencies": {
+    "prop-types": "^15",
+    "react": ">= 16.3.0 < 18",
+    "react-dom": ">= 16.3.0 < 18"
   },
   "devDependencies": {
     "algoliasearch": "^4",
@@ -25,7 +28,9 @@
     "react": "^16.12.0",
     "react-autosuggest": "^10.1.0",
     "react-scripts": "^4.0.3",
-    "search-insights": "^1.7.1"
+    "search-insights": "^1.7.1",
+    "prop-types": "^15",
+    "react-dom": "^16"
   },
   "browserslist": [
     ">0.2%",
