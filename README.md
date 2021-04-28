@@ -2,9 +2,21 @@
 
 This is the repository packaging the Algolia Recommend React component as well as an Algolia Recommend demo.
 
-## Documentation
-
 **During the beta of Algolia Recommend, this React component relies on an Algolia Index to retrieve the recommendations, and performs a regular Search API request to get the recommendations.**
+
+## Install
+
+```sh
+npm install --save @algolia/react-recommendations@1.0.0-beta.6
+```
+
+## Usage
+
+```js
+import Recommendations from "@algolia/recommendations";
+```
+
+### Props
 
 Available props:
 
