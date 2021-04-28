@@ -39,7 +39,6 @@ const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
   let recoFilters = [];
   let hitsPerPage = props.hitsPerPage;
   const threshold = props.threshold || 0;
-  const model = props.model;
 
   if (record.recommendations) {
     recoFilters = record.recommendations
@@ -54,7 +53,7 @@ const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
       hitsPerPage = record.recommendations.length;
     }
   }
-  if (model === 'bought-together') {
+  if (this.model === 'bought-together') {
     return {
       optionalFilters: [],
       filters:
