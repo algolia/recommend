@@ -2,9 +2,30 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { InstantSearch, Hits, Configure } from "react-instantsearch-dom";
 
-const getRecommendedObject = (recoIndex, objectID, searchClient) => {
+// BY RE-USING OR UPDATING THIS CODE YOU UNDERSTAND
+// THAT WILL ONLY BY VALID FOR THE *BETA* VERSION OF ALGOLIA RECOMMEND
+//
+// ONCE FULLY RELEASE, ALGOLIA RECOMMEND WILL HAVE ITS OWN ENDPOINTS
+// AND NOT ANYMORE RELY ON THE SEARCH API
+
+const getRecommendedObject_TEMPORARY_BETA = (
+  model,
+  indexName,
+  objectID,
+  searchClient
+) => {
+  let index;
+
+  if (model === "bought-together") {
+    index = `ai_recommend_bought-together_${indexName}`;
+  } else if (model === "related-products") {
+    index = `ai_recommend_related-products_${indexName}`;
+  } else {
+    throw new Error(`Unknown model '${model}'.`);
+  }
+
   return searchClient
-    .initIndex(recoIndex)
+    .initIndex(index)
     .getObject(objectID)
     .catch(() => {
       // not fatal, no recommendations for this object
@@ -12,7 +33,7 @@ const getRecommendedObject = (recoIndex, objectID, searchClient) => {
     });
 };
 
-function buildSearchParamsFromRecommendations(record, props) {
+const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
   let recoFilters = [];
   let hitsPerPage = props.hitsPerPage;
   const threshold = props.threshold || 0;
@@ -37,31 +58,7 @@ function buildSearchParamsFromRecommendations(record, props) {
     facetFilters: props.facetFilters,
     hitsPerPage: hitsPerPage,
   };
-}
-
-function configWidget(t) {
-  const { props } = t;
-  let index;
-
-  if (props.model === "bought-together") {
-    index = `ai_recommend_bought-together_${props.indexName}`;
-  } else if (props.model === "related-products") {
-    index = `ai_recommend_related-products_${props.indexName}`;
-  } else {
-    throw new Error(`Unknown model '${props.model}'.`);
-  }
-
-  return getRecommendedObject(index, props.objectID, props.searchClient).then(
-    (record) => {
-      const params = buildSearchParamsFromRecommendations(record, props);
-      t.setState({
-        ...t.state,
-        params,
-        recommendations: record.recommendations || [],
-      });
-    }
-  );
-}
+};
 
 export default class Recommendations extends Component {
   constructor(props) {
@@ -81,13 +78,34 @@ export default class Recommendations extends Component {
   }
 
   componentDidMount() {
-    configWidget(this);
+    this._configWidget();
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      configWidget(this);
+      this._configWidget();
     }
+  }
+
+  _configWidget() {
+    const { props } = this;
+
+    return getRecommendedObject_TEMPORARY_BETA(
+      props.model,
+      props.indexName,
+      props.objectID,
+      props.searchClient
+    ).then((record) => {
+      const params = buildSearchParamsFromRecommendations_TEMPORARY_BETA(
+        record,
+        props
+      );
+      this.setState({
+        ...this.state,
+        params,
+        recommendations: record.recommendations || [],
+      });
+    });
   }
 
   render() {
