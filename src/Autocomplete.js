@@ -10,7 +10,6 @@ class AutoComplete extends Component {
     currentRefinement: PropTypes.string.isRequired,
     refine: PropTypes.func.isRequired,
     onSuggestionSelected: PropTypes.func.isRequired,
-    onSuggestionCleared: PropTypes.func.isRequired,
   };
 
   state = {
