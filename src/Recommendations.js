@@ -1,6 +1,11 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { InstantSearch, Hits, Configure } from "react-instantsearch-dom";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import {
+  InstantSearch,
+  Hits,
+  Configure,
+  connectHits,
+} from 'react-instantsearch-dom';
 
 // BY RE-USING OR UPDATING THIS CODE YOU UNDERSTAND
 // THAT WILL ONLY BY VALID FOR THE *BETA* VERSION OF ALGOLIA RECOMMEND
@@ -16,9 +21,9 @@ const getRecommendedObject_TEMPORARY_BETA = (
 ) => {
   let index;
 
-  if (model === "bought-together") {
+  if (model === 'bought-together') {
     index = `ai_recommend_bought-together_${indexName}`;
-  } else if (model === "related-products") {
+  } else if (model === 'related-products') {
     index = `ai_recommend_related-products_${indexName}`;
   } else {
     throw new Error(`Unknown model '${model}'.`);
@@ -135,6 +140,9 @@ export class Recommendations extends Component {
   }
 
   render() {
+    const CustomHits = this.props.wrapperComponent
+      ? connectHits(this.props.wrapperComponent)
+      : null;
     return (
       <div>
         <InstantSearch
@@ -155,15 +163,19 @@ export class Recommendations extends Component {
             analytics={this.props.analytics || false}
             enableABTest={false}
           />
-          <Hits
-            hitComponent={({ hit }) => {
-              const recommendation = this.state.recommendations.find(
-                (e) => e.objectID === hit.objectID
-              );
-              hit._recommendScore = recommendation && recommendation.score;
-              return this.props.hitComponent({ hit });
-            }}
-          />
+          {!CustomHits ? (
+            <Hits
+              hitComponent={({ hit }) => {
+                const recommendation = this.state.recommendations.find(
+                  (e) => e.objectID === hit.objectID
+                );
+                hit._recommendScore = recommendation && recommendation.score;
+                return this.props.hitComponent({ hit });
+              }}
+            />
+          ) : (
+            <CustomHits />
+          )}
         </InstantSearch>
       </div>
     );
@@ -180,4 +192,5 @@ Recommendations.propTypes = {
   clickAnalytics: PropTypes.bool,
   analytics: PropTypes.bool,
   threshold: PropTypes.number,
+  wrapperComponent: PropTypes.elementType,
 };
