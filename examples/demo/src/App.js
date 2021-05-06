@@ -34,6 +34,7 @@ function App() {
       <Autocomplete
         placeholder="Search for a product"
         openOnFocus={true}
+        defaultActiveItemId={0}
         getSources={({ query }) => {
           return [
             {
