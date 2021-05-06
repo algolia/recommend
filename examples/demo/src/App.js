@@ -119,7 +119,7 @@ function App() {
           <Recommendations
             model="related-products"
             searchClient={searchClient}
-            indexName={'gstar_demo_test'}
+            indexName="gstar_demo_test"
             objectID={selectedProduct.objectID}
             hitComponent={HitWithInsights}
             maxRecommendations={5}
