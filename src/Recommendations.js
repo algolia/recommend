@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { InstantSearch, Hits, Configure } from "react-instantsearch-dom";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { InstantSearch, Hits, Configure } from 'react-instantsearch-dom';
 
 // BY RE-USING OR UPDATING THIS CODE YOU UNDERSTAND
 // THAT WILL ONLY BY VALID FOR THE *BETA* VERSION OF ALGOLIA RECOMMEND
@@ -8,166 +8,139 @@ import { InstantSearch, Hits, Configure } from "react-instantsearch-dom";
 // ONCE FULLY RELEASE, ALGOLIA RECOMMEND WILL HAVE ITS OWN ENDPOINTS
 // AND NOT ANYMORE RELY ON THE SEARCH API
 
-const getRecommendedObject_TEMPORARY_BETA = (
-  model,
-  indexName,
-  objectID,
-  searchClient
-) => {
-  let index;
-
-  if (model === "bought-together") {
-    index = `ai_recommend_bought-together_${indexName}`;
-  } else if (model === "related-products") {
-    index = `ai_recommend_related-products_${indexName}`;
-  } else {
-    throw new Error(`Unknown model '${model}'.`);
+function getIndexNameFromModel(model, indexName) {
+  switch (model) {
+    case 'bought-together':
+      return `ai_recommend_bought-together_${indexName}`;
+    case 'related-products':
+      return `ai_recommend_related-products_${indexName}`;
+    default:
+      throw new Error(`Unknown model: ${JSON.stringify(model)}.`);
   }
+}
 
-  return searchClient
-    .initIndex(index)
-    .getObject(objectID)
-    .catch(() => {
-      // not fatal, no recommendations for this object
-      return {};
-    });
-};
-
-const scoredObjectID = (objectID, score) =>
-  `objectID:${objectID}<score=${score}>`;
-
-const buildSearchParamsFromRecommendations_TEMPORARY_BETA = (record, props) => {
-  let recoFilters;
-  let hitsPerPage;
-  const maxRecommendations = props.maxRecommendations || 0;
-  const threshold = props.threshold || 0;
-  const fallbackFilters = props.fallbackFilters || [];
+function getSearchParamsFromRecommendation(
+  record,
+  {
+    maxRecommendations = 0,
+    threshold = 0,
+    fallbackFilters = [],
+    objectID,
+    facetFilters,
+  }
+) {
   const hasFallback = fallbackFilters.length > 0;
 
-  if (record.recommendations) {
-    recoFilters = record.recommendations
-      .reverse()
-      .filter((reco) => reco.score > threshold)
-      .map((reco, i) =>
-        scoredObjectID(reco.objectID, Math.round(reco.score * 100) + i)
-      );
+  if (!record.recommendations) {
+    return {
+      facetFilters,
+      filters: `NOT objectID:${objectID}`,
+      hitsPerPage: hasFallback ? maxRecommendations : 0,
+      optionalFilters: fallbackFilters,
+    };
+  }
 
-    // recommendations and fallback, force to retrieve maxRecommendations hits
-    if (hasFallback) {
-      hitsPerPage = maxRecommendations;
-    } else {
-      // otherwise max the hits retrieved with maxRecommendations
-      if (maxRecommendations > 0) {
-        hitsPerPage = Math.min(
-          record.recommendations.length,
-          maxRecommendations
-        );
-      } else {
-        hitsPerPage = record.recommendations.length;
-      }
-    }
+  const recoFilters = record.recommendations
+    .reverse()
+    .filter((reco) => reco.score > threshold)
+    .map(
+      (reco, i) =>
+        `objectID:${reco.objectID}<score=${Math.round(reco.score * 100) + i}>`
+    );
+
+  let hitsPerPage;
+
+  // There's recommendations and a fallback, we force to retrieve
+  // `maxRecommendations` number of hits.
+  if (hasFallback) {
+    hitsPerPage = maxRecommendations;
   } else {
-    recoFilters = [];
-
-    // no recommendations but fallback, force to retrieve maxRecommendations hits
-    if (hasFallback) {
-      hitsPerPage = maxRecommendations;
+    // Otherwise, cap the hits retrieved with `maxRecommendations`
+    if (maxRecommendations > 0) {
+      hitsPerPage = Math.min(record.recommendations.length, maxRecommendations);
     } else {
-      // otherwise, don't retrieve anything
-      hitsPerPage = 0;
+      hitsPerPage = record.recommendations.length;
     }
   }
 
   return {
-    optionalFilters: [...recoFilters, ...fallbackFilters],
-    filters: `NOT objectID:${props.objectID}`,
-    facetFilters: props.facetFilters,
+    facetFilters,
+    filters: `NOT objectID:${objectID}`,
     hitsPerPage,
+    optionalFilters: [...recoFilters, ...fallbackFilters],
   };
-};
+}
 
-export class Recommendations extends Component {
-  constructor(props) {
-    super(props);
+function useRecommendations(props) {
+  const [recommendations, setRecommendations] = useState([]);
+  const [searchParameters, setSearchParameters] = useState({});
 
-    this.state = {
-      params: {
-        optionalFilters: [],
-        filters: [],
-        facetFilters: [],
-        hitsPerPage: 0,
-      },
-      searchClient: this.props.searchClient,
-      objectID: this.props.objectID,
-      recommendations: [],
-    };
-  }
+  useEffect(() => {
+    return props.searchClient
+      .initIndex(getIndexNameFromModel(props.model, props.indexName))
+      .getObject(props.objectID)
+      .catch(() => {
+        // `getObject` can throw when there's no recommendations for the object,
+        // which is not fatal.
+        return {};
+      })
+      .then((record) => {
+        const searchParameters = getSearchParamsFromRecommendation(
+          record,
+          props
+        );
 
-  componentDidMount() {
-    this._configWidget();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      this._configWidget();
-    }
-  }
-
-  _configWidget() {
-    const { props } = this;
-
-    return getRecommendedObject_TEMPORARY_BETA(
-      props.model,
-      props.indexName,
-      props.objectID,
-      props.searchClient
-    ).then((record) => {
-      const params = buildSearchParamsFromRecommendations_TEMPORARY_BETA(
-        record,
-        props
-      );
-      this.setState({
-        ...this.state,
-        params,
-        recommendations: record.recommendations || [],
+        setRecommendations(record.recommendations || []);
+        setSearchParameters(searchParameters);
       });
-    });
-  }
+  }, [props.model, props.indexName, props.objectID, props.searchClient]);
 
-  render() {
-    return (
-      <div>
-        <InstantSearch
-          searchClient={this.props.searchClient}
-          indexName={this.props.indexName}
-        >
-          <Configure
-            optionalFilters={this.state.params.optionalFilters}
-            hitsPerPage={this.state.params.hitsPerPage}
-            filters={this.state.params.filters}
-            facetFilters={this.state.params.facetFilters}
-            typoTolerance={false}
-            analyticsTags={[`alg-recommend_${this.props.model}`]}
-            ruleContexts={[
-              `alg-recommend_${this.props.model}_${this.props.objectID}`,
-            ]}
-            clickAnalytics={this.props.clickAnalytics || false}
-            analytics={this.props.analytics || false}
-            enableABTest={false}
-          />
-          <Hits
-            hitComponent={({ hit }) => {
-              const recommendation = this.state.recommendations.find(
-                (e) => e.objectID === hit.objectID
-              );
-              hit._recommendScore = recommendation && recommendation.score;
-              return this.props.hitComponent({ hit });
-            }}
-          />
-        </InstantSearch>
-      </div>
-    );
-  }
+  return { recommendations, searchParameters };
+}
+
+function defaultRender({ children }) {
+  return children;
+}
+
+export function Recommendations(props) {
+  const { recommendations, searchParameters } = useRecommendations(props);
+  const render = props.children || defaultRender;
+
+  return (
+    <div>
+      <InstantSearch
+        searchClient={props.searchClient}
+        indexName={props.indexName}
+      >
+        <Configure
+          analytics={props.analytics}
+          analyticsTags={[`alg-recommend_${props.model}`]}
+          clickAnalytics={props.clickAnalytics}
+          enableABTest={false}
+          facetFilters={searchParameters.facetFilters}
+          filters={searchParameters.filters}
+          hitsPerPage={searchParameters.hitsPerPage}
+          optionalFilters={searchParameters.optionalFilters}
+          ruleContexts={[`alg-recommend_${props.model}_${props.objectID}`]}
+          typoTolerance={false}
+        />
+        {render({
+          recommendations,
+          children: (
+            <Hits
+              hitComponent={({ hit }) => {
+                const recommendation = recommendations.find(
+                  (reco) => reco.objectID === hit.objectID
+                );
+                hit._recommendScore = recommendation && recommendation.score;
+                return props.hitComponent({ hit });
+              }}
+            />
+          ),
+        })}
+      </InstantSearch>
+    </div>
+  );
 }
 
 Recommendations.propTypes = {
@@ -180,4 +153,5 @@ Recommendations.propTypes = {
   clickAnalytics: PropTypes.bool,
   analytics: PropTypes.bool,
   threshold: PropTypes.number,
+  children: PropTypes.func,
 };
