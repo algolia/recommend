@@ -1,7 +1,7 @@
 import type { SearchOptions } from '@algolia/client-search';
 import { useEffect, useState } from 'react';
-import { RecommendationsProps } from './Recommendations';
 
+import { RecommendationsProps } from './Recommendations';
 import {
   ProductRecord,
   RecommendationModel,
@@ -107,6 +107,7 @@ export function useRecommendations(
         // The `objectID` doesn't exist, so it's not fatal but we cannot get
         // recommendations.
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.model, props.indexName, props.objectID, props.searchClient]);
 
   return {

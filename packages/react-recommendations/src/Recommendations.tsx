@@ -1,11 +1,11 @@
 import type { SearchOptions } from '@algolia/client-search';
 import type { SearchClient } from 'algoliasearch';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { InstantSearch, Hits, Configure } from 'react-instantsearch-dom';
 
-import { useRecommendations } from './useRecommendations';
 import { RecommendationModel, RecommendationRecord } from './types';
+import { useRecommendations } from './useRecommendations';
 
 function defaultRender(props: { children: React.ReactChildren }) {
   return props.children;

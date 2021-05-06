@@ -22,6 +22,7 @@ export function Autocomplete(props) {
     return () => {
       search.destroy();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div ref={containerRef} />;

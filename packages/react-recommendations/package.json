@@ -21,6 +21,8 @@
     "react-instantsearch-dom": "^6.0.0"
   },
   "peerDependencies": {
+    "@algolia/client-search": "^4.9.1",
+    "algoliasearch": "^4.9.1",
     "prop-types": "^15.0.0",
     "react": ">= 16.8.0 < 18",
     "react-dom": ">= 16.8.0 < 18"
