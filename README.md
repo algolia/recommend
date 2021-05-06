@@ -7,47 +7,105 @@ This is the repository packaging the Algolia Recommend React component as well a
 
 **During the beta of Algolia Recommend, this React component relies on an Algolia Index to retrieve the recommendations, and performs a regular Search API request to get the recommendations.**
 
-## Install
+## Installation
 
 ```sh
-npm install --save @algolia/react-recommendations@1.0.0-beta.9
+yarn add @algolia/react-recommendations@beta
+# or
+npm install @algolia/react-recommendations@beta
 ```
 
 ## Usage
 
+First, you need to import the package.
+
 ```js
-import { Recommendations } from "@algolia/react-recommendations";
+import { Recommendations } from '@algolia/react-recommendations';
 ```
 
-### Props
-
-Available props:
-
-- `searchClient`: the Algolia API Client to use
-- `model`: the name of the Recommendation model to use (`bought-together` or `related-product`)
-- `indexName`: the name of the products index
-- `objectID`: the objectID of the product to get recommendations from
-- `hitComponent`: the InstantSearch-compatible `Hit` widget
-- (optional) `maxRecommendations`: the number of recommendations to retrieve (default: max recommendations available)
-- (optional) `facetFilters`: additional facet filters
-- (optional) `fallbackFilters`: additional filters to use as fallback should there not be enough recommendations
-- (optional) `analytics`: whether you want Search Analytics to be turned on or not (default: `false`)
-- (optional) `clickAnalytics`: whether you want Click Analytics to be turned on or not (default: `false`)
+Then, use the `Recommendations` component:
 
 ```jsx
+// Related products:
 <Recommendations
+  model="related-products"
   searchClient={searchClient}
-  model={"related-products" | "bought-together"}
-  indexName={"your_source_index_name"}
-  objectID={currentObjectID}
+  indexName="YOUR_SOURCE_INDEX_NAME"
+  objectID={objectID}
   hitComponent={Hit}
-  maxRecommendations={5}
-  facetFilters={[]}
-  fallbackFilters={[]}
-  analytics={true | false}
-  clickAnalytics={true | false}
+/>
+
+// Bought together:
+<Recommendations
+  model="bought-together"
+  searchClient={searchClient}
+  indexName="YOUR_SOURCE_INDEX_NAME"
+  objectID={objectID}
+  hitComponent={Hit}
 />
 ```
+
+## Props
+
+### `model`
+
+> `"related-product" | "bought-together"` | **required**
+
+The name of the Recommendation model to use.
+
+### `searchClient`
+
+> `SearchClient` | **required**
+
+The initialized Algolia search client.
+
+### `indexName`
+
+> `string` | **required**
+
+The name of the products index.
+
+### `objectID`
+
+> `string` | **required**
+
+The objectID of the product to get recommendations from
+
+### `hitComponent`
+
+> `function` | **required**
+
+The InstantSearch-compatible `Hit` widget. See [`hitComponent`](https://www.algolia.com/doc/api-reference/widgets/hits/react/#widget-param-hitcomponent).
+
+### `maxRecommendations`
+
+> `number` | defaults to max recommendations available
+
+The number of recommendations to retrieve.
+
+### `facetFilters`
+
+> list of strings
+
+Additional [facet filters](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/?client=javascript) to forward.
+
+### `fallbackFilters`
+
+> list of strings
+
+Additional filters to use as fallback should there not be enough recommendations.
+
+### `analytics`
+
+> `boolean` | defaults to `false`
+
+Whether you want [Search Analytics](https://www.algolia.com/doc/api-reference/api-parameters/analytics/?client=javascript) to be enabled.
+
+### `clickAnalytics`
+
+> `boolean` | defaults to `false`
+
+Whether you want [Click Analytics](https://www.algolia.com/doc/api-reference/api-parameters/clickAnalytics/?client=javascript) to be enabled.
 
 ## Development
 
@@ -59,3 +117,7 @@ yarn start
 ```
 
 Open http://localhost:3000 to see your app.
+
+## License
+
+[MIT](LICENSE)
