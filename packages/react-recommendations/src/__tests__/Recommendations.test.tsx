@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
+import { createSearchClient } from '../../../../test-utils/createSearchClient';
 import { Recommendations } from '../Recommendations';
 
 const hit = {
@@ -26,70 +27,18 @@ const hit = {
   objectID: 'D06270-9132-995',
 };
 
-function createSingleSearchResponse(subset) {
-  const {
-    query = '',
-    page = 0,
-    hitsPerPage = 20,
-    hits = [],
-    nbHits = hits.length,
-    nbPages = Math.ceil(nbHits / hitsPerPage),
-    params = '',
-    exhaustiveNbHits = true,
-    exhaustiveFacetsCount = true,
-    processingTimeMS = 0,
-    ...rest
-  } = subset;
-
-  return {
-    page,
-    hitsPerPage,
-    nbHits,
-    nbPages,
-    processingTimeMS,
-    hits,
-    query,
-    params,
-    exhaustiveNbHits,
-    exhaustiveFacetsCount,
-    ...rest,
-  };
-}
-
-export function createMultiSearchResponse(...args) {
-  if (!args.length) {
-    return {
-      results: [createSingleSearchResponse()],
-    };
-  }
-
-  return {
-    results: args.map(createSingleSearchResponse),
-  };
-}
-
-function createSearchClient() {
-  return {
-    initIndex: jest.fn(() => ({
-      getObject: jest.fn(() => Promise.resolve(hit)),
-    })),
-    search: jest.fn((requests) =>
-      Promise.resolve(
-        createMultiSearchResponse(
-          ...requests.map(() => createSingleSearchResponse())
-        )
-      )
-    ),
-  };
-}
-
 function Hit(props) {
   return props.name;
 }
 
 describe('Recommendations', () => {
   test('calls the correct index', () => {
-    const searchClient = createSearchClient();
+    const searchClient = createSearchClient({
+      initIndex: jest.fn(() => ({
+        getObject: jest.fn(() => Promise.resolve(hit)),
+      })),
+    });
+
     render(
       <Recommendations
         model="related-products"

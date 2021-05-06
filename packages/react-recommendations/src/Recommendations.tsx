@@ -1,14 +1,37 @@
+import type { SearchOptions } from '@algolia/client-search';
+import type { SearchClient } from 'algoliasearch';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { InstantSearch, Hits, Configure } from 'react-instantsearch-dom';
 
 import { useRecommendations } from './useRecommendations';
+import { RecommendationModel, RecommendationRecord } from './types';
 
-function defaultRender({ children }) {
-  return children;
+function defaultRender(props: { children: React.ReactChildren }) {
+  return props.children;
 }
 
-export function Recommendations(props) {
+export type RecommendationsProps = {
+  model: RecommendationModel;
+  indexName: string;
+  objectID: string;
+  searchClient: SearchClient;
+  hitComponent: React.FunctionComponent<{ hit: RecommendationRecord }>;
+
+  analytics?: boolean;
+  clickAnalytics?: boolean;
+  facetFilters?: SearchOptions['facetFilters'];
+  fallbackFilters?: SearchOptions['optionalFilters'];
+  maxRecommendations?: number;
+  threshold?: number;
+
+  children?(props: {
+    recommendations: RecommendationRecord[];
+    children: React.ReactNode;
+  }): React.ReactNode;
+};
+
+export function Recommendations(props: RecommendationsProps) {
   const { recommendations, searchParameters } = useRecommendations(props);
   const render = props.children || defaultRender;
 
@@ -42,7 +65,7 @@ export function Recommendations(props) {
                 return props.hitComponent({ hit });
               }}
             />
-          ),
+          ) as any,
         })}
       </InstantSearch>
     </div>
@@ -55,9 +78,13 @@ Recommendations.propTypes = {
   indexName: PropTypes.string.isRequired,
   objectID: PropTypes.string.isRequired,
   hitComponent: PropTypes.elementType.isRequired,
-  maxRecommendations: PropTypes.number,
-  clickAnalytics: PropTypes.bool,
+
   analytics: PropTypes.bool,
+  clickAnalytics: PropTypes.bool,
+  facetFilters: PropTypes.arrayOf(PropTypes.string),
+  fallbackFilters: PropTypes.arrayOf(PropTypes.string),
+  maxRecommendations: PropTypes.number,
   threshold: PropTypes.number,
+
   children: PropTypes.func,
 };
