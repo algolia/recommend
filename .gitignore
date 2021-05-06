@@ -1,2 +1,16 @@
-node_modules
-/index.js
+# Generated files
+node_modules/
+.DS_Store
+.eslintcache
+*.log
+coverage/
+.parcel-cache
+
+# Bundle build files
+dist/
+
+# IDE
+.vscode/
+
+# Environment files
+.env
