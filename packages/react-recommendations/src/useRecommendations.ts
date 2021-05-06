@@ -46,12 +46,12 @@ function getSearchParamsFromRecommendation(
     };
   }
 
-  const recoFilters = record.recommendations
+  const recommendationFilters = record.recommendations
     .reverse()
-    .filter((reco) => reco.score > threshold)
+    .filter((recommendation) => recommendation.score > threshold)
     .map(
-      (reco, i) =>
-        `objectID:${reco.objectID}<score=${Math.round(reco.score * 100) + i}>`
+      ({ objectID, score }, i) =>
+        `objectID:${objectID}<score=${Math.round(score * 100) + i}>`
     );
 
   let hitsPerPage: number;
@@ -73,7 +73,7 @@ function getSearchParamsFromRecommendation(
     facetFilters,
     filters: `NOT objectID:${objectID}`,
     hitsPerPage,
-    optionalFilters: [...recoFilters, ...fallbackFilters],
+    optionalFilters: [...recommendationFilters, ...fallbackFilters],
   };
 }
 
@@ -104,9 +104,8 @@ export function useRecommendations(
         setSearchParameters(searchParameters);
       })
       .catch(() => {
-        // `getObject` can throw when there's no recommendations for the object,
-        // which is not fatal.
-        return {};
+        // The `objectID` doesn't exist, so it's not fatal but we cannot get
+        // recommendations.
       });
   }, [props.model, props.indexName, props.objectID, props.searchClient]);
 
