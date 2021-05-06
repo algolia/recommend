@@ -1,7 +1,6 @@
 import { Recommendations } from '@algolia/react-recommendations';
 import algoliasearch from 'algoliasearch';
 import React, { useState } from 'react';
-import { connectHitInsights } from 'react-instantsearch-dom';
 import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
@@ -21,14 +20,12 @@ insights('init', {
   apiKey: '28cf6d38411215e2eef188e635216508',
 });
 
-const HitWithInsights = connectHitInsights(insights)(Hit);
-
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   return (
     <div className="container">
-      <h1>React InstantSearch Algolia Recommend Demo</h1>
+      <h1>Algolia Recommend Demo</h1>
       <h3>Looking for Recommendations?</h3>
 
       <Autocomplete
@@ -98,7 +95,7 @@ function App() {
             searchClient={searchClient}
             indexName="gstar_demo_test"
             objectID={selectedProduct.objectID}
-            hitComponent={HitWithInsights}
+            hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
             maxRecommendations={3}
             clickAnalytics={true}
             analytics={true}
@@ -122,7 +119,7 @@ function App() {
             searchClient={searchClient}
             indexName="gstar_demo_test"
             objectID={selectedProduct.objectID}
-            hitComponent={HitWithInsights}
+            hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
             maxRecommendations={5}
             facetFilters={[
               `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,

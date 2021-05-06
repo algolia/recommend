@@ -1,7 +1,6 @@
 # @algolia/react-recommendations
 
-[![MIT](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
-[![npm version](https://img.shields.io/npm/v/@algolia/react-recommendations)](https://www.npmjs.com/package/@algolia/react-recommendations)
+[![MIT](https://img.shields.io/badge/license-MIT-green)](./LICENSE) [![npm version](https://img.shields.io/npm/v/@algolia/react-recommendations)](https://www.npmjs.com/package/@algolia/react-recommendations)
 
 This is the repository packaging the Algolia Recommend React component as well as an Algolia Recommend demo.
 
@@ -75,7 +74,7 @@ The objectID of the product to get recommendations from
 
 > `function` | **required**
 
-The InstantSearch-compatible `Hit` widget. See [`hitComponent`](https://www.algolia.com/doc/api-reference/widgets/hits/react/#widget-param-hitcomponent).
+The product component to display.
 
 ### `maxRecommendations`
 

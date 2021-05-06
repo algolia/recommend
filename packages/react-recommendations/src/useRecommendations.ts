@@ -1,12 +1,7 @@
-import type { SearchOptions } from '@algolia/client-search';
 import { useEffect, useState } from 'react';
 
 import { RecommendationsProps } from './Recommendations';
-import {
-  ProductRecord,
-  RecommendationModel,
-  RecommendationRecord,
-} from './types';
+import { ProductRecord, RecommendationModel } from './types';
 
 // BY RE-USING OR UPDATING THIS CODE YOU UNDERSTAND
 // THAT WILL ONLY BY VALID FOR THE *BETA* VERSION OF ALGOLIA RECOMMEND
@@ -77,18 +72,10 @@ function getSearchParamsFromRecommendation(
   };
 }
 
-type UseRecommendationsReturn = {
-  recommendations: RecommendationRecord[];
-  searchParameters: SearchOptions;
-};
-
 export function useRecommendations(
   props: RecommendationsProps
-): UseRecommendationsReturn {
-  const [recommendations, setRecommendations] = useState<
-    RecommendationRecord[]
-  >([]);
-  const [searchParameters, setSearchParameters] = useState<SearchOptions>({});
+): ProductRecord[] {
+  const [products, setProducts] = useState<ProductRecord[]>([]);
 
   useEffect(() => {
     props.searchClient
@@ -99,19 +86,42 @@ export function useRecommendations(
           record,
           props
         );
+        const recommendations = record.recommendations || [];
 
-        setRecommendations(record.recommendations || []);
-        setSearchParameters(searchParameters);
+        props.searchClient
+          .initIndex(props.indexName)
+          .search<ProductRecord>('', {
+            analytics: props.analytics,
+            analyticsTags: [`alg-recommend_${props.model}`],
+            clickAnalytics: props.clickAnalytics,
+            enableABTest: false,
+            facetFilters: props.facetFilters,
+            ruleContexts: [`alg-recommend_${props.model}_${props.objectID}`],
+            typoTolerance: false,
+            ...searchParameters,
+          })
+          .then((result) => {
+            const hits = result.hits.map((hit) => {
+              const match = recommendations.find(
+                (x) => x.objectID === hit.objectID
+              );
+
+              return {
+                ...hit,
+                __indexName: props.indexName,
+                __queryID: result.queryID,
+                __recommendScore: match?.score,
+              };
+            });
+
+            setProducts(hits);
+          });
       })
       .catch(() => {
-        // The `objectID` doesn't exist, so it's not fatal but we cannot get
-        // recommendations.
+        // The `objectID` doesn't exist, we cannot get recommendations.
+        setProducts([]);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.model, props.indexName, props.objectID, props.searchClient]);
+  }, [props]);
 
-  return {
-    recommendations,
-    searchParameters,
-  };
+  return products;
 }
