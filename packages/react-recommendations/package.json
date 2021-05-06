@@ -1,0 +1,30 @@
+{
+  "name": "@algolia/react-recommendations",
+  "version": "1.0.0-beta.9",
+  "scripts": {
+    "build": "babel src/Recommendations.js > index.js"
+  },
+  "source": "src/index.js",
+  "types": "dist/esm/index.d.ts",
+  "module": "dist/esm/index.js",
+  "main": "dist/umd/index.production.js",
+  "umd:main": "dist/umd/index.production.js",
+  "unpkg": "dist/umd/index.production.js",
+  "jsdelivr": "dist/umd/index.production.js",
+  "sideEffects": false,
+  "files": [
+    "dist/"
+  ],
+  "dependencies": {
+    "react-instantsearch-dom": "^6.0.0"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.0.0",
+    "react": ">= 16.8.0 < 18",
+    "react-dom": ">= 16.8.0 < 18"
+  },
+  "devDependencies": {
+    "prop-types": "15.7.2",
+    "react": "17.0.2"
+  }
+}

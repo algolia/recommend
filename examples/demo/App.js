@@ -1,67 +1,33 @@
-import React, { Component, useState } from 'react';
-import {
-  InstantSearch,
-  Configure,
-  connectHitInsights,
-} from 'react-instantsearch-dom';
+import { Recommendations } from '@algolia/react-recommendations';
 import algoliasearch from 'algoliasearch';
-import { Recommendations } from './Recommendations.js';
+import React, { useState } from 'react';
+import { connectHitInsights } from 'react-instantsearch-dom';
+import insights from 'search-insights';
+
+import '@algolia/autocomplete-theme-classic';
+
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
+import { Hit } from './Hit';
 
 import './App.css';
-
-const aa = require('search-insights');
-
-aa('init', {
-  appId: 'HYDY1KWTWB',
-  apiKey: '28cf6d38411215e2eef188e635216508',
-});
 
 const searchClient = algoliasearch(
   'HYDY1KWTWB',
   '28cf6d38411215e2eef188e635216508'
 );
 
-const RecoHitsWithInsights = ({ hit, insights }) => {
-  return (
-    <div>
-      <img src={hit.image_link} align="left" alt={hit.name} width={100} />
-      <div className="hit-name">{hit.name}</div>
-      <div className="hit-objectID">
-        <p>
-          {hit.objectID} (score={hit._recommendScore})
-        </p>
-      </div>
-      <div className="hit-price">${hit.price}</div>
-      <button
-        onClick={() =>
-          insights('clickedObjectIDsAfterSearch', {
-            eventName: 'Product Clicked',
-          })
-        }
-      >
-        See details
-      </button>
-      <button
-        onClick={() =>
-          insights('convertedObjectIDsAfterSearch', {
-            eventName: 'Product Added To Cart',
-          })
-        }
-      >
-        Add to cart
-      </button>
-    </div>
-  );
-};
+insights('init', {
+  appId: 'HYDY1KWTWB',
+  apiKey: '28cf6d38411215e2eef188e635216508',
+});
 
-const HitWithInsights = connectHitInsights(aa)(RecoHitsWithInsights);
+const HitWithInsights = connectHitInsights(insights)(Hit);
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   return (
-    <div className="ais-InstantSearch">
+    <div className="container">
       <h1>React InstantSearch Algolia Recommend Demo</h1>
       <h3>Looking for Recommendations?</h3>
 
