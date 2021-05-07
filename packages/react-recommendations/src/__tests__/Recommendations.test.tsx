@@ -1,6 +1,7 @@
-import { render } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
+import { createSingleSearchResponse } from '../../../../test-utils/createApiResponse';
 import { createSearchClient } from '../../../../test-utils/createSearchClient';
 import { Recommendations } from '../Recommendations';
 
@@ -27,31 +28,47 @@ const hit = {
   objectID: 'D06270-9132-995',
 };
 
-function Hit(props) {
-  return props.name;
+function Hit({ hit }) {
+  return hit.name;
 }
 
 describe('Recommendations', () => {
-  test('calls the correct index', () => {
+  test('calls the correct index', async () => {
+    const index = {
+      getObject: jest.fn(() => Promise.resolve(hit)),
+      search: jest.fn(() =>
+        Promise.resolve(
+          createSingleSearchResponse({
+            hits: [hit],
+          })
+        )
+      ),
+    };
     const searchClient = createSearchClient({
-      initIndex: jest.fn(() => ({
-        getObject: jest.fn(() => Promise.resolve(hit)),
-      })),
+      initIndex: jest.fn(() => index),
     });
 
-    render(
-      <Recommendations
-        model="related-products"
-        searchClient={searchClient}
-        indexName="indexName"
-        objectID="objectID"
-        hitComponent={Hit}
-      />
-    );
+    act(() => {
+      render(
+        <Recommendations
+          model="related-products"
+          searchClient={searchClient}
+          indexName="indexName"
+          objectID="objectID"
+          hitComponent={Hit}
+        />
+      );
+    });
 
     expect(searchClient.initIndex).toHaveBeenCalledTimes(1);
     expect(searchClient.initIndex).toHaveBeenCalledWith(
       'ai_recommend_related-products_indexName'
     );
+    expect(index.getObject).toHaveBeenCalledTimes(1);
+    expect(index.getObject).toHaveBeenCalledWith('objectID');
+
+    await waitFor(() => {
+      return expect(index.search).toHaveBeenCalledTimes(1);
+    });
   });
 });

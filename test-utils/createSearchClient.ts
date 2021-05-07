@@ -15,6 +15,7 @@ export function createSearchClient(
     clearCache: jest.fn(),
     initIndex: jest.fn(() => ({
       getObject: jest.fn(() => Promise.resolve({})),
+      search: jest.fn(() => Promise.resolve(createSingleSearchResponse())),
     })),
     transporter: {} as any,
     search: jest.fn((requests) =>
