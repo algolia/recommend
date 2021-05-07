@@ -79,11 +79,11 @@ describe('Recommendations', () => {
     await waitFor(() => {
       expect(index.search).toHaveBeenCalledTimes(1);
       expect(index.search).toHaveBeenCalledWith('', {
-        analytics: undefined,
+        analytics: false,
         analyticsTags: ['alg-recommend_related-products'],
-        clickAnalytics: undefined,
+        clickAnalytics: false,
         enableABTest: false,
-        facetFilters: undefined,
+        facetFilters: [],
         filters: 'NOT objectID:objectID',
         hitsPerPage: 0,
         optionalFilters: [],
@@ -118,11 +118,11 @@ describe('Recommendations', () => {
     await waitFor(() => {
       expect(index.search).toHaveBeenCalledTimes(1);
       expect(index.search).toHaveBeenCalledWith('', {
-        analytics: undefined,
+        analytics: false,
         analyticsTags: ['alg-recommend_bought-together'],
-        clickAnalytics: undefined,
+        clickAnalytics: false,
         enableABTest: false,
-        facetFilters: undefined,
+        facetFilters: [],
         filters: 'NOT objectID:objectID',
         hitsPerPage: 0,
         optionalFilters: [],

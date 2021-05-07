@@ -1,7 +1,12 @@
+import type { SearchOptions } from '@algolia/client-search';
 import { useEffect, useState } from 'react';
 
 import { RecommendationsProps } from './Recommendations';
-import { ProductRecord, RecommendationModel } from './types';
+import {
+  ProductRecord,
+  RecommendationModel,
+  RecommendationRecord,
+} from './types';
 
 // BY RE-USING OR UPDATING THIS CODE YOU UNDERSTAND
 // THAT WILL ONLY BY VALID FOR THE *BETA* VERSION OF ALGOLIA RECOMMEND
@@ -20,28 +25,47 @@ function getIndexNameFromModel(model: RecommendationModel, indexName: string) {
   }
 }
 
-function getSearchParamsFromRecommendation<TObject extends ProductRecord>(
-  record: TObject,
-  {
-    maxRecommendations = 0,
-    threshold = 0,
-    fallbackFilters = [],
-    objectID,
-    facetFilters,
-  }: RecommendationsProps<TObject>
-) {
+function getHitsPerPage({
+  fallbackFilters,
+  maxRecommendations,
+  recommendations,
+}: {
+  fallbackFilters: NonNullable<SearchOptions['optionalFilters']>;
+  maxRecommendations: number;
+  recommendations: RecommendationRecord[];
+}) {
   const hasFallback = fallbackFilters.length > 0;
 
-  if (!record.recommendations) {
-    return {
-      facetFilters,
-      filters: `NOT objectID:${objectID}`,
-      hitsPerPage: hasFallback ? maxRecommendations : 0,
-      optionalFilters: fallbackFilters,
-    };
+  if (recommendations.length === 0) {
+    return hasFallback ? maxRecommendations : 0;
   }
 
-  const recommendationFilters = record.recommendations
+  // There's recommendations and a fallback, we force to retrieve
+  // `maxRecommendations` number of hits.
+  if (hasFallback) {
+    return maxRecommendations;
+  }
+
+  // Otherwise, cap the hits retrieved with `maxRecommendations`
+  return maxRecommendations > 0
+    ? Math.min(recommendations.length, maxRecommendations)
+    : recommendations.length;
+}
+
+function getOptionalFilters({
+  fallbackFilters,
+  recommendations,
+  threshold,
+}: {
+  fallbackFilters: NonNullable<SearchOptions['optionalFilters']>;
+  recommendations: RecommendationRecord[];
+  threshold: number;
+}) {
+  if (recommendations.length === 0) {
+    return fallbackFilters;
+  }
+
+  const recommendationFilters = recommendations
     .reverse()
     .filter((recommendation) => recommendation.score > threshold)
     .map(
@@ -49,27 +73,7 @@ function getSearchParamsFromRecommendation<TObject extends ProductRecord>(
         `objectID:${objectID}<score=${Math.round(score * 100) + i}>`
     );
 
-  let hitsPerPage: number;
-
-  // There's recommendations and a fallback, we force to retrieve
-  // `maxRecommendations` number of hits.
-  if (hasFallback) {
-    hitsPerPage = maxRecommendations;
-  } else {
-    // Otherwise, cap the hits retrieved with `maxRecommendations`
-    if (maxRecommendations > 0) {
-      hitsPerPage = Math.min(record.recommendations.length, maxRecommendations);
-    } else {
-      hitsPerPage = record.recommendations.length;
-    }
-  }
-
-  return {
-    facetFilters,
-    filters: `NOT objectID:${objectID}`,
-    hitsPerPage,
-    optionalFilters: [...recommendationFilters, ...fallbackFilters],
-  };
+  return [...recommendationFilters, ...fallbackFilters];
 }
 
 export function useRecommendations<TObject extends ProductRecord>(
@@ -82,22 +86,32 @@ export function useRecommendations<TObject extends ProductRecord>(
       .initIndex(getIndexNameFromModel(props.model, props.indexName))
       .getObject<TObject>(props.objectID)
       .then((record) => {
-        const searchParameters = getSearchParamsFromRecommendation(
-          record,
-          props
-        );
-        const recommendations = record.recommendations || [];
+        const recommendations = record.recommendations ?? [];
+        const fallbackFilters = props.fallbackFilters ?? [];
+        const maxRecommendations = props.maxRecommendations ?? 0;
+        const threshold = props.threshold ?? 0;
 
         props.searchClient
           .initIndex(props.indexName)
           .search<TObject>('', {
-            analytics: props.analytics,
+            analytics: props.analytics ?? false,
             analyticsTags: [`alg-recommend_${props.model}`],
-            clickAnalytics: props.clickAnalytics,
+            clickAnalytics: props.clickAnalytics ?? false,
             enableABTest: false,
+            facetFilters: props.facetFilters ?? [],
+            filters: `NOT objectID:${props.objectID}`,
             ruleContexts: [`alg-recommend_${props.model}_${props.objectID}`],
             typoTolerance: false,
-            ...searchParameters,
+            hitsPerPage: getHitsPerPage({
+              fallbackFilters,
+              maxRecommendations,
+              recommendations,
+            }),
+            optionalFilters: getOptionalFilters({
+              fallbackFilters,
+              recommendations,
+              threshold,
+            }),
           })
           .then((result) => {
             const hits = result.hits.map((hit) => {
@@ -109,6 +123,8 @@ export function useRecommendations<TObject extends ProductRecord>(
                 ...hit,
                 __indexName: props.indexName,
                 __queryID: result.queryID,
+                // @TODO: this is for debugging purpose and can be removed
+                // before stable release.
                 __recommendScore: match?.score,
               };
             });
