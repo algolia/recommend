@@ -78,7 +78,7 @@ The product component to display.
 
 ### `maxRecommendations`
 
-> `number` | defaults to max recommendations available
+> `number` | defaults to the maximum number of recommendations available
 
 The number of recommendations to retrieve.
 
