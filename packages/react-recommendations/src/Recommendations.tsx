@@ -1,25 +1,13 @@
-import type { SearchOptions } from '@algolia/client-search';
-import type { SearchClient } from 'algoliasearch';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { ProductRecord, RecommendationModel } from './types';
-import { useRecommendations } from './useRecommendations';
+import { ProductRecord } from './types';
+import {
+  useRecommendations,
+  UseRecommendationsProps,
+} from './useRecommendations';
 
-export type RecommendationsProps<TObject> = {
-  model: RecommendationModel;
-  indexName: string;
-  objectID: string;
-  searchClient: SearchClient;
-  hitComponent: React.FunctionComponent<{ hit: TObject }>;
-
-  analytics?: boolean;
-  clickAnalytics?: boolean;
-  facetFilters?: SearchOptions['facetFilters'];
-  fallbackFilters?: SearchOptions['optionalFilters'];
-  maxRecommendations?: number;
-  threshold?: number;
-
+export type RecommendationsProps<TObject> = UseRecommendationsProps<TObject> & {
   children?(props: {
     recommendations: TObject[];
     children: React.ReactNode;

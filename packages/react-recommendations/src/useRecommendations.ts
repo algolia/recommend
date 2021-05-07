@@ -1,5 +1,6 @@
 import type { SearchOptions } from '@algolia/client-search';
-import { useEffect, useState } from 'react';
+import type { SearchClient } from 'algoliasearch';
+import { useMemo, useEffect, useState } from 'react';
 
 import { RecommendationsProps } from './Recommendations';
 import {
@@ -25,13 +26,13 @@ function getIndexNameFromModel(model: RecommendationModel, indexName: string) {
   }
 }
 
-function getHitsPerPage({
+function getHitsPerPage<TObject>({
   fallbackFilters,
   maxRecommendations,
   recommendations,
 }: {
-  fallbackFilters: NonNullable<SearchOptions['optionalFilters']>;
-  maxRecommendations: number;
+  fallbackFilters: InternalUseRecommendationsProps<TObject>['fallbackFilters'];
+  maxRecommendations: InternalUseRecommendationsProps<TObject>['maxRecommendations'];
   recommendations: RecommendationRecord[];
 }) {
   const hasFallback = fallbackFilters.length > 0;
@@ -52,14 +53,14 @@ function getHitsPerPage({
     : recommendations.length;
 }
 
-function getOptionalFilters({
+function getOptionalFilters<TObject>({
   fallbackFilters,
   recommendations,
   threshold,
 }: {
-  fallbackFilters: NonNullable<SearchOptions['optionalFilters']>;
+  fallbackFilters: InternalUseRecommendationsProps<TObject>['fallbackFilters'];
   recommendations: RecommendationRecord[];
-  threshold: number;
+  threshold: InternalUseRecommendationsProps<TObject>['threshold'];
 }) {
   if (recommendations.length === 0) {
     return fallbackFilters;
@@ -76,10 +77,44 @@ function getOptionalFilters({
   return [...recommendationFilters, ...fallbackFilters];
 }
 
-export function useRecommendations<TObject extends ProductRecord>(
+export type UseRecommendationsProps<TObject> = {
+  model: RecommendationModel;
+  indexName: string;
+  objectID: string;
+  searchClient: SearchClient;
+  hitComponent: React.FunctionComponent<{ hit: TObject }>;
+
+  analytics?: boolean;
+  clickAnalytics?: boolean;
+  facetFilters?: SearchOptions['facetFilters'];
+  fallbackFilters?: SearchOptions['optionalFilters'];
+  maxRecommendations?: number;
+  threshold?: number;
+};
+
+type InternalUseRecommendationsProps<TObject> = Required<
+  UseRecommendationsProps<TObject>
+>;
+
+function getDefaultedProps<TObject>(
   props: RecommendationsProps<TObject>
+): InternalUseRecommendationsProps<TObject> {
+  return {
+    analytics: false,
+    clickAnalytics: false,
+    facetFilters: [],
+    fallbackFilters: [],
+    maxRecommendations: 0,
+    threshold: 0,
+    ...props,
+  };
+}
+
+export function useRecommendations<TObject extends ProductRecord>(
+  userProps: RecommendationsProps<TObject>
 ): TObject[] {
   const [products, setProducts] = useState<TObject[]>([]);
+  const props = useMemo(() => getDefaultedProps(userProps), [userProps]);
 
   useEffect(() => {
     props.searchClient
@@ -87,30 +122,27 @@ export function useRecommendations<TObject extends ProductRecord>(
       .getObject<TObject>(props.objectID)
       .then((record) => {
         const recommendations = record.recommendations ?? [];
-        const fallbackFilters = props.fallbackFilters ?? [];
-        const maxRecommendations = props.maxRecommendations ?? 0;
-        const threshold = props.threshold ?? 0;
 
         props.searchClient
           .initIndex(props.indexName)
           .search<TObject>('', {
-            analytics: props.analytics ?? false,
+            analytics: props.analytics,
             analyticsTags: [`alg-recommend_${props.model}`],
-            clickAnalytics: props.clickAnalytics ?? false,
+            clickAnalytics: props.clickAnalytics,
             enableABTest: false,
-            facetFilters: props.facetFilters ?? [],
+            facetFilters: props.facetFilters,
             filters: `NOT objectID:${props.objectID}`,
             ruleContexts: [`alg-recommend_${props.model}_${props.objectID}`],
             typoTolerance: false,
             hitsPerPage: getHitsPerPage({
-              fallbackFilters,
-              maxRecommendations,
+              fallbackFilters: props.fallbackFilters,
+              maxRecommendations: props.maxRecommendations,
               recommendations,
             }),
             optionalFilters: getOptionalFilters({
-              fallbackFilters,
+              fallbackFilters: props.fallbackFilters,
               recommendations,
-              threshold,
+              threshold: props.threshold,
             }),
           })
           .then((result) => {
