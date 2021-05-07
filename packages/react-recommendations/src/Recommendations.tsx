@@ -6,12 +6,12 @@ import React from 'react';
 import { ProductRecord, RecommendationModel } from './types';
 import { useRecommendations } from './useRecommendations';
 
-export type RecommendationsProps = {
+export type RecommendationsProps<TObject> = {
   model: RecommendationModel;
   indexName: string;
   objectID: string;
   searchClient: SearchClient;
-  hitComponent: React.FunctionComponent<{ hit: ProductRecord }>;
+  hitComponent: React.FunctionComponent<{ hit: TObject }>;
 
   analytics?: boolean;
   clickAnalytics?: boolean;
@@ -21,13 +21,13 @@ export type RecommendationsProps = {
   threshold?: number;
 
   children?(props: {
-    recommendations: ProductRecord[];
+    recommendations: TObject[];
     children: React.ReactNode;
   }): React.ReactNode;
 };
 
-function defaultRender(props: {
-  recommendations: ProductRecord[];
+function defaultRender<TObject>(props: {
+  recommendations: TObject[];
   children: React.ReactNode;
 }) {
   if (props.recommendations.length === 0) {
@@ -37,8 +37,10 @@ function defaultRender(props: {
   return props.children;
 }
 
-export function Recommendations(props: RecommendationsProps) {
-  const recommendations = useRecommendations(props);
+export function Recommendations<TObject extends ProductRecord>(
+  props: RecommendationsProps<TObject>
+) {
+  const recommendations = useRecommendations<TObject>(props);
   const render = props.children || defaultRender;
 
   const children = (

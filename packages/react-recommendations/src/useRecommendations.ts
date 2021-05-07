@@ -72,15 +72,15 @@ function getSearchParamsFromRecommendation(
   };
 }
 
-export function useRecommendations(
-  props: RecommendationsProps
-): ProductRecord[] {
-  const [products, setProducts] = useState<ProductRecord[]>([]);
+export function useRecommendations<TObject extends ProductRecord>(
+  props: RecommendationsProps<TObject>
+): TObject[] {
+  const [products, setProducts] = useState<TObject[]>([]);
 
   useEffect(() => {
     props.searchClient
       .initIndex(getIndexNameFromModel(props.model, props.indexName))
-      .getObject<ProductRecord>(props.objectID)
+      .getObject<TObject>(props.objectID)
       .then((record) => {
         const searchParameters = getSearchParamsFromRecommendation(
           record,
@@ -90,12 +90,11 @@ export function useRecommendations(
 
         props.searchClient
           .initIndex(props.indexName)
-          .search<ProductRecord>('', {
+          .search<TObject>('', {
             analytics: props.analytics,
             analyticsTags: [`alg-recommend_${props.model}`],
             clickAnalytics: props.clickAnalytics,
             enableABTest: false,
-            facetFilters: props.facetFilters,
             ruleContexts: [`alg-recommend_${props.model}_${props.objectID}`],
             typoTolerance: false,
             ...searchParameters,
