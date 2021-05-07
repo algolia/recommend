@@ -20,15 +20,15 @@ function getIndexNameFromModel(model: RecommendationModel, indexName: string) {
   }
 }
 
-function getSearchParamsFromRecommendation(
-  record: ProductRecord,
+function getSearchParamsFromRecommendation<TObject extends ProductRecord>(
+  record: TObject,
   {
     maxRecommendations = 0,
     threshold = 0,
     fallbackFilters = [],
     objectID,
     facetFilters,
-  }: RecommendationsProps
+  }: RecommendationsProps<TObject>
 ) {
   const hasFallback = fallbackFilters.length > 0;
 
