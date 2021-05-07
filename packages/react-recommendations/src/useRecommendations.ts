@@ -2,7 +2,6 @@ import type { SearchOptions } from '@algolia/client-search';
 import type { SearchClient } from 'algoliasearch';
 import { useMemo, useEffect, useState } from 'react';
 
-import { RecommendationsProps } from './Recommendations';
 import {
   ProductRecord,
   RecommendationModel,
@@ -26,13 +25,13 @@ function getIndexNameFromModel(model: RecommendationModel, indexName: string) {
   }
 }
 
-function getHitsPerPage<TObject>({
+function getHitsPerPage({
   fallbackFilters,
   maxRecommendations,
   recommendations,
 }: {
-  fallbackFilters: InternalUseRecommendationsProps<TObject>['fallbackFilters'];
-  maxRecommendations: InternalUseRecommendationsProps<TObject>['maxRecommendations'];
+  fallbackFilters: InternalUseRecommendationsProps['fallbackFilters'];
+  maxRecommendations: InternalUseRecommendationsProps['maxRecommendations'];
   recommendations: RecommendationRecord[];
 }) {
   const hasFallback = fallbackFilters.length > 0;
@@ -53,14 +52,14 @@ function getHitsPerPage<TObject>({
     : recommendations.length;
 }
 
-function getOptionalFilters<TObject>({
+function getOptionalFilters({
   fallbackFilters,
   recommendations,
   threshold,
 }: {
-  fallbackFilters: InternalUseRecommendationsProps<TObject>['fallbackFilters'];
+  fallbackFilters: InternalUseRecommendationsProps['fallbackFilters'];
   recommendations: RecommendationRecord[];
-  threshold: InternalUseRecommendationsProps<TObject>['threshold'];
+  threshold: InternalUseRecommendationsProps['threshold'];
 }) {
   if (recommendations.length === 0) {
     return fallbackFilters;
@@ -77,12 +76,11 @@ function getOptionalFilters<TObject>({
   return [...recommendationFilters, ...fallbackFilters];
 }
 
-export type UseRecommendationsProps<TObject> = {
+export type UseRecommendationsProps = {
   model: RecommendationModel;
   indexName: string;
   objectID: string;
   searchClient: SearchClient;
-  hitComponent: React.FunctionComponent<{ hit: TObject }>;
 
   analytics?: boolean;
   clickAnalytics?: boolean;
@@ -92,13 +90,11 @@ export type UseRecommendationsProps<TObject> = {
   threshold?: number;
 };
 
-type InternalUseRecommendationsProps<TObject> = Required<
-  UseRecommendationsProps<TObject>
->;
+type InternalUseRecommendationsProps = Required<UseRecommendationsProps>;
 
-function getDefaultedProps<TObject>(
-  props: RecommendationsProps<TObject>
-): InternalUseRecommendationsProps<TObject> {
+function getDefaultedProps(
+  props: UseRecommendationsProps
+): InternalUseRecommendationsProps {
   return {
     analytics: false,
     clickAnalytics: false,
@@ -111,7 +107,7 @@ function getDefaultedProps<TObject>(
 }
 
 export function useRecommendations<TObject extends ProductRecord>(
-  userProps: RecommendationsProps<TObject>
+  userProps: UseRecommendationsProps
 ): TObject[] {
   const [products, setProducts] = useState<TObject[]>([]);
   const props = useMemo(() => getDefaultedProps(userProps), [userProps]);
