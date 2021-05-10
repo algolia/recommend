@@ -93,8 +93,10 @@ function App() {
             objectID={selectedProduct.objectID}
             hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
             maxRecommendations={3}
-            clickAnalytics={true}
-            analytics={true}
+            searchParameters={{
+              analytics: true,
+              clickAnalytics: true,
+            }}
           >
             {({ recommendations, children }) => {
               if (recommendations.length === 0) {
@@ -117,14 +119,16 @@ function App() {
             objectID={selectedProduct.objectID}
             hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
             maxRecommendations={5}
-            facetFilters={[
-              `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-            ]}
+            searchParameters={{
+              analytics: true,
+              clickAnalytics: true,
+              facetFilters: [
+                `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+              ],
+            }}
             fallbackFilters={[
               `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
             ]}
-            clickAnalytics={true}
-            analytics={true}
           >
             {({ recommendations, children }) => {
               if (recommendations.length === 0) {

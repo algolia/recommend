@@ -57,15 +57,11 @@ Recommendations.propTypes = {
   objectID: PropTypes.string.isRequired,
   hitComponent: PropTypes.elementType.isRequired,
 
-  analytics: PropTypes.bool,
-  clickAnalytics: PropTypes.bool,
-  facetFilters: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
-  ),
   fallbackFilters: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
   ),
   maxRecommendations: PropTypes.number,
+  searchParameters: PropTypes.object,
   threshold: PropTypes.number,
 
   children: PropTypes.func,

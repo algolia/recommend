@@ -82,29 +82,17 @@ The product component to display.
 
 The number of recommendations to retrieve.
 
-### `facetFilters`
-
-> list of strings
-
-Additional [facet filters](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/?client=javascript) to forward.
-
 ### `fallbackFilters`
 
 > list of strings
 
 Additional filters to use as fallback should there not be enough recommendations.
 
-### `analytics`
+### `searchParameters`
 
-> `boolean` | defaults to `false`
+> [`SearchParameters`](https://www.algolia.com/doc/api-reference/search-api-parameters/) | defaults to `{ analytics: false, enableABTest: false }`
 
-Whether you want [Search Analytics](https://www.algolia.com/doc/api-reference/api-parameters/analytics/?client=javascript) to be enabled.
-
-### `clickAnalytics`
-
-> `boolean` | defaults to `false`
-
-Whether you want [Click Analytics](https://www.algolia.com/doc/api-reference/api-parameters/clickAnalytics/?client=javascript) to be enabled.
+List of [search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/) to send.
 
 ## Development
 

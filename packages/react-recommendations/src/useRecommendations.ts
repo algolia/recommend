@@ -82,11 +82,9 @@ export type UseRecommendationsProps = {
   objectID: string;
   searchClient: SearchClient;
 
-  analytics?: boolean;
-  clickAnalytics?: boolean;
-  facetFilters?: SearchOptions['facetFilters'];
   fallbackFilters?: SearchOptions['optionalFilters'];
   maxRecommendations?: number;
+  searchParameters?: SearchOptions;
   threshold?: number;
 };
 
@@ -96,11 +94,18 @@ function getDefaultedProps(
   props: UseRecommendationsProps
 ): InternalUseRecommendationsProps {
   return {
-    analytics: false,
-    clickAnalytics: false,
-    facetFilters: [],
     fallbackFilters: [],
     maxRecommendations: 0,
+    searchParameters: {
+      analytics: false,
+      analyticsTags: [`alg-recommend_${props.model}`],
+      clickAnalytics: false,
+      enableABTest: false,
+      filters: `NOT objectID:${props.objectID}`,
+      ruleContexts: [`alg-recommend_${props.model}_${props.objectID}`],
+      typoTolerance: false,
+      ...props.searchParameters,
+    },
     threshold: 0,
     ...props,
   };
@@ -122,14 +127,6 @@ export function useRecommendations<TObject extends ProductRecord>(
         props.searchClient
           .initIndex(props.indexName)
           .search<TObject>('', {
-            analytics: props.analytics,
-            analyticsTags: [`alg-recommend_${props.model}`],
-            clickAnalytics: props.clickAnalytics,
-            enableABTest: false,
-            facetFilters: props.facetFilters,
-            filters: `NOT objectID:${props.objectID}`,
-            ruleContexts: [`alg-recommend_${props.model}_${props.objectID}`],
-            typoTolerance: false,
             hitsPerPage: getHitsPerPage({
               fallbackFilters: props.fallbackFilters,
               maxRecommendations: props.maxRecommendations,
@@ -140,6 +137,7 @@ export function useRecommendations<TObject extends ProductRecord>(
               recommendations,
               threshold: props.threshold,
             }),
+            ...props.searchParameters,
           })
           .then((result) => {
             const hits = result.hits.map((hit) => {
