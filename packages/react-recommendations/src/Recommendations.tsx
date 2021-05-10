@@ -59,8 +59,12 @@ Recommendations.propTypes = {
 
   analytics: PropTypes.bool,
   clickAnalytics: PropTypes.bool,
-  facetFilters: PropTypes.arrayOf(PropTypes.string),
-  fallbackFilters: PropTypes.arrayOf(PropTypes.string),
+  facetFilters: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
+  ),
+  fallbackFilters: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
+  ),
   maxRecommendations: PropTypes.number,
   threshold: PropTypes.number,
 
