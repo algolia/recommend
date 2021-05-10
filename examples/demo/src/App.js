@@ -10,23 +10,19 @@ import { Hit } from './Hit';
 
 import './App.css';
 
-const searchClient = algoliasearch(
-  'HYDY1KWTWB',
-  '28cf6d38411215e2eef188e635216508'
-);
+const appId = 'HYDY1KWTWB';
+const apiKey = '28cf6d38411215e2eef188e635216508';
 
-insights('init', {
-  appId: 'HYDY1KWTWB',
-  apiKey: '28cf6d38411215e2eef188e635216508',
-});
+const searchClient = algoliasearch(appId, apiKey);
+
+insights('init', { appId, apiKey });
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   return (
     <div className="container">
-      <h1>Algolia Recommend Demo</h1>
-      <h3>Looking for Recommendations?</h3>
+      <h1>Algolia Recommendations</h1>
 
       <Autocomplete
         placeholder="Search for a product"
