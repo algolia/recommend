@@ -1,4 +1,7 @@
-import { Recommendations } from '@algolia/react-recommendations';
+import {
+  FrequentlyBoughtTogether,
+  RelatedProducts,
+} from '@algolia/react-recommendations';
 import algoliasearch from 'algoliasearch';
 import React, { useState } from 'react';
 import insights from 'search-insights';
@@ -12,6 +15,7 @@ import './App.css';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
+const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
 
@@ -37,7 +41,7 @@ function App() {
                   searchClient,
                   queries: [
                     {
-                      indexName: 'gstar_demo_test',
+                      indexName,
                       query,
                       params: {
                         hitsPerPage: 5,
@@ -86,10 +90,9 @@ function App() {
 
       {selectedProduct && (
         <>
-          <Recommendations
-            model="bought-together"
+          <FrequentlyBoughtTogether
             searchClient={searchClient}
-            indexName="gstar_demo_test"
+            indexName={indexName}
             objectID={selectedProduct.objectID}
             hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
             maxRecommendations={3}
@@ -97,28 +100,17 @@ function App() {
               analytics: true,
               clickAnalytics: true,
             }}
-          >
-            {({ recommendations, children }) => {
-              if (recommendations.length === 0) {
-                return null;
-              }
+          />
 
-              return (
-                <>
-                  <h3>Frequently Bought Together</h3>
-                  {children}
-                </>
-              );
-            }}
-          </Recommendations>
-
-          <Recommendations
-            model="related-products"
+          <RelatedProducts
             searchClient={searchClient}
-            indexName="gstar_demo_test"
+            indexName={indexName}
             objectID={selectedProduct.objectID}
             hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
             maxRecommendations={5}
+            fallbackFilters={[
+              `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+            ]}
             searchParameters={{
               analytics: true,
               clickAnalytics: true,
@@ -126,23 +118,7 @@ function App() {
                 `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
               ],
             }}
-            fallbackFilters={[
-              `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-            ]}
-          >
-            {({ recommendations, children }) => {
-              if (recommendations.length === 0) {
-                return null;
-              }
-
-              return (
-                <>
-                  <h3>Related Products</h3>
-                  {children}
-                </>
-              );
-            }}
-          </Recommendations>
+          />
         </>
       )}
     </div>

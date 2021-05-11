@@ -1,35 +1,42 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { RecommendationsProps } from './Recommendations';
 import { ProductRecord } from './types';
-import {
-  useRecommendations,
-  UseRecommendationsProps,
-} from './useRecommendations';
+import { useRecommendations } from './useRecommendations';
 
-export type RecommendationsProps<TObject> = UseRecommendationsProps & {
-  hitComponent: React.FunctionComponent<{ hit: TObject }>;
-  children?(props: {
-    recommendations: TObject[];
-    children: React.ReactNode;
-  }): React.ReactNode;
-};
+export type RelatedProductsProps<TObject> = Omit<
+  RecommendationsProps<TObject>,
+  'model'
+>;
 
 function defaultRender<TObject>(props: {
   recommendations: TObject[];
   children: React.ReactNode;
 }) {
+  // @TODO We might always want to render something
+  if (props.recommendations.length === 0) {
+    return null;
+  }
+
   return props.children;
 }
 
-export function Recommendations<TObject extends ProductRecord>(
-  props: RecommendationsProps<TObject>
+export function RelatedProducts<TObject extends ProductRecord>(
+  userProps: RelatedProductsProps<TObject>
 ) {
+  const props: RecommendationsProps<TObject> = {
+    ...userProps,
+    fallbackFilters: [],
+    model: 'related-products',
+  };
   const { recommendations } = useRecommendations<TObject>(props);
   const render = props.children || defaultRender;
 
   const children = (
-    <div className="ais-Recommendations">
+    <section className="ais-Recommendations">
+      <h2>Related products</h2>
+
       {recommendations.length > 0 && (
         <ol className="ais-Recommendations-list">
           {recommendations.map((recommendation) => (
@@ -42,14 +49,13 @@ export function Recommendations<TObject extends ProductRecord>(
           ))}
         </ol>
       )}
-    </div>
+    </section>
   );
 
   return render({ recommendations, children });
 }
 
-Recommendations.propTypes = {
-  model: PropTypes.string.isRequired,
+RelatedProducts.propTypes = {
   searchClient: PropTypes.object.isRequired,
   indexName: PropTypes.string.isRequired,
   objectID: PropTypes.string.isRequired,
