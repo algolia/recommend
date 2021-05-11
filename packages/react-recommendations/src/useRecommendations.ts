@@ -2,79 +2,14 @@ import type { SearchOptions } from '@algolia/client-search';
 import type { SearchClient } from 'algoliasearch';
 import { useMemo, useEffect, useState } from 'react';
 
+import { getHitsPerPage } from './getHitsPerPage';
+import { getIndexNameFromModel } from './getIndexNameFromModel';
+import { getOptionalFilters } from './getOptionalFilters';
 import {
+  InternalUseRecommendationsProps,
   ProductRecord,
   RecommendationModel,
-  RecommendationRecord,
 } from './types';
-
-// BY RE-USING OR UPDATING THIS CODE YOU UNDERSTAND
-// THAT WILL ONLY BY VALID FOR THE *BETA* VERSION OF ALGOLIA RECOMMEND
-//
-// ONCE FULLY RELEASE, ALGOLIA RECOMMEND WILL HAVE ITS OWN ENDPOINTS
-// AND NOT ANYMORE RELY ON THE SEARCH API
-
-function getIndexNameFromModel(model: RecommendationModel, indexName: string) {
-  switch (model) {
-    case 'bought-together':
-      return `ai_recommend_bought-together_${indexName}`;
-    case 'related-products':
-      return `ai_recommend_related-products_${indexName}`;
-    default:
-      throw new Error(`Unknown model: ${JSON.stringify(model)}.`);
-  }
-}
-
-function getHitsPerPage({
-  fallbackFilters,
-  maxRecommendations,
-  recommendations,
-}: {
-  fallbackFilters: InternalUseRecommendationsProps['fallbackFilters'];
-  maxRecommendations: InternalUseRecommendationsProps['maxRecommendations'];
-  recommendations: RecommendationRecord[];
-}) {
-  const hasFallback = fallbackFilters.length > 0;
-
-  if (recommendations.length === 0) {
-    return hasFallback ? maxRecommendations : 0;
-  }
-
-  // There's recommendations and a fallback, we force to retrieve
-  // `maxRecommendations` number of hits.
-  if (hasFallback) {
-    return maxRecommendations;
-  }
-
-  // Otherwise, cap the hits retrieved with `maxRecommendations`
-  return maxRecommendations > 0
-    ? Math.min(recommendations.length, maxRecommendations)
-    : recommendations.length;
-}
-
-function getOptionalFilters({
-  fallbackFilters,
-  recommendations,
-  threshold,
-}: {
-  fallbackFilters: InternalUseRecommendationsProps['fallbackFilters'];
-  recommendations: RecommendationRecord[];
-  threshold: InternalUseRecommendationsProps['threshold'];
-}) {
-  if (recommendations.length === 0) {
-    return fallbackFilters;
-  }
-
-  const recommendationFilters = recommendations
-    .reverse()
-    .filter((recommendation) => recommendation.score > threshold)
-    .map(
-      ({ objectID, score }, i) =>
-        `objectID:${objectID}<score=${Math.round(score * 100) + i}>`
-    );
-
-  return [...recommendationFilters, ...fallbackFilters];
-}
 
 export type UseRecommendationsProps = {
   model: RecommendationModel;
@@ -87,8 +22,6 @@ export type UseRecommendationsProps = {
   searchParameters?: SearchOptions;
   threshold?: number;
 };
-
-type InternalUseRecommendationsProps = Required<UseRecommendationsProps>;
 
 function getDefaultedProps(
   props: UseRecommendationsProps
