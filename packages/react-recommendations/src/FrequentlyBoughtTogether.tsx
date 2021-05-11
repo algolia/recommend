@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { RecommendationsProps } from './Recommendations';
-import { ProductRecord } from './types';
+import { ProductRecord, RecommendationTranslations } from './types';
 import { useRecommendations } from './useRecommendations';
 
 export type FrequentlyBoughtTogetherProps<TObject> = Omit<
@@ -24,17 +24,28 @@ function defaultRender<TObject>(props: {
 export function FrequentlyBoughtTogether<TObject extends ProductRecord>(
   userProps: FrequentlyBoughtTogetherProps<TObject>
 ) {
-  const props: RecommendationsProps<TObject> = {
-    ...userProps,
-    fallbackFilters: [],
-    model: 'bought-together',
-  };
+  const props: RecommendationsProps<TObject> = useMemo(
+    () => ({
+      ...userProps,
+      fallbackFilters: [],
+      model: 'bought-together',
+    }),
+    [userProps]
+  );
   const { recommendations } = useRecommendations<TObject>(props);
   const render = props.children || defaultRender;
+  const translations: RecommendationTranslations = useMemo(
+    () => ({
+      ...userProps.translations,
+      title: 'Frequently bought together',
+      showMore: 'Show more',
+    }),
+    [userProps.translations]
+  );
 
   const children = (
     <div className="ais-Recommendations">
-      <h2>Frequently bought together</h2>
+      {translations.title && <h2>{translations.title}</h2>}
 
       {recommendations.length > 0 && (
         <ol className="ais-Recommendations-list">

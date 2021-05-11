@@ -12,4 +12,9 @@ export type RecommendationRecord = {
   score: number;
 };
 
+export type RecommendationTranslations = {
+  title: string;
+  showMore: string;
+};
+
 export type InternalUseRecommendationsProps = Required<UseRecommendationsProps>;

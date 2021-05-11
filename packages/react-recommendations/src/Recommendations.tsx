@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { ProductRecord } from './types';
+import { ProductRecord, RecommendationTranslations } from './types';
 import {
   useRecommendations,
   UseRecommendationsProps,
@@ -13,6 +13,7 @@ export type RecommendationsProps<TObject> = UseRecommendationsProps & {
     recommendations: TObject[];
     children: React.ReactNode;
   }): React.ReactNode;
+  translations?: Partial<RecommendationTranslations>;
 };
 
 function defaultRender<TObject>(props: {

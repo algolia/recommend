@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { RecommendationsProps } from './Recommendations';
-import { ProductRecord } from './types';
+import { ProductRecord, RecommendationTranslations } from './types';
 import { useRecommendations } from './useRecommendations';
 
 export type RelatedProductsProps<TObject> = Omit<
@@ -14,7 +14,7 @@ function defaultRender<TObject>(props: {
   recommendations: TObject[];
   children: React.ReactNode;
 }) {
-  // @TODO We might always want to render something
+  // @TODO: we might always want to render something
   if (props.recommendations.length === 0) {
     return null;
   }
@@ -25,17 +25,27 @@ function defaultRender<TObject>(props: {
 export function RelatedProducts<TObject extends ProductRecord>(
   userProps: RelatedProductsProps<TObject>
 ) {
-  const props: RecommendationsProps<TObject> = {
-    ...userProps,
-    fallbackFilters: [],
-    model: 'related-products',
-  };
+  const props: RecommendationsProps<TObject> = useMemo(
+    () => ({
+      ...userProps,
+      model: 'related-products',
+    }),
+    [userProps]
+  );
   const { recommendations } = useRecommendations<TObject>(props);
   const render = props.children || defaultRender;
+  const translations: RecommendationTranslations = useMemo(
+    () => ({
+      ...userProps.translations,
+      title: 'Related products',
+      showMore: 'Show more',
+    }),
+    [userProps.translations]
+  );
 
   const children = (
     <section className="ais-Recommendations">
-      <h2>Related products</h2>
+      {translations.title && <h2>{translations.title}</h2>}
 
       {recommendations.length > 0 && (
         <ol className="ais-Recommendations-list">
