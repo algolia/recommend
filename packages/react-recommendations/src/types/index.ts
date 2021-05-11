@@ -1,5 +1,5 @@
 export * from './UseRecommendationsInternalProps';
-export * from './ProductRecord';
+export * from './ProductBaseRecord';
 export * from './RecommendationModel';
 export * from './RecommendationRecord';
 export * from './RecommendationTranslations';

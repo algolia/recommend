@@ -1,6 +1,6 @@
 import { RecommendationRecord } from './RecommendationRecord';
 
-export type ProductRecord = {
+export type ProductBaseRecord = {
   objectID: string;
   recommendations?: RecommendationRecord[];
 };

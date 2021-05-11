@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { ProductRecord, RecommendationTranslations } from './types';
+import { ProductBaseRecord, RecommendationTranslations } from './types';
 import {
   useRecommendations,
   UseRecommendationsProps,
@@ -23,7 +23,7 @@ function defaultRender<TObject>(props: {
   return props.children;
 }
 
-export function Recommendations<TObject extends ProductRecord>(
+export function Recommendations<TObject extends ProductBaseRecord>(
   props: RecommendationsProps<TObject>
 ) {
   const { recommendations } = useRecommendations<TObject>(props);

@@ -7,7 +7,7 @@ import { getIndexNameFromModel } from './getIndexNameFromModel';
 import { getOptionalFilters } from './getOptionalFilters';
 import {
   UseRecommendationsInternalProps,
-  ProductRecord,
+  ProductBaseRecord,
   RecommendationModel,
 } from './types';
 
@@ -48,7 +48,7 @@ function getDefaultedProps(
   };
 }
 
-export function useRecommendations<TObject extends ProductRecord>(
+export function useRecommendations<TObject extends ProductBaseRecord>(
   userProps: UseRecommendationsProps
 ): UseRecommendationReturn<TObject> {
   const [products, setProducts] = useState<TObject[]>([]);

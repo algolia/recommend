@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useMemo } from 'react';
 
 import { RecommendationsProps } from './Recommendations';
-import { ProductRecord, RecommendationTranslations } from './types';
+import { ProductBaseRecord, RecommendationTranslations } from './types';
 import { useRecommendations } from './useRecommendations';
 
 export type FrequentlyBoughtTogetherProps<TObject> = Omit<
@@ -21,7 +21,7 @@ function defaultRender<TObject>(props: {
   return props.children;
 }
 
-export function FrequentlyBoughtTogether<TObject extends ProductRecord>(
+export function FrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
   userProps: FrequentlyBoughtTogetherProps<TObject>
 ) {
   const props: RecommendationsProps<TObject> = useMemo(
