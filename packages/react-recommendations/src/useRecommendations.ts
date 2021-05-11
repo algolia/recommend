@@ -6,7 +6,7 @@ import { getHitsPerPage } from './getHitsPerPage';
 import { getIndexNameFromModel } from './getIndexNameFromModel';
 import { getOptionalFilters } from './getOptionalFilters';
 import {
-  InternalUseRecommendationsProps,
+  UseRecommendationsInternalProps,
   ProductRecord,
   RecommendationModel,
 } from './types';
@@ -29,7 +29,7 @@ type UseRecommendationReturn<TObject> = {
 
 function getDefaultedProps(
   props: UseRecommendationsProps
-): InternalUseRecommendationsProps {
+): UseRecommendationsInternalProps {
   return {
     fallbackFilters: [],
     maxRecommendations: 0,

@@ -1,8 +1,8 @@
-import { InternalUseRecommendationsProps, RecommendationRecord } from './types';
+import { UseRecommendationsInternalProps, RecommendationRecord } from './types';
 
 type GetHitsPerPageParams = {
-  fallbackFilters: InternalUseRecommendationsProps['fallbackFilters'];
-  maxRecommendations: InternalUseRecommendationsProps['maxRecommendations'];
+  fallbackFilters: UseRecommendationsInternalProps['fallbackFilters'];
+  maxRecommendations: UseRecommendationsInternalProps['maxRecommendations'];
   recommendations: RecommendationRecord[];
 };
 

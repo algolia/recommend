@@ -1,9 +1,9 @@
-import { InternalUseRecommendationsProps, RecommendationRecord } from './types';
+import { UseRecommendationsInternalProps, RecommendationRecord } from './types';
 
 type GetOptionalFiltersParams = {
-  fallbackFilters: InternalUseRecommendationsProps['fallbackFilters'];
+  fallbackFilters: UseRecommendationsInternalProps['fallbackFilters'];
   recommendations: RecommendationRecord[];
-  threshold: InternalUseRecommendationsProps['threshold'];
+  threshold: UseRecommendationsInternalProps['threshold'];
 };
 
 export function getOptionalFilters({
