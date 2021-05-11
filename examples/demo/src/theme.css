@@ -66,8 +66,25 @@
 .auc-Recommendations--inline .auc-Recommendations-list {
   grid-auto-columns: 34%;
   grid-auto-flow: column;
-  overflow-x: scroll;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
   scroll-snap-type: x proximity;
+  scrollbar-color: #0f0f0f #c4c4c4;
+  scrollbar-width: thin;
+}
+
+.auc-Recommendations--inline .auc-Recommendations-list::-webkit-scrollbar {
+  height: 2px;
+}
+
+.auc-Recommendations--inline
+  .auc-Recommendations-list::-webkit-scrollbar-track {
+  background-color: #c4c4c4;
+}
+
+.auc-Recommendations--inline
+  .auc-Recommendations-list::-webkit-scrollbar-thumb {
+  background-color: #0f0f0f;
 }
 
 @media (min-width: 999px) {
