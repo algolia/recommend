@@ -7,44 +7,45 @@
   background: #f1f1f1;
   border: 1px solid #fff;
   border-radius: 2px;
+  box-shadow: 0px 2px 6px rgba(90, 94, 154, 0.44);
   color: #9698c3;
   cursor: pointer;
   display: flex;
-  box-shadow: 0px 2px 6px rgba(90, 94, 154, 0.44);
   height: 40px;
   justify-content: center;
+  outline-color: #9698c3;
   padding: 0;
   position: absolute;
-  top: 30%;
+  top: 35%;
+  transition: opacity 150ms;
   width: 32px;
-  outline-color: #9698c3;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .auc-Recommendations-navigation:not(:disabled):hover {
-    background: #fff;
-    color: #3c4fe0;
-  }
+.auc-Recommendations-container:hover
+  .auc-Recommendations-navigation:not([hidden]) {
+  opacity: 1;
+  visibility: visible;
 }
 
-.auc-Recommendations-navigation:disabled {
-  cursor: not-allowed;
-  filter: grayscale(1);
+.auc-Recommendations-navigation,
+.auc-Recommendations-navigation[hidden] {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .auc-Recommendations-navigation--previous {
   left: 0;
-  transform: translateX(-50%);
+  transform: translateX(-25%);
 }
 
 .auc-Recommendations-navigation--next {
   right: 0;
-  transform: translateX(50%);
+  transform: translateX(25%);
 }
 
 .auc-Recommendations-list {
   display: grid;
-  gap: 1rem;
+  gap: 0.5rem;
   list-style: none;
   margin: 0;
   padding: 0;

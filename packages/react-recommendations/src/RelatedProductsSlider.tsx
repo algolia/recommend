@@ -30,6 +30,16 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
     [props.translations]
   );
   const listRef = useRef<HTMLOListElement>(null);
+  const previousButton = useRef<HTMLButtonElement>(null);
+  const nextButton = useRef<HTMLButtonElement>(null);
+
+  const isPreviousButtonHidden = () => Boolean(!listRef.current?.scrollLeft);
+  const isNextButtonHidden = () =>
+    Boolean(
+      listRef.current &&
+        listRef.current.scrollLeft + listRef.current.clientWidth >=
+          listRef.current.scrollWidth
+    );
 
   const children = (
     <section className="auc-Recommendations auc-Recommendations--inline">
@@ -39,6 +49,8 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
         <div className="auc-Recommendations-container">
           <button
             title="Previous"
+            ref={previousButton}
+            hidden={isPreviousButtonHidden()}
             className="auc-Recommendations-navigation auc-Recommendations-navigation--previous"
             onClick={(event) => {
               event.preventDefault();
@@ -59,7 +71,22 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
             </svg>
           </button>
 
-          <ol className="auc-Recommendations-list" ref={listRef}>
+          <ol
+            className="auc-Recommendations-list"
+            ref={listRef}
+            onScroll={() => {
+              if (
+                !listRef.current ||
+                !previousButton.current ||
+                !nextButton.current
+              ) {
+                return;
+              }
+
+              previousButton.current.hidden = isPreviousButtonHidden();
+              nextButton.current.hidden = isNextButtonHidden();
+            }}
+          >
             {recommendations.map((recommendation) => (
               <li
                 key={recommendation.objectID}
@@ -72,6 +99,8 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
 
           <button
             title="Next"
+            ref={nextButton}
+            hidden={isNextButtonHidden()}
             className="auc-Recommendations-navigation auc-Recommendations-navigation--next"
             onClick={(event) => {
               event.preventDefault();
