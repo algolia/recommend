@@ -36,23 +36,23 @@ export function RelatedProducts<TObject extends ProductBaseRecord>(
   const render = props.children || defaultRender;
   const translations: RecommendationTranslations = useMemo(
     () => ({
-      ...userProps.translations,
       title: 'Related products',
       showMore: 'Show more',
+      ...userProps.translations,
     }),
     [userProps.translations]
   );
 
   const children = (
-    <section className="ais-Recommendations">
+    <section className="auc-Recommendations">
       {translations.title && <h2>{translations.title}</h2>}
 
       {recommendations.length > 0 && (
-        <ol className="ais-Recommendations-list">
+        <ol className="auc-Recommendations-list">
           {recommendations.map((recommendation) => (
             <li
               key={recommendation.objectID}
-              className="ais-Recommendations-item"
+              className="auc-Recommendations-item"
             >
               <props.hitComponent hit={recommendation} />
             </li>

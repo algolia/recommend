@@ -1,8 +1,19 @@
-.ais-Recommendations-list {
+.auc-Recommendations-list {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(5, 1fr);
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.auc-Recommendations--grid .auc-Recommendations-list {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.auc-Recommendations--inline .auc-Recommendations-list {
+  grid-auto-columns: 20%;
+  grid-auto-flow: column;
+  overflow: scroll;
+  overflow-x: scroll;
+  scroll-snap-type: x proximity;
 }

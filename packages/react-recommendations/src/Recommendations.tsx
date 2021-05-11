@@ -30,13 +30,13 @@ export function Recommendations<TObject extends ProductBaseRecord>(
   const render = props.children || defaultRender;
 
   const children = (
-    <div className="ais-Recommendations">
+    <div className="auc-Recommendations">
       {recommendations.length > 0 && (
-        <ol className="ais-Recommendations-list">
+        <ol className="auc-Recommendations-list">
           {recommendations.map((recommendation) => (
             <li
               key={recommendation.objectID}
-              className="ais-Recommendations-item"
+              className="auc-Recommendations-item"
             >
               <props.hitComponent hit={recommendation} />
             </li>

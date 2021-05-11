@@ -102,23 +102,51 @@ function App() {
             }}
           />
 
-          <RelatedProducts
-            searchClient={searchClient}
-            indexName={indexName}
-            objectID={selectedProduct.objectID}
-            hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
-            maxRecommendations={10}
-            fallbackFilters={[
-              `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-            ]}
-            searchParameters={{
-              analytics: true,
-              clickAnalytics: true,
-              facetFilters: [
-                `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-              ],
-            }}
-          />
+          <div className="auc-Recommendations--inline">
+            <RelatedProducts
+              searchClient={searchClient}
+              indexName={indexName}
+              objectID={selectedProduct.objectID}
+              hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
+              maxRecommendations={10}
+              translations={{
+                title: 'Related products (inline)',
+              }}
+              fallbackFilters={[
+                `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+              ]}
+              searchParameters={{
+                analytics: true,
+                clickAnalytics: true,
+                facetFilters: [
+                  `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+                ],
+              }}
+            />
+          </div>
+
+          <div className="auc-Recommendations--grid">
+            <RelatedProducts
+              searchClient={searchClient}
+              indexName={indexName}
+              objectID={selectedProduct.objectID}
+              hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
+              maxRecommendations={10}
+              translations={{
+                title: 'Related products (grid)',
+              }}
+              fallbackFilters={[
+                `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+              ]}
+              searchParameters={{
+                analytics: true,
+                clickAnalytics: true,
+                facetFilters: [
+                  `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+                ],
+              }}
+            />
+          </div>
         </>
       )}
     </div>
