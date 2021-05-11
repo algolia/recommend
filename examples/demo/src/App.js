@@ -93,30 +93,23 @@ function App() {
         <>
           <div style={{ padding: '1rem 0' }}>
             <div
-              className="RecommendationItem"
+              className="Hit"
               style={{ gridTemplateColumns: '150px 1fr', gap: '1rem' }}
             >
-              <div
-                className="RecommendationItemImage"
-                style={{ maxWidth: 150 }}
-              >
+              <div className="Hit-Image" style={{ maxWidth: 150 }}>
                 <img
                   src={selectedProduct.image_link}
                   alt={selectedProduct.name}
                 />
               </div>
 
-              <div className="RecommendationItemContent">
-                <div className="RecommendationItemName">
-                  {selectedProduct.name}
-                </div>
-                <div className="RecommendationItemDescription">
+              <div className="Hit-Content">
+                <div className="Hit-Name">{selectedProduct.name}</div>
+                <div className="Hit-Description">
                   {selectedProduct.objectID}
                 </div>
-                <footer className="RecommendationItemFooter">
-                  <span className="RecommendationItemPrice">
-                    ${selectedProduct.price}
-                  </span>
+                <footer className="Hit-Footer">
+                  <span className="Hit-Price">${selectedProduct.price}</span>
                 </footer>
               </div>
             </div>
