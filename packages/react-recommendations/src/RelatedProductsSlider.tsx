@@ -33,10 +33,11 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
   const previousButton = useRef<HTMLButtonElement>(null);
   const nextButton = useRef<HTMLButtonElement>(null);
 
-  const isPreviousButtonHidden = () => Boolean(!listRef.current?.scrollLeft);
+  const isPreviousButtonHidden = () =>
+    Boolean(!listRef.current || listRef.current.scrollLeft <= 0);
   const isNextButtonHidden = () =>
     Boolean(
-      listRef.current &&
+      !listRef.current ||
         listRef.current.scrollLeft + listRef.current.clientWidth >=
           listRef.current.scrollWidth
     );
