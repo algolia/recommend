@@ -29,7 +29,7 @@ function defaultRender<TObject>(props: {
 export function Recommendations<TObject extends ProductRecord>(
   props: RecommendationsProps<TObject>
 ) {
-  const recommendations = useRecommendations<TObject>(props);
+  const { recommendations } = useRecommendations<TObject>(props);
   const render = props.children || defaultRender;
 
   const children = (

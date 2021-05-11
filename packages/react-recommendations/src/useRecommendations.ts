@@ -23,6 +23,10 @@ export type UseRecommendationsProps = {
   threshold?: number;
 };
 
+type UseRecommendationReturn<TObject> = {
+  recommendations: TObject[];
+};
+
 function getDefaultedProps(
   props: UseRecommendationsProps
 ): InternalUseRecommendationsProps {
@@ -46,7 +50,7 @@ function getDefaultedProps(
 
 export function useRecommendations<TObject extends ProductRecord>(
   userProps: UseRecommendationsProps
-): TObject[] {
+): UseRecommendationReturn<TObject> {
   const [products, setProducts] = useState<TObject[]>([]);
   const props = useMemo(() => getDefaultedProps(userProps), [userProps]);
 
@@ -97,5 +101,7 @@ export function useRecommendations<TObject extends ProductRecord>(
       });
   }, [props]);
 
-  return products;
+  return {
+    recommendations: products,
+  };
 }
