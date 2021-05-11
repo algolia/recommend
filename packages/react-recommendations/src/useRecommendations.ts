@@ -2,14 +2,16 @@ import type { SearchOptions } from '@algolia/client-search';
 import type { SearchClient } from 'algoliasearch';
 import { useMemo, useEffect, useState } from 'react';
 
-import { getHitsPerPage } from './getHitsPerPage';
-import { getIndexNameFromModel } from './getIndexNameFromModel';
-import { getOptionalFilters } from './getOptionalFilters';
 import {
   UseRecommendationsInternalProps,
   ProductBaseRecord,
   RecommendationModel,
 } from './types';
+import {
+  getHitsPerPage,
+  getIndexNameFromModel,
+  getOptionalFilters,
+} from './utils';
 
 export type UseRecommendationsProps = {
   model: RecommendationModel;

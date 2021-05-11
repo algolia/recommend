@@ -23,6 +23,9 @@ function defaultRender<TObject>(props: {
   return props.children;
 }
 
+/**
+ * @deprecated
+ */
 export function Recommendations<TObject extends ProductBaseRecord>(
   props: RecommendationsProps<TObject>
 ) {

@@ -1,4 +1,7 @@
-import { UseRecommendationsInternalProps, RecommendationRecord } from './types';
+import {
+  UseRecommendationsInternalProps,
+  RecommendationRecord,
+} from '../types';
 
 type GetOptionalFiltersParams = {
   fallbackFilters: UseRecommendationsInternalProps['fallbackFilters'];

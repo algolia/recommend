@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 
 import { RecommendationsProps } from './Recommendations';
 import { ProductBaseRecord, RecommendationTranslations } from './types';
-import { useRecommendations } from './useRecommendations';
+import { useFrequentlyBoughtTogether } from './useFrequentlyBoughtTogether';
 
 export type FrequentlyBoughtTogetherProps<TObject> = Omit<
   RecommendationsProps<TObject>,
@@ -22,30 +22,22 @@ function defaultRender<TObject>(props: {
 }
 
 export function FrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
-  userProps: FrequentlyBoughtTogetherProps<TObject>
+  props: FrequentlyBoughtTogetherProps<TObject>
 ) {
-  const props: RecommendationsProps<TObject> = useMemo(
-    () => ({
-      ...userProps,
-      fallbackFilters: [],
-      model: 'bought-together',
-    }),
-    [userProps]
-  );
-  const { recommendations } = useRecommendations<TObject>(props);
+  const { recommendations } = useFrequentlyBoughtTogether<TObject>(props);
   const render = props.children || defaultRender;
   const translations: RecommendationTranslations = useMemo(
     () => ({
       title: 'Frequently bought together',
       showMore: 'Show more',
-      ...userProps.translations,
+      ...props.translations,
     }),
-    [userProps.translations]
+    [props.translations]
   );
 
   const children = (
-    <div className="auc-Recommendations">
-      {translations.title && <h2>{translations.title}</h2>}
+    <div className="auc-Recommendations auc-Recommendations--grid">
+      {translations.title && <h3>{translations.title}</h3>}
 
       {recommendations.length > 0 && (
         <ol className="auc-Recommendations-list">

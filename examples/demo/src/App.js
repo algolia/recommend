@@ -1,6 +1,7 @@
 import {
   FrequentlyBoughtTogether,
   RelatedProducts,
+  RelatedProductsSlider,
 } from '@algolia/react-recommendations';
 import algoliasearch from 'algoliasearch';
 import React, { useState } from 'react';
@@ -90,6 +91,37 @@ function App() {
 
       {selectedProduct && (
         <>
+          <div style={{ padding: '1rem 0' }}>
+            <div
+              className="RecommendationItem"
+              style={{ gridTemplateColumns: '150px 1fr', gap: '1rem' }}
+            >
+              <div
+                className="RecommendationItemImage"
+                style={{ maxWidth: 150 }}
+              >
+                <img
+                  src={selectedProduct.image_link}
+                  alt={selectedProduct.name}
+                />
+              </div>
+
+              <div className="RecommendationItemContent">
+                <div className="RecommendationItemName">
+                  {selectedProduct.name}
+                </div>
+                <div className="RecommendationItemDescription">
+                  {selectedProduct.objectID}
+                </div>
+                <footer className="RecommendationItemFooter">
+                  <span className="RecommendationItemPrice">
+                    ${selectedProduct.price}
+                  </span>
+                </footer>
+              </div>
+            </div>
+          </div>
+
           <FrequentlyBoughtTogether
             searchClient={searchClient}
             indexName={indexName}
@@ -102,51 +134,47 @@ function App() {
             }}
           />
 
-          <div className="auc-Recommendations--inline">
-            <RelatedProducts
-              searchClient={searchClient}
-              indexName={indexName}
-              objectID={selectedProduct.objectID}
-              hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
-              maxRecommendations={10}
-              translations={{
-                title: 'Related products (inline)',
-              }}
-              fallbackFilters={[
-                `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-              ]}
-              searchParameters={{
-                analytics: true,
-                clickAnalytics: true,
-                facetFilters: [
-                  `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-                ],
-              }}
-            />
-          </div>
+          <RelatedProductsSlider
+            searchClient={searchClient}
+            indexName={indexName}
+            objectID={selectedProduct.objectID}
+            hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
+            maxRecommendations={10}
+            translations={{
+              title: 'Related products (slider)',
+            }}
+            fallbackFilters={[
+              `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+            ]}
+            searchParameters={{
+              analytics: true,
+              clickAnalytics: true,
+              facetFilters: [
+                `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+              ],
+            }}
+          />
 
-          <div className="auc-Recommendations--grid">
-            <RelatedProducts
-              searchClient={searchClient}
-              indexName={indexName}
-              objectID={selectedProduct.objectID}
-              hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
-              maxRecommendations={10}
-              translations={{
-                title: 'Related products (grid)',
-              }}
-              fallbackFilters={[
-                `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-              ]}
-              searchParameters={{
-                analytics: true,
-                clickAnalytics: true,
-                facetFilters: [
-                  `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-                ],
-              }}
-            />
-          </div>
+          <RelatedProducts
+            searchClient={searchClient}
+            indexName={indexName}
+            objectID={selectedProduct.objectID}
+            hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
+            maxRecommendations={10}
+            translations={{
+              title: 'Related products',
+            }}
+            fallbackFilters={[
+              `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+            ]}
+            searchParameters={{
+              analytics: true,
+              clickAnalytics: true,
+              facetFilters: [
+                `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+              ],
+            }}
+          />
         </>
       )}
     </div>

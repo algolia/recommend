@@ -1,4 +1,4 @@
-import { RecommendationModel } from './types';
+import { RecommendationModel } from '../types';
 
 export function getIndexNameFromModel(
   model: RecommendationModel,

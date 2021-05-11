@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 
 import { RecommendationsProps } from './Recommendations';
 import { ProductBaseRecord, RecommendationTranslations } from './types';
-import { useRecommendations } from './useRecommendations';
+import { useRelatedProducts } from './useRelatedProducts';
 
 export type RelatedProductsProps<TObject> = Omit<
   RecommendationsProps<TObject>,
@@ -14,7 +14,6 @@ function defaultRender<TObject>(props: {
   recommendations: TObject[];
   children: React.ReactNode;
 }) {
-  // @TODO: we might always want to render something
   if (props.recommendations.length === 0) {
     return null;
   }
@@ -23,41 +22,36 @@ function defaultRender<TObject>(props: {
 }
 
 export function RelatedProducts<TObject extends ProductBaseRecord>(
-  userProps: RelatedProductsProps<TObject>
+  props: RelatedProductsProps<TObject>
 ) {
-  const props: RecommendationsProps<TObject> = useMemo(
-    () => ({
-      ...userProps,
-      model: 'related-products',
-    }),
-    [userProps]
-  );
-  const { recommendations } = useRecommendations<TObject>(props);
+  const { recommendations } = useRelatedProducts<TObject>(props);
   const render = props.children || defaultRender;
   const translations: RecommendationTranslations = useMemo(
     () => ({
       title: 'Related products',
       showMore: 'Show more',
-      ...userProps.translations,
+      ...props.translations,
     }),
-    [userProps.translations]
+    [props.translations]
   );
 
   const children = (
-    <section className="auc-Recommendations">
-      {translations.title && <h2>{translations.title}</h2>}
+    <section className="auc-Recommendations auc-Recommendations--grid">
+      {translations.title && <h3>{translations.title}</h3>}
 
       {recommendations.length > 0 && (
-        <ol className="auc-Recommendations-list">
-          {recommendations.map((recommendation) => (
-            <li
-              key={recommendation.objectID}
-              className="auc-Recommendations-item"
-            >
-              <props.hitComponent hit={recommendation} />
-            </li>
-          ))}
-        </ol>
+        <div className="auc-Recommendations-container">
+          <ol className="auc-Recommendations-list">
+            {recommendations.map((recommendation) => (
+              <li
+                key={recommendation.objectID}
+                className="auc-Recommendations-item"
+              >
+                <props.hitComponent hit={recommendation} />
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
     </section>
   );

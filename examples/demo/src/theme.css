@@ -1,19 +1,80 @@
+.auc-Recommendations-container {
+  position: relative;
+}
+
+.auc-Recommendations-navigation {
+  align-items: center;
+  background: #f1f1f1;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  color: #9698c3;
+  cursor: pointer;
+  display: flex;
+  box-shadow: 0px 2px 6px rgba(90, 94, 154, 0.44);
+  height: 40px;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  top: 30%;
+  width: 32px;
+  outline-color: #9698c3;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .auc-Recommendations-navigation:not(:disabled):hover {
+    background: #fff;
+    color: #3c4fe0;
+  }
+}
+
+.auc-Recommendations-navigation:disabled {
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.auc-Recommendations-navigation--previous {
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.auc-Recommendations-navigation--next {
+  right: 0;
+  transform: translateX(50%);
+}
+
 .auc-Recommendations-list {
   display: grid;
   gap: 1rem;
   list-style: none;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
+  scroll-snap-type: mandatory;
 }
 
 .auc-Recommendations--grid .auc-Recommendations-list {
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 999px) {
+  .auc-Recommendations--grid .auc-Recommendations-list {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 
 .auc-Recommendations--inline .auc-Recommendations-list {
-  grid-auto-columns: 20%;
+  grid-auto-columns: 34%;
   grid-auto-flow: column;
-  overflow: scroll;
   overflow-x: scroll;
   scroll-snap-type: x proximity;
+}
+
+@media (min-width: 999px) {
+  .auc-Recommendations--inline .auc-Recommendations-list {
+    grid-auto-columns: 20%;
+  }
+}
+
+.auc-Recommendations-item {
+  scroll-snap-align: start;
 }

@@ -25,6 +25,11 @@ body {
   max-width: 100%;
 }
 
+.RecommendationItemContent {
+  display: grid;
+  gap: 0.5rem;
+}
+
 .RecommendationItemName {
   font-weight: bold;
 }
@@ -35,4 +40,18 @@ body {
 
 .RecommendationItemPrice {
   font-weight: bold;
+}
+
+.RecommendationItemButton {
+  background: none;
+  border: 0;
+  color: #777;
+  cursor: pointer;
+  padding: 0;
+}
+
+.RecommendationItemFooter {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 }
