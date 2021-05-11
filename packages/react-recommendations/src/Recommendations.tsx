@@ -49,7 +49,7 @@ export function Recommendations<TObject extends ProductBaseRecord>(
     </div>
   );
 
-  return render({ recommendations, children });
+  return render({ recommendations, children }) as JSX.Element;
 }
 
 Recommendations.propTypes = {

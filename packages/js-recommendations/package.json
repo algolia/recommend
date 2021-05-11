@@ -1,0 +1,24 @@
+{
+  "name": "@algolia/js-recommendations",
+  "version": "1.0.0-beta.9",
+  "scripts": {
+    "build:clean": "rm -rf ./dist",
+    "build:esm": "babel src --root-mode upward --extensions '.ts,.tsx' --out-dir dist/esm --ignore '**/*/__tests__/'",
+    "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm",
+    "build": "yarn build:clean && yarn build:esm && yarn build:types"
+  },
+  "source": "src/index.ts",
+  "types": "dist/esm/index.d.ts",
+  "module": "dist/esm/index.js",
+  "main": "dist/esm/index.js",
+  "unpkg": "dist/esm/index.js",
+  "jsdelivr": "dist/esm/index.js",
+  "sideEffects": false,
+  "files": [
+    "dist/"
+  ],
+  "devDependencies": {
+    "@algolia/react-recommendations": "1.0.0-beta.9",
+    "preact": "^10.0.0"
+  }
+}

@@ -56,7 +56,7 @@ export function RelatedProducts<TObject extends ProductBaseRecord>(
     </section>
   );
 
-  return render({ recommendations, children });
+  return render({ recommendations, children }) as JSX.Element;
 }
 
 RelatedProducts.propTypes = {

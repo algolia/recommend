@@ -54,7 +54,7 @@ export function FrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
     </div>
   );
 
-  return render({ recommendations, children });
+  return render({ recommendations, children }) as JSX.Element;
 }
 
 FrequentlyBoughtTogether.propTypes = {
