@@ -79,7 +79,7 @@ export function useRecommendations<TObject extends ProductBaseRecord>(
             ...props.searchParameters,
           })
           .then((result) => {
-            const hits = result.hits.map((hit) => {
+            const hits = result.hits.map((hit, index) => {
               const match = recommendations.find(
                 (x) => x.objectID === hit.objectID
               );
@@ -88,6 +88,7 @@ export function useRecommendations<TObject extends ProductBaseRecord>(
                 ...hit,
                 __indexName: props.indexName,
                 __queryID: result.queryID,
+                __position: index + 1,
                 // @TODO: this is for debugging purpose and can be removed
                 // before stable release.
                 __recommendScore: match?.score,

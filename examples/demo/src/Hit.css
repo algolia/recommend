@@ -3,6 +3,11 @@
   gap: 0.5rem;
 }
 
+.Hit-link {
+  color: inherit;
+  text-decoration: none;
+}
+
 .Hit-Image img {
   max-width: 100%;
 }
@@ -13,7 +18,10 @@
 }
 
 .Hit-Name {
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #000;
 }
 
 .Hit-Description {

@@ -12,7 +12,8 @@ body {
 }
 
 h3 {
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
 }
 
 .container {

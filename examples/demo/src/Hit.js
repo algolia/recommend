@@ -4,13 +4,15 @@ import './Hit.css';
 
 export function Hit({ hit, insights }) {
   return (
-    <div
-      className="Hit"
+    <a
+      className="Hit Hit-link"
+      href={hit.url}
       onClick={(event) => {
         event.preventDefault();
 
         insights('clickedObjectIDs', {
           objectIDs: [hit.objectID],
+          positions: [hit.__position],
           eventName: 'Product Clicked',
           queryID: hit.__queryID,
           index: hit.__indexName,
@@ -65,6 +67,6 @@ export function Hit({ hit, insights }) {
         </span>
         Add to cart
       </button>
-    </div>
+    </a>
   );
 }
