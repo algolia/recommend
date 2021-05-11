@@ -16,15 +16,23 @@ body {
   max-width: 1200px;
 }
 
-.hit {
+.RecommendationItem {
   display: grid;
   gap: 0.5rem;
 }
 
-.hit-image img {
+.RecommendationItemImage img {
   max-width: 100%;
 }
 
-.hit-name {
+.RecommendationItemName {
+  font-weight: bold;
+}
+
+.RecommendationItemDescription {
+  color: #555;
+}
+
+.RecommendationItemPrice {
   font-weight: bold;
 }

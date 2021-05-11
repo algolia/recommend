@@ -2,19 +2,19 @@ import React from 'react';
 
 export function Hit({ hit, insights }) {
   return (
-    <div className="hit">
-      <div className="hit-image">
+    <div className="RecommendationItem">
+      <div className="RecommendationItemImage">
         <img src={hit.image_link} alt={hit.name} />
       </div>
 
       <div>
-        <div className="hit-name">{hit.name}</div>
-        <div className="hit-objectID">
+        <div className="RecommendationItemName">{hit.name}</div>
+        <div className="RecommendationItemDescription">
           <p>
             {hit.objectID} (score: {hit.__recommendScore})
           </p>
         </div>
-        <div className="hit-price">${hit.price}</div>
+        <div className="RecommendationItemPrice">${hit.price}</div>
       </div>
 
       <div>

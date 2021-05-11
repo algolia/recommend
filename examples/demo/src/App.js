@@ -107,7 +107,7 @@ function App() {
             indexName={indexName}
             objectID={selectedProduct.objectID}
             hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
-            maxRecommendations={5}
+            maxRecommendations={10}
             fallbackFilters={[
               `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
             ]}
