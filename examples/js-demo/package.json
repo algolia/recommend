@@ -16,6 +16,10 @@
     "search-insights": "1.8.0",
     "preact": "^10.0.0"
   },
+  "alias": {
+    "react": "preact/compat",
+    "react-dom": "preact/compat"
+  },
   "devDependencies": {
     "parcel": "2.0.0-beta.2"
   }

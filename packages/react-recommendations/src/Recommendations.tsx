@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import { ProductBaseRecord, RecommendationTranslations } from './types';
@@ -51,20 +50,3 @@ export function Recommendations<TObject extends ProductBaseRecord>(
 
   return render({ recommendations, children });
 }
-
-Recommendations.propTypes = {
-  model: PropTypes.string.isRequired,
-  searchClient: PropTypes.object.isRequired,
-  indexName: PropTypes.string.isRequired,
-  objectID: PropTypes.string.isRequired,
-  hitComponent: PropTypes.elementType.isRequired,
-
-  fallbackFilters: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
-  ),
-  maxRecommendations: PropTypes.number,
-  searchParameters: PropTypes.object,
-  threshold: PropTypes.number,
-
-  children: PropTypes.func,
-};

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useMemo } from 'react';
 
 import { RecommendationsProps } from './Recommendations';
@@ -56,16 +55,3 @@ export function FrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
 
   return render({ recommendations, children });
 }
-
-FrequentlyBoughtTogether.propTypes = {
-  searchClient: PropTypes.object.isRequired,
-  indexName: PropTypes.string.isRequired,
-  objectID: PropTypes.string.isRequired,
-  hitComponent: PropTypes.elementType.isRequired,
-
-  maxRecommendations: PropTypes.number,
-  searchParameters: PropTypes.object,
-  threshold: PropTypes.number,
-
-  children: PropTypes.func,
-};

@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "react": "preact/compat",
+          "react-dom": "preact/compat"
+        }
+      }
+    ]
+  ]
+}

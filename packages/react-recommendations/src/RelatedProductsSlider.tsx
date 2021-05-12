@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useMemo, useRef } from 'react';
 
 import { RelatedProductsProps } from './RelatedProducts';
@@ -176,19 +175,3 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
 
   return render({ recommendations, children });
 }
-
-RelatedProductsSlider.propTypes = {
-  searchClient: PropTypes.object.isRequired,
-  indexName: PropTypes.string.isRequired,
-  objectID: PropTypes.string.isRequired,
-  hitComponent: PropTypes.elementType.isRequired,
-
-  fallbackFilters: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
-  ),
-  maxRecommendations: PropTypes.number,
-  searchParameters: PropTypes.object,
-  threshold: PropTypes.number,
-
-  children: PropTypes.func,
-};

@@ -3,7 +3,7 @@ import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
 import {
   frequentlyBoughtTogether,
   relatedProducts,
-} from '@algolia/js-recommendations';
+} from '@algolia/js-recommendations/dist/esm';
 import algoliasearch from 'algoliasearch';
 import { h } from 'preact';
 import insights from 'search-insights';
