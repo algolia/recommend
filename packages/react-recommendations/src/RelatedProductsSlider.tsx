@@ -7,7 +7,7 @@ import { useRelatedProducts } from './useRelatedProducts';
 
 let lastSliderId = 0;
 
-function generatedSliderId() {
+function generateSliderId() {
   return `auc-slider-${lastSliderId++}`;
 }
 
@@ -38,7 +38,7 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
   const listRef = useRef<HTMLOListElement>(null);
   const previousButtonRef = useRef<HTMLButtonElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
-  const sliderIdRef = useRef(generatedSliderId());
+  const sliderIdRef = useRef(generateSliderId());
 
   const isPreviousButtonHidden = () =>
     Boolean(!listRef.current || listRef.current.scrollLeft <= 0);
