@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 
 import { RelatedProductsProps } from './RelatedProducts';
 import { ProductBaseRecord, RecommendationTranslations } from './types';
@@ -60,15 +60,6 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
   const nextButtonRef = useRef<HTMLButtonElement>(null);
   const sliderIdRef = useRef(generateSliderId());
 
-  const isPreviousButtonHidden = () =>
-    Boolean(!listRef.current || listRef.current.scrollLeft <= 0);
-  const isNextButtonHidden = () =>
-    Boolean(
-      !listRef.current ||
-        listRef.current.scrollLeft + listRef.current.clientWidth >=
-          listRef.current.scrollWidth
-    );
-
   function scrollLeft() {
     if (listRef.current) {
       listRef.current.scrollLeft -= listRef.current.offsetWidth * 0.75;
@@ -81,6 +72,25 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
     }
   }
 
+  function updateNavigationButtonsProps() {
+    if (
+      !listRef.current ||
+      !previousButtonRef.current ||
+      !nextButtonRef.current
+    ) {
+      return;
+    }
+
+    previousButtonRef.current.hidden = listRef.current.scrollLeft <= 0;
+    nextButtonRef.current.hidden =
+      listRef.current.scrollLeft + listRef.current.clientWidth >=
+      listRef.current.scrollWidth;
+  }
+
+  useEffect(() => {
+    updateNavigationButtonsProps();
+  });
+
   const children = (
     <section className="auc-Recommendations auc-Recommendations--inline">
       {translations.title && <h3>{translations.title}</h3>}
@@ -92,7 +102,6 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
             title={translations.previousButtonTitle}
             aria-label={translations.previousButtonLabel}
             aria-controls={sliderIdRef.current}
-            hidden={isPreviousButtonHidden()}
             className="auc-Recommendations-navigation auc-Recommendations-navigation--previous"
             onClick={(event) => {
               event.preventDefault();
@@ -117,18 +126,7 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
             aria-roledescription="carousel"
             aria-label={translations.sliderLabel}
             aria-live="polite"
-            onScroll={() => {
-              if (
-                !listRef.current ||
-                !previousButtonRef.current ||
-                !nextButtonRef.current
-              ) {
-                return;
-              }
-
-              previousButtonRef.current.hidden = isPreviousButtonHidden();
-              nextButtonRef.current.hidden = isNextButtonHidden();
-            }}
+            onScroll={updateNavigationButtonsProps}
             onKeyDown={(event) => {
               if (event.key === 'ArrowLeft') {
                 event.preventDefault();
@@ -156,7 +154,6 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
             title={translations.nextButtonTitle}
             aria-label={translations.nextButtonLabel}
             aria-controls={sliderIdRef.current}
-            hidden={isNextButtonHidden()}
             className="auc-Recommendations-navigation auc-Recommendations-navigation--next"
             onClick={(event) => {
               event.preventDefault();
