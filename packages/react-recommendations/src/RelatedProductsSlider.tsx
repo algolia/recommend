@@ -5,6 +5,12 @@ import { RelatedProductsProps } from './RelatedProducts';
 import { ProductBaseRecord, RecommendationTranslations } from './types';
 import { useRelatedProducts } from './useRelatedProducts';
 
+let lastSliderId = 0;
+
+function generatedSliderId() {
+  return `auc-slider-${lastSliderId++}`;
+}
+
 function defaultRender<TObject>(props: {
   recommendations: TObject[];
   children: React.ReactNode;
@@ -30,8 +36,9 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
     [props.translations]
   );
   const listRef = useRef<HTMLOListElement>(null);
-  const previousButton = useRef<HTMLButtonElement>(null);
-  const nextButton = useRef<HTMLButtonElement>(null);
+  const previousButtonRef = useRef<HTMLButtonElement>(null);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const sliderIdRef = useRef(generatedSliderId());
 
   const isPreviousButtonHidden = () =>
     Boolean(!listRef.current || listRef.current.scrollLeft <= 0);
@@ -61,8 +68,9 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
       {recommendations.length > 0 && (
         <div className="auc-Recommendations-container">
           <button
-            title="Previous"
-            ref={previousButton}
+            ref={previousButtonRef}
+            aria-label="Previous"
+            aria-controls={sliderIdRef.current}
             hidden={isPreviousButtonHidden()}
             className="auc-Recommendations-navigation auc-Recommendations-navigation--previous"
             onClick={(event) => {
@@ -84,17 +92,21 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
             className="auc-Recommendations-list"
             ref={listRef}
             tabIndex={0}
+            id={sliderIdRef.current}
+            aria-roledescription="carousel"
+            aria-label={translations.title}
+            aria-live="polite"
             onScroll={() => {
               if (
                 !listRef.current ||
-                !previousButton.current ||
-                !nextButton.current
+                !previousButtonRef.current ||
+                !nextButtonRef.current
               ) {
                 return;
               }
 
-              previousButton.current.hidden = isPreviousButtonHidden();
-              nextButton.current.hidden = isNextButtonHidden();
+              previousButtonRef.current.hidden = isPreviousButtonHidden();
+              nextButtonRef.current.hidden = isNextButtonHidden();
             }}
             onKeyDown={(event) => {
               if (event.key === 'ArrowLeft') {
@@ -106,10 +118,12 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
               }
             }}
           >
-            {recommendations.map((recommendation) => (
+            {recommendations.map((recommendation, index) => (
               <li
                 key={recommendation.objectID}
                 className="auc-Recommendations-item"
+                aria-roledescription="slide"
+                aria-label={`${index + 1} of ${recommendations.length}`}
               >
                 <props.hitComponent hit={recommendation} />
               </li>
@@ -117,8 +131,9 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
           </ol>
 
           <button
-            title="Next"
-            ref={nextButton}
+            ref={nextButtonRef}
+            aria-label="Next"
+            aria-controls={sliderIdRef.current}
             hidden={isNextButtonHidden()}
             className="auc-Recommendations-navigation auc-Recommendations-navigation--next"
             onClick={(event) => {
