@@ -42,6 +42,18 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
           listRef.current.scrollWidth
     );
 
+  function scrollLeft() {
+    if (listRef.current) {
+      listRef.current.scrollLeft -= listRef.current.offsetWidth * 0.75;
+    }
+  }
+
+  function scrollRight() {
+    if (listRef.current) {
+      listRef.current.scrollLeft += listRef.current.offsetWidth * 0.75;
+    }
+  }
+
   const children = (
     <section className="auc-Recommendations auc-Recommendations--inline">
       {translations.title && <h3>{translations.title}</h3>}
@@ -55,11 +67,7 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
             className="auc-Recommendations-navigation auc-Recommendations-navigation--previous"
             onClick={(event) => {
               event.preventDefault();
-
-              if (listRef.current) {
-                listRef.current.scrollLeft -=
-                  listRef.current.offsetWidth * 0.75;
-              }
+              scrollLeft();
             }}
           >
             <svg width="8" height="16" viewBox="0 0 8 16" fill="none">
@@ -75,6 +83,7 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
           <ol
             className="auc-Recommendations-list"
             ref={listRef}
+            tabIndex={0}
             onScroll={() => {
               if (
                 !listRef.current ||
@@ -86,6 +95,15 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
 
               previousButton.current.hidden = isPreviousButtonHidden();
               nextButton.current.hidden = isNextButtonHidden();
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                scrollLeft();
+              } else if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                scrollRight();
+              }
             }}
           >
             {recommendations.map((recommendation) => (
@@ -105,11 +123,7 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
             className="auc-Recommendations-navigation auc-Recommendations-navigation--next"
             onClick={(event) => {
               event.preventDefault();
-
-              if (listRef.current) {
-                listRef.current.scrollLeft +=
-                  listRef.current.offsetWidth * 0.75;
-              }
+              scrollRight();
             }}
           >
             <svg width="8" height="16" viewBox="0 0 8 16" fill="none">

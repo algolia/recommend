@@ -48,6 +48,8 @@
   gap: 0.5rem;
   list-style: none;
   margin: 0;
+  outline-color: #9698c3;
+  outline-offset: 0.5rem;
   padding: 0;
   scroll-behavior: smooth;
   scroll-snap-type: mandatory;
@@ -95,4 +97,9 @@
 
 .auc-Recommendations-item {
   scroll-snap-align: start;
+}
+
+.auc-Recommendations-item * {
+  outline-color: #9698c3;
+  outline-offset: 3px;
 }
