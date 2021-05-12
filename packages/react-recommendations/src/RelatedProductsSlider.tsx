@@ -13,7 +13,7 @@ function generateSliderId() {
 
 function defaultRender<TObject>(props: {
   recommendations: TObject[];
-  children: React.ReactNode;
+  children: JSX.Element;
 }) {
   if (props.recommendations.length === 0) {
     return null;

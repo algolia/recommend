@@ -11,14 +11,14 @@ export type RecommendationsProps<TObject> = UseRecommendationsProps & {
   hitComponent: React.FunctionComponent<{ hit: TObject }>;
   children?(props: {
     recommendations: TObject[];
-    children: React.ReactNode;
-  }): React.ReactNode;
+    children: JSX.Element;
+  }): JSX.Element;
   translations?: Partial<RecommendationTranslations>;
 };
 
 function defaultRender<TObject>(props: {
   recommendations: TObject[];
-  children: React.ReactNode;
+  children: JSX.Element;
 }) {
   return props.children;
 }
@@ -49,7 +49,7 @@ export function Recommendations<TObject extends ProductBaseRecord>(
     </div>
   );
 
-  return render({ recommendations, children }) as JSX.Element;
+  return render({ recommendations, children });
 }
 
 Recommendations.propTypes = {

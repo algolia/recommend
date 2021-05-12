@@ -12,7 +12,7 @@ export type FrequentlyBoughtTogetherProps<TObject> = Omit<
 
 function defaultRender<TObject>(props: {
   recommendations: TObject[];
-  children: React.ReactNode;
+  children: JSX.Element;
 }) {
   if (props.recommendations.length === 0) {
     return null;
@@ -54,7 +54,7 @@ export function FrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
     </div>
   );
 
-  return render({ recommendations, children }) as JSX.Element;
+  return render({ recommendations, children });
 }
 
 FrequentlyBoughtTogether.propTypes = {
