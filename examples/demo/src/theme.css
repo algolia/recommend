@@ -21,6 +21,12 @@
   width: 32px;
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .auc-Recommendations-navigation {
+    display: none;
+  }
+}
+
 .auc-Recommendations-container:hover
   .auc-Recommendations-navigation:not([hidden]) {
   opacity: 1;
