@@ -22,15 +22,35 @@ function defaultRender<TObject>(props: {
   return props.children;
 }
 
+type RelatedProductsSliderTranslations = RecommendationTranslations & {
+  sliderLabel: string;
+  previousButtonLabel: string;
+  previousButtonTitle: string;
+  nextButtonLabel: string;
+  nextButtonTitle: string;
+};
+
+type RelatedProductsSliderProps<TObject> = Omit<
+  RelatedProductsProps<TObject>,
+  'translations'
+> & {
+  translations?: Partial<RelatedProductsSliderTranslations>;
+};
+
 export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
-  props: RelatedProductsProps<TObject>
+  props: RelatedProductsSliderProps<TObject>
 ) {
   const { recommendations } = useRelatedProducts<TObject>(props);
   const render = props.children || defaultRender;
-  const translations: RecommendationTranslations = useMemo(
+  const translations: RelatedProductsSliderTranslations = useMemo(
     () => ({
       title: 'Related products',
       showMore: 'Show more',
+      sliderLabel: props.translations?.title ?? 'Related products',
+      nextButtonLabel: 'Next',
+      nextButtonTitle: 'Next',
+      previousButtonLabel: 'Previous',
+      previousButtonTitle: 'Previous',
       ...props.translations,
     }),
     [props.translations]
@@ -69,7 +89,8 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
         <div className="auc-Recommendations-container">
           <button
             ref={previousButtonRef}
-            aria-label="Previous"
+            title={translations.previousButtonTitle}
+            aria-label={translations.previousButtonLabel}
             aria-controls={sliderIdRef.current}
             hidden={isPreviousButtonHidden()}
             className="auc-Recommendations-navigation auc-Recommendations-navigation--previous"
@@ -94,7 +115,7 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
             tabIndex={0}
             id={sliderIdRef.current}
             aria-roledescription="carousel"
-            aria-label={translations.title}
+            aria-label={translations.sliderLabel}
             aria-live="polite"
             onScroll={() => {
               if (
@@ -132,7 +153,8 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
 
           <button
             ref={nextButtonRef}
-            aria-label="Next"
+            title={translations.nextButtonTitle}
+            aria-label={translations.nextButtonLabel}
             aria-controls={sliderIdRef.current}
             hidden={isNextButtonHidden()}
             className="auc-Recommendations-navigation auc-Recommendations-navigation--next"
