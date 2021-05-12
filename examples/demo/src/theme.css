@@ -72,7 +72,7 @@
 }
 
 .auc-Recommendations--inline .auc-Recommendations-list {
-  grid-auto-columns: 34%;
+  grid-auto-columns: 42%;
   grid-auto-flow: column;
   overflow-x: auto;
   padding-bottom: 0.5rem;
