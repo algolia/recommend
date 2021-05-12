@@ -71,12 +71,12 @@ export function useRecommendations<TObject extends ProductBaseRecord>(
               maxRecommendations: props.maxRecommendations,
               recommendations,
             }),
+            ...props.searchParameters,
             optionalFilters: getOptionalFilters({
               fallbackFilters: props.fallbackFilters,
               recommendations,
               threshold: props.threshold,
-            }),
-            ...props.searchParameters,
+            }).concat(props.searchParameters.optionalFilters as any),
           })
           .then((result) => {
             const hits = result.hits.map((hit, index) => {
