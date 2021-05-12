@@ -1,3 +1,9 @@
+:root {
+  --auc-primary-color: #9698c3;
+  --auc-muted-color: #c4c4c4;
+  --auc-dark-color: #0f0f0f;
+}
+
 .auc-Recommendations-container {
   position: relative;
 }
@@ -8,12 +14,12 @@
   border: 1px solid #fff;
   border-radius: 2px;
   box-shadow: 0px 2px 6px rgba(90, 94, 154, 0.44);
-  color: #9698c3;
+  color: var(--auc-primary-color);
   cursor: pointer;
   display: flex;
   height: 40px;
   justify-content: center;
-  outline-color: #9698c3;
+  outline-color: var(--auc-primary-color);
   padding: 0;
   position: absolute;
   top: 35%;
@@ -54,7 +60,7 @@
   gap: 0.5rem;
   list-style: none;
   margin: 0;
-  outline-color: #9698c3;
+  outline-color: var(--auc-primary-color);
   outline-offset: 0.5rem;
   padding: 0;
   scroll-behavior: smooth;
@@ -77,7 +83,7 @@
   overflow-x: auto;
   padding-bottom: 0.5rem;
   scroll-snap-type: x proximity;
-  scrollbar-color: #0f0f0f #c4c4c4;
+  scrollbar-color: var(--auc-dark-color) var(--auc-muted-color);
   scrollbar-width: thin;
 }
 
@@ -87,12 +93,12 @@
 
 .auc-Recommendations--inline
   .auc-Recommendations-list::-webkit-scrollbar-track {
-  background-color: #c4c4c4;
+  background-color: var(--auc-muted-color);
 }
 
 .auc-Recommendations--inline
   .auc-Recommendations-list::-webkit-scrollbar-thumb {
-  background-color: #0f0f0f;
+  background-color: var(--auc-dark-color);
 }
 
 @media (min-width: 999px) {
@@ -106,6 +112,6 @@
 }
 
 .auc-Recommendations-item * {
-  outline-color: #9698c3;
+  outline-color: var(--auc-primary-color);
   outline-offset: 3px;
 }
