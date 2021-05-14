@@ -1,7 +1,7 @@
 import { act, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
-import { createSingleSearchResponse } from '../../../../test-utils/createApiResponse';
+import { createMultiSearchResponse } from '../../../../test-utils/createApiResponse';
 import { createSearchClient } from '../../../../test-utils/createSearchClient';
 import { Recommendations } from '../Recommendations';
 
@@ -34,17 +34,17 @@ function Hit({ hit }) {
 
 function createRecommendationsClient() {
   const index = {
-    getObject: jest.fn(() => Promise.resolve(hit)),
+    getObjects: jest.fn(() => Promise.resolve({ results: [hit] })),
+  };
+  const searchClient = createSearchClient({
+    initIndex: jest.fn(() => index),
     search: jest.fn(() =>
       Promise.resolve(
-        createSingleSearchResponse({
+        createMultiSearchResponse({
           hits: [hit],
         })
       )
     ),
-  };
-  const searchClient = createSearchClient({
-    initIndex: jest.fn(() => index),
   });
 
   return {
@@ -63,7 +63,7 @@ describe('Recommendations', () => {
           model="related-products"
           searchClient={searchClient}
           indexName="indexName"
-          objectID="objectID"
+          objectIDs={['objectID']}
           hitComponent={Hit}
         />
       );
@@ -73,22 +73,27 @@ describe('Recommendations', () => {
     expect(searchClient.initIndex).toHaveBeenCalledWith(
       'ai_recommend_related-products_indexName'
     );
-    expect(index.getObject).toHaveBeenCalledTimes(1);
-    expect(index.getObject).toHaveBeenCalledWith('objectID');
+    expect(index.getObjects).toHaveBeenCalledTimes(1);
+    expect(index.getObjects).toHaveBeenCalledWith(['objectID']);
 
     await waitFor(() => {
-      expect(index.search).toHaveBeenCalledTimes(1);
-      expect(index.search).toHaveBeenCalledWith('', {
-        analytics: false,
-        analyticsTags: ['alg-recommend_related-products'],
-        clickAnalytics: false,
-        enableABTest: false,
-        filters: 'NOT objectID:objectID',
-        hitsPerPage: 0,
-        optionalFilters: [],
-        ruleContexts: ['alg-recommend_related-products_objectID'],
-        typoTolerance: false,
-      });
+      expect(searchClient.search).toHaveBeenCalledTimes(1);
+      expect(searchClient.search).toHaveBeenCalledWith([
+        {
+          indexName: 'indexName',
+          params: {
+            analytics: false,
+            analyticsTags: ['alg-recommend_related-products'],
+            clickAnalytics: false,
+            enableABTest: false,
+            filters: 'NOT objectID:objectID',
+            hitsPerPage: 0,
+            optionalFilters: [],
+            ruleContexts: ['alg-recommend_related-products_objectID'],
+            typoTolerance: false,
+          },
+        },
+      ]);
     });
   });
 
@@ -101,7 +106,7 @@ describe('Recommendations', () => {
           model="bought-together"
           searchClient={searchClient}
           indexName="indexName"
-          objectID="objectID"
+          objectIDs={['objectID']}
           hitComponent={Hit}
         />
       );
@@ -111,22 +116,27 @@ describe('Recommendations', () => {
     expect(searchClient.initIndex).toHaveBeenCalledWith(
       'ai_recommend_bought-together_indexName'
     );
-    expect(index.getObject).toHaveBeenCalledTimes(1);
-    expect(index.getObject).toHaveBeenCalledWith('objectID');
+    expect(index.getObjects).toHaveBeenCalledTimes(1);
+    expect(index.getObjects).toHaveBeenCalledWith(['objectID']);
 
     await waitFor(() => {
-      expect(index.search).toHaveBeenCalledTimes(1);
-      expect(index.search).toHaveBeenCalledWith('', {
-        analytics: false,
-        analyticsTags: ['alg-recommend_bought-together'],
-        clickAnalytics: false,
-        enableABTest: false,
-        filters: 'NOT objectID:objectID',
-        hitsPerPage: 0,
-        optionalFilters: [],
-        ruleContexts: ['alg-recommend_bought-together_objectID'],
-        typoTolerance: false,
-      });
+      expect(searchClient.search).toHaveBeenCalledTimes(1);
+      expect(searchClient.search).toHaveBeenCalledWith([
+        {
+          indexName: 'indexName',
+          params: {
+            analytics: false,
+            analyticsTags: ['alg-recommend_bought-together'],
+            clickAnalytics: false,
+            enableABTest: false,
+            filters: 'NOT objectID:objectID',
+            hitsPerPage: 0,
+            optionalFilters: [],
+            ruleContexts: ['alg-recommend_bought-together_objectID'],
+            typoTolerance: false,
+          },
+        },
+      ]);
     });
   });
 });

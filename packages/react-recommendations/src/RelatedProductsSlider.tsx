@@ -180,7 +180,7 @@ export function RelatedProductsSlider<TObject extends ProductBaseRecord>(
 RelatedProductsSlider.propTypes = {
   searchClient: PropTypes.object.isRequired,
   indexName: PropTypes.string.isRequired,
-  objectID: PropTypes.string.isRequired,
+  objectIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
   hitComponent: PropTypes.elementType.isRequired,
 
   fallbackFilters: PropTypes.arrayOf(

@@ -1,22 +1,19 @@
-import {
-  UseRecommendationsInternalProps,
-  RecommendationRecord,
-} from '../types';
+import { UseRecommendationsInternalProps } from '../types';
 
 type GetHitsPerPageParams = {
   fallbackFilters: UseRecommendationsInternalProps['fallbackFilters'];
   maxRecommendations: UseRecommendationsInternalProps['maxRecommendations'];
-  recommendations: RecommendationRecord[];
+  recommendationsCount: number;
 };
 
 export function getHitsPerPage({
   fallbackFilters,
   maxRecommendations,
-  recommendations,
+  recommendationsCount,
 }: GetHitsPerPageParams) {
   const hasFallback = fallbackFilters.length > 0;
 
-  if (recommendations.length === 0) {
+  if (recommendationsCount === 0) {
     return hasFallback ? maxRecommendations : 0;
   }
 
@@ -28,6 +25,6 @@ export function getHitsPerPage({
 
   // Otherwise, cap the hits retrieved with `maxRecommendations`
   return maxRecommendations > 0
-    ? Math.min(recommendations.length, maxRecommendations)
-    : recommendations.length;
+    ? Math.min(recommendationsCount, maxRecommendations)
+    : recommendationsCount;
 }

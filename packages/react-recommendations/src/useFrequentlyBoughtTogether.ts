@@ -10,7 +10,7 @@ import {
 
 export type UseFrequentlyBoughtTogetherProps = {
   indexName: string;
-  objectID: string;
+  objectIDs: string[];
   searchClient: SearchClient;
 
   maxRecommendations?: number;
