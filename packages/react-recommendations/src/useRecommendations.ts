@@ -69,21 +69,21 @@ export function useRecommendations<TObject extends ProductBaseRecord>(
       .getObjects<TObject>(props.objectIDs)
       .then((response) => {
         const recommendationsList = response.results.map(
-          (x) => x?.recommendations ?? []
+          (result) => result?.recommendations ?? []
         );
 
         props.searchClient
           .search<TObject>(
             recommendationsList.map((recommendations) => {
-              // This computes the `hitsPerPage` value if a single `objectID`
+              // This computes the `hitsPerPage` value as if a single `objectID`
               // was passed.
               const globalHitsPerPage = getHitsPerPage({
                 fallbackFilters: props.fallbackFilters,
                 maxRecommendations: props.maxRecommendations,
                 recommendationsCount: recommendations.length,
               });
-              // This reduces the `hitsPerPage` value to get a `globalHitsPerPage`
-              // amount shared among all requests.
+              // This reduces the `globalHitsPerPage` value to get a `hitsPerPage`
+              // that is divided among all requests.
               const hitsPerPage =
                 globalHitsPerPage > 0
                   ? Math.ceil(globalHitsPerPage / props.objectIDs.length)
@@ -104,39 +104,44 @@ export function useRecommendations<TObject extends ProductBaseRecord>(
             })
           )
           .then((response) => {
-            const hits = sortBy<ProductRecord<TObject>>(
-              (a, b) => {
-                const scoreA = a.__recommendScore || 0;
-                const scoreB = b.__recommendScore || 0;
+            const hits =
+              // Since recommendations from multiple indices are returned, we
+              // need to sort them descending based on their score.
+              sortBy<ProductRecord<TObject>>(
+                (a, b) => {
+                  const scoreA = a.__recommendScore || 0;
+                  const scoreB = b.__recommendScore || 0;
 
-                return scoreA < scoreB ? 1 : -1;
-              },
-              uniqBy<ProductRecord<TObject>>(
-                'objectID',
-                response.results.flatMap((result) =>
-                  result.hits.map((hit, index) => {
-                    const match = recommendationsList
-                      .flat()
-                      .find((x) => x.objectID === hit.objectID);
+                  return scoreA < scoreB ? 1 : -1;
+                },
+                // Multiple identical recommended `objectID`s can be returned b
+                // the engine, so we need to remove duplicates.
+                uniqBy<ProductRecord<TObject>>(
+                  'objectID',
+                  response.results.flatMap((result) =>
+                    result.hits.map((hit, index) => {
+                      const match = recommendationsList
+                        .flat()
+                        .find((x) => x.objectID === hit.objectID);
 
-                    return {
-                      ...hit,
-                      __indexName: props.indexName,
-                      __queryID: result.queryID,
-                      __position: index + 1,
-                      __recommendScore: match?.score ?? null,
-                    };
-                  })
+                      return {
+                        ...hit,
+                        __indexName: props.indexName,
+                        __queryID: result.queryID,
+                        __position: index + 1,
+                        __recommendScore: match?.score ?? null,
+                      };
+                    })
+                  )
                 )
-              )
-            ).slice(
-              0,
-              // We cap the number of recommendations because the previously
-              // computed `hitsPerPage` was an approximation due to `Math.ceil`.
-              props.maxRecommendations > 0
-                ? props.maxRecommendations
-                : undefined
-            );
+              ).slice(
+                0,
+                // We cap the number of recommendations because the previously
+                // computed `hitsPerPage` was an approximation due to `Math.ceil`.
+                props.maxRecommendations > 0
+                  ? props.maxRecommendations
+                  : undefined
+              );
 
             setProducts(hits);
           });
