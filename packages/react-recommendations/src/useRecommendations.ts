@@ -65,7 +65,6 @@ export function useRecommendations<TObject extends ProductBaseRecord>(
         const recommendations = record.recommendations ?? [];
 
         props.searchClient.addAlgoliaAgent('react-recommendations', version);
-
         props.searchClient
           .initIndex(props.indexName)
           .search<TObject>('', {
