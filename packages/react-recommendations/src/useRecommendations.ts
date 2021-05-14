@@ -12,6 +12,7 @@ import {
   getIndexNameFromModel,
   getOptionalFilters,
 } from './utils';
+import { version } from './version';
 
 export type UseRecommendationsProps = {
   model: RecommendationModel;
@@ -62,6 +63,8 @@ export function useRecommendations<TObject extends ProductBaseRecord>(
       .getObject<TObject>(props.objectID)
       .then((record) => {
         const recommendations = record.recommendations ?? [];
+
+        props.searchClient.addAlgoliaAgent('react-recommendations', version);
 
         props.searchClient
           .initIndex(props.indexName)
