@@ -1,6 +1,6 @@
-type Predicate<TITem> = (a: TITem, b: TITem) => number;
+type Predicate<TItem> = (a: TItem, b: TItem) => number;
 
-export function sortBy<TITem>(predicate: Predicate<TITem>, items: TITem[]) {
+export function sortBy<TItem>(predicate: Predicate<TItem>, items: TItem[]) {
   const itemsCopy = [...items];
   itemsCopy.sort(predicate);
 
