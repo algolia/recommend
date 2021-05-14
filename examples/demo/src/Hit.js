@@ -1,6 +1,10 @@
 import React from 'react';
 
+import config from '../demo.config';
+
 import './Hit.css';
+
+const { nameAttribute, imageAttribute, priceAttribute } = config;
 
 export function Hit({ hit, insights }) {
   return (
@@ -20,14 +24,14 @@ export function Hit({ hit, insights }) {
       }}
     >
       <div className="Hit-Image">
-        <img src={hit.image_link} alt={hit.name} />
+        <img src={hit[imageAttribute]} alt={hit[nameAttribute]} />
       </div>
 
       <div className="Hit-Content">
-        <div className="Hit-Name">{hit.name}</div>
+        <div className="Hit-Name">{hit[nameAttribute]}</div>
         <div className="Hit-Description">{hit.objectID}</div>
 
-        <div className="Hit-Price">${hit.price}</div>
+        <div className="Hit-Price">${hit[priceAttribute]}</div>
 
         <button
           className="Hit-Button"

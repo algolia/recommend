@@ -9,14 +9,23 @@ import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
 
+import config from '../demo.config';
+
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
 import { Hit } from './Hit';
 
 import './App.css';
 
-const appId = 'HYDY1KWTWB';
-const apiKey = '28cf6d38411215e2eef188e635216508';
-const indexName = 'gstar_demo_test';
+const {
+  appId,
+  apiKey,
+  indexName,
+  nameAttribute,
+  imageAttribute,
+  categoryAttribute,
+  priceAttribute,
+  fallbackFilter,
+} = config;
 
 const searchClient = algoliasearch(appId, apiKey);
 
@@ -52,7 +61,7 @@ function App() {
                 });
               },
               getItemInputValue({ item }) {
-                return item.name;
+                return item[nameAttribute];
               },
               onSelect({ item }) {
                 setSelectedProduct(item);
@@ -64,8 +73,8 @@ function App() {
                       <div className="aa-ItemContent">
                         <div className="aa-ItemIcon aa-ItemIcon--picture aa-ItemIcon--alignTop">
                           <img
-                            src={item.image_link}
-                            alt={item.name}
+                            src={item[imageAttribute]}
+                            alt={item[nameAttribute]}
                             width="40"
                             height="40"
                           />
@@ -73,10 +82,13 @@ function App() {
 
                         <div className="aa-ItemContentBody">
                           <div className="aa-ItemContentTitle">
-                            <components.Highlight hit={item} attribute="name" />
+                            <components.Highlight
+                              hit={item}
+                              attribute={nameAttribute}
+                            />
                           </div>
                           <div className="aa-ItemContentDescription">
-                            In <strong>{item.category}</strong>
+                            In <strong>{item[categoryAttribute]}</strong>
                           </div>
                         </div>
                       </div>
@@ -98,18 +110,20 @@ function App() {
             >
               <div className="Hit-Image" style={{ maxWidth: 150 }}>
                 <img
-                  src={selectedProduct.image_link}
-                  alt={selectedProduct.name}
+                  src={selectedProduct[imageAttribute]}
+                  alt={selectedProduct[nameAttribute]}
                 />
               </div>
 
               <div className="Hit-Content">
-                <div className="Hit-Name">{selectedProduct.name}</div>
+                <div className="Hit-Name">{selectedProduct[nameAttribute]}</div>
                 <div className="Hit-Description">
                   {selectedProduct.objectID}
                 </div>
                 <footer className="Hit-Footer">
-                  <span className="Hit-Price">${selectedProduct.price}</span>
+                  <span className="Hit-Price">
+                    ${selectedProduct[priceAttribute]}
+                  </span>
                 </footer>
               </div>
             </div>
@@ -122,8 +136,8 @@ function App() {
             hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
             maxRecommendations={3}
             searchParameters={{
-              analytics: true,
-              clickAnalytics: true,
+              analytics: false,
+              clickAnalytics: false,
             }}
           />
 
@@ -137,14 +151,11 @@ function App() {
               title: 'Related products (slider)',
             }}
             fallbackFilters={[
-              `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+              `${fallbackFilter}:${selectedProduct[fallbackFilter]}`,
             ]}
             searchParameters={{
-              analytics: true,
-              clickAnalytics: true,
-              facetFilters: [
-                `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-              ],
+              analytics: false,
+              clickAnalytics: false,
             }}
           />
 
@@ -158,14 +169,11 @@ function App() {
               title: 'Related products',
             }}
             fallbackFilters={[
-              `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+              `${fallbackFilter}:${selectedProduct[fallbackFilter]}`,
             ]}
             searchParameters={{
-              analytics: true,
-              clickAnalytics: true,
-              facetFilters: [
-                `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-              ],
+              analytics: false,
+              clickAnalytics: false,
             }}
           />
         </>
