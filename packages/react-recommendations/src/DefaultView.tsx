@@ -9,7 +9,7 @@ export type ViewProps<
 > = {
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
-  classNames?: TClassNames;
+  classNames?: Partial<TClassNames>;
   translations?: Partial<TTranslations>;
 };
 
