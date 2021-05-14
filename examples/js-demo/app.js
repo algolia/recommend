@@ -3,12 +3,14 @@ import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
 import {
   frequentlyBoughtTogether,
   relatedProducts,
+  relatedProductsSlider,
 } from '@algolia/js-recommendations/dist/esm';
 import algoliasearch from 'algoliasearch';
-import { h } from 'preact';
+import { h, render } from 'preact';
 import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
+import { Hit } from './Hit';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
@@ -43,6 +45,7 @@ autocomplete({
           return item.name;
         },
         onSelect({ item }) {
+          render(hitShowcase(item), document.querySelector('#hitShowcase'));
           renderRecommendations(item);
         },
         templates: {
@@ -77,12 +80,35 @@ autocomplete({
   },
 });
 
-function renderRecommendations(item) {
+function hitShowcase(selectedProduct) {
+  return (
+    <div style={{ padding: '1rem 0' }}>
+      <div
+        className="Hit"
+        style={{ gridTemplateColumns: '150px 1fr', gap: '1rem' }}
+      >
+        <div className="Hit-Image" style={{ maxWidth: 150 }}>
+          <img src={selectedProduct.image_link} alt={selectedProduct.name} />
+        </div>
+
+        <div className="Hit-Content">
+          <div className="Hit-Name">{selectedProduct.name}</div>
+          <div className="Hit-Description">{selectedProduct.objectID}</div>
+          <footer className="Hit-Footer">
+            <span className="Hit-Price">${selectedProduct.price}</span>
+          </footer>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function renderRecommendations(selectedProduct) {
   frequentlyBoughtTogether({
     container: '#frequentlyBoughtTogether',
     searchClient,
     indexName,
-    objectID: item.objectID,
+    objectID: selectedProduct.objectID,
     hitComponent({ hit }) {
       return <Hit hit={hit} insights={insights} />;
     },
@@ -93,11 +119,35 @@ function renderRecommendations(item) {
     },
   });
 
+  relatedProductsSlider({
+    container: '#relatedProductsSlider',
+    searchClient,
+    indexName,
+    objectID: selectedProduct.objectID,
+    hitComponent({ hit }) {
+      return <Hit hit={hit} insights={insights} />;
+    },
+    maxRecommendations: 10,
+    translations: {
+      title: 'Related products (slider)',
+    },
+    fallbackFilters: [
+      `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+    ],
+    searchParameters: {
+      analytics: true,
+      clickAnalytics: true,
+      facetFilters: [
+        `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+      ],
+    },
+  });
+
   relatedProducts({
     container: '#relatedProducts',
     searchClient,
     indexName,
-    objectID: item.objectID,
+    objectID: selectedProduct.objectID,
     hitComponent({ hit }) {
       return <Hit hit={hit} insights={insights} />;
     },
@@ -106,61 +156,14 @@ function renderRecommendations(item) {
       title: 'Related products (inline)',
     },
     fallbackFilters: [
-      `hierarchical_categories.lvl2:${item.hierarchical_categories.lvl2}`,
+      `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
     ],
     searchParameters: {
       analytics: true,
       clickAnalytics: true,
       facetFilters: [
-        `hierarchical_categories.lvl0:${item.hierarchical_categories.lvl0}`,
+        `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
       ],
     },
   });
-}
-
-function Hit({ hit, insights }) {
-  return (
-    <div className="RecommendationItem">
-      <div className="RecommendationItemImage">
-        <img src={hit.image_link} alt={hit.name} />
-      </div>
-
-      <div>
-        <div className="RecommendationItemName">{hit.name}</div>
-        <div className="RecommendationItemDescription">
-          <p>
-            {hit.objectID} (score: {hit.__recommendScore})
-          </p>
-        </div>
-        <div className="RecommendationItemPrice">${hit.price}</div>
-      </div>
-
-      <div>
-        <button
-          onClick={() =>
-            insights('clickedObjectIDsAfterSearch', {
-              objectIDs: [hit.objectID],
-              eventName: 'Product Clicked',
-              queryID: hit.__queryID,
-              index: hit.__indexName,
-            })
-          }
-        >
-          See details
-        </button>
-        <button
-          onClick={() =>
-            insights('convertedObjectIDsAfterSearch', {
-              objectIDs: [hit.objectID],
-              eventName: 'Product Added To Cart',
-              queryID: hit.__queryID,
-              index: hit.__indexName,
-            })
-          }
-        >
-          Add to cart
-        </button>
-      </div>
-    </div>
-  );
 }
