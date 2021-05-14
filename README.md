@@ -30,7 +30,7 @@ Then, use the `Recommendations` component:
   model="related-products"
   searchClient={searchClient}
   indexName="YOUR_SOURCE_INDEX_NAME"
-  objectID={objectID}
+  objectIDs={[objectID]}
   hitComponent={Hit}
 />
 
@@ -39,7 +39,7 @@ Then, use the `Recommendations` component:
   model="bought-together"
   searchClient={searchClient}
   indexName="YOUR_SOURCE_INDEX_NAME"
-  objectID={objectID}
+  objectIDs={[objectID]}
   hitComponent={Hit}
 />
 ```
@@ -64,11 +64,11 @@ The initialized Algolia search client.
 
 The name of the products index.
 
-### `objectID`
+### `objectIDs`
 
-> `string` | **required**
+> `string[` | **required**
 
-The objectID of the product to get recommendations from
+An array of object IDs of the products to get recommendations from.
 
 ### `hitComponent`
 

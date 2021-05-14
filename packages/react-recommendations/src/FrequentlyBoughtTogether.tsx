@@ -60,7 +60,7 @@ export function FrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
 FrequentlyBoughtTogether.propTypes = {
   searchClient: PropTypes.object.isRequired,
   indexName: PropTypes.string.isRequired,
-  objectID: PropTypes.string.isRequired,
+  objectIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
   hitComponent: PropTypes.elementType.isRequired,
 
   maxRecommendations: PropTypes.number,

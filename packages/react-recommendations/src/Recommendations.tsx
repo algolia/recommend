@@ -56,7 +56,7 @@ Recommendations.propTypes = {
   model: PropTypes.string.isRequired,
   searchClient: PropTypes.object.isRequired,
   indexName: PropTypes.string.isRequired,
-  objectID: PropTypes.string.isRequired,
+  objectIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
   hitComponent: PropTypes.elementType.isRequired,
 
   fallbackFilters: PropTypes.arrayOf(

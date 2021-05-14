@@ -62,7 +62,7 @@ export function RelatedProducts<TObject extends ProductBaseRecord>(
 RelatedProducts.propTypes = {
   searchClient: PropTypes.object.isRequired,
   indexName: PropTypes.string.isRequired,
-  objectID: PropTypes.string.isRequired,
+  objectIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
   hitComponent: PropTypes.elementType.isRequired,
 
   fallbackFilters: PropTypes.arrayOf(
