@@ -1,22 +1,17 @@
 import {
   ProductBaseRecord,
   RelatedProducts,
-  RelatedProductsProps as RelatedProductsComponentProps,
+  RelatedProductsProps,
 } from '@algolia/react-recommendations';
 import React, { render } from 'preact/compat';
 
 import { getHTMLElement } from './getHTMLElement';
-
-interface RelatedProductsProps<TObject extends ProductBaseRecord>
-  extends RelatedProductsComponentProps<TObject> {
-  container: string | HTMLElement;
-  environment?: typeof window;
-}
+import { RenderProps } from './types';
 
 export function relatedProducts<TObject extends ProductBaseRecord>({
   container,
   environment,
   ...rest
-}: RelatedProductsProps<TObject>) {
+}: RelatedProductsProps<TObject> & RenderProps) {
   render(<RelatedProducts {...rest} />, getHTMLElement(container, environment));
 }
