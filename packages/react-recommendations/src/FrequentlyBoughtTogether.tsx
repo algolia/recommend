@@ -38,7 +38,7 @@ export function FrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
   }
 
   return (
-    <div className="auc-Recommendations ">
+    <div className="auc-Recommendations">
       {translations.title && <h3>{translations.title}</h3>}
 
       <View
