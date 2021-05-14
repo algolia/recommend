@@ -1,71 +1,51 @@
-import PropTypes from 'prop-types';
 import React, { useMemo } from 'react';
 
+import { DefaultView, ViewProps } from './DefaultView';
 import { RecommendationsProps } from './Recommendations';
 import { ProductBaseRecord, RecommendationTranslations } from './types';
 import { useFrequentlyBoughtTogether } from './useFrequentlyBoughtTogether';
 
-export type FrequentlyBoughtTogetherProps<TObject> = Omit<
-  RecommendationsProps<TObject>,
-  'model' | 'fallbackFilters'
->;
-
-function defaultRender<TObject>(props: {
-  recommendations: TObject[];
-  children: React.ReactNode;
-}) {
-  if (props.recommendations.length === 0) {
-    return null;
-  }
-
-  return props.children;
-}
+export type FrequentlyBoughtTogetherProps<
+  TObject extends ProductBaseRecord
+> = Omit<RecommendationsProps<TObject>, 'model' | 'fallbackFilters'> & {
+  view?(
+    props: ViewProps<
+      TObject,
+      RecommendationTranslations,
+      Record<string, string>
+    >
+  ): JSX.Element;
+};
 
 export function FrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
   props: FrequentlyBoughtTogetherProps<TObject>
 ) {
   const { recommendations } = useFrequentlyBoughtTogether<TObject>(props);
-  const render = props.children || defaultRender;
-  const translations: RecommendationTranslations = useMemo(
+  const translations: RecommendationTranslations &
+    Record<string, string> = useMemo(
     () => ({
       title: 'Frequently bought together',
+      sliderLabel: 'Frequently bought together products',
       showMore: 'Show more',
       ...props.translations,
     }),
     [props.translations]
   );
+  const View = props.view ?? DefaultView;
 
-  const children = (
-    <div className="auc-Recommendations auc-Recommendations--grid">
+  if (recommendations.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="auc-Recommendations ">
       {translations.title && <h3>{translations.title}</h3>}
 
-      {recommendations.length > 0 && (
-        <ol className="auc-Recommendations-list">
-          {recommendations.map((recommendation) => (
-            <li
-              key={recommendation.objectID}
-              className="auc-Recommendations-item"
-            >
-              <props.hitComponent hit={recommendation} />
-            </li>
-          ))}
-        </ol>
-      )}
+      <View
+        items={recommendations}
+        itemComponent={({ item }) => <props.hitComponent hit={item} />}
+        translations={translations}
+      />
     </div>
   );
-
-  return render({ recommendations, children });
 }
-
-FrequentlyBoughtTogether.propTypes = {
-  searchClient: PropTypes.object.isRequired,
-  indexName: PropTypes.string.isRequired,
-  objectIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
-  hitComponent: PropTypes.elementType.isRequired,
-
-  maxRecommendations: PropTypes.number,
-  searchParameters: PropTypes.object,
-  threshold: PropTypes.number,
-
-  children: PropTypes.func,
-};
