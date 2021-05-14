@@ -7,7 +7,7 @@ import {
   UseRecommendationsProps,
 } from './useRecommendations';
 
-export type RecommendationsProps<TObject> = UseRecommendationsProps & {
+export type RecommendationsProps<TObject> = UseRecommendationsProps<TObject> & {
   hitComponent: React.FunctionComponent<{ hit: TObject }>;
   children?(props: {
     recommendations: TObject[];

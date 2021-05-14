@@ -22,7 +22,7 @@ export type UseRelatedProductsProps = {
 export function useRelatedProducts<TObject extends ProductBaseRecord>(
   userProps: UseRelatedProductsProps
 ) {
-  const props: UseRecommendationsProps = useMemo(
+  const props: UseRecommendationsProps<TObject> = useMemo(
     () => ({
       ...userProps,
       model: 'related-products',

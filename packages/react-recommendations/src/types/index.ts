@@ -3,3 +3,4 @@ export * from './ProductBaseRecord';
 export * from './RecommendationModel';
 export * from './RecommendationRecord';
 export * from './RecommendationTranslations';
+export * from './RecommendationsTransformItems';
