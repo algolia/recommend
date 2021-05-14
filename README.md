@@ -66,9 +66,9 @@ The name of the products index.
 
 ### `objectIDs`
 
-> `string[` | **required**
+> `string[]` | **required**
 
-An array of object IDs of the products to get recommendations from.
+An array of `objectID`s of the products to get recommendations from.
 
 ### `hitComponent`
 
