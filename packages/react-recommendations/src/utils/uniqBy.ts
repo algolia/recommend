@@ -1,3 +1,3 @@
-export function uniqBy<TObject>(key: keyof TObject, objects: TObject[]) {
-  return [...new Map(objects.map((item) => [item[key], item])).values()];
+export function uniqBy<TItem>(key: keyof TItem, items: TItem[]) {
+  return [...new Map(items.map((item) => [item[key], item])).values()];
 }

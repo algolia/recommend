@@ -1,11 +1,8 @@
-type Predicate<TObject> = (a: TObject, b: TObject) => number;
+type Predicate<TITem> = (a: TITem, b: TITem) => number;
 
-export function sortBy<TObject>(
-  predicate: Predicate<TObject>,
-  objects: TObject[]
-) {
-  const objectsCopy = [...objects];
-  objectsCopy.sort(predicate);
+export function sortBy<TITem>(predicate: Predicate<TITem>, items: TITem[]) {
+  const itemsCopy = [...items];
+  itemsCopy.sort(predicate);
 
-  return objectsCopy;
+  return itemsCopy;
 }
