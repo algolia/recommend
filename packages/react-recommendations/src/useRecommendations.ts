@@ -6,7 +6,7 @@ import {
   UseRecommendationsInternalProps,
   ProductBaseRecord,
   RecommendationModel,
-  RecommendationsTransformItems,
+  RecommendationTransformItems,
 } from './types';
 import {
   getHitsPerPage,
@@ -24,7 +24,7 @@ export type UseRecommendationsProps<TObject> = {
   maxRecommendations?: number;
   searchParameters?: SearchOptions;
   threshold?: number;
-  transformItems?: RecommendationsTransformItems<TObject>;
+  transformItems?: RecommendationTransformItems<TObject>;
 };
 
 type UseRecommendationReturn<TObject> = {
