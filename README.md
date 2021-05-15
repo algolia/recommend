@@ -1,4 +1,4 @@
-# @algolia/react-recommendations
+# Recommendations
 
 [![MIT](https://img.shields.io/badge/license-MIT-green)](./LICENSE) [![npm version](https://img.shields.io/npm/v/@algolia/react-recommendations)](https://www.npmjs.com/package/@algolia/react-recommendations)
 
@@ -9,39 +9,96 @@ This is the repository packaging the Algolia Recommend React component as well a
 ## Installation
 
 ```sh
-yarn add @algolia/react-recommendations@beta
+yarn add @algolia/react-recommendations@experimental
 # or
-npm install @algolia/react-recommendations@beta
+npm install @algolia/react-recommendations@experimental
 ```
 
 ## Usage
 
-First, you need to import the package.
-
 ```js
-import { Recommendations } from '@algolia/react-recommendations';
+import {
+  FrequentlyBoughtTogether,
+  RelatedProducts,
+} from '@algolia/react-recommendations';
+import algoliasearch from 'algoliasearch';
+
+const appId = 'HYDY1KWTWB';
+const apiKey = '28cf6d38411215e2eef188e635216508';
+const indexName = 'gstar_demo_test';
+
+const searchClient = algoliasearch(appId, apiKey);
+
+function Hit({ hit }) {
+  return (
+    <pre>
+      <code>{JSON.stringify(hit)}</code>
+    </pre>
+  );
+}
+
+function App({ currentObjectID }) {
+  // ...
+
+  return (
+    <div>
+      <FrequentlyBoughtTogether
+        searchClient={searchClient}
+        indexName={indexName}
+        objectIDs={[currentObjectID]}
+        hitComponent={Hit}
+      />
+
+      <RelatedProducts
+        searchClient={searchClient}
+        indexName={indexName}
+        objectIDs={[currentObjectID]}
+        hitComponent={Hit}
+      />
+    </div>
+  );
+}
 ```
 
-Then, use the `Recommendations` component:
+If you want full control of the rendering, you can use the `useRelatedProducts` and `useFrequentlyBoughtTogether` React hooks:
 
 ```jsx
-// Related products:
-<Recommendations
-  model="related-products"
-  searchClient={searchClient}
-  indexName="YOUR_SOURCE_INDEX_NAME"
-  objectIDs={[objectID]}
-  hitComponent={Hit}
-/>
+import { useRelatedProducts } from '@algolia/react-recommendations';
+import algoliasearch from 'algoliasearch';
 
-// Bought together:
-<Recommendations
-  model="bought-together"
-  searchClient={searchClient}
-  indexName="YOUR_SOURCE_INDEX_NAME"
-  objectIDs={[objectID]}
-  hitComponent={Hit}
-/>
+const appId = 'HYDY1KWTWB';
+const apiKey = '28cf6d38411215e2eef188e635216508';
+const indexName = 'gstar_demo_test';
+
+const searchClient = algoliasearch(appId, apiKey);
+
+function App({ currentObjectID }) {
+  // ...
+  const { recommendations } = useRelatedProducts({
+    searchClient,
+    indexName,
+    objectIDs: [currentObjectID],
+  });
+
+  return (
+    <div className="auc-Recommendations">
+      {recommendations.length > 0 && (
+        <ol className="auc-Recommendations-list">
+          {recommendations.map((recommendation) => (
+            <li
+              key={recommendation.objectID}
+              className="auc-Recommendations-item"
+            >
+              <pre>
+                <code>{JSON.stringify(hit)}</code>
+              </pre>
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+  );
+}
 ```
 
 ## Props
@@ -93,17 +150,6 @@ Additional filters to use as fallback should there not be enough recommendations
 > [`SearchParameters`](https://www.algolia.com/doc/api-reference/search-api-parameters/) | defaults to `{ analytics: false, enableABTest: false }`
 
 List of [search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/) to send.
-
-## Development
-
-To run this project locally, install the dependencies and run the local server:
-
-```sh
-yarn
-yarn start
-```
-
-Open http://localhost:3000 to see your app.
 
 ## License
 
