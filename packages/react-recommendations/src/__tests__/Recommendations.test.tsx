@@ -1,8 +1,10 @@
 import { act, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
-import { createMultiSearchResponse } from '../../../../test-utils/createApiResponse';
-import { createSearchClient } from '../../../../test-utils/createSearchClient';
+import {
+  createMultiSearchResponse,
+  createSearchClient,
+} from '../../../../test/utils';
 import { Recommendations } from '../Recommendations';
 
 const hit = {
