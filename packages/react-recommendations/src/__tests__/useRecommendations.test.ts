@@ -35,6 +35,7 @@ function createRecommendationsClient() {
     getObjects: jest.fn(() => Promise.resolve({ results: [hit] })),
   };
   const searchClient = createSearchClient({
+    // @ts-expect-error `initIndex` is not part of the lite bundle
     initIndex: jest.fn(() => index),
     search: jest.fn(() =>
       Promise.resolve(
