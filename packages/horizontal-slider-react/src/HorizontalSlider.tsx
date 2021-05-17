@@ -31,26 +31,15 @@ type HorizontalSliderTranslations = {
   nextButtonTitle: string;
 };
 
-// @TODO: extract this type to a shared package
-type ViewProps<
-  TItem extends RecordWithObjectID,
-  TTranslations extends Record<string, string>,
-  TClassNames extends Record<string, string>
-> = {
+type HorizontalSliderProps<TItem extends RecordWithObjectID> = {
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
-  classNames?: Partial<TClassNames>;
-  translations?: Partial<TTranslations>;
+  classNames?: Partial<HorizontalSliderClassnames>;
+  translations?: Partial<HorizontalSliderTranslations>;
 };
 
-type SliderProps<TItem extends RecordWithObjectID> = ViewProps<
-  TItem,
-  HorizontalSliderTranslations,
-  HorizontalSliderClassnames
->;
-
 export function HorizontalSlider<TObject extends RecordWithObjectID>(
-  props: SliderProps<TObject>
+  props: HorizontalSliderProps<TObject>
 ) {
   const translations: HorizontalSliderTranslations = useMemo(
     () => ({

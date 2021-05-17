@@ -1,6 +1,5 @@
 import { RecordWithObjectID } from './RecordWithObjectID';
 
-// @TODO: extract this type to a shared package
 export type ViewProps<
   TItem extends RecordWithObjectID,
   TTranslations extends Record<string, string>,

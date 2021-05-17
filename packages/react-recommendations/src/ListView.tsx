@@ -2,7 +2,7 @@ import React from 'react';
 
 import { RecordWithObjectID, ViewProps } from './types';
 
-export function DefaultView<TItem extends RecordWithObjectID>(
+export function ListView<TItem extends RecordWithObjectID>(
   props: ViewProps<TItem, {}, {}>
 ) {
   return (

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { DefaultView } from './DefaultView';
+import { ListView } from './ListView';
 import {
   ChildrenProps,
   RecommendationsComponentProps,
@@ -29,7 +29,7 @@ export function FrequentlyBoughtTogether<TObject>(
   );
 
   const render = props.children ?? defaultRender;
-  const ViewComponent = props.view ?? DefaultView;
+  const ViewComponent = props.view ?? ListView;
   const View = (viewProps: unknown) => (
     <ViewComponent
       items={recommendations}
