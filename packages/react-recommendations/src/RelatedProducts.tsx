@@ -26,10 +26,6 @@ export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
     [props.translations]
   );
 
-  if (recommendations.length === 0) {
-    return null;
-  }
-
   const render = props.children ?? defaultRender;
   const ViewComponent = props.view ?? DefaultView;
   const View = (viewProps: unknown) => (
@@ -45,6 +41,10 @@ export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
 }
 
 function defaultRender<TObject>(props: ChildrenProps<TObject>) {
+  if (props.recommendations.length === 0) {
+    return null;
+  }
+
   return (
     <section className="auc-Recommendations">
       {props.translations.title && <h3>{props.translations.title}</h3>}
