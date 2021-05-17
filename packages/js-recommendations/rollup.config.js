@@ -1,25 +1,27 @@
 import { plugins } from '../../rollup.base.config';
 
+import pkg from './package.json';
+
 if (!process.env.BUILD) {
   throw new Error('The `BUILD` environment variable is required to build.');
 }
 
 const output = {
   umd: {
-    file: 'dist/umd/index.js',
+    file: pkg.main,
     format: 'umd',
     sourcemap: true,
-    name: '@algolia/js-recommendations',
+    name: pkg.name,
   },
   esm: {
-    file: 'dist/esm/index.js',
+    file: pkg.module,
     format: 'es',
     sourcemap: true,
   },
 };
 
 export default {
-  input: 'src/index.ts',
+  input: pkg.source,
   output: output[process.env.BUILD],
   plugins,
 };

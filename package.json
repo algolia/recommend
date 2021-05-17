@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "build": "lerna run build --no-private",
+    "build:umd": "lerna run build:umd --no-private",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "test": "jest"
   },
@@ -17,6 +18,7 @@
     "@babel/preset-env": "7.13.8",
     "@babel/preset-react": "7.12.13",
     "@babel/preset-typescript": "7.13.0",
+    "@rollup/plugin-babel": "5.3.0",
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "7.1.1",
     "@rollup/plugin-replace": "2.3.3",
@@ -43,7 +45,6 @@
     "lerna": "4.0.0",
     "prettier": "2.2.1",
     "rollup": "2.48.0",
-    "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-filesize": "6.2.1",
     "rollup-plugin-license": "0.13.0",
