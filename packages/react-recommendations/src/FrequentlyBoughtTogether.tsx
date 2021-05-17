@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useMemo } from 'react';
 
 import { RecommendationsProps } from './Recommendations';
@@ -12,7 +11,7 @@ export type FrequentlyBoughtTogetherProps<TObject> = Omit<
 
 function defaultRender<TObject>(props: {
   recommendations: TObject[];
-  children: React.ReactNode;
+  children: JSX.Element;
 }) {
   if (props.recommendations.length === 0) {
     return null;
@@ -56,16 +55,3 @@ export function FrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
 
   return render({ recommendations, children });
 }
-
-FrequentlyBoughtTogether.propTypes = {
-  searchClient: PropTypes.object.isRequired,
-  indexName: PropTypes.string.isRequired,
-  objectIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
-  hitComponent: PropTypes.elementType.isRequired,
-
-  maxRecommendations: PropTypes.number,
-  searchParameters: PropTypes.object,
-  threshold: PropTypes.number,
-
-  children: PropTypes.func,
-};

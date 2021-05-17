@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import { ProductBaseRecord, RecommendationTranslations } from './types';
@@ -11,14 +10,14 @@ export type RecommendationsProps<TObject> = UseRecommendationsProps<TObject> & {
   hitComponent: React.FunctionComponent<{ hit: TObject }>;
   children?(props: {
     recommendations: TObject[];
-    children: React.ReactNode;
-  }): React.ReactNode;
+    children: JSX.Element;
+  }): JSX.Element;
   translations?: Partial<RecommendationTranslations>;
 };
 
 function defaultRender<TObject>(props: {
   recommendations: TObject[];
-  children: React.ReactNode;
+  children: JSX.Element;
 }) {
   return props.children;
 }
@@ -51,20 +50,3 @@ export function Recommendations<TObject extends ProductBaseRecord>(
 
   return render({ recommendations, children });
 }
-
-Recommendations.propTypes = {
-  model: PropTypes.string.isRequired,
-  searchClient: PropTypes.object.isRequired,
-  indexName: PropTypes.string.isRequired,
-  objectIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
-  hitComponent: PropTypes.elementType.isRequired,
-
-  fallbackFilters: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
-  ),
-  maxRecommendations: PropTypes.number,
-  searchParameters: PropTypes.object,
-  threshold: PropTypes.number,
-
-  children: PropTypes.func,
-};
