@@ -10,7 +10,7 @@ import {
 
 export type UseRelatedProductsProps = {
   indexName: string;
-  objectID: string;
+  objectIDs: string[];
   searchClient: SearchClient;
 
   fallbackFilters?: SearchOptions['optionalFilters'];

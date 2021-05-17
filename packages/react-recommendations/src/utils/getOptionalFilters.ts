@@ -20,12 +20,8 @@ export function getOptionalFilters<TObject extends ProductBaseRecord>({
   }
 
   const recommendationFilters = recommendations
-    .reverse()
     .filter((recommendation) => recommendation.score > threshold)
-    .map(
-      ({ objectID, score }, i) =>
-        `objectID:${objectID}<score=${Math.round(score * 100) + i}>`
-    );
+    .map(({ objectID, score }) => `objectID:${objectID}<score=${score}>`);
 
   return [...recommendationFilters, ...fallbackFilters];
 }
