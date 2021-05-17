@@ -8,6 +8,7 @@
   "scripts": {
     "build": "lerna run build --no-private",
     "lint": "eslint --ext .js,.ts,.tsx .",
+    "prepare": "lerna run prepare --no-private",
     "test": "jest"
   },
   "devDependencies": {
