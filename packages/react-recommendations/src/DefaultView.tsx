@@ -1,19 +1,8 @@
 import React from 'react';
 
-import { ProductBaseRecord } from './types';
+import { RecordWithObjectID, ViewProps } from './types';
 
-export type ViewProps<
-  TItem extends ProductBaseRecord,
-  TTranslations extends Record<string, string>,
-  TClassNames extends Record<string, string>
-> = {
-  items: TItem[];
-  itemComponent({ item: TItem }): JSX.Element;
-  classNames?: Partial<TClassNames>;
-  translations?: Partial<TTranslations>;
-};
-
-export function DefaultView<TItem extends ProductBaseRecord>(
+export function DefaultView<TItem extends RecordWithObjectID>(
   props: ViewProps<TItem, {}, {}>
 ) {
   return (

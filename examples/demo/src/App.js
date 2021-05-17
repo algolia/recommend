@@ -1,8 +1,8 @@
 import {
   FrequentlyBoughtTogether,
   RelatedProducts,
-  Slider,
 } from '@algolia/react-recommendations';
+import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 import React, { useState } from 'react';
 import insights from 'search-insights';
@@ -12,9 +12,9 @@ import '@algolia/autocomplete-theme-classic';
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
 import { Hit } from './Hit';
 
+import '@algolia/ui-components-horizontal-slider-react/HorizontalSlider.css';
 import './App.css';
 import './Recommendations.css';
-import './Slider.css';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
@@ -134,7 +134,7 @@ function App() {
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
-            view={Slider}
+            view={HorizontalSlider}
             maxRecommendations={10}
             translations={{
               title: 'Related products (slider)',

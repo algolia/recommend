@@ -1,26 +1,20 @@
 import React, { useMemo } from 'react';
 
-import { DefaultView, ViewProps } from './DefaultView';
-import { RecommendationsProps } from './Recommendations';
-import { ProductBaseRecord, RecommendationTranslations } from './types';
-import { useRelatedProducts } from './useRelatedProducts';
+import { DefaultView } from './DefaultView';
+import {
+  ChildrenProps,
+  RecommendationsComponentProps,
+  RecommendationTranslations,
+} from './types';
+import {
+  useRelatedProducts,
+  UseRelatedProductsProps,
+} from './useRelatedProducts';
 
-export type RelatedProductsProps<TObject extends ProductBaseRecord> = Omit<
-  RecommendationsProps<TObject>,
-  'model'
-> & {
-  view?(
-    props: ViewProps<
-      TObject,
-      RecommendationTranslations,
-      Record<string, string>
-    >
-  ): JSX.Element;
-};
+type RelatedProductsProps<TObject> = UseRelatedProductsProps &
+  RecommendationsComponentProps<TObject>;
 
-export function RelatedProducts<TObject extends ProductBaseRecord>(
-  props: RelatedProductsProps<TObject>
-) {
+export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
   const { recommendations } = useRelatedProducts<TObject>(props);
   const translations: RecommendationTranslations = useMemo(
     () => ({
@@ -31,21 +25,31 @@ export function RelatedProducts<TObject extends ProductBaseRecord>(
     }),
     [props.translations]
   );
-  const View = props.view ?? DefaultView;
 
   if (recommendations.length === 0) {
     return null;
   }
 
+  const render = props.children ?? defaultRender;
+  const ViewComponent = props.view ?? DefaultView;
+  const View = (viewProps: unknown) => (
+    <ViewComponent
+      items={recommendations}
+      itemComponent={({ item }) => <props.hitComponent hit={item} />}
+      translations={translations}
+      {...viewProps}
+    />
+  );
+
+  return render({ recommendations, translations, View });
+}
+
+function defaultRender<TObject>(props: ChildrenProps<TObject>) {
   return (
     <section className="auc-Recommendations">
-      {translations.title && <h3>{translations.title}</h3>}
+      {props.translations.title && <h3>{props.translations.title}</h3>}
 
-      <View
-        items={recommendations}
-        itemComponent={({ item }) => <props.hitComponent hit={item} />}
-        translations={translations}
-      />
+      <props.View />
     </section>
   );
 }

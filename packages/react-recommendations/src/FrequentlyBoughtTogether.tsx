@@ -1,23 +1,20 @@
 import React, { useMemo } from 'react';
 
-import { DefaultView, ViewProps } from './DefaultView';
-import { RecommendationsProps } from './Recommendations';
-import { ProductBaseRecord, RecommendationTranslations } from './types';
-import { useFrequentlyBoughtTogether } from './useFrequentlyBoughtTogether';
+import { DefaultView } from './DefaultView';
+import {
+  ChildrenProps,
+  RecommendationsComponentProps,
+  RecommendationTranslations,
+} from './types';
+import {
+  useFrequentlyBoughtTogether,
+  UseFrequentlyBoughtTogetherProps,
+} from './useFrequentlyBoughtTogether';
 
-export type FrequentlyBoughtTogetherProps<
-  TObject extends ProductBaseRecord
-> = Omit<RecommendationsProps<TObject>, 'model' | 'fallbackFilters'> & {
-  view?(
-    props: ViewProps<
-      TObject,
-      RecommendationTranslations,
-      Record<string, string>
-    >
-  ): JSX.Element;
-};
+type FrequentlyBoughtTogetherProps<TObject> = UseFrequentlyBoughtTogetherProps &
+  RecommendationsComponentProps<TObject>;
 
-export function FrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
+export function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>
 ) {
   const { recommendations } = useFrequentlyBoughtTogether<TObject>(props);
@@ -31,21 +28,31 @@ export function FrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
     }),
     [props.translations]
   );
-  const View = props.view ?? DefaultView;
 
   if (recommendations.length === 0) {
     return null;
   }
 
-  return (
-    <div className="auc-Recommendations">
-      {translations.title && <h3>{translations.title}</h3>}
+  const render = props.children ?? defaultRender;
+  const ViewComponent = props.view ?? DefaultView;
+  const View = (viewProps: unknown) => (
+    <ViewComponent
+      items={recommendations}
+      itemComponent={({ item }) => <props.hitComponent hit={item} />}
+      translations={translations}
+      {...viewProps}
+    />
+  );
 
-      <View
-        items={recommendations}
-        itemComponent={({ item }) => <props.hitComponent hit={item} />}
-        translations={translations}
-      />
-    </div>
+  return render({ recommendations, translations, View });
+}
+
+function defaultRender<TObject>(props: ChildrenProps<TObject>) {
+  return (
+    <section className="auc-Recommendations">
+      {props.translations.title && <h3>{props.translations.title}</h3>}
+
+      <props.View />
+    </section>
   );
 }

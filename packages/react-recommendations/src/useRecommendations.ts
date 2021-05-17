@@ -6,6 +6,7 @@ import {
   ProductBaseRecord,
   ProductRecord,
   RecommendationModel,
+  RecordWithObjectID,
   UseRecommendationsInternalProps,
 } from './types';
 import {
@@ -29,7 +30,7 @@ export type UseRecommendationsProps = {
 };
 
 type UseRecommendationReturn<TObject> = {
-  recommendations: TObject[];
+  recommendations: Array<RecordWithObjectID<TObject>>;
 };
 
 function getDefaultedProps(
@@ -57,7 +58,7 @@ function getDefaultedProps(
   };
 }
 
-export function useRecommendations<TObject extends ProductBaseRecord>(
+export function useRecommendations<TObject>(
   userProps: UseRecommendationsProps
 ): UseRecommendationReturn<TObject> {
   const [products, setProducts] = useState<Array<ProductRecord<TObject>>>([]);
@@ -66,7 +67,7 @@ export function useRecommendations<TObject extends ProductBaseRecord>(
   useEffect(() => {
     props.searchClient
       .initIndex(getIndexNameFromModel(props.model, props.indexName))
-      .getObjects<TObject>(props.objectIDs)
+      .getObjects<ProductBaseRecord>(props.objectIDs)
       .then((response) => {
         const recommendationsList = response.results.map(
           (result) => result?.recommendations ?? []

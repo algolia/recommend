@@ -1,19 +1,20 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 
-import { ViewProps } from './DefaultView';
-import { ProductBaseRecord } from './types';
+let lastHorizontalSliderId = 0;
 
-let lastSliderId = 0;
-
-function generateSliderId() {
-  return `uic-slider-${lastSliderId++}`;
+function generateHorizontalSliderId() {
+  return `uic-horizontal-slider-${lastHorizontalSliderId++}`;
 }
 
 function cx(...classNames: Array<string | undefined>) {
   return classNames.filter(Boolean).join(' ');
 }
 
-type SliderClassnames = {
+type RecordWithObjectID = {
+  objectID: string;
+};
+
+type HorizontalSliderClassnames = {
   item: string;
   list: string;
   navigation: string;
@@ -22,7 +23,7 @@ type SliderClassnames = {
   root: string;
 };
 
-type SliderTranslations = {
+type HorizontalSliderTranslations = {
   sliderLabel: string;
   previousButtonLabel: string;
   previousButtonTitle: string;
@@ -30,16 +31,28 @@ type SliderTranslations = {
   nextButtonTitle: string;
 };
 
-type SliderProps<TItem extends ProductBaseRecord> = ViewProps<
+// @TODO: extract this type to a shared package
+type ViewProps<
+  TItem extends RecordWithObjectID,
+  TTranslations extends Record<string, string>,
+  TClassNames extends Record<string, string>
+> = {
+  items: TItem[];
+  itemComponent({ item: TItem }): JSX.Element;
+  classNames?: Partial<TClassNames>;
+  translations?: Partial<TTranslations>;
+};
+
+type SliderProps<TItem extends RecordWithObjectID> = ViewProps<
   TItem,
-  SliderTranslations,
-  SliderClassnames
+  HorizontalSliderTranslations,
+  HorizontalSliderClassnames
 >;
 
-export function Slider<TObject extends ProductBaseRecord>(
+export function HorizontalSlider<TObject extends RecordWithObjectID>(
   props: SliderProps<TObject>
 ) {
-  const translations: SliderTranslations = useMemo(
+  const translations: HorizontalSliderTranslations = useMemo(
     () => ({
       sliderLabel: 'Items',
       nextButtonLabel: 'Next',
@@ -53,7 +66,7 @@ export function Slider<TObject extends ProductBaseRecord>(
   const listRef = useRef<HTMLOListElement>(null);
   const previousButtonRef = useRef<HTMLButtonElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
-  const sliderIdRef = useRef(generateSliderId());
+  const sliderIdRef = useRef(generateHorizontalSliderId());
 
   function scrollLeft() {
     if (listRef.current) {
@@ -91,15 +104,17 @@ export function Slider<TObject extends ProductBaseRecord>(
   }
 
   return (
-    <div className={cx('uic-Slider-container', props.classNames?.root)}>
+    <div
+      className={cx('uic-HorizontalSlider-container', props.classNames?.root)}
+    >
       <button
         ref={previousButtonRef}
         title={translations.previousButtonTitle}
         aria-label={translations.previousButtonLabel}
         aria-controls={sliderIdRef.current}
         className={cx(
-          'uic-Slider-navigation',
-          'uic-Slider-navigation--previous',
+          'uic-HorizontalSlider-navigation',
+          'uic-HorizontalSlider-navigation--previous',
           props.classNames?.navigation,
           props.classNames?.navigationPrevious
         )}
@@ -119,7 +134,7 @@ export function Slider<TObject extends ProductBaseRecord>(
       </button>
 
       <ol
-        className={cx('uic-Slider-list', props.classNames?.list)}
+        className={cx('uic-HorizontalSlider-list', props.classNames?.list)}
         ref={listRef}
         tabIndex={0}
         id={sliderIdRef.current}
@@ -140,7 +155,7 @@ export function Slider<TObject extends ProductBaseRecord>(
         {props.items.map((item, index) => (
           <li
             key={item.objectID}
-            className={cx('uic-Slider-item', props.classNames?.item)}
+            className={cx('uic-HorizontalSlider-item', props.classNames?.item)}
             aria-roledescription="slide"
             aria-label={`${index + 1} of ${props.items.length}`}
           >
@@ -155,8 +170,8 @@ export function Slider<TObject extends ProductBaseRecord>(
         aria-label={translations.nextButtonLabel}
         aria-controls={sliderIdRef.current}
         className={cx(
-          'uic-Slider-navigation',
-          'uic-Slider-navigation--next',
+          'uic-HorizontalSlider-navigation',
+          'uic-HorizontalSlider-navigation--next',
           props.classNames?.navigation,
           props.classNames?.navigationNext
         )}
