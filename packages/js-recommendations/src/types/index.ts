@@ -1,1 +1,1 @@
-export * from './RenderProps';
+export * from './EnvironmentProps';

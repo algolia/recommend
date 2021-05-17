@@ -6,14 +6,14 @@ import {
 import React, { render } from 'preact/compat';
 
 import { getHTMLElement } from './getHTMLElement';
-import { RenderProps } from './types';
+import { EnvironmentProps } from './types';
 import { version } from './version';
 
 export function relatedProducts<TObject extends ProductBaseRecord>({
   container,
   environment,
   ...rest
-}: RelatedProductsProps<TObject> & RenderProps) {
+}: RelatedProductsProps<TObject> & EnvironmentProps) {
   rest.searchClient.addAlgoliaAgent('js-recommendations', version);
 
   render(<RelatedProducts {...rest} />, getHTMLElement(container, environment));

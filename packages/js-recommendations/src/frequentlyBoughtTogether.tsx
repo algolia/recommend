@@ -6,14 +6,14 @@ import {
 import React, { render } from 'preact/compat';
 
 import { getHTMLElement } from './getHTMLElement';
-import { RenderProps } from './types';
+import { EnvironmentProps } from './types';
 import { version } from './version';
 
 export function frequentlyBoughtTogether<TObject extends ProductBaseRecord>({
   container,
   environment,
   ...rest
-}: FrequentlyBoughtTogetherProps<TObject> & RenderProps) {
+}: FrequentlyBoughtTogetherProps<TObject> & EnvironmentProps) {
   rest.searchClient.addAlgoliaAgent('js-recommendations', version);
 
   render(
