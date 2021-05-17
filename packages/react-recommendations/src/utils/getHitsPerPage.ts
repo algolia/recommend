@@ -1,16 +1,16 @@
-import { UseRecommendationsInternalProps } from '../types';
+import { UseRecommendationsInternalProps, ProductBaseRecord } from '../types';
 
-type GetHitsPerPageParams = {
-  fallbackFilters: UseRecommendationsInternalProps['fallbackFilters'];
-  maxRecommendations: UseRecommendationsInternalProps['maxRecommendations'];
+type GetHitsPerPageParams<TObject> = {
+  fallbackFilters: UseRecommendationsInternalProps<TObject>['fallbackFilters'];
+  maxRecommendations: UseRecommendationsInternalProps<TObject>['maxRecommendations'];
   recommendationsCount: number;
 };
 
-export function getHitsPerPage({
+export function getHitsPerPage<TObject extends ProductBaseRecord>({
   fallbackFilters,
   maxRecommendations,
   recommendationsCount,
-}: GetHitsPerPageParams) {
+}: GetHitsPerPageParams<TObject>) {
   const hasFallback = fallbackFilters.length > 0;
 
   if (recommendationsCount === 0) {
