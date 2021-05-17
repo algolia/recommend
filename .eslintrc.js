@@ -63,7 +63,7 @@ module.exports = {
       },
     },
     {
-      files: ['test-utils/**/*', '**/__tests__/**'],
+      files: ['test/**/*', '**/__tests__/**'],
       rules: {
         'import/no-extraneous-dependencies': OFF,
       },
