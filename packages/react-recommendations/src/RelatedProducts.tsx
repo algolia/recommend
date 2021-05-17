@@ -16,7 +16,7 @@ type RelatedProductsProps<TObject> = UseRelatedProductsProps &
 
 export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
   const { recommendations } = useRelatedProducts<TObject>(props);
-  const translations: RecommendationTranslations = useMemo(
+  const translations = useMemo<RecommendationTranslations>(
     () => ({
       title: 'Related products',
       sliderLabel: 'Related products',

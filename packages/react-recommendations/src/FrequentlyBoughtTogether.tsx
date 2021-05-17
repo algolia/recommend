@@ -18,8 +18,7 @@ export function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>
 ) {
   const { recommendations } = useFrequentlyBoughtTogether<TObject>(props);
-  const translations: RecommendationTranslations &
-    Record<string, string> = useMemo(
+  const translations = useMemo<RecommendationTranslations>(
     () => ({
       title: 'Frequently bought together',
       sliderLabel: 'Frequently bought together products',

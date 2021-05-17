@@ -3,9 +3,9 @@ import type { SearchClient } from 'algoliasearch';
 import { useMemo, useEffect, useState } from 'react';
 
 import {
-  ProductBaseRecord,
   ProductRecord,
   RecommendationModel,
+  RecommendationRecord,
   RecordWithObjectID,
   UseRecommendationsInternalProps,
 } from './types';
@@ -16,6 +16,10 @@ import {
   sortBy,
   uniqBy,
 } from './utils';
+
+type RecommendRecord = RecordWithObjectID<{
+  recommendations?: RecommendationRecord[];
+}>;
 
 export type UseRecommendationsProps = {
   model: RecommendationModel;
@@ -67,7 +71,7 @@ export function useRecommendations<TObject>(
   useEffect(() => {
     props.searchClient
       .initIndex(getIndexNameFromModel(props.model, props.indexName))
-      .getObjects<ProductBaseRecord>(props.objectIDs)
+      .getObjects<RecommendRecord>(props.objectIDs)
       .then((response) => {
         const recommendationsList = response.results.map(
           (result) => result?.recommendations ?? []

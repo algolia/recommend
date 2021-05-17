@@ -1,4 +1,3 @@
-export * from './ProductBaseRecord';
 export * from './ProductRecord';
 export * from './RecommendationModel';
 export * from './RecommendationRecord';
