@@ -29,6 +29,7 @@ module.exports = {
     'import/extensions': OFF,
     'no-unused-expressions': OFF,
     'no-lonely-if': OFF,
+    'react/prop-types': OFF,
     '@typescript-eslint/camelcase': [
       ERROR,
       {
@@ -66,12 +67,6 @@ module.exports = {
       files: ['test/**/*', '**/__tests__/**'],
       rules: {
         'import/no-extraneous-dependencies': OFF,
-      },
-    },
-    {
-      files: ['examples/**/*'],
-      rules: {
-        'react/prop-types': OFF,
       },
     },
   ],

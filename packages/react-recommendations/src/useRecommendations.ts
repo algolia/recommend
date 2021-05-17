@@ -16,6 +16,7 @@ import {
   sortBy,
   uniqBy,
 } from './utils';
+import { version } from './version';
 
 type RecommendRecord = RecordWithObjectID<{
   recommendations?: RecommendationRecord[];
@@ -71,6 +72,16 @@ export function useRecommendations<TObject>(
 ): UseRecommendationReturn<TObject> {
   const [products, setProducts] = useState<Array<ProductRecord<TObject>>>([]);
   const props = useMemo(() => getDefaultedProps(userProps), [userProps]);
+
+  useEffect(() => {
+    if (
+      !props.searchClient.transporter.userAgent.value.includes(
+        `js-recommendations (${version})`
+      )
+    ) {
+      props.searchClient.addAlgoliaAgent('react-recommendations', version);
+    }
+  }, [props.searchClient]);
 
   useEffect(() => {
     props.searchClient
