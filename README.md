@@ -46,14 +46,14 @@ function App({ currentObjectID }) {
         searchClient={searchClient}
         indexName={indexName}
         objectIDs={[currentObjectID]}
-        hitComponent={Hit}
+        itemComponent={Hit}
       />
 
       <RelatedProducts
         searchClient={searchClient}
         indexName={indexName}
         objectIDs={[currentObjectID]}
-        hitComponent={Hit}
+        itemComponent={Hit}
       />
     </div>
   );
@@ -127,7 +127,7 @@ The name of the products index.
 
 An array of `objectID`s of the products to get recommendations from.
 
-### `hitComponent`
+### `itemComponent`
 
 > `function` | **required**
 

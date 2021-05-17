@@ -9,7 +9,7 @@ export type ChildrenProps<TObject> = {
 };
 
 export type RecommendationsComponentProps<TObject> = {
-  hitComponent({ hit: TObject }): JSX.Element;
+  itemComponent({ item: TObject }): JSX.Element;
   children?(props: ChildrenProps<TObject>): JSX.Element;
   translations?: Partial<RecommendationTranslations>;
   view?(

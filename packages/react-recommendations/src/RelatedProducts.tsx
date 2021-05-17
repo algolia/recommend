@@ -31,7 +31,7 @@ export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
   const View = (viewProps: unknown) => (
     <ViewComponent
       items={recommendations}
-      itemComponent={({ item }) => <props.hitComponent hit={item} />}
+      itemComponent={props.itemComponent}
       translations={translations}
       {...viewProps}
     />

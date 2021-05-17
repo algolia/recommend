@@ -121,7 +121,7 @@ function App() {
             searchClient={searchClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
+            itemComponent={({ item }) => <Hit hit={item} insights={insights} />}
             maxRecommendations={3}
             searchParameters={{
               analytics: true,
@@ -133,7 +133,7 @@ function App() {
             searchClient={searchClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
+            itemComponent={({ item }) => <Hit hit={item} insights={insights} />}
             view={HorizontalSlider}
             maxRecommendations={10}
             translations={{
@@ -155,7 +155,7 @@ function App() {
             searchClient={searchClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
+            itemComponent={({ item }) => <Hit hit={item} insights={insights} />}
             maxRecommendations={10}
             translations={{
               title: 'Related products',
