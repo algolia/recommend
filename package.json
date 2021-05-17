@@ -9,6 +9,7 @@
     "build": "lerna run build --no-private",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "prepare": "lerna run prepare --no-private",
+    "test:types": "tsc --noEmit",
     "test": "jest"
   },
   "devDependencies": {
@@ -18,6 +19,7 @@
     "@babel/preset-react": "7.12.13",
     "@babel/preset-typescript": "7.13.0",
     "@testing-library/react": "11.2.6",
+    "@testing-library/react-hooks": "5.1.2",
     "@types/jest": "^26.0.23",
     "@types/react": "^17.0.5",
     "@typescript-eslint/eslint-plugin": "2.19.0",

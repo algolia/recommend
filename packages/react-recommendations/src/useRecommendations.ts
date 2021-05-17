@@ -21,7 +21,7 @@ type RecommendRecord = RecordWithObjectID<{
   recommendations?: RecommendationRecord[];
 }>;
 
-export type UseRecommendationsProps = {
+export type UseRecommendationsProps<TObject> = {
   model: RecommendationModel;
   indexName: string;
   objectIDs: string[];
@@ -31,15 +31,18 @@ export type UseRecommendationsProps = {
   maxRecommendations?: number;
   searchParameters?: SearchOptions;
   threshold?: number;
+  transformItems?: (
+    items: Array<ProductRecord<TObject>>
+  ) => Array<ProductRecord<TObject>>;
 };
 
 type UseRecommendationReturn<TObject> = {
   recommendations: Array<RecordWithObjectID<TObject>>;
 };
 
-function getDefaultedProps(
-  props: UseRecommendationsProps
-): UseRecommendationsInternalProps {
+function getDefaultedProps<TObject>(
+  props: UseRecommendationsProps<TObject>
+): UseRecommendationsInternalProps<TObject> {
   return {
     fallbackFilters: [],
     maxRecommendations: 0,
@@ -58,12 +61,13 @@ function getDefaultedProps(
       ...props.searchParameters,
     },
     threshold: 0,
+    transformItems: (items) => items,
     ...props,
   };
 }
 
 export function useRecommendations<TObject>(
-  userProps: UseRecommendationsProps
+  userProps: UseRecommendationsProps<TObject>
 ): UseRecommendationReturn<TObject> {
   const [products, setProducts] = useState<Array<ProductRecord<TObject>>>([]);
   const props = useMemo(() => getDefaultedProps(userProps), [userProps]);
@@ -148,7 +152,7 @@ export function useRecommendations<TObject>(
                   : undefined
               );
 
-            setProducts(hits);
+            setProducts(props.transformItems(hits));
           });
       })
       .catch(() => {

@@ -20,7 +20,7 @@ export type UseFrequentlyBoughtTogetherProps = {
 export function useFrequentlyBoughtTogether<TObject>(
   userProps: UseFrequentlyBoughtTogetherProps
 ) {
-  const props: UseRecommendationsProps = useMemo(
+  const props: UseRecommendationsProps<TObject> = useMemo(
     () => ({
       ...userProps,
       fallbackFilters: [],
