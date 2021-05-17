@@ -26,7 +26,9 @@ export type UseRecommendationsProps<TObject> = {
   maxRecommendations?: number;
   searchParameters?: SearchOptions;
   threshold?: number;
-  transformItems?: (items: TObject[]) => TObject[];
+  transformItems?: (
+    items: Array<ProductRecord<TObject>>
+  ) => Array<ProductRecord<TObject>>;
 };
 
 type UseRecommendationReturn<TObject> = {
