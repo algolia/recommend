@@ -8,7 +8,7 @@ if (!process.env.BUILD) {
 
 const output = {
   umd: {
-    file: pkg.main,
+    file: pkg['umd:main'],
     format: 'umd',
     sourcemap: true,
     name: pkg.name,
