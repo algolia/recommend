@@ -10,7 +10,7 @@ function cx(...classNames: Array<string | undefined>) {
   return classNames.filter(Boolean).join(' ');
 }
 
-type RecordWithObjectID = {
+type RecordWithObjectID<TObject = {}> = TObject & {
   objectID: string;
 };
 
