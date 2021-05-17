@@ -1,3 +1,5 @@
 import { UseRecommendationsProps } from '../useRecommendations';
 
-export type UseRecommendationsInternalProps = Required<UseRecommendationsProps>;
+export type UseRecommendationsInternalProps<TObject> = Required<
+  UseRecommendationsProps<TObject>
+>;

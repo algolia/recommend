@@ -10,7 +10,7 @@ import {
 
 export type UseRelatedProductsProps = {
   indexName: string;
-  objectID: string;
+  objectIDs: string[];
   searchClient: SearchClient;
 
   fallbackFilters?: SearchOptions['optionalFilters'];
@@ -22,7 +22,7 @@ export type UseRelatedProductsProps = {
 export function useRelatedProducts<TObject extends ProductBaseRecord>(
   userProps: UseRelatedProductsProps
 ) {
-  const props: UseRecommendationsProps = useMemo(
+  const props: UseRecommendationsProps<TObject> = useMemo(
     () => ({
       ...userProps,
       model: 'related-products',

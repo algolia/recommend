@@ -10,7 +10,7 @@ import {
 
 export type UseFrequentlyBoughtTogetherProps = {
   indexName: string;
-  objectID: string;
+  objectIDs: string[];
   searchClient: SearchClient;
 
   maxRecommendations?: number;
@@ -21,7 +21,7 @@ export type UseFrequentlyBoughtTogetherProps = {
 export function useFrequentlyBoughtTogether<TObject extends ProductBaseRecord>(
   userProps: UseFrequentlyBoughtTogetherProps
 ) {
-  const props: UseRecommendationsProps = useMemo(
+  const props: UseRecommendationsProps<TObject> = useMemo(
     () => ({
       ...userProps,
       fallbackFilters: [],

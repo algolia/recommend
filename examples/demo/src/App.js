@@ -118,7 +118,7 @@ function App() {
           <FrequentlyBoughtTogether
             searchClient={searchClient}
             indexName={indexName}
-            objectID={selectedProduct.objectID}
+            objectIDs={[selectedProduct.objectID]}
             hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
             maxRecommendations={3}
             searchParameters={{
@@ -130,7 +130,7 @@ function App() {
           <RelatedProductsSlider
             searchClient={searchClient}
             indexName={indexName}
-            objectID={selectedProduct.objectID}
+            objectIDs={[selectedProduct.objectID]}
             hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
             maxRecommendations={10}
             translations={{
@@ -151,7 +151,7 @@ function App() {
           <RelatedProducts
             searchClient={searchClient}
             indexName={indexName}
-            objectID={selectedProduct.objectID}
+            objectIDs={[selectedProduct.objectID]}
             hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
             maxRecommendations={10}
             translations={{

@@ -108,7 +108,7 @@ function renderRecommendations(selectedProduct) {
     container: '#frequentlyBoughtTogether',
     searchClient,
     indexName,
-    objectID: selectedProduct.objectID,
+    objectIDs: [selectedProduct.objectID],
     hitComponent({ hit }) {
       return <Hit hit={hit} insights={insights} />;
     },
@@ -123,7 +123,7 @@ function renderRecommendations(selectedProduct) {
     container: '#relatedProductsSlider',
     searchClient,
     indexName,
-    objectID: selectedProduct.objectID,
+    objectIDs: [selectedProduct.objectID],
     hitComponent({ hit }) {
       return <Hit hit={hit} insights={insights} />;
     },
@@ -147,13 +147,13 @@ function renderRecommendations(selectedProduct) {
     container: '#relatedProducts',
     searchClient,
     indexName,
-    objectID: selectedProduct.objectID,
+    objectIDs: [selectedProduct.objectID],
     hitComponent({ hit }) {
       return <Hit hit={hit} insights={insights} />;
     },
     maxRecommendations: 10,
     translations: {
-      title: 'Related products (inline)',
+      title: 'Related products',
     },
     fallbackFilters: [
       `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
