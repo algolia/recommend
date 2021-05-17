@@ -58,19 +58,21 @@ export function useRecommendations<TObject extends ProductBaseRecord>(
   const props = useMemo(() => getDefaultedProps(userProps), [userProps]);
 
   useEffect(() => {
+    if (
+      !props.searchClient.transporter.userAgent.value.includes(
+        `js-recommendations (${version})`
+      )
+    ) {
+      props.searchClient.addAlgoliaAgent('react-recommendations', version);
+    }
+  }, [props.searchClient]);
+
+  useEffect(() => {
     props.searchClient
       .initIndex(getIndexNameFromModel(props.model, props.indexName))
       .getObject<TObject>(props.objectID)
       .then((record) => {
         const recommendations = record.recommendations ?? [];
-
-        if (
-          !props.searchClient.transporter.userAgent.value.includes(
-            `js-recommendations (${version})`
-          )
-        ) {
-          props.searchClient.addAlgoliaAgent('react-recommendations', version);
-        }
 
         props.searchClient
           .initIndex(props.indexName)
