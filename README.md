@@ -4,7 +4,7 @@
 
 This is the repository packaging the UI components for Algolia Recommend.
 
-> ℹ️ During the beta of Algolia Recommend, this React component relies on an Algolia Index to retrieve the recommendations, and performs a regular Search API request to get the recommendations.
+> ℹ️ During the beta of Algolia Recommend, the UI components rely on an Algolia Index to retrieve the recommendations, and perform a regular Search API request to get the recommendations.
 
 ## Packages
 
