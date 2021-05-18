@@ -30,7 +30,7 @@ aliases:
       cp -R /tmp/workspace/packages/js-recommendations/dist packages/js-recommendations
 
 defaults: &defaults
-  working_directory: ~ui-components/
+  working_directory: ~/ui-components
   docker:
     - image: circleci/node:14.15.0
 
@@ -57,11 +57,11 @@ jobs:
           command: |
             set -exu
 
-            mkdir -p packages/react-recommendations/dist
-            mkdir -p packages/js-recommendations/dist
+            mkdir -p /tmp/workspace/packages/react-recommendations/dist
+            mkdir -p /tmp/workspace/packages/js-recommendations/dist
 
-            cp -R /tmp/workspace/packages/react-recommendations/dist packages/react-recommendations
-            cp -R /tmp/workspace/packages/js-recommendations/dist packages/js-recommendations
+            cp -R packages/react-recommendations/dist /tmp/workspace/packages/react-recommendations
+            cp -R packages/js-recommendations/dist /tmp/workspace/packages/js-recommendations
       - persist_to_workspace:
           root: *workspace_root
           paths:
