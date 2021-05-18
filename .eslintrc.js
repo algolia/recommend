@@ -58,13 +58,13 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['scripts/**/*', '*.config.js'],
+      files: ['scripts/**', '*.config.js'],
       rules: {
         'import/no-commonjs': OFF,
       },
     },
     {
-      files: ['test/**/*', '**/__tests__/**'],
+      files: ['test/**', '**/__tests__/**'],
       rules: {
         'import/no-extraneous-dependencies': OFF,
       },

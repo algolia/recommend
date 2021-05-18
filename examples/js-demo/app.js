@@ -3,11 +3,11 @@ import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
 import {
   frequentlyBoughtTogether,
   relatedProducts,
-} from '@algolia/js-recommendations/dist/esm';
+} from '@algolia/js-recommendations';
 import {
   horizontalSlider,
   HorizontalSlider,
-} from '@algolia/ui-components-horizontal-slider-js/dist/esm';
+} from '@algolia/ui-components-horizontal-slider-js';
 import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
 import insights from 'search-insights';

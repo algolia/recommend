@@ -1,8 +1,9 @@
+/** @jsx h */
 import {
   FrequentlyBoughtTogether,
   FrequentlyBoughtTogetherProps,
 } from '@algolia/react-recommendations';
-import React, { render } from 'preact/compat';
+import { h, render } from 'preact';
 
 import { getHTMLElement } from './getHTMLElement';
 import { EnvironmentProps } from './types';
