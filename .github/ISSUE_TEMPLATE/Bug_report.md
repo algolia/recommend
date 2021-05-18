@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Help us improve Recommendations.
+about: Help us improve ui-components.
 ---
 
 ## Description
@@ -11,7 +11,7 @@ about: Help us improve Recommendations.
 
 <!-- Fork the sandbox, reproduce the bug and paste the URL. -->
 
-[**Preview →**](https://codesandbox.io/s/github/algolia/react-recommendations/tree/next/examples/demo?file=/src/App.js)
+[**Preview →**](https://codesandbox.io/s/github/algolia/ui-components/tree/next/examples/demo?file=/src/App.js)
 
 **Steps**
 
