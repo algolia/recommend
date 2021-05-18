@@ -1,0 +1,103 @@
+/* @TODO: these variables will end up in the global theme */
+:root {
+  --aui-primary-color: #9698c3;
+  --aui-muted-color: #c4c4c4;
+  --aui-dark-color: #0f0f0f;
+}
+
+.uic-HorizontalSlider-container {
+  position: relative;
+}
+
+.uic-HorizontalSlider-navigation {
+  align-items: center;
+  background: #f1f1f1;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  box-shadow: 0px 2px 6px rgba(90, 94, 154, 0.44);
+  color: var(--aui-primary-color);
+  cursor: pointer;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  outline-color: var(--aui-primary-color);
+  padding: 0;
+  position: absolute;
+  top: 35%;
+  transition: opacity 150ms;
+  width: 32px;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .uic-HorizontalSlider-navigation {
+    display: none;
+  }
+}
+
+.uic-HorizontalSlider-container:hover
+  .uic-HorizontalSlider-navigation:not([hidden]) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.uic-HorizontalSlider-navigation,
+.uic-HorizontalSlider-navigation[hidden] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.uic-HorizontalSlider-navigation--previous {
+  left: 0;
+  transform: translateX(-25%);
+}
+
+.uic-HorizontalSlider-navigation--next {
+  right: 0;
+  transform: translateX(25%);
+}
+
+.uic-HorizontalSlider-list {
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  outline-color: var(--aui-primary-color);
+  outline-offset: 0.5rem;
+  padding: 0;
+  scroll-behavior: smooth;
+  scroll-snap-type: mandatory;
+  grid-auto-columns: 42%;
+  grid-auto-flow: column;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scroll-snap-type: x proximity;
+  scrollbar-color: var(--aui-dark-color) var(--aui-muted-color);
+  scrollbar-width: thin;
+}
+
+.uic-HorizontalSlider-list::-webkit-scrollbar {
+  height: 2px;
+}
+
+.uic-HorizontalSlider-list::-webkit-scrollbar-track {
+  background-color: var(--aui-muted-color);
+}
+
+.uic-HorizontalSlider-list::-webkit-scrollbar-thumb {
+  background-color: var(--aui-dark-color);
+}
+
+@media (min-width: 999px) {
+  .uic-HorizontalSlider-list {
+    grid-auto-columns: 20%;
+  }
+}
+
+.uic-HorizontalSlider-item {
+  scroll-snap-align: start;
+}
+
+.uic-HorizontalSlider-item * {
+  outline-color: var(--aui-primary-color);
+  outline-offset: 3px;
+}

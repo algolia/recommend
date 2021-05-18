@@ -11,8 +11,9 @@ import {
   UseFrequentlyBoughtTogetherProps,
 } from './useFrequentlyBoughtTogether';
 
-type FrequentlyBoughtTogetherProps<TObject> = UseFrequentlyBoughtTogetherProps &
-  RecommendationsComponentProps<TObject>;
+export type FrequentlyBoughtTogetherProps<
+  TObject
+> = UseFrequentlyBoughtTogetherProps & RecommendationsComponentProps<TObject>;
 
 export function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>

@@ -1,5 +1,4 @@
 import {
-  ProductBaseRecord,
   RelatedProducts,
   RelatedProductsProps,
 } from '@algolia/react-recommendations';
@@ -9,7 +8,7 @@ import { getHTMLElement } from './getHTMLElement';
 import { EnvironmentProps } from './types';
 import { version } from './version';
 
-export function relatedProducts<TObject extends ProductBaseRecord>({
+export function relatedProducts<TObject>({
   container,
   environment,
   ...rest

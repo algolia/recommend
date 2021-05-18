@@ -12,6 +12,7 @@
     "@algolia/autocomplete-js": "1.0.1",
     "@algolia/autocomplete-theme-classic": "1.0.1",
     "@algolia/js-recommendations": "1.0.0-beta.9",
+    "@algolia/ui-components-horizontal-slider-js": "1.0.0-beta.9",
     "algoliasearch": "4.9.1",
     "search-insights": "1.8.0",
     "preact": "10.5.13"

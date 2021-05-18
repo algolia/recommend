@@ -11,7 +11,7 @@ import {
   UseRelatedProductsProps,
 } from './useRelatedProducts';
 
-type RelatedProductsProps<TObject> = UseRelatedProductsProps &
+export type RelatedProductsProps<TObject> = UseRelatedProductsProps &
   RecommendationsComponentProps<TObject>;
 
 export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {

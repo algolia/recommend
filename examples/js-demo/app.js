@@ -3,13 +3,17 @@ import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
 import {
   frequentlyBoughtTogether,
   relatedProducts,
-  relatedProductsSlider,
 } from '@algolia/js-recommendations/dist/esm';
+import {
+  horizontalSlider,
+  HorizontalSlider,
+} from '@algolia/ui-components-horizontal-slider-js/dist/esm';
 import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
 import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
+import '@algolia/ui-components-horizontal-slider-js/HorizontalSlider.css';
 import { Hit } from './Hit';
 
 const appId = 'HYDY1KWTWB';
@@ -17,6 +21,8 @@ const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
+
+insights('init', { appId, apiKey });
 
 autocomplete({
   container: '#autocomplete',
@@ -109,8 +115,8 @@ function renderRecommendations(selectedProduct) {
     searchClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
-    hitComponent({ hit }) {
-      return <Hit hit={hit} insights={insights} />;
+    itemComponent({ item }) {
+      return <Hit hit={item} insights={insights} />;
     },
     maxRecommendations: 3,
     searchParameters: {
@@ -119,28 +125,34 @@ function renderRecommendations(selectedProduct) {
     },
   });
 
-  relatedProductsSlider({
+  horizontalSlider({
+    container: '#relatedProductsSlider',
+    items: [
+      { objectID: '1', name: 'Name 1' },
+      { objectID: '2', name: 'Name 2' },
+      { objectID: '3', name: 'Name 3' },
+      { objectID: '4', name: 'Name 4' },
+      { objectID: '5', name: 'Name 5' },
+      { objectID: '6', name: 'Name 6' },
+      { objectID: '7', name: 'Name 7' },
+      { objectID: '8', name: 'Name 8' },
+      { objectID: '9', name: 'Name 9' },
+      { objectID: '10', name: 'Name 10' },
+      { objectID: '11', name: 'Name 11' },
+      { objectID: '12', name: 'Name 12' },
+    ],
+    itemComponent: ({ item }) => item.name,
+  });
+
+  relatedProducts({
     container: '#relatedProductsSlider',
     searchClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
-    hitComponent({ hit }) {
-      return <Hit hit={hit} insights={insights} />;
+    itemComponent({ item }) {
+      return <Hit hit={item} insights={insights} />;
     },
-    maxRecommendations: 10,
-    translations: {
-      title: 'Related products (slider)',
-    },
-    fallbackFilters: [
-      `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-    ],
-    searchParameters: {
-      analytics: true,
-      clickAnalytics: true,
-      facetFilters: [
-        `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-      ],
-    },
+    view: HorizontalSlider,
   });
 
   relatedProducts({
@@ -148,8 +160,8 @@ function renderRecommendations(selectedProduct) {
     searchClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
-    hitComponent({ hit }) {
-      return <Hit hit={hit} insights={insights} />;
+    itemComponent({ item }) {
+      return <Hit hit={item} insights={insights} />;
     },
     maxRecommendations: 10,
     translations: {

@@ -31,7 +31,7 @@ type HorizontalSliderTranslations = {
   nextButtonTitle: string;
 };
 
-type HorizontalSliderProps<TItem extends RecordWithObjectID> = {
+export type HorizontalSliderProps<TItem extends RecordWithObjectID> = {
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
   classNames?: Partial<HorizontalSliderClassnames>;
