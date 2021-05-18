@@ -13,6 +13,7 @@ export function createSearchClient(
     appId: '',
     addAlgoliaAgent: jest.fn(),
     clearCache: jest.fn(),
+    // @ts-expect-error `initIndex` is not part of the lite bundle
     initIndex: jest.fn(() => ({
       getObject: jest.fn(() => Promise.resolve({})),
       search: jest.fn(() => Promise.resolve(createSingleSearchResponse())),
