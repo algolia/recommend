@@ -1,0 +1,12 @@
+{
+  "files": [
+    {
+      "path": "packages/react-recommendations/dist/umd/index.js",
+      "maxSize": "3.25 kB"
+    },
+    {
+      "path": "packages/js-recommendations/dist/umd/index.js",
+      "maxSize": "9.5 kB"
+    }
+  ]
+}
