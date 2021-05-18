@@ -64,7 +64,7 @@ module.exports = {
       },
     },
     {
-      files: ['test/**', '**/__tests__/**'],
+      files: ['test/**', '**/__tests__/**', '*.config.js'],
       rules: {
         'import/no-extraneous-dependencies': OFF,
       },

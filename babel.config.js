@@ -12,7 +12,6 @@ module.exports = (api) => {
   return {
     presets: [
       ['@babel/preset-typescript'],
-      ['@babel/preset-react'],
       [
         '@babel/preset-env',
         {
@@ -20,6 +19,44 @@ module.exports = (api) => {
           targets,
         },
       ],
+    ],
+    overrides: [
+      {
+        test: [
+          'packages/react-recommendations',
+          'packages/horizontal-slider-react',
+          'examples/demo',
+        ],
+        presets: [['@babel/preset-react']],
+      },
+      {
+        test: [
+          'packages/js-recommendations',
+          'packages/horizontal-slider-js',
+          'examples/js-demo',
+        ],
+        presets: [
+          [
+            '@babel/preset-react',
+            {
+              pragma: 'h',
+              pragmaFrag: 'Fragment',
+            },
+          ],
+        ],
+        plugins: [
+          [
+            'module-resolver',
+            {
+              // root: ['./src'],
+              alias: {
+                react: 'preact/compat',
+                'react-dom': 'preact/compat',
+              },
+            },
+          ],
+        ],
+      },
     ],
   };
 };

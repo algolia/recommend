@@ -7,7 +7,7 @@ import {
 import {
   horizontalSlider,
   HorizontalSlider,
-} from '@algolia/ui-components-horizontal-slider-js';
+} from '@algolia/ui-components-horizontal-slider-js/dist/umd';
 import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
 import insights from 'search-insights';
@@ -110,39 +110,39 @@ function hitShowcase(selectedProduct) {
 }
 
 function renderRecommendations(selectedProduct) {
-  frequentlyBoughtTogether({
-    container: '#frequentlyBoughtTogether',
-    searchClient,
-    indexName,
-    objectIDs: [selectedProduct.objectID],
-    itemComponent({ item }) {
-      return <Hit hit={item} insights={insights} />;
-    },
-    maxRecommendations: 3,
-    searchParameters: {
-      analytics: true,
-      clickAnalytics: true,
-    },
-  });
+  // frequentlyBoughtTogether({
+  //   container: '#frequentlyBoughtTogether',
+  //   searchClient,
+  //   indexName,
+  //   objectIDs: [selectedProduct.objectID],
+  //   itemComponent({ item }) {
+  //     return <Hit hit={item} insights={insights} />;
+  //   },
+  //   maxRecommendations: 3,
+  //   searchParameters: {
+  //     analytics: true,
+  //     clickAnalytics: true,
+  //   },
+  // });
 
-  horizontalSlider({
-    container: '#relatedProductsSlider',
-    items: [
-      { objectID: '1', name: 'Name 1' },
-      { objectID: '2', name: 'Name 2' },
-      { objectID: '3', name: 'Name 3' },
-      { objectID: '4', name: 'Name 4' },
-      { objectID: '5', name: 'Name 5' },
-      { objectID: '6', name: 'Name 6' },
-      { objectID: '7', name: 'Name 7' },
-      { objectID: '8', name: 'Name 8' },
-      { objectID: '9', name: 'Name 9' },
-      { objectID: '10', name: 'Name 10' },
-      { objectID: '11', name: 'Name 11' },
-      { objectID: '12', name: 'Name 12' },
-    ],
-    itemComponent: ({ item }) => item.name,
-  });
+  // horizontalSlider({
+  //   container: '#relatedProductsSlider',
+  //   items: [
+  //     { objectID: '1', name: 'Name 1' },
+  //     { objectID: '2', name: 'Name 2' },
+  //     { objectID: '3', name: 'Name 3' },
+  //     { objectID: '4', name: 'Name 4' },
+  //     { objectID: '5', name: 'Name 5' },
+  //     { objectID: '6', name: 'Name 6' },
+  //     { objectID: '7', name: 'Name 7' },
+  //     { objectID: '8', name: 'Name 8' },
+  //     { objectID: '9', name: 'Name 9' },
+  //     { objectID: '10', name: 'Name 10' },
+  //     { objectID: '11', name: 'Name 11' },
+  //     { objectID: '12', name: 'Name 12' },
+  //   ],
+  //   itemComponent: ({ item }) => item.name,
+  // });
 
   relatedProducts({
     container: '#relatedProductsSlider',
@@ -155,27 +155,27 @@ function renderRecommendations(selectedProduct) {
     view: HorizontalSlider,
   });
 
-  relatedProducts({
-    container: '#relatedProducts',
-    searchClient,
-    indexName,
-    objectIDs: [selectedProduct.objectID],
-    itemComponent({ item }) {
-      return <Hit hit={item} insights={insights} />;
-    },
-    maxRecommendations: 10,
-    translations: {
-      title: 'Related products',
-    },
-    fallbackFilters: [
-      `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-    ],
-    searchParameters: {
-      analytics: true,
-      clickAnalytics: true,
-      facetFilters: [
-        `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-      ],
-    },
-  });
+  // relatedProducts({
+  //   container: '#relatedProducts',
+  //   searchClient,
+  //   indexName,
+  //   objectIDs: [selectedProduct.objectID],
+  //   itemComponent({ item }) {
+  //     return <Hit hit={item} insights={insights} />;
+  //   },
+  //   maxRecommendations: 10,
+  //   translations: {
+  //     title: 'Related products',
+  //   },
+  //   fallbackFilters: [
+  //     `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+  //   ],
+  //   searchParameters: {
+  //     analytics: true,
+  //     clickAnalytics: true,
+  //     facetFilters: [
+  //       `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+  //     ],
+  //   },
+  // });
 }

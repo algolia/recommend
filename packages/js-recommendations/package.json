@@ -1,12 +1,20 @@
 {
   "name": "@algolia/js-recommendations",
   "version": "1.0.0-beta.9",
+  "license": "MIT",
+  "homepage": "https://github.com/algolia/ui-components",
+  "repository": "algolia/ui-components",
+  "author": {
+    "name": "Algolia, Inc.",
+    "url": "https://www.algolia.com"
+  },
   "scripts": {
     "build:clean": "rm -rf ./dist",
     "build:esm": "cross-env BUILD=esm rollup --config",
     "build:umd": "cross-env BUILD=umd rollup --config",
     "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm",
-    "build": "yarn build:clean && yarn build:esm && yarn build:umd && yarn build:types"
+    "build": "yarn build:clean; yarn build:esm; yarn build:umd; yarn build:types",
+    "prepare": "yarn build:esm && yarn build:types"
   },
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",

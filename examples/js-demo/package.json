@@ -9,8 +9,7 @@
     "start": "parcel index.html"
   },
   "alias": {
-    "@algolia/js-recommendations": "@algolia/js-recommendations/dist/esm",
-    "@algolia/ui-components-horizontal-slider-js": "@algolia/ui-components-horizontal-slider-js/dist/esm"
+    "@algolia/js-recommendations": "@algolia/js-recommendations/dist/esm"
   },
   "dependencies": {
     "@algolia/autocomplete-js": "1.0.1",

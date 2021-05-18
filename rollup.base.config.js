@@ -1,25 +1,30 @@
 import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import filesize from 'rollup-plugin-filesize';
-import { terser } from 'rollup-plugin-terser';
+// import { terser } from 'rollup-plugin-terser';
 
 export const plugins = [
   replace({
-    __DEV__: JSON.stringify(process.env.NODE_ENV === 'development'),
+    preventAssignment: true,
+    values: {
+      __DEV__: JSON.stringify(process.env.NODE_ENV === 'development'),
+    },
   }),
   json(),
   resolve({
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   }),
+  commonjs(),
   babel({
-    exclude: 'node_modules/**',
+    include: 'node_modules/**',
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     rootMode: 'upward',
     babelHelpers: 'bundled',
   }),
-  terser(),
+  // terser(),
   filesize({
     showMinifiedSize: false,
     showGzippedSize: true,

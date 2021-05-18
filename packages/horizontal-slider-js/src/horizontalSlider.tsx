@@ -1,8 +1,9 @@
+/** @jsx h */
 import {
   HorizontalSlider as HorizontalSliderOriginal,
   HorizontalSliderProps,
 } from '@algolia/ui-components-horizontal-slider-react';
-import React, { render } from 'preact/compat';
+import { h, render } from 'preact';
 
 import { getHTMLElement } from './getHTMLElement';
 
