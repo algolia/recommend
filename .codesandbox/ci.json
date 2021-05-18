@@ -1,5 +1,5 @@
 {
-  "packages": ["packages/*-recommendations"],
+  "packages": ["packages/*"],
   "buildCommand": false,
   "^": "buildCommand is false because `yarn prepare` is going to build packages anyway.",
   "sandboxes": ["/examples/demo", "/examples/js-demo"],
