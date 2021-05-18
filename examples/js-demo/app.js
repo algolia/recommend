@@ -4,7 +4,7 @@ import {
   frequentlyBoughtTogether,
   relatedProducts,
   relatedProductsSlider,
-} from '@algolia/js-recommendations/dist/esm';
+} from '@algolia/js-recommendations';
 import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
 import insights from 'search-insights';
