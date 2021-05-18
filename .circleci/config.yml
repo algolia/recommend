@@ -30,7 +30,7 @@ aliases:
       cp -R /tmp/workspace/packages/js-recommendations/dist packages/js-recommendations
 
 defaults: &defaults
-  working_directory: ~ui-components/
+  working_directory: ~/ui-components
   docker:
     - image: circleci/node:14.15.0
 
