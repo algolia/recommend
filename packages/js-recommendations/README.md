@@ -39,21 +39,19 @@ const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
 
-function renderRelatedProducts({ currentObjectID }) {
-  relatedProducts({
-    container: '#relatedProducts',
-    searchClient,
-    indexName,
-    objectIDs: [currentObjectID],
-    itemComponent({ item }) {
-      return (
-        <pre>
-          <code>{JSON.stringify(item)}</code>
-        </pre>
-      );
-    },
-  });
-}
+relatedProducts({
+  container: '#relatedProducts',
+  searchClient,
+  indexName,
+  objectIDs: [currentObjectID],
+  itemComponent({ item }) {
+    return (
+      <pre>
+        <code>{JSON.stringify(item)}</code>
+      </pre>
+    );
+  },
+});
 ```
 
 #### Props
@@ -152,21 +150,19 @@ const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
 
-function renderFrequentlyBoughtTogether({ currentObjectID }) {
-  frequentlyBoughtTogether({
-    container: '#frequentlyBoughtTogether',
-    searchClient,
-    indexName,
-    objectIDs: [currentObjectID],
-    itemComponent({ item }) {
-      return (
-        <pre>
-          <code>{JSON.stringify(item)}</code>
-        </pre>
-      );
-    },
-  });
-}
+frequentlyBoughtTogether({
+  container: '#frequentlyBoughtTogether',
+  searchClient,
+  indexName,
+  objectIDs: [currentObjectID],
+  itemComponent({ item }) {
+    return (
+      <pre>
+        <code>{JSON.stringify(item)}</code>
+      </pre>
+    );
+  },
+});
 ```
 
 #### Props
