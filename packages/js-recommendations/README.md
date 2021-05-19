@@ -100,8 +100,8 @@ The translations for the component.
 ```ts
 type ChildrenProps<TObject> = {
   recommendations: TObject[];
-  View(props: unknown): JSX.Element;
   translations: RecommendationTranslations;
+  View(props: unknown): JSX.Element;
 };
 ```
 
@@ -143,7 +143,6 @@ Then, inject results into it by calling the `frequentlyBoughtTogether` function 
 
 ```js
 /** @jsx h */
-
 import { h } from 'preact';
 import { frequentlyBoughtTogether } from '@algolia/js-recommendations';
 import algoliasearch from 'algoliasearch';
@@ -216,8 +215,8 @@ The translations for the component.
 ```ts
 type ChildrenProps<TObject> = {
   recommendations: TObject[];
-  View(props: unknown): JSX.Element;
   translations: RecommendationTranslations;
+  View(props: unknown): JSX.Element;
 };
 ```
 
