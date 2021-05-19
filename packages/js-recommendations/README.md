@@ -28,7 +28,6 @@ Then, inject results into it by calling the `relatedProducts` function and provi
 
 ```js
 /** @jsx h */
-
 import { h } from 'preact';
 import { relatedProducts } from '@algolia/js-recommendations';
 import algoliasearch from 'algoliasearch';
@@ -73,20 +72,22 @@ The product component to display.
 
 ##### `translations`
 
-> `RecommendationTranslations`
+> `RelatedProductTranslations`
 
 <details>
 
-<summary><code>RecommendationTranslations</code></summary>
+<summary><code>RelatedProductTranslations</code></summary>
 
 ```ts
-type RecommendationTranslations = Partial<{
+type RelatedProductTranslations = Partial<{
   title: string;
   showMore: string;
 }>;
 ```
 
 </details>
+
+The translations for the component.
 
 ##### `children`
 
@@ -187,20 +188,22 @@ The product component to display.
 
 ##### `translations`
 
-> `RecommendationTranslations`
+> `FrequentlyBoughtTogetherTranslations`
 
 <details>
 
-<summary><code>RecommendationTranslations</code></summary>
+<summary><code>FrequentlyBoughtTogetherTranslations</code></summary>
 
 ```ts
-type RecommendationTranslations = Partial<{
+type FrequentlyBoughtTogetherTranslations = Partial<{
   title: string;
   showMore: string;
 }>;
 ```
 
 </details>
+
+The translations for the component.
 
 ##### `children`
 

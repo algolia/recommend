@@ -62,18 +62,20 @@ The product component to display.
 
 ##### `translations`
 
-> `RecommendationTranslations`
+> `RelatedProductTranslations`
 
 <details>
 
-<summary><code>RecommendationTranslations</code></summary>
+<summary><code>RelatedProductTranslations</code></summary>
 
 ```ts
-type RecommendationTranslations = Partial<{
+type RelatedProductTranslations = Partial<{
   title: string;
   showMore: string;
 }>;
 ```
+
+The translations for the component.
 
 </details>
 
@@ -89,7 +91,7 @@ type RecommendationTranslations = Partial<{
 type ChildrenProps<TObject> = {
   recommendations: TObject[];
   View(props: unknown): JSX.Element;
-  translations: RecommendationTranslations;
+  translations: RelatedProductTranslations;
 };
 ```
 
@@ -124,13 +126,9 @@ function defaultRender(props) {
 <summary><code>ViewProps</code></summary>
 
 ```ts
-type ViewProps<
-  TItem extends RecordWithObjectID,
-  TTranslations extends Record<string, string>
-> = {
+type ViewProps<TItem extends RecordWithObjectID> = {
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
-  translations?: TTranslations;
 };
 ```
 
@@ -253,20 +251,22 @@ The product component to display.
 
 ##### `translations`
 
-> `RecommendationTranslations`
+> `FrequentlyBoughtTogetherTranslations`
 
 <details>
 
-<summary><code>RecommendationTranslations</code></summary>
+<summary><code>FrequentlyBoughtTogetherTranslations</code></summary>
 
 ```ts
-type RecommendationTranslations = Partial<{
+type FrequentlyBoughtTogetherTranslations = Partial<{
   title: string;
   showMore: string;
 }>;
 ```
 
 </details>
+
+The translations for the component.
 
 ##### `children`
 
@@ -315,13 +315,9 @@ function defaultRender(props) {
 <summary><code>ViewProps</code></summary>
 
 ```ts
-type ViewProps<
-  TItem extends RecordWithObjectID,
-  TTranslations extends Record<string, string>
-> = {
+type ViewProps<TItem extends RecordWithObjectID> = {
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
-  translations?: TTranslations;
 };
 ```
 
