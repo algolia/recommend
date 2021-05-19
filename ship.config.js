@@ -9,6 +9,8 @@ module.exports = {
     packagesToPublish: [
       'packages/react-recommendations',
       'packages/js-recommendations',
+      'packages/horizontal-slider-react',
+      'packages/horizontal-slider-js',
     ],
   },
   publishCommand({ tag }) {
