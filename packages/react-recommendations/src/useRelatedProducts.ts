@@ -1,5 +1,3 @@
-import type { SearchOptions } from '@algolia/client-search';
-import type { SearchClient } from 'algoliasearch';
 import { useMemo } from 'react';
 
 import {
@@ -7,19 +5,13 @@ import {
   UseRecommendationsProps,
 } from './useRecommendations';
 
-export type UseRelatedProductsProps = {
-  indexName: string;
-  objectIDs: string[];
-  searchClient: SearchClient;
-
-  fallbackFilters?: SearchOptions['optionalFilters'];
-  maxRecommendations?: number;
-  searchParameters?: SearchOptions;
-  threshold?: number;
-};
+export type UseRelatedProductsProps<TObject> = Omit<
+  UseRecommendationsProps<TObject>,
+  'model'
+>;
 
 export function useRelatedProducts<TObject>(
-  userProps: UseRelatedProductsProps
+  userProps: UseRelatedProductsProps<TObject>
 ) {
   const props: UseRecommendationsProps<TObject> = useMemo(
     () => ({
