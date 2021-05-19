@@ -187,6 +187,8 @@ The product component to display.
 
 ##### `translations`
 
+> `RecommendationTranslations`
+
 <details>
 
 <summary><code>RecommendationTranslations</code></summary>
