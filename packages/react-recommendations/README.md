@@ -131,8 +131,8 @@ type ViewProps<
 > = {
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
-  classNames?: Partial<TClassNames>;
-  translations?: Partial<TTranslations>;
+  classNames?: TClassNames;
+  translations?: TTranslations;
 };
 ```
 
@@ -318,8 +318,8 @@ type ViewProps<
 > = {
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
-  classNames?: Partial<TClassNames>;
-  translations?: Partial<TTranslations>;
+  classNames?: TClassNames;
+  translations?: TTranslations;
 };
 ```
 
