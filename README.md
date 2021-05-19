@@ -10,8 +10,10 @@ During the beta of Algolia Recommend, the UI components rely on an Algolia Index
 
 ## Packages
 
-- [`react-recommendations`](packages/react-recommendations): React package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
-- [`js-recommendations`](packages/js-recommendations): JavaScript package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
+- [`@algolia/js-recommendations`](packages/js-recommendations): JavaScript package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
+- [`@algolia/react-recommendations`](packages/react-recommendations): React package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
+- [`@algolia/ui-components-js-horizontal-slider`](packages/js-horizontal-slider): JavaScript horizontal slider UI component
+- [`@algolia/ui-components-react-horizontal-slider`](packages/react-horizontal-slider): React horizontal slider UI component
 
 ## License
 
