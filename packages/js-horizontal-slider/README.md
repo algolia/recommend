@@ -1,6 +1,6 @@
 # `@algolia/ui-components-js-horizontal-slider`
 
-Horizontal slider JavaScript UI component.
+Horizontal slider UI component for JavaScript.
 
 ## Installation
 

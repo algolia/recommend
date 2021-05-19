@@ -1,6 +1,6 @@
 # `@algolia/ui-components-react-horizontal-slider`
 
-Horizontal slider React UI component.
+Horizontal slider UI component for React.
 
 ## Installation
 
