@@ -1,5 +1,3 @@
-import babel from '@rollup/plugin-babel';
-
 import { plugins } from '../../rollup.base.config';
 
 import pkg from './package.json';
@@ -25,26 +23,5 @@ const output = {
 export default {
   input: pkg.source,
   output: output[process.env.BUILD],
-  plugins: plugins.map((plugin) =>
-    plugin.name === 'babel'
-      ? babel({
-          exclude: 'node_modules/**',
-          extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-          rootMode: 'upward',
-          babelHelpers: 'bundled',
-          presets: [['@babel/preset-react']],
-          plugins: [
-            [
-              'module-resolver',
-              {
-                alias: {
-                  react: 'preact/compat',
-                  'react-dom': 'preact/compat',
-                },
-              },
-            ],
-          ],
-        })
-      : plugin
-  ),
+  plugins,
 };

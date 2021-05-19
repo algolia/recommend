@@ -4,7 +4,19 @@ import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import filesize from 'rollup-plugin-filesize';
-// import { terser } from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
+
+const preactPlugins = [
+  [
+    'module-resolver',
+    {
+      alias: {
+        react: 'preact/compat',
+        'react-dom': 'preact/compat',
+      },
+    },
+  ],
+];
 
 export const plugins = [
   replace({
@@ -23,8 +35,9 @@ export const plugins = [
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     rootMode: 'upward',
     babelHelpers: 'bundled',
+    plugins: process.env.BUILD_PREACT ? preactPlugins : [],
   }),
-  // terser(),
+  terser(),
   filesize({
     showMinifiedSize: false,
     showGzippedSize: true,

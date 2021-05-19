@@ -4,7 +4,7 @@ import {
   relatedProducts,
 } from '@algolia/js-recommendations';
 import algoliasearch from 'algoliasearch';
-import React, { render, createElement } from 'preact/compat';
+import React, { render } from 'preact/compat';
 import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
@@ -14,8 +14,6 @@ import { Hit } from './Hit';
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
-
-global.h = createElement;
 
 const searchClient = algoliasearch(appId, apiKey);
 
