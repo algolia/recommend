@@ -18,7 +18,14 @@ export function createSearchClient(
       getObject: jest.fn(() => Promise.resolve({})),
       search: jest.fn(() => Promise.resolve(createSingleSearchResponse())),
     })),
-    transporter: {} as any,
+    transporter: {
+      userAgent: {
+        value: '',
+        add() {
+          return {};
+        },
+      },
+    } as any,
     search: jest.fn((requests) =>
       Promise.resolve(
         createMultiSearchResponse(
@@ -29,6 +36,7 @@ export function createSearchClient(
     searchForFacetValues: jest.fn(() =>
       Promise.resolve([createSFFVResponse()])
     ),
+
     ...args,
   };
 }
