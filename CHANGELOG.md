@@ -1,35 +1,17 @@
-#  (2021-05-19)
-
-
-### Bug Fixes
-
-* correct prop types for `fallbackFilters` ([9ec01ea](https://github.com/algolia/ui-components/commit/9ec01eaa25813510d9c5c55f5cff6da1772cb0a4))
-* display navigation arrows on initial render ([53d3e13](https://github.com/algolia/ui-components/commit/53d3e13a5c82989b974c6fc62c862d5a17e1ce85))
-* hide previous button when scroll is negative ([3f2c635](https://github.com/algolia/ui-components/commit/3f2c6351b01513b3d04730ac4f1f63892a0b3185))
-* import type ([58a47e3](https://github.com/algolia/ui-components/commit/58a47e3f8c56c3b6ba93e9ca8fcc4a72c5d320b9))
-* use `ProductRecord` type in `transformItems` ([8598fa4](https://github.com/algolia/ui-components/commit/8598fa43d7ec6db036325ab919574e4a93ae8c92))
-
+# [1.0.0-experimental.0](https://github.com/algolia/ui-components/compare/v1.0.0-beta.9...v1.0.0-experimental.0) (2021-05-19)
 
 ### Features
 
-* introduce slider components ([#13](https://github.com/algolia/ui-components/issues/13)) ([bd3ff44](https://github.com/algolia/ui-components/commit/bd3ff4489a9aa1bfa218e7d3234d04f7f0342592))
+* **slider**: introduce slider components ([#13](https://github.com/algolia/ui-components/issues/13)) ([bd3ff44](https://github.com/algolia/ui-components/commit/bd3ff4489a9aa1bfa218e7d3234d04f7f0342592))
 * **js:** introduce JavaScript package ([#6](https://github.com/algolia/ui-components/issues/6)) ([b73d884](https://github.com/algolia/ui-components/commit/b73d884a1e3f1bc060545d8e6cb88bfee330b7e0))
 * **transformItems:** Add `transformItems` function to `useRecommendations` hook ([#9](https://github.com/algolia/ui-components/issues/9)) ([6d4dded](https://github.com/algolia/ui-components/commit/6d4dded6c54ff82b5e570363d031d927d6a12896))
 * accept multiple `objectID`s ([#8](https://github.com/algolia/ui-components/issues/8)) ([7ebd2e7](https://github.com/algolia/ui-components/commit/7ebd2e7af42da7124f2f86082f3cb2bf692c97c1))
-* accept user `optionalFilters` ([8d5f810](https://github.com/algolia/ui-components/commit/8d5f810ea0b5acf6a1c02d102217b4f25ace1f39))
 * add `searchParameters` prop ([db65cf8](https://github.com/algolia/ui-components/commit/db65cf8469a01bbcc181f09f5a921aa72124231a))
 * add accessibility translations ([9bc1be4](https://github.com/algolia/ui-components/commit/9bc1be44f9361898ad999a92da12b321b209df4b))
 * add Translations API ([2625ffe](https://github.com/algolia/ui-components/commit/2625ffe2ec59fef24844bf3bcf1f1de796eaede2))
-* decrease app padding ([1a2d98c](https://github.com/algolia/ui-components/commit/1a2d98c33dd6507bc39cd9d614292c5764ec6643))
-* design Add to cart button ([bc3a052](https://github.com/algolia/ui-components/commit/bc3a05267503f621f1b548fbb4cc2a0821317cb2))
-* design scroll bar ([f17182b](https://github.com/algolia/ui-components/commit/f17182b4b9ac745fb0e86cbf274b0d1b7e60812c))
 * design slider and grid components ([b797e16](https://github.com/algolia/ui-components/commit/b797e16b07b16aad96957f4a2b59e2b65f79535a))
 * export `FrequentlyBoughtTogether` and `RelatedProducts` ([3d365fd](https://github.com/algolia/ui-components/commit/3d365fdc2009fca9b7a00a7aae75bd51efaf8e4d))
-* extract colors to CSS vars ([ec8cb39](https://github.com/algolia/ui-components/commit/ec8cb390e52e4ed1a9396162260d594f9f1a0f53))
-* hide navigation buttons on touch devices ([664d70d](https://github.com/algolia/ui-components/commit/664d70d2cf17ba7556fe49692c3160871e991fb2))
-* hide slider buttons on scroll end ([4c3be00](https://github.com/algolia/ui-components/commit/4c3be001cadbb9aa5b8a189e5c71707c346ed63c))
 * implement keyboard navigation ([9887eb8](https://github.com/algolia/ui-components/commit/9887eb8c74646eba6ade714eca7e4873a24b2f1a))
-* increase hits size on mobile ([c40565d](https://github.com/algolia/ui-components/commit/c40565d9876de18c8ff9fa90bad6bc54df6fafd7))
 * make carousel accessible ([4fd4fdb](https://github.com/algolia/ui-components/commit/4fd4fdbdffdd5c65327f492c11b77fdd78d1bac6))
 * support Insights position ([47f9193](https://github.com/algolia/ui-components/commit/47f9193887040dad662699a4c9fa83d07f1b2b02))
 * **theme:** bootstrap grid layout ([900a285](https://github.com/algolia/ui-components/commit/900a285e950606d4d607284189900c419052375a))
@@ -37,6 +19,3 @@
 * make API generic ([da9735c](https://github.com/algolia/ui-components/commit/da9735c0c36a85da3e89ac8a42858c5abd585d36))
 * remove InstantSearch ([7866971](https://github.com/algolia/ui-components/commit/7866971cf38f3933b7a8b72d08acd3ce9b19392c))
 * return object from `useRecommendations` ([bcecce9](https://github.com/algolia/ui-components/commit/bcecce9670e46d8a3e031fa33803313159851381))
-
-
-
