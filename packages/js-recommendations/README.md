@@ -12,19 +12,19 @@ npm install @algolia/js-recommendations@experimental
 
 ## API
 
-### `RelatedProducts`
+### `relatedProducts`
 
-Component to display related products.
+Function to render related products.
 
 #### Usage
 
-To get started, you need a container for your slider to go in. If you don’t have one already, you can insert one into your markup:
+To get started, you need a container for your results to go in. If you don’t have one already, you can insert one into your markup:
 
 ```html
 <div id="relatedProducts"></div>
 ```
 
-Then, insert your slider into it by calling the `relatedProducts` function and providing the [`container`](#container). It can be a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
+Then, inject results into it by calling the `relatedProducts` function and providing the [`container`](#container). It can be a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
 
 ```js
 /** @jsx h */
@@ -121,19 +121,19 @@ function defaultRender(props) {
 }
 ```
 
-### `FrequentlyBoughtTogether`
+### `frequentlyBoughtTogether`
 
-Component to display frequently bought together products.
+Function to render frequently bought together products.
 
 #### Usage
 
-To get started, you need a container for your slider to go in. If you don’t have one already, you can insert one into your markup:
+To get started, you need a container for your results to go in. If you don’t have one already, you can insert one into your markup:
 
 ```html
-<div id="relatedProducts"></div>
+<div id="frequentlyBoughtTogether"></div>
 ```
 
-Then, insert your slider into it by calling the `relatedProducts` function and providing the [`container`](#container). It can be a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
+Then, inject results into it by calling the `frequentlyBoughtTogether` function and providing the [`container`](#container). It can be a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
 
 ```js
 /** @jsx h */
