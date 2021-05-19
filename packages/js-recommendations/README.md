@@ -38,6 +38,7 @@ const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
+const currentObjectID = 'fff4851ec9c8ca4e771b87b3fcdd9953b55c64df';
 
 relatedProducts({
   container: '#relatedProducts',
@@ -151,6 +152,7 @@ const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
+const currentObjectID = 'fff4851ec9c8ca4e771b87b3fcdd9953b55c64df';
 
 frequentlyBoughtTogether({
   container: '#frequentlyBoughtTogether',
