@@ -36,7 +36,6 @@ export function createSearchClient(
     searchForFacetValues: jest.fn(() =>
       Promise.resolve([createSFFVResponse()])
     ),
-
     ...args,
   };
 }
