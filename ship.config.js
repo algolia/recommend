@@ -7,10 +7,10 @@ module.exports = {
     // We rely on Lerna to bump our dependencies.
     packagesToBump: [],
     packagesToPublish: [
-      'packages/react-recommendations',
+      'packages/js-horizontal-slider',
       'packages/js-recommendations',
       'packages/react-horizontal-slider',
-      'packages/js-horizontal-slider',
+      'packages/react-recommendations',
     ],
   },
   publishCommand({ tag }) {
