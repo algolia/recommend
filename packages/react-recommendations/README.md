@@ -126,8 +126,7 @@ function defaultRender(props) {
 ```ts
 type ViewProps<
   TItem extends RecordWithObjectID,
-  TTranslations extends Record<string, string>,
-  Record<string, string>
+  TTranslations extends Record<string, string>
 > = {
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
@@ -318,8 +317,7 @@ function defaultRender(props) {
 ```ts
 type ViewProps<
   TItem extends RecordWithObjectID,
-  TTranslations extends Record<string, string>,
-  Record<string, string>
+  TTranslations extends Record<string, string>
 > = {
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
