@@ -1,20 +1,20 @@
 {
   "files": [
     {
-      "path": "packages/react-recommendations/dist/umd/index.js",
-      "maxSize": "2.5 kB"
+      "path": "packages/js-horizontal-slider/dist/umd/index.js",
+      "maxSize": "7.5 kB"
     },
     {
       "path": "packages/js-recommendations/dist/umd/index.js",
       "maxSize": "8.25 kB"
     },
     {
-      "path": "packages/horizontal-slider-react/dist/umd/index.js",
+      "path": "packages/react-horizontal-slider/dist/umd/index.js",
       "maxSize": "1.75 kB"
     },
     {
-      "path": "packages/horizontal-slider-js/dist/umd/index.js",
-      "maxSize": "7.5 kB"
+      "path": "packages/react-recommendations/dist/umd/index.js",
+      "maxSize": "2.5 kB"
     }
   ]
 }

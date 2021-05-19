@@ -8,7 +8,7 @@ import React, { render } from 'preact/compat';
 import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
-import '@algolia/ui-components-horizontal-slider-js/HorizontalSlider.css';
+import '@algolia/ui-components-js-horizontal-slider/HorizontalSlider.css';
 import { Hit } from './Hit';
 
 const appId = 'HYDY1KWTWB';

@@ -1,5 +1,5 @@
 {
-  "name": "@algolia/ui-components-horizontal-slider-js",
+  "name": "@algolia/ui-components-js-horizontal-slider",
   "version": "1.0.0-experimental.0",
   "license": "MIT",
   "homepage": "https://github.com/algolia/ui-components",
@@ -29,7 +29,7 @@
     "HorizontalSlider.css"
   ],
   "dependencies": {
-    "@algolia/ui-components-horizontal-slider-react": "1.0.0-experimental.0",
+    "@algolia/ui-components-react-horizontal-slider": "1.0.0-experimental.0",
     "preact": "^10.0.0"
   }
 }
