@@ -272,6 +272,8 @@ Additional filters to use as fallback should there not be enough recommendations
 
 ### `transformItems`
 
+Function to transform the items retrieved by Algolia. It's useful to edit, add, remove or reorder them..
+
 > `(Array<RecordWithObjectID<TItem>>) => Array<RecordWithObjectID<TItem>>`
 
 <details>
@@ -285,7 +287,5 @@ type RecordWithObjectID<TItem> = TItem & {
 ```
 
 </details>
-
-Receives the items, and is called before displaying them. Should return a new array with the same shape as the original array. Useful for mapping over the items to transform, and remove or reorder them.
 
 List of [search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/) to send.
