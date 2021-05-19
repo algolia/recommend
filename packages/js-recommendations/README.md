@@ -278,9 +278,9 @@ Additional filters to use as fallback should there not be enough recommendations
 
 > [`SearchParameters`](https://www.algolia.com/doc/api-reference/search-api-parameters/) | defaults to `{ analytics: false, enableABTest: false }`
 
-### `transformItems`
+List of [search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/) to send.
 
-Function to transform the items retrieved by Algolia. It's useful to edit, add, remove or reorder them.
+### `transformItems`
 
 > `(Array<RecordWithObjectID<TItem>>) => Array<RecordWithObjectID<TItem>>`
 
@@ -296,4 +296,4 @@ type RecordWithObjectID<TItem> = TItem & {
 
 </details>
 
-List of [search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/) to send.
+Function to transform the items retrieved by Algolia. It's useful to edit, add, remove or reorder them.
