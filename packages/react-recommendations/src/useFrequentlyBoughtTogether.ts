@@ -1,5 +1,3 @@
-import type { SearchOptions } from '@algolia/client-search';
-import type { SearchClient } from 'algoliasearch';
 import { useMemo } from 'react';
 
 import {
@@ -7,18 +5,13 @@ import {
   UseRecommendationsProps,
 } from './useRecommendations';
 
-export type UseFrequentlyBoughtTogetherProps = {
-  indexName: string;
-  objectIDs: string[];
-  searchClient: SearchClient;
-
-  maxRecommendations?: number;
-  searchParameters?: SearchOptions;
-  threshold?: number;
-};
+export type UseFrequentlyBoughtTogetherProps<TObject> = Omit<
+  UseRecommendationsProps<TObject>,
+  'model' | 'fallbackFilters'
+>;
 
 export function useFrequentlyBoughtTogether<TObject>(
-  userProps: UseFrequentlyBoughtTogetherProps
+  userProps: UseFrequentlyBoughtTogetherProps<TObject>
 ) {
   const props: UseRecommendationsProps<TObject> = useMemo(
     () => ({

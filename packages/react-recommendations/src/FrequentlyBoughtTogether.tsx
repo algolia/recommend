@@ -13,7 +13,8 @@ import {
 
 export type FrequentlyBoughtTogetherProps<
   TObject
-> = UseFrequentlyBoughtTogetherProps & RecommendationsComponentProps<TObject>;
+> = UseFrequentlyBoughtTogetherProps<TObject> &
+  RecommendationsComponentProps<TObject>;
 
 export function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>

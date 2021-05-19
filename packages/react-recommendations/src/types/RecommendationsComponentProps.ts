@@ -11,7 +11,7 @@ export type ChildrenProps<TObject> = {
 export type RecommendationsComponentProps<TObject> = {
   itemComponent({ item: TObject }): JSX.Element;
   children?(props: ChildrenProps<TObject>): JSX.Element;
-  translations?: Partial<RecommendationTranslations>;
+  translations?: RecommendationTranslations;
   view?(
     props: ViewProps<
       RecordWithObjectID<TObject>,
