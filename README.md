@@ -4,7 +4,9 @@
 
 This is the repository packaging the UI components for Algolia Recommend.
 
-> ℹ️ During the beta of Algolia Recommend, the UI components rely on an Algolia Index to retrieve the recommendations, and perform a regular Search API request to get the recommendations.
+> ⚠️ This branch is the experimental version of the UI components. **If you're using the beta version of Algolia Recommend, [head over to the `main` branch](https://github.com/algolia/ui-components/tree/main)**.
+
+During the beta of Algolia Recommend, the UI components rely on an Algolia Index to retrieve the recommendations, and perform a regular Search API request to get the recommendations.
 
 ## Packages
 
