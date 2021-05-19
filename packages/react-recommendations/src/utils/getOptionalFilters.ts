@@ -1,7 +1,6 @@
 import {
-  UseRecommendationsInternalProps,
   RecommendationRecord,
-  ProductBaseRecord,
+  UseRecommendationsInternalProps,
 } from '../types';
 
 type GetOptionalFiltersParams<TObject> = {
@@ -10,7 +9,7 @@ type GetOptionalFiltersParams<TObject> = {
   threshold: UseRecommendationsInternalProps<TObject>['threshold'];
 };
 
-export function getOptionalFilters<TObject extends ProductBaseRecord>({
+export function getOptionalFilters<TObject>({
   fallbackFilters,
   recommendations,
   threshold,

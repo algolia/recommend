@@ -3,9 +3,10 @@ import type { SearchClient } from 'algoliasearch';
 import { useMemo, useEffect, useState } from 'react';
 
 import {
-  ProductBaseRecord,
   ProductRecord,
   RecommendationModel,
+  RecommendationRecord,
+  RecordWithObjectID,
   UseRecommendationsInternalProps,
 } from './types';
 import {
@@ -16,6 +17,10 @@ import {
   uniqBy,
 } from './utils';
 import { version } from './version';
+
+type RecommendRecord = RecordWithObjectID<{
+  recommendations?: RecommendationRecord[];
+}>;
 
 export type UseRecommendationsProps<TObject> = {
   model: RecommendationModel;
@@ -33,10 +38,10 @@ export type UseRecommendationsProps<TObject> = {
 };
 
 type UseRecommendationReturn<TObject> = {
-  recommendations: TObject[];
+  recommendations: Array<RecordWithObjectID<TObject>>;
 };
 
-function getDefaultedProps<TObject extends ProductBaseRecord>(
+function getDefaultedProps<TObject>(
   props: UseRecommendationsProps<TObject>
 ): UseRecommendationsInternalProps<TObject> {
   return {
@@ -62,7 +67,7 @@ function getDefaultedProps<TObject extends ProductBaseRecord>(
   };
 }
 
-export function useRecommendations<TObject extends ProductBaseRecord>(
+export function useRecommendations<TObject>(
   userProps: UseRecommendationsProps<TObject>
 ): UseRecommendationReturn<TObject> {
   const [products, setProducts] = useState<Array<ProductRecord<TObject>>>([]);
@@ -81,7 +86,7 @@ export function useRecommendations<TObject extends ProductBaseRecord>(
   useEffect(() => {
     props.searchClient
       .initIndex(getIndexNameFromModel(props.model, props.indexName))
-      .getObjects<TObject>(props.objectIDs)
+      .getObjects<RecommendRecord>(props.objectIDs)
       .then((response) => {
         const recommendationsList = response.results.map(
           (result) => result?.recommendations ?? []

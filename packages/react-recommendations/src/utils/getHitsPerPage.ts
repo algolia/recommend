@@ -1,4 +1,4 @@
-import { UseRecommendationsInternalProps, ProductBaseRecord } from '../types';
+import { UseRecommendationsInternalProps } from '../types';
 
 type GetHitsPerPageParams<TObject> = {
   fallbackFilters: UseRecommendationsInternalProps<TObject>['fallbackFilters'];
@@ -6,7 +6,7 @@ type GetHitsPerPageParams<TObject> = {
   recommendationsCount: number;
 };
 
-export function getHitsPerPage<TObject extends ProductBaseRecord>({
+export function getHitsPerPage<TObject>({
   fallbackFilters,
   maxRecommendations,
   recommendationsCount,

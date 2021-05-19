@@ -1,59 +1,55 @@
 import React, { useMemo } from 'react';
 
-import { RecommendationsProps } from './Recommendations';
-import { ProductBaseRecord, RecommendationTranslations } from './types';
-import { useRelatedProducts } from './useRelatedProducts';
+import { ListView } from './ListView';
+import {
+  ChildrenProps,
+  RecommendationsComponentProps,
+  RecommendationTranslations,
+} from './types';
+import {
+  useRelatedProducts,
+  UseRelatedProductsProps,
+} from './useRelatedProducts';
 
-export type RelatedProductsProps<TObject> = Omit<
-  RecommendationsProps<TObject>,
-  'model'
->;
+export type RelatedProductsProps<TObject> = UseRelatedProductsProps &
+  RecommendationsComponentProps<TObject>;
 
-function defaultRender<TObject>(props: {
-  recommendations: TObject[];
-  children: JSX.Element;
-}) {
-  if (props.recommendations.length === 0) {
-    return null;
-  }
-
-  return props.children;
-}
-
-export function RelatedProducts<TObject extends ProductBaseRecord>(
-  props: RelatedProductsProps<TObject>
-) {
+export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
   const { recommendations } = useRelatedProducts<TObject>(props);
-  const render = props.children || defaultRender;
-  const translations: RecommendationTranslations = useMemo(
+  const translations = useMemo<RecommendationTranslations>(
     () => ({
       title: 'Related products',
+      sliderLabel: 'Related products',
       showMore: 'Show more',
       ...props.translations,
     }),
     [props.translations]
   );
 
-  const children = (
-    <section className="auc-Recommendations auc-Recommendations--grid">
-      {translations.title && <h3>{translations.title}</h3>}
-
-      {recommendations.length > 0 && (
-        <div className="auc-Recommendations-container">
-          <ol className="auc-Recommendations-list">
-            {recommendations.map((recommendation) => (
-              <li
-                key={recommendation.objectID}
-                className="auc-Recommendations-item"
-              >
-                <props.hitComponent hit={recommendation} />
-              </li>
-            ))}
-          </ol>
-        </div>
-      )}
-    </section>
+  const render = props.children ?? defaultRender;
+  const ViewComponent = props.view ?? ListView;
+  const View = (viewProps: unknown) => (
+    <ViewComponent
+      items={recommendations}
+      itemComponent={props.itemComponent}
+      translations={translations}
+      {...viewProps}
+    />
   );
 
-  return render({ recommendations, children });
+  return render({ recommendations, translations, View });
+}
+
+function defaultRender<TObject>(props: ChildrenProps<TObject>) {
+  if (props.recommendations.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="auc-Recommendations">
+      {props.translations.title && <h3>{props.translations.title}</h3>}
+
+      <props.View />
+    </section>
+  );
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@algolia/js-recommendations",
+  "name": "@algolia/ui-components-horizontal-slider-js",
   "version": "1.0.0-beta.9",
   "license": "MIT",
   "homepage": "https://github.com/algolia/ui-components",
@@ -25,13 +25,11 @@
   "jsdelivr": "dist/umd/index.js",
   "sideEffects": false,
   "files": [
-    "dist/"
+    "dist/",
+    "HorizontalSlider.css"
   ],
-  "peerDependencies": {
-    "algoliasearch": "^4.9.1"
-  },
   "dependencies": {
-    "@algolia/react-recommendations": "1.0.0-beta.9",
+    "@algolia/ui-components-horizontal-slider-react": "1.0.0-beta.9",
     "preact": "^10.0.0"
   }
 }

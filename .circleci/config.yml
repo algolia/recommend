@@ -25,9 +25,13 @@ aliases:
 
       mkdir -p packages/react-recommendations/dist
       mkdir -p packages/js-recommendations/dist
+      mkdir -p packages/horizontal-slider-js/dist
+      mkdir -p packages/horizontal-slider-react/dist
 
       cp -R /tmp/workspace/packages/react-recommendations/dist packages/react-recommendations
       cp -R /tmp/workspace/packages/js-recommendations/dist packages/js-recommendations
+      cp -R /tmp/workspace/packages/horizontal-slider-js/dist packages/horizontal-slider-js
+      cp -R /tmp/workspace/packages/horizontal-slider-react/dist packages/horizontal-slider-react
 
 defaults: &defaults
   working_directory: ~/ui-components
@@ -59,9 +63,13 @@ jobs:
 
             mkdir -p /tmp/workspace/packages/react-recommendations/dist
             mkdir -p /tmp/workspace/packages/js-recommendations/dist
+            mkdir -p /tmp/workspace/packages/horizontal-slider-js/dist
+            mkdir -p /tmp/workspace/packages/horizontal-slider-react/dist
 
             cp -R packages/react-recommendations/dist /tmp/workspace/packages/react-recommendations
             cp -R packages/js-recommendations/dist /tmp/workspace/packages/js-recommendations
+            cp -R packages/horizontal-slider-js/dist /tmp/workspace/packages/horizontal-slider-js
+            cp -R packages/horizontal-slider-react/dist /tmp/workspace/packages/horizontal-slider-react
       - persist_to_workspace:
           root: *workspace_root
           paths:

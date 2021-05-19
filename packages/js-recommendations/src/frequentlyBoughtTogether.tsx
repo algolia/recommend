@@ -1,18 +1,16 @@
-/** @jsx h */
 import {
-  ProductBaseRecord,
   FrequentlyBoughtTogether,
   FrequentlyBoughtTogetherProps,
-} from '@algolia/react-recommendations';
-import { h, render } from 'preact';
+} from '@algolia/react-recommendations/src';
+import React, { render } from 'preact/compat';
 
 import { getHTMLElement } from './getHTMLElement';
 import { EnvironmentProps } from './types';
 import { version } from './version';
 
-export function frequentlyBoughtTogether<TObject extends ProductBaseRecord>({
+export function frequentlyBoughtTogether<TObject>({
   container,
-  environment,
+  environment = window,
   ...rest
 }: FrequentlyBoughtTogetherProps<TObject> & EnvironmentProps) {
   rest.searchClient.addAlgoliaAgent('js-recommendations', version);

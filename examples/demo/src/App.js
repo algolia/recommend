@@ -1,8 +1,8 @@
 import {
   FrequentlyBoughtTogether,
   RelatedProducts,
-  RelatedProductsSlider,
 } from '@algolia/react-recommendations';
+import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 import React, { useState } from 'react';
 import insights from 'search-insights';
@@ -12,7 +12,9 @@ import '@algolia/autocomplete-theme-classic';
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
 import { Hit } from './Hit';
 
+import '@algolia/ui-components-horizontal-slider-react/HorizontalSlider.css';
 import './App.css';
+import './Recommendations.css';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
@@ -119,7 +121,7 @@ function App() {
             searchClient={searchClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
+            itemComponent={({ item }) => <Hit hit={item} insights={insights} />}
             maxRecommendations={3}
             searchParameters={{
               analytics: true,
@@ -127,11 +129,12 @@ function App() {
             }}
           />
 
-          <RelatedProductsSlider
+          <RelatedProducts
             searchClient={searchClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
+            itemComponent={({ item }) => <Hit hit={item} insights={insights} />}
+            view={HorizontalSlider}
             maxRecommendations={10}
             translations={{
               title: 'Related products (slider)',
@@ -152,7 +155,7 @@ function App() {
             searchClient={searchClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            hitComponent={({ hit }) => <Hit hit={hit} insights={insights} />}
+            itemComponent={({ item }) => <Hit hit={item} insights={insights} />}
             maxRecommendations={10}
             translations={{
               title: 'Related products',

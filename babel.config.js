@@ -21,5 +21,21 @@ module.exports = (api) => {
         },
       ],
     ],
+    overrides: [
+      {
+        test: ['examples/js-demo'],
+        plugins: [
+          [
+            'module-resolver',
+            {
+              alias: {
+                react: 'preact/compat',
+                'react-dom': 'preact/compat',
+              },
+            },
+          ],
+        ],
+      },
+    ],
   };
 };

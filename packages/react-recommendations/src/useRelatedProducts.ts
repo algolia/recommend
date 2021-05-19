@@ -2,7 +2,6 @@ import type { SearchOptions } from '@algolia/client-search';
 import type { SearchClient } from 'algoliasearch';
 import { useMemo } from 'react';
 
-import { ProductBaseRecord } from './types';
 import {
   useRecommendations,
   UseRecommendationsProps,
@@ -19,7 +18,7 @@ export type UseRelatedProductsProps = {
   threshold?: number;
 };
 
-export function useRelatedProducts<TObject extends ProductBaseRecord>(
+export function useRelatedProducts<TObject>(
   userProps: UseRelatedProductsProps
 ) {
   const props: UseRecommendationsProps<TObject> = useMemo(

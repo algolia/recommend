@@ -1,15 +1,14 @@
-/** @jsx h */
 import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
 import {
   frequentlyBoughtTogether,
   relatedProducts,
-  relatedProductsSlider,
 } from '@algolia/js-recommendations';
 import algoliasearch from 'algoliasearch';
-import { h, render } from 'preact';
+import React, { render } from 'preact/compat';
 import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
+import '@algolia/ui-components-horizontal-slider-js/HorizontalSlider.css';
 import { Hit } from './Hit';
 
 const appId = 'HYDY1KWTWB';
@@ -17,6 +16,8 @@ const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
+
+insights('init', { appId, apiKey });
 
 autocomplete({
   container: '#autocomplete',
@@ -109,8 +110,8 @@ function renderRecommendations(selectedProduct) {
     searchClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
-    hitComponent({ hit }) {
-      return <Hit hit={hit} insights={insights} />;
+    itemComponent({ item }) {
+      return <Hit hit={item} insights={insights} />;
     },
     maxRecommendations: 3,
     searchParameters: {
@@ -119,37 +120,13 @@ function renderRecommendations(selectedProduct) {
     },
   });
 
-  relatedProductsSlider({
-    container: '#relatedProductsSlider',
-    searchClient,
-    indexName,
-    objectIDs: [selectedProduct.objectID],
-    hitComponent({ hit }) {
-      return <Hit hit={hit} insights={insights} />;
-    },
-    maxRecommendations: 10,
-    translations: {
-      title: 'Related products (slider)',
-    },
-    fallbackFilters: [
-      `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-    ],
-    searchParameters: {
-      analytics: true,
-      clickAnalytics: true,
-      facetFilters: [
-        `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-      ],
-    },
-  });
-
   relatedProducts({
     container: '#relatedProducts',
     searchClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
-    hitComponent({ hit }) {
-      return <Hit hit={hit} insights={insights} />;
+    itemComponent({ item }) {
+      return <Hit hit={item} insights={insights} />;
     },
     maxRecommendations: 10,
     translations: {
