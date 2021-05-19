@@ -28,10 +28,10 @@ const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
 
-function Hit({ hit }) {
+function Hit({ item }) {
   return (
     <pre>
-      <code>{JSON.stringify(hit)}</code>
+      <code>{JSON.stringify(item)}</code>
     </pre>
   );
 }
@@ -44,7 +44,7 @@ function App({ currentObjectID }) {
       searchClient={searchClient}
       indexName={indexName}
       objectIDs={[currentObjectID]}
-      hitComponent={Hit}
+      itemComponent={Hit}
     />
   );
 }
@@ -54,7 +54,7 @@ function App({ currentObjectID }) {
 
 The component accepts all the [shared props](#shared-props) and the following:
 
-##### `hitComponent`
+##### `itemComponent`
 
 > `({ item }) => JSX.Element` | **required**
 
@@ -62,19 +62,97 @@ The product component to display.
 
 ##### `translations`
 
-> `Translations`
+> `RelatedProductTranslations`
+
+<details>
+
+<summary><code>RelatedProductTranslations</code></summary>
 
 ```ts
-type Translations = {
+type RelatedProductTranslations = Partial<{
   title: string;
-};
+  showMore: string;
+}>;
 ```
+
+The translations for the component.
+
+</details>
 
 ##### `children`
 
-> `(props) => JSX.Element`
+> `(props: ChildrenProps) => JSX.Element`
+
+<details>
+
+<summary><code>ChildrenProps</code></summary>
+
+```ts
+type ChildrenProps<TObject> = {
+  recommendations: TObject[];
+  View(props: unknown): JSX.Element;
+  translations: RelatedProductTranslations;
+};
+```
+
+</details>
 
 Render function to modify the default rendering.
+
+The default implementation is:
+
+```js
+function defaultRender(props) {
+  if (props.recommendations.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="auc-Recommendations">
+      {props.translations.title && <h3>{props.translations.title}</h3>}
+
+      <props.View />
+    </section>
+  );
+}
+```
+
+##### `view`
+
+> `(props: ViewProps) => JSX.Element`
+
+<details>
+
+<summary><code>ViewProps</code></summary>
+
+```ts
+type ViewProps<TItem extends RecordWithObjectID> = {
+  items: TItem[];
+  itemComponent({ item: TItem }): JSX.Element;
+};
+```
+
+</details>
+
+The view component to render your items into.
+
+The default implementation is:
+
+```js
+function ListView(props) {
+  return (
+    <div className="auc-Recommendations-container">
+      <ol className="auc-Recommendations-list">
+        {props.items.map((item) => (
+          <li key={item.objectID} className="auc-Recommendations-item">
+            <props.itemComponent item={item} />
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+```
 
 ### `useRelatedProducts`
 
@@ -139,10 +217,10 @@ const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
 
-function Hit({ hit }) {
+function Hit({ item }) {
   return (
     <pre>
-      <code>{JSON.stringify(hit)}</code>
+      <code>{JSON.stringify(item)}</code>
     </pre>
   );
 }
@@ -155,7 +233,7 @@ function App({ currentObjectID }) {
       searchClient={searchClient}
       indexName={indexName}
       objectIDs={[currentObjectID]}
-      hitComponent={Hit}
+      itemComponent={Hit}
     />
   );
 }
@@ -165,7 +243,7 @@ function App({ currentObjectID }) {
 
 The component accepts all the [shared props](#shared-props) and the following:
 
-##### `hitComponent`
+##### `itemComponent`
 
 > `({ item }) => JSX.Element` | **required**
 
@@ -173,19 +251,97 @@ The product component to display.
 
 ##### `translations`
 
-> `Translations`
+> `FrequentlyBoughtTogetherTranslations`
+
+<details>
+
+<summary><code>FrequentlyBoughtTogetherTranslations</code></summary>
 
 ```ts
-type Translations = {
+type FrequentlyBoughtTogetherTranslations = Partial<{
   title: string;
-};
+  showMore: string;
+}>;
 ```
+
+</details>
+
+The translations for the component.
 
 ##### `children`
 
-> `(props) => JSX.Element`
+> `(props: ChildrenProps) => JSX.Element`
+
+<details>
+
+<summary><code>ChildrenProps</code></summary>
+
+```ts
+type ChildrenProps<TObject> = {
+  recommendations: TObject[];
+  View(props: unknown): JSX.Element;
+  translations: RecommendationTranslations;
+};
+```
+
+</details>
 
 Render function to modify the default rendering.
+
+The default implementation is:
+
+```js
+function defaultRender(props) {
+  if (props.recommendations.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="auc-Recommendations">
+      {props.translations.title && <h3>{props.translations.title}</h3>}
+
+      <props.View />
+    </section>
+  );
+}
+```
+
+##### `view`
+
+> `(props: ViewProps) => JSX.Element`
+
+<details>
+
+<summary><code>ViewProps</code></summary>
+
+```ts
+type ViewProps<TItem extends RecordWithObjectID> = {
+  items: TItem[];
+  itemComponent({ item: TItem }): JSX.Element;
+};
+```
+
+</details>
+
+The view component to render your items into.
+
+The default implementation is:
+
+```js
+function ListView(props) {
+  return (
+    <div className="auc-Recommendations-container">
+      <ol className="auc-Recommendations-list">
+        {props.items.map((item) => (
+          <li key={item.objectID} className="auc-Recommendations-item">
+            <props.itemComponent item={item} />
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+```
 
 ### `useFrequentlyBoughtTogether`
 
@@ -327,3 +483,21 @@ Additional filters to use as fallback should there not be enough recommendations
 > [`SearchParameters`](https://www.algolia.com/doc/api-reference/search-api-parameters/) | defaults to `{ analytics: false, enableABTest: false }`
 
 List of [search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/) to send.
+
+### `transformItems`
+
+Function to transform the items retrieved by Algolia. It's useful to edit, add, remove or reorder them.
+
+> `(Array<RecordWithObjectID<TItem>>) => Array<RecordWithObjectID<TItem>>`
+
+<details>
+
+<summary><code>RecordWithObjectID</code></summary>
+
+```ts
+type RecordWithObjectID<TItem> = TItem & {
+  objectID: string;
+};
+```
+
+</details>
