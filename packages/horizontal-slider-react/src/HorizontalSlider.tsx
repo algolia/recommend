@@ -52,6 +52,7 @@ export function HorizontalSlider<TObject extends RecordWithObjectID>(
     }),
     [props.translations]
   );
+  const classNames = props.classNames ?? {};
   const listRef = useRef<HTMLOListElement>(null);
   const previousButtonRef = useRef<HTMLButtonElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
@@ -104,8 +105,8 @@ export function HorizontalSlider<TObject extends RecordWithObjectID>(
         className={cx(
           'uic-HorizontalSlider-navigation',
           'uic-HorizontalSlider-navigation--previous',
-          props.classNames?.navigation,
-          props.classNames?.navigationPrevious
+          classNames.navigation,
+          classNames.navigationPrevious
         )}
         onClick={(event) => {
           event.preventDefault();
@@ -123,7 +124,7 @@ export function HorizontalSlider<TObject extends RecordWithObjectID>(
       </button>
 
       <ol
-        className={cx('uic-HorizontalSlider-list', props.classNames?.list)}
+        className={cx('uic-HorizontalSlider-list', classNames.list)}
         ref={listRef}
         tabIndex={0}
         id={sliderIdRef.current}
@@ -144,7 +145,7 @@ export function HorizontalSlider<TObject extends RecordWithObjectID>(
         {props.items.map((item, index) => (
           <li
             key={item.objectID}
-            className={cx('uic-HorizontalSlider-item', props.classNames?.item)}
+            className={cx('uic-HorizontalSlider-item', classNames.item)}
             aria-roledescription="slide"
             aria-label={`${index + 1} of ${props.items.length}`}
           >
@@ -161,8 +162,8 @@ export function HorizontalSlider<TObject extends RecordWithObjectID>(
         className={cx(
           'uic-HorizontalSlider-navigation',
           'uic-HorizontalSlider-navigation--next',
-          props.classNames?.navigation,
-          props.classNames?.navigationNext
+          classNames.navigation,
+          classNames.navigationNext
         )}
         onClick={(event) => {
           event.preventDefault();
