@@ -4,7 +4,7 @@ import {
 } from '@algolia/react-recommendations';
 import { HorizontalSlider } from '@algolia/ui-components-react-horizontal-slider';
 import algoliasearch from 'algoliasearch';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
@@ -92,7 +92,7 @@ function App() {
       />
 
       {selectedProduct && (
-        <>
+        <Fragment>
           <div style={{ padding: '1rem 0' }}>
             <div
               className="Hit"
@@ -171,7 +171,7 @@ function App() {
               ],
             }}
           />
-        </>
+        </Fragment>
       )}
     </div>
   );
