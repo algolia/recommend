@@ -85,6 +85,8 @@ type RecommendationTranslations = Partial<{
 }>;
 ```
 
+</details>
+
 ##### `children`
 
 > `(props: ChildrenProps) => JSX.Element`
@@ -183,7 +185,9 @@ The product component to display.
 
 ##### `translations`
 
-> `Translations`
+<details>
+
+<summary><code>RecommendationTranslations</code></summary>
 
 ```ts
 type RecommendationTranslations = Partial<{
@@ -191,6 +195,8 @@ type RecommendationTranslations = Partial<{
   showMore: string;
 }>;
 ```
+
+</details>
 
 ##### `children`
 

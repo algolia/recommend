@@ -254,7 +254,11 @@ The product component to display.
 
 ##### `translations`
 
-> `Translations`
+> `RecommendationTranslations`
+
+<details>
+
+<summary><code>RecommendationTranslations</code></summary>
 
 ```ts
 type RecommendationTranslations = Partial<{
@@ -262,6 +266,8 @@ type RecommendationTranslations = Partial<{
   showMore: string;
 }>;
 ```
+
+</details>
 
 ##### `children`
 
