@@ -1,7 +1,7 @@
 {
   "name": "@algolia/ui-components-horizontal-slider-react",
   "description": "Horizontal slider UI component.",
-  "version": "1.0.0-beta.9",
+  "version": "1.0.0-experimental.0",
   "license": "MIT",
   "homepage": "https://github.com/algolia/ui-components",
   "repository": "algolia/ui-components",
