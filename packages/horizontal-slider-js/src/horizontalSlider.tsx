@@ -1,21 +1,14 @@
-/** @jsx h */
 import {
-  HorizontalSlider as HorizontalSliderOriginal,
+  HorizontalSlider,
   HorizontalSliderProps,
-} from '@algolia/ui-components-horizontal-slider-react';
-import { h, render } from 'preact';
+} from '@algolia/ui-components-horizontal-slider-react/src';
+import React, { render } from 'preact/compat';
 
 import { getHTMLElement } from './getHTMLElement';
 
 type RecordWithObjectID<TObject = {}> = TObject & {
   objectID: string;
 };
-
-export function HorizontalSlider<TObject extends RecordWithObjectID>(
-  props: HorizontalSliderProps<TObject>
-) {
-  return <HorizontalSliderOriginal {...props} />;
-}
 
 type EnvironmentProps = {
   container: string | HTMLElement;
@@ -24,7 +17,7 @@ type EnvironmentProps = {
 
 export function horizontalSlider<TObject extends RecordWithObjectID>({
   container,
-  environment,
+  environment = window,
   ...rest
 }: HorizontalSliderProps<TObject> & EnvironmentProps) {
   render(

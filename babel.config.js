@@ -31,8 +31,8 @@ module.exports = (api) => {
       },
       {
         test: [
-          'packages/js-recommendations',
-          'packages/horizontal-slider-js',
+          // 'packages/js-recommendations',
+          // 'packages/horizontal-slider-js',
           'examples/js-demo',
         ],
         presets: [

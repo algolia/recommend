@@ -19,7 +19,7 @@ export const plugins = [
   }),
   commonjs(),
   babel({
-    include: 'node_modules/**',
+    exclude: 'node_modules/**',
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     rootMode: 'upward',
     babelHelpers: 'bundled',
