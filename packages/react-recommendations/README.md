@@ -127,11 +127,10 @@ function defaultRender(props) {
 type ViewProps<
   TItem extends RecordWithObjectID,
   TTranslations extends Record<string, string>,
-  TClassNames extends Record<string, string>
+  Record<string, string>
 > = {
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
-  classNames?: TClassNames;
   translations?: TTranslations;
 };
 ```
@@ -314,11 +313,10 @@ function defaultRender(props) {
 type ViewProps<
   TItem extends RecordWithObjectID,
   TTranslations extends Record<string, string>,
-  TClassNames extends Record<string, string>
+  Record<string, string>
 > = {
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
-  classNames?: TClassNames;
   translations?: TTranslations;
 };
 ```
