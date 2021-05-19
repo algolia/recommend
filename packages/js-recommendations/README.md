@@ -58,7 +58,7 @@ function renderRelatedProducts({ currentObjectID }) {
 
 #### Props
 
-The component accepts all the [shared props](#shared-props) and the following:
+The function accepts all the [shared props](#shared-props) and the following:
 
 ##### `container`
 
@@ -171,7 +171,7 @@ function renderFrequentlyBoughtTogether({ currentObjectID }) {
 
 #### Props
 
-The component accepts all the [shared props](#shared-props) and the following:
+The function accepts all the [shared props](#shared-props) and the following:
 
 ##### `container`
 
