@@ -488,13 +488,10 @@ List of [search parameters](https://www.algolia.com/doc/api-reference/search-api
 
 ### `transformItems`
 
-Function to transform the items retrieved by Algolia. It's useful to edit, add, remove or reorder them.
-
-> `(Array<RecordWithObjectID<TItem>>) => Array<RecordWithObjectID<TItem>>`
-
+<blockquote>
 <details>
 
-<summary><code>RecordWithObjectID</code></summary>
+<summary><code>(Array&lt;RecordWithObjectID&lt;TItem>>) => Array&lt;RecordWithObjectID&lt;TItem>></code></summary>
 
 ```ts
 type RecordWithObjectID<TItem> = TItem & {
@@ -503,3 +500,6 @@ type RecordWithObjectID<TItem> = TItem & {
 ```
 
 </details>
+</blockquote>
+
+Function to transform the items retrieved by Algolia. It's useful to edit, add, remove or reorder them.
