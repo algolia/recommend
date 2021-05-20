@@ -62,8 +62,7 @@ The product component to display.
 
 ##### `translations`
 
-> `RelatedProductTranslations`
-
+<blockquote>
 <details>
 
 <summary><code>RelatedProductTranslations</code></summary>
@@ -75,27 +74,30 @@ type RelatedProductTranslations = Partial<{
 }>;
 ```
 
+</details>
+</blockquote>
+
 The translations for the component.
 
 </details>
 
 ##### `children`
 
-> `(props: ChildrenProps) => JSX.Element`
-
+<blockquote>
 <details>
 
-<summary><code>ChildrenProps</code></summary>
+<summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
 
 ```ts
 type ChildrenProps<TObject> = {
   recommendations: TObject[];
-  View(props: unknown): JSX.Element;
   translations: RelatedProductTranslations;
+  View(props: unknown): JSX.Element;
 };
 ```
 
 </details>
+</blockquote>
 
 Render function to modify the default rendering.
 
@@ -119,11 +121,10 @@ function defaultRender(props) {
 
 ##### `view`
 
-> `(props: ViewProps) => JSX.Element`
-
+<blockquote>
 <details>
 
-<summary><code>ViewProps</code></summary>
+<summary><code>(props: ViewProps) => JSX.Element</code></summary>
 
 ```ts
 type ViewProps<TItem extends RecordWithObjectID> = {
@@ -133,6 +134,7 @@ type ViewProps<TItem extends RecordWithObjectID> = {
 ```
 
 </details>
+</blockquote>
 
 The view component to render your items into.
 
@@ -190,7 +192,7 @@ function App({ currentObjectID }) {
               className="auc-Recommendations-item"
             >
               <pre>
-                <code>{JSON.stringify(hit)}</code>
+                <code>{JSON.stringify(recommendation)}</code>
               </pre>
             </li>
           ))}
@@ -251,8 +253,7 @@ The product component to display.
 
 ##### `translations`
 
-> `FrequentlyBoughtTogetherTranslations`
-
+<blockquote>
 <details>
 
 <summary><code>FrequentlyBoughtTogetherTranslations</code></summary>
@@ -265,26 +266,27 @@ type FrequentlyBoughtTogetherTranslations = Partial<{
 ```
 
 </details>
+</blockquote>
 
 The translations for the component.
 
 ##### `children`
 
-> `(props: ChildrenProps) => JSX.Element`
-
+<blockquote>
 <details>
 
-<summary><code>ChildrenProps</code></summary>
+<summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
 
 ```ts
 type ChildrenProps<TObject> = {
   recommendations: TObject[];
-  View(props: unknown): JSX.Element;
   translations: RecommendationTranslations;
+  View(props: unknown): JSX.Element;
 };
 ```
 
 </details>
+</blockquote>
 
 Render function to modify the default rendering.
 
@@ -308,11 +310,10 @@ function defaultRender(props) {
 
 ##### `view`
 
-> `(props: ViewProps) => JSX.Element`
-
+<blockquote>
 <details>
 
-<summary><code>ViewProps</code></summary>
+<summary><code>(props: ViewProps) => JSX.Element</code></summary>
 
 ```ts
 type ViewProps<TItem extends RecordWithObjectID> = {
@@ -322,6 +323,7 @@ type ViewProps<TItem extends RecordWithObjectID> = {
 ```
 
 </details>
+</blockquote>
 
 The view component to render your items into.
 
@@ -379,7 +381,7 @@ function App({ currentObjectID }) {
               className="auc-Recommendations-item"
             >
               <pre>
-                <code>{JSON.stringify(hit)}</code>
+                <code>{JSON.stringify(recommendation)}</code>
               </pre>
             </li>
           ))}
@@ -435,7 +437,7 @@ function App({ currentObjectID }) {
               className="auc-Recommendations-item"
             >
               <pre>
-                <code>{JSON.stringify(hit)}</code>
+                <code>{JSON.stringify(recommendation)}</code>
               </pre>
             </li>
           ))}
