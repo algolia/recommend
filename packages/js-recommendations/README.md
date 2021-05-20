@@ -72,8 +72,7 @@ The product component to display.
 
 ##### `translations`
 
-> `RelatedProductTranslations`
-
+<blockquote>
 <details>
 
 <summary><code>RelatedProductTranslations</code></summary>
@@ -86,16 +85,16 @@ type RelatedProductTranslations = Partial<{
 ```
 
 </details>
+</blockquote>
 
 The translations for the component.
 
 ##### `children`
 
-> `(props: ChildrenProps) => JSX.Element`
-
+<blockquote>
 <details>
 
-<summary><code>ChildrenProps</code></summary>
+<summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
 
 ```ts
 type ChildrenProps<TObject> = {
@@ -106,6 +105,7 @@ type ChildrenProps<TObject> = {
 ```
 
 </details>
+</blockquote>
 
 Render function to modify the default rendering.
 
@@ -187,8 +187,7 @@ The product component to display.
 
 ##### `translations`
 
-> `FrequentlyBoughtTogetherTranslations`
-
+<blockquote>
 <details>
 
 <summary><code>FrequentlyBoughtTogetherTranslations</code></summary>
@@ -201,26 +200,27 @@ type FrequentlyBoughtTogetherTranslations = Partial<{
 ```
 
 </details>
+</blockquote>
 
 The translations for the component.
 
 ##### `children`
 
-> `(props: ChildrenProps) => JSX.Element`
-
+<blockquote>
 <details>
 
-<summary><code>ChildrenProps</code></summary>
+<summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
 
 ```ts
 type ChildrenProps<TObject> = {
   recommendations: TObject[];
-  translations: RecommendationTranslations;
+  translations: RelatedProductTranslations;
   View(props: unknown): JSX.Element;
 };
 ```
 
 </details>
+</blockquote>
 
 Render function to modify the default rendering.
 
@@ -282,11 +282,10 @@ List of [search parameters](https://www.algolia.com/doc/api-reference/search-api
 
 ### `transformItems`
 
-> `(Array<RecordWithObjectID<TItem>>) => Array<RecordWithObjectID<TItem>>`
-
+<blockquote>
 <details>
 
-<summary><code>RecordWithObjectID</code></summary>
+<summary><code>(Array&lt;RecordWithObjectID&lt;TItem>>) => Array&lt;RecordWithObjectID&lt;TItem>></code></summary>
 
 ```ts
 type RecordWithObjectID<TItem> = TItem & {
@@ -295,5 +294,6 @@ type RecordWithObjectID<TItem> = TItem & {
 ```
 
 </details>
+</blockquote>
 
 Function to transform the items retrieved by Algolia. It's useful to edit, add, remove or reorder them.
