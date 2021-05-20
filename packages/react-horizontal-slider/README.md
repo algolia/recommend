@@ -42,13 +42,10 @@ See usage for [Recommendations](/packages/react-recommendations#horizontal-slide
 
 ### `items`
 
-> `RecordWithObjectID<TItem>` | **required**
-
-The items to display in the component.
-
+<blockquote>
 <details>
 
-<summary><code>RecordWithObjectID</code></summary>
+<summary><code>RecordWithObjectID</code> | <b>required</b></summary>
 
 ```ts
 type RecordWithObjectID<TItem> = TItem & {
@@ -57,6 +54,9 @@ type RecordWithObjectID<TItem> = TItem & {
 ```
 
 </details>
+</blockquote>
+
+The items to display in the component.
 
 ### `itemComponent`
 
@@ -66,10 +66,7 @@ The item component to display.
 
 ### `translations`
 
-> `HorizontalSliderTranslations`
-
-The translations for the component.
-
+<blockquote>
 <details>
 
 <summary><code>HorizontalSliderTranslations</code></summary>
@@ -85,13 +82,13 @@ type HorizontalSliderTranslations = Partial<{
 ```
 
 </details>
+</blockquote>
+
+The translations for the component.
 
 ### `classNames`
 
-> `HorizontalSliderClassnames`
-
-The class names for the component.
-
+<blockquote>
 <details>
 
 <summary><code>HorizontalSliderClassnames</code></summary>
@@ -108,3 +105,6 @@ type HorizontalSliderClassnames = Partial<{
 ```
 
 </details>
+</blockquote>
+
+The class names for the component.

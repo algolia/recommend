@@ -4,7 +4,7 @@
 
 This is the repository packaging the UI components for Algolia Recommend.
 
-> ⚠️ This branch is the experimental version of the UI components. **If you've been using the npm `beta` tag, make sure to [switch to `experimental` tag](/packages/react-recommendations#installation)**.
+> ⚠️ This branch is the experimental version of the UI components. **If you've been using the npm `beta` tag, make sure to [switch to the `experimental` tag](/packages/react-recommendations#installation)**.
 
 During the beta of Algolia Recommend, the UI components rely on an Algolia Index to retrieve the recommendations, and perform a regular Search API request to get the recommendations.
 
