@@ -10,13 +10,11 @@ yarn add @algolia/react-recommendations@experimental
 npm install @algolia/react-recommendations@experimental
 ```
 
-## API
-
-### `RelatedProducts`
+## `<RelatedProducts />`
 
 Component to display related products.
 
-#### Usage
+### Usage
 
 ```js
 import { RelatedProducts } from '@algolia/react-recommendations';
@@ -50,17 +48,17 @@ function App({ currentObjectID }) {
 }
 ```
 
-#### Props
+### Props
 
 The component accepts all the [shared props](#shared-props) and the following:
 
-##### `itemComponent`
+#### `itemComponent`
 
 > `({ item }) => JSX.Element` | **required**
 
 The product component to display.
 
-##### `translations`
+#### `translations`
 
 <blockquote>
 <details>
@@ -81,7 +79,7 @@ The translations for the component.
 
 </details>
 
-##### `children`
+#### `children`
 
 <blockquote>
 <details>
@@ -119,7 +117,7 @@ function defaultRender(props) {
 }
 ```
 
-##### `view`
+#### `view`
 
 <blockquote>
 <details>
@@ -156,13 +154,13 @@ function ListView(props) {
 }
 ```
 
-### `useRelatedProducts`
+## `useRelatedProducts`
 
-> `(props: SharedProps) => { recommendations }`
+> [`(props: SharedProps) => { recommendations }`](#shared-props)
 
 Hook to retrieve related products.
 
-#### Usage
+### Usage
 
 ```jsx
 import { useRelatedProducts } from '@algolia/react-recommendations';
@@ -203,11 +201,15 @@ function App({ currentObjectID }) {
 }
 ```
 
-### `FrequentlyBoughtTogether`
+### Props
+
+The hook accepts all the [shared props](#shared-props).
+
+## `<FrequentlyBoughtTogether />`
 
 Component to display frequently bought together products.
 
-#### Usage
+### Usage
 
 ```js
 import { FrequentlyBoughtTogether } from '@algolia/react-recommendations';
@@ -241,17 +243,17 @@ function App({ currentObjectID }) {
 }
 ```
 
-#### Props
+### Props
 
 The component accepts all the [shared props](#shared-props) and the following:
 
-##### `itemComponent`
+#### `itemComponent`
 
 > `({ item }) => JSX.Element` | **required**
 
 The product component to display.
 
-##### `translations`
+#### `translations`
 
 <blockquote>
 <details>
@@ -270,7 +272,7 @@ type FrequentlyBoughtTogetherTranslations = Partial<{
 
 The translations for the component.
 
-##### `children`
+#### `children`
 
 <blockquote>
 <details>
@@ -308,7 +310,7 @@ function defaultRender(props) {
 }
 ```
 
-##### `view`
+#### `view`
 
 <blockquote>
 <details>
@@ -345,13 +347,13 @@ function ListView(props) {
 }
 ```
 
-### `useFrequentlyBoughtTogether`
+## `useFrequentlyBoughtTogether`
 
-> `(props: Omit<SharedProps, 'fallbackFilters'>) => { recommendations }`
+> [`(props: Omit<SharedProps, 'fallbackFilters'>) => { recommendations }`](#shared-props)
 
 Hook to retrieve frequently bought together products.
 
-#### Usage
+### Usage
 
 ```jsx
 import { useFrequentlyBoughtTogether } from '@algolia/react-recommendations';
@@ -392,21 +394,17 @@ function App({ currentObjectID }) {
 }
 ```
 
-### `useRecommendations`
+### Props
+
+The hook accepts all the [shared props](#shared-props).
+
+## `useRecommendations`
+
+> [`(props: SharedProps & { model: RecommendationModel }) => { recommendations }`](#shared-props)
 
 Generic hook to retrieve hits from an AI model.
 
-#### Props
-
-The component accepts all the [shared props](#shared-props) and the following:
-
-##### `model`
-
-> `"related-products" | "bought-together"` | **required**
-
-The name of the Recommendation model to use.
-
-#### Usage
+### Usage
 
 ```jsx
 import { useRecommendations } from '@algolia/react-recommendations';
@@ -447,6 +445,16 @@ function App({ currentObjectID }) {
   );
 }
 ```
+
+### Props
+
+The hook accepts all the [shared props](#shared-props) and the following:
+
+#### `model`
+
+> `"related-products" | "bought-together"` | **required**
+
+The name of the Recommendation model to use.
 
 ## Shared props
 
