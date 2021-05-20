@@ -1,6 +1,6 @@
 # ui-components
 
-[![MIT](https://img.shields.io/badge/license-MIT-green)](./LICENSE) [![npm version](https://img.shields.io/npm/v/@algolia/react-recommendations)](https://www.npmjs.com/package/@algolia/react-recommendations)
+[![MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](./LICENSE)
 
 This is the repository packaging the UI components for Algolia Recommend.
 
