@@ -16,6 +16,8 @@ Component to display related products.
 
 ### Usage
 
+#### Default view
+
 ```js
 import { RelatedProducts } from '@algolia/react-recommendations';
 import algoliasearch from 'algoliasearch';
@@ -43,6 +45,46 @@ function App({ currentObjectID }) {
       indexName={indexName}
       objectIDs={[currentObjectID]}
       itemComponent={RelatedItem}
+    />
+  );
+}
+```
+
+#### Horizontal slider view
+
+Example with the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component:
+
+```js
+import { RelatedProducts } from '@algolia/react-recommendations';
+import { HorizontalSlider } from '@algolia/ui-components-react-horizontal-slider';
+import algoliasearch from 'algoliasearch';
+
+import '@algolia/ui-components-react-horizontal-slider/HorizontalSlider.css';
+
+const appId = 'HYDY1KWTWB';
+const apiKey = '28cf6d38411215e2eef188e635216508';
+const indexName = 'gstar_demo_test';
+
+const searchClient = algoliasearch(appId, apiKey);
+
+function RelatedItem({ item }) {
+  return (
+    <pre>
+      <code>{JSON.stringify(item)}</code>
+    </pre>
+  );
+}
+
+function App({ currentObjectID }) {
+  // ...
+
+  return (
+    <RelatedProducts
+      searchClient={searchClient}
+      indexName={indexName}
+      objectIDs={[currentObjectID]}
+      itemComponent={RelatedItem}
+      view={HorizontalSlider}
     />
   );
 }
@@ -134,7 +176,7 @@ type ViewProps<TItem extends RecordWithObjectID> = {
 </details>
 </blockquote>
 
-The view component to render your items into.
+The view component to render your items into. You can use the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component.
 
 The default implementation is:
 
@@ -211,6 +253,8 @@ Component to display frequently bought together products.
 
 ### Usage
 
+#### Default view
+
 ```js
 import { FrequentlyBoughtTogether } from '@algolia/react-recommendations';
 import algoliasearch from 'algoliasearch';
@@ -238,6 +282,46 @@ function App({ currentObjectID }) {
       indexName={indexName}
       objectIDs={[currentObjectID]}
       itemComponent={RelatedItem}
+    />
+  );
+}
+```
+
+#### Horizontal slider view
+
+Example with the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component:
+
+```js
+import { FrequentlyBoughtTogether } from '@algolia/react-recommendations';
+import { HorizontalSlider } from '@algolia/ui-components-react-horizontal-slider';
+import algoliasearch from 'algoliasearch';
+
+import '@algolia/ui-components-react-horizontal-slider/HorizontalSlider.css';
+
+const appId = 'HYDY1KWTWB';
+const apiKey = '28cf6d38411215e2eef188e635216508';
+const indexName = 'gstar_demo_test';
+
+const searchClient = algoliasearch(appId, apiKey);
+
+function RelatedItem({ item }) {
+  return (
+    <pre>
+      <code>{JSON.stringify(item)}</code>
+    </pre>
+  );
+}
+
+function App({ currentObjectID }) {
+  // ...
+
+  return (
+    <FrequentlyBoughtTogether
+      searchClient={searchClient}
+      indexName={indexName}
+      objectIDs={[currentObjectID]}
+      itemComponent={RelatedItem}
+      view={HorizontalSlider}
     />
   );
 }
@@ -327,7 +411,7 @@ type ViewProps<TItem extends RecordWithObjectID> = {
 </details>
 </blockquote>
 
-The view component to render your items into.
+The view component to render your items into. You can use the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component.
 
 The default implementation is:
 

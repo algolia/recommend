@@ -12,6 +12,8 @@ npm install @algolia/ui-components-react-horizontal-slider@experimental
 
 ## Usage
 
+### Standalone
+
 ```js
 import { HorizontalSlider } from '@algolia/ui-components-react-horizontal-slider';
 
@@ -31,6 +33,10 @@ function App() {
   return <HorizontalSlider itemComponent={Item} items={items} />;
 }
 ```
+
+### With recommendations
+
+See usage for [Recommendations](/packages/react-recommendations#horizontal-slider-view).
 
 ## Props
 
