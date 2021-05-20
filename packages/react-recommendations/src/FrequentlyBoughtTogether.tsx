@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { createElement, Fragment, useMemo } from 'react';
 
 import { DefaultChildren } from './DefaultChildren';
 import { DefaultFallback } from './DefaultFallback';
@@ -40,6 +40,8 @@ export function FrequentlyBoughtTogether<TObject>(
   const View = (viewProps: unknown) => (
     <ViewComponent
       classNames={classNames}
+      createElement={createElement}
+      Fragment={Fragment}
       itemComponent={props.itemComponent}
       items={recommendations}
       translations={translations}
@@ -49,7 +51,9 @@ export function FrequentlyBoughtTogether<TObject>(
 
   return children({
     classNames,
+    createElement,
     Fallback,
+    Fragment,
     Header,
     recommendations,
     translations,

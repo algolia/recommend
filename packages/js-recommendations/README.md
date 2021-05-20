@@ -66,7 +66,35 @@ The container for the `relatedProducts` component. You can either pass a [CSS se
 
 ##### `itemComponent`
 
-> `({ item }) => JSX.Element` | **required**
+<blockquote>
+<details>
+
+<summary><code>(props: ItemComponentProps) => JSX.Element</code> | <b>required</b></summary>
+
+```ts
+type ItemComponentProps<TObject> = {
+  item: TObject;
+  /**
+   * The function to create virtual nodes.
+   *
+   * @default React.createElement
+   */
+  createElement: (
+    type: any,
+    props: Record<string, any> | null,
+    ...children: JSX.Element[]
+  ) => JSX.Element;
+  /**
+   * The component to use to create fragments.
+   *
+   * @default React.Fragment
+   */
+  Fragment: any;
+};
+```
+
+</details>
+</blockquote>
 
 The product component to display.
 
@@ -119,11 +147,16 @@ The translations for the component.
 <summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
 
 ```ts
-type ChildrenProps<TObject> = {
+type ComponentProps<TObject> = RendererProps & {
   classNames: RecommendationClassNames;
   recommendations: TObject[];
   translations: Required<RecommendationTranslations>;
-  View(props: unknown): JSX.Element;
+};
+
+type ChildrenProps<TObject> = ComponentProps<TObject> & {
+  Fallback(props: RendererProps): JSX.Element | null;
+  Header(props: ComponentProps<TObject>): JSX.Element | null;
+  View(props: RendererProps & unknown): JSX.Element;
 };
 ```
 
@@ -204,7 +237,35 @@ The container for the `frequentlyBoughtTogether` component. You can either pass 
 
 ##### `itemComponent`
 
-> `({ item }) => JSX.Element` | **required**
+<blockquote>
+<details>
+
+<summary><code>(props: ItemComponentProps) => JSX.Element</code> | <b>required</b></summary>
+
+```ts
+type ItemComponentProps<TObject> = {
+  item: TObject;
+  /**
+   * The function to create virtual nodes.
+   *
+   * @default React.createElement
+   */
+  createElement: (
+    type: any,
+    props: Record<string, any> | null,
+    ...children: JSX.Element[]
+  ) => JSX.Element;
+  /**
+   * The component to use to create fragments.
+   *
+   * @default React.Fragment
+   */
+  Fragment: any;
+};
+```
+
+</details>
+</blockquote>
 
 The product component to display.
 
@@ -257,11 +318,16 @@ The translations for the component.
 <summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
 
 ```ts
-type ChildrenProps<TObject> = {
+type ComponentProps<TObject> = RendererProps & {
   classNames: RecommendationClassNames;
   recommendations: TObject[];
   translations: Required<RecommendationTranslations>;
-  View(props: unknown): JSX.Element;
+};
+
+type ChildrenProps<TObject> = ComponentProps<TObject> & {
+  Fallback(props: RendererProps): JSX.Element | null;
+  Header(props: ComponentProps<TObject>): JSX.Element | null;
+  View(props: RendererProps & unknown): JSX.Element;
 };
 ```
 

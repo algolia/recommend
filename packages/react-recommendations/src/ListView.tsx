@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createElement, Fragment } from 'react';
 
 import {
   RecommendationClassNames,
@@ -24,7 +24,11 @@ export function ListView<TItem extends RecordWithObjectID>(
             key={item.objectID}
             className={cx('auc-Recommendations-item', props.classNames.item)}
           >
-            <props.itemComponent item={item} />
+            <props.itemComponent
+              createElement={createElement}
+              Fragment={Fragment}
+              item={item}
+            />
           </li>
         ))}
       </ol>

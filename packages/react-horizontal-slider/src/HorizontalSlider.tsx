@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, {
+  createElement,
+  Fragment,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 
 let lastHorizontalSliderId = 0;
 
@@ -31,9 +37,32 @@ export type HorizontalSliderTranslations = Partial<{
   nextButtonTitle: string;
 }>;
 
+export type ItemComponentProps<TItem> = RendererProps & {
+  item: TItem;
+};
+
+export type RendererProps = {
+  /**
+   * The function to create virtual nodes.
+   *
+   * @default React.createElement
+   */
+  createElement: (
+    type: any,
+    props: Record<string, any> | null,
+    ...children: JSX.Element[]
+  ) => JSX.Element;
+  /**
+   * The component to use to create fragments.
+   *
+   * @default React.Fragment
+   */
+  Fragment: any;
+};
+
 export type HorizontalSliderProps<TItem extends RecordWithObjectID> = {
   items: TItem[];
-  itemComponent({ item: TItem }): JSX.Element;
+  itemComponent(props: ItemComponentProps<TItem>): JSX.Element;
   classNames?: HorizontalSliderClassnames;
   translations?: HorizontalSliderTranslations;
 };
@@ -149,7 +178,11 @@ export function HorizontalSlider<TObject extends RecordWithObjectID>(
             aria-roledescription="slide"
             aria-label={`${index + 1} of ${props.items.length}`}
           >
-            <props.itemComponent item={item} />
+            <props.itemComponent
+              createElement={createElement}
+              Fragment={Fragment}
+              item={item}
+            />
           </li>
         ))}
       </ol>

@@ -3,23 +3,46 @@ import { RecommendationTranslations } from './RecommendationTranslations';
 import { RecordWithObjectID } from './RecordWithObjectID';
 import { ViewProps } from './ViewProps';
 
-export type ComponentProps<TObject> = {
+export type ComponentProps<TObject> = RendererProps & {
   classNames: RecommendationClassNames;
   recommendations: TObject[];
   translations: Required<RecommendationTranslations>;
 };
 
 export type ChildrenProps<TObject> = ComponentProps<TObject> & {
-  Fallback(): JSX.Element | null;
+  Fallback(props: RendererProps): JSX.Element | null;
   Header(props: ComponentProps<TObject>): JSX.Element | null;
-  View(props: unknown): JSX.Element;
+  View(props: RendererProps & unknown): JSX.Element;
+};
+
+export type ItemComponentProps<TObject> = RendererProps & {
+  item: TObject;
+};
+
+export type RendererProps = {
+  /**
+   * The function to create virtual nodes.
+   *
+   * @default React.createElement
+   */
+  createElement: (
+    type: any,
+    props: Record<string, any> | null,
+    ...children: JSX.Element[]
+  ) => JSX.Element;
+  /**
+   * The component to use to create fragments.
+   *
+   * @default React.Fragment
+   */
+  Fragment: any;
 };
 
 export type RecommendationsComponentProps<TObject> = {
-  itemComponent({ item: TObject }): JSX.Element;
+  itemComponent(props: ItemComponentProps<TObject>): JSX.Element;
   classNames?: RecommendationClassNames;
   children?(props: ChildrenProps<TObject>): JSX.Element;
-  fallbackComponent?(): JSX.Element;
+  fallbackComponent?(props: RendererProps): JSX.Element;
   headerComponent?(props: ComponentProps<TObject>): JSX.Element;
   translations?: Required<RecommendationTranslations>;
   view?(

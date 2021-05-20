@@ -96,7 +96,35 @@ The component accepts all the [shared props](#shared-props) and the following:
 
 #### `itemComponent`
 
-> `({ item }) => JSX.Element` | **required**
+<blockquote>
+<details>
+
+<summary><code>(props: ItemComponentProps) => JSX.Element</code> | <b>required</b></summary>
+
+```ts
+type ItemComponentProps<TObject> = {
+  item: TObject;
+  /**
+   * The function to create virtual nodes.
+   *
+   * @default React.createElement
+   */
+  createElement: (
+    type: any,
+    props: Record<string, any> | null,
+    ...children: JSX.Element[]
+  ) => JSX.Element;
+  /**
+   * The component to use to create fragments.
+   *
+   * @default React.Fragment
+   */
+  Fragment: any;
+};
+```
+
+</details>
+</blockquote>
 
 The product component to display.
 
@@ -153,7 +181,7 @@ The translations for the component.
 ```ts
 type ViewProps<TItem extends RecordWithObjectID> = {
   items: TItem[];
-  itemComponent({ item: TItem }): JSX.Element;
+  itemComponent(props: ItemComponentProps<TItem>): JSX.Element;
 };
 ```
 
@@ -171,7 +199,11 @@ function ListView(props) {
       <ol className="auc-Recommendations-list">
         {props.items.map((item) => (
           <li key={item.objectID} className="auc-Recommendations-item">
-            <props.itemComponent item={item} />
+            <props.itemComponent
+              createElement={createElement}
+              Fragment={Fragment}
+              item={item}
+            />
           </li>
         ))}
       </ol>
@@ -182,7 +214,34 @@ function ListView(props) {
 
 #### `fallbackComponent`
 
-> `() => JSX.Element`
+<blockquote>
+<details>
+
+<summary><code>(props: RendererProps) => JSX.Element</code></summary>
+
+```ts
+type RendererProps = {
+  /**
+   * The function to create virtual nodes.
+   *
+   * @default React.createElement
+   */
+  createElement: (
+    type: any,
+    props: Record<string, any> | null,
+    ...children: JSX.Element[]
+  ) => JSX.Element;
+  /**
+   * The component to use to create fragments.
+   *
+   * @default React.Fragment
+   */
+  Fragment: any;
+};
+```
+
+</details>
+</blockquote>
 
 The fallback component to render when no recommendations are returned.
 
@@ -194,11 +253,16 @@ The fallback component to render when no recommendations are returned.
 <summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
 
 ```ts
-type ChildrenProps<TObject> = {
+type ComponentProps<TObject> = RendererProps & {
   classNames: RecommendationClassNames;
   recommendations: TObject[];
   translations: Required<RecommendationTranslations>;
-  View(props: unknown): JSX.Element;
+};
+
+type ChildrenProps<TObject> = ComponentProps<TObject> & {
+  Fallback(props: RendererProps): JSX.Element | null;
+  Header(props: ComponentProps<TObject>): JSX.Element | null;
+  View(props: RendererProps & unknown): JSX.Element;
 };
 ```
 
@@ -362,7 +426,35 @@ The component accepts all the [shared props](#shared-props) and the following:
 
 #### `itemComponent`
 
-> `({ item }) => JSX.Element` | **required**
+<blockquote>
+<details>
+
+<summary><code>(props: ItemComponentProps) => JSX.Element</code> | <b>required</b></summary>
+
+```ts
+type ItemComponentProps<TObject> = {
+  item: TObject;
+  /**
+   * The function to create virtual nodes.
+   *
+   * @default React.createElement
+   */
+  createElement: (
+    type: any,
+    props: Record<string, any> | null,
+    ...children: JSX.Element[]
+  ) => JSX.Element;
+  /**
+   * The component to use to create fragments.
+   *
+   * @default React.Fragment
+   */
+  Fragment: any;
+};
+```
+
+</details>
+</blockquote>
 
 The product component to display.
 
@@ -417,7 +509,7 @@ The translations for the component.
 ```ts
 type ViewProps<TItem extends RecordWithObjectID> = {
   items: TItem[];
-  itemComponent({ item: TItem }): JSX.Element;
+  itemComponent(props: ItemComponentProps<TItem>): JSX.Element;
 };
 ```
 
@@ -435,7 +527,11 @@ function ListView(props) {
       <ol className="auc-Recommendations-list">
         {props.items.map((item) => (
           <li key={item.objectID} className="auc-Recommendations-item">
-            <props.itemComponent item={item} />
+            <props.itemComponent
+              createElement={createElement}
+              Fragment={Fragment}
+              item={item}
+            />
           </li>
         ))}
       </ol>
@@ -446,7 +542,34 @@ function ListView(props) {
 
 #### `fallbackComponent`
 
-> `() => JSX.Element`
+<blockquote>
+<details>
+
+<summary><code>(props: RendererProps) => JSX.Element</code></summary>
+
+```ts
+type RendererProps = {
+  /**
+   * The function to create virtual nodes.
+   *
+   * @default React.createElement
+   */
+  createElement: (
+    type: any,
+    props: Record<string, any> | null,
+    ...children: JSX.Element[]
+  ) => JSX.Element;
+  /**
+   * The component to use to create fragments.
+   *
+   * @default React.Fragment
+   */
+  Fragment: any;
+};
+```
+
+</details>
+</blockquote>
 
 The fallback component to render when no recommendations are returned.
 
@@ -489,11 +612,16 @@ function App({ currentObjectID }) {
 <summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
 
 ```ts
-type ChildrenProps<TObject> = {
+type ComponentProps<TObject> = RendererProps & {
   classNames: RecommendationClassNames;
   recommendations: TObject[];
   translations: Required<RecommendationTranslations>;
-  View(props: unknown): JSX.Element;
+};
+
+type ChildrenProps<TObject> = ComponentProps<TObject> & {
+  Fallback(props: RendererProps): JSX.Element | null;
+  Header(props: ComponentProps<TObject>): JSX.Element | null;
+  View(props: RendererProps & unknown): JSX.Element;
 };
 ```
 

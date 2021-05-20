@@ -60,7 +60,35 @@ The items to display in the component.
 
 ### `itemComponent`
 
-> `({ item }) => JSX.Element` | **required**
+<blockquote>
+<details>
+
+<summary><code>(props: ItemComponentProps) => JSX.Element</code> | <b>required</b></summary>
+
+```ts
+type ItemComponentProps<TObject> = {
+  item: TObject;
+  /**
+   * The function to create virtual nodes.
+   *
+   * @default React.createElement
+   */
+  createElement: (
+    type: any,
+    props: Record<string, any> | null,
+    ...children: JSX.Element[]
+  ) => JSX.Element;
+  /**
+   * The component to use to create fragments.
+   *
+   * @default React.Fragment
+   */
+  Fragment: any;
+};
+```
+
+</details>
+</blockquote>
 
 The item component to display.
 
