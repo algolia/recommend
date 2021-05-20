@@ -26,7 +26,7 @@ const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
 
-function Hit({ item }) {
+function RelatedItem({ item }) {
   return (
     <pre>
       <code>{JSON.stringify(item)}</code>
@@ -42,7 +42,7 @@ function App({ currentObjectID }) {
       searchClient={searchClient}
       indexName={indexName}
       objectIDs={[currentObjectID]}
-      itemComponent={Hit}
+      itemComponent={RelatedItem}
     />
   );
 }
@@ -221,7 +221,7 @@ const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
 
-function Hit({ item }) {
+function RelatedItem({ item }) {
   return (
     <pre>
       <code>{JSON.stringify(item)}</code>
@@ -237,7 +237,7 @@ function App({ currentObjectID }) {
       searchClient={searchClient}
       indexName={indexName}
       objectIDs={[currentObjectID]}
-      itemComponent={Hit}
+      itemComponent={RelatedItem}
     />
   );
 }
