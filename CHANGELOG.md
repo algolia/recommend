@@ -1,3 +1,18 @@
+# [](https://github.com/algolia/react-recommendations/compare/v1.0.0-experimental.0...v) (2021-05-21)
+
+
+### Bug Fixes
+
+* **recommendations:** convert scores to integers ([#19](https://github.com/algolia/react-recommendations/issues/19)) ([1d43a04](https://github.com/algolia/react-recommendations/commit/1d43a04642f8481c5c9762030ec2dfa1bc9ea7b7))
+* **types:** fix missing types ([#17](https://github.com/algolia/react-recommendations/issues/17)) ([b28963e](https://github.com/algolia/react-recommendations/commit/b28963e144ac97bdd1b3d20cbc05e67f11be8be6))
+
+
+### Features
+
+* **recommendations:** support `classNames` prop ([#20](https://github.com/algolia/react-recommendations/issues/20)) ([2a006fc](https://github.com/algolia/react-recommendations/commit/2a006fc24099163f9d5c83cdbd99641f66a00f5f))
+
+
+
 # [1.0.0-experimental.0](https://github.com/algolia/ui-components/compare/v1.0.0-beta.9...v1.0.0-experimental.0) (2021-05-19)
 
 ### Features
