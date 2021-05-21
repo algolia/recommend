@@ -100,6 +100,28 @@ The component accepts all the [shared props](#shared-props) and the following:
 
 The product component to display.
 
+#### `classNames`
+
+<blockquote>
+<details>
+
+<summary><code>RelatedProductsClassNames</code></summary>
+
+```ts
+type RelatedProductsClassNames = Partial<{
+  root: string;
+  title: string;
+  container: string;
+  list: string;
+  item: string;
+}>;
+```
+
+</details>
+</blockquote>
+
+The class names for the component.
+
 #### `translations`
 
 <blockquote>
@@ -120,6 +142,43 @@ type RelatedProductTranslations = Partial<{
 The translations for the component.
 
 </details>
+
+#### `view`
+
+<blockquote>
+<details>
+
+<summary><code>(props: ViewProps) => JSX.Element</code></summary>
+
+```ts
+type ViewProps<TItem extends RecordWithObjectID> = {
+  items: TItem[];
+  itemComponent({ item: TItem }): JSX.Element;
+};
+```
+
+</details>
+</blockquote>
+
+The view component to render your items into. You can use the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component.
+
+The default implementation is:
+
+```js
+function ListView(props) {
+  return (
+    <div className="auc-Recommendations-container">
+      <ol className="auc-Recommendations-list">
+        {props.items.map((item) => (
+          <li key={item.objectID} className="auc-Recommendations-item">
+            <props.itemComponent item={item} />
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+```
 
 #### `children`
 
@@ -155,43 +214,6 @@ function defaultRender(props) {
 
       <props.View />
     </section>
-  );
-}
-```
-
-#### `view`
-
-<blockquote>
-<details>
-
-<summary><code>(props: ViewProps) => JSX.Element</code></summary>
-
-```ts
-type ViewProps<TItem extends RecordWithObjectID> = {
-  items: TItem[];
-  itemComponent({ item: TItem }): JSX.Element;
-};
-```
-
-</details>
-</blockquote>
-
-The view component to render your items into. You can use the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component.
-
-The default implementation is:
-
-```js
-function ListView(props) {
-  return (
-    <div className="auc-Recommendations-container">
-      <ol className="auc-Recommendations-list">
-        {props.items.map((item) => (
-          <li key={item.objectID} className="auc-Recommendations-item">
-            <props.itemComponent item={item} />
-          </li>
-        ))}
-      </ol>
-    </div>
   );
 }
 ```
@@ -337,6 +359,28 @@ The component accepts all the [shared props](#shared-props) and the following:
 
 The product component to display.
 
+#### `classNames`
+
+<blockquote>
+<details>
+
+<summary><code>FrequentlyBoughtTogetherClassNames</code></summary>
+
+```ts
+type FrequentlyBoughtTogetherClassNames = Partial<{
+  root: string;
+  title: string;
+  container: string;
+  list: string;
+  item: string;
+}>;
+```
+
+</details>
+</blockquote>
+
+The class names for the component.
+
 #### `translations`
 
 <blockquote>
@@ -355,6 +399,43 @@ type FrequentlyBoughtTogetherTranslations = Partial<{
 </blockquote>
 
 The translations for the component.
+
+#### `view`
+
+<blockquote>
+<details>
+
+<summary><code>(props: ViewProps) => JSX.Element</code></summary>
+
+```ts
+type ViewProps<TItem extends RecordWithObjectID> = {
+  items: TItem[];
+  itemComponent({ item: TItem }): JSX.Element;
+};
+```
+
+</details>
+</blockquote>
+
+The view component to render your items into. You can use the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component.
+
+The default implementation is:
+
+```js
+function ListView(props) {
+  return (
+    <div className="auc-Recommendations-container">
+      <ol className="auc-Recommendations-list">
+        {props.items.map((item) => (
+          <li key={item.objectID} className="auc-Recommendations-item">
+            <props.itemComponent item={item} />
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+```
 
 #### `children`
 
@@ -390,43 +471,6 @@ function defaultRender(props) {
 
       <props.View />
     </section>
-  );
-}
-```
-
-#### `view`
-
-<blockquote>
-<details>
-
-<summary><code>(props: ViewProps) => JSX.Element</code></summary>
-
-```ts
-type ViewProps<TItem extends RecordWithObjectID> = {
-  items: TItem[];
-  itemComponent({ item: TItem }): JSX.Element;
-};
-```
-
-</details>
-</blockquote>
-
-The view component to render your items into. You can use the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component.
-
-The default implementation is:
-
-```js
-function ListView(props) {
-  return (
-    <div className="auc-Recommendations-container">
-      <ol className="auc-Recommendations-list">
-        {props.items.map((item) => (
-          <li key={item.objectID} className="auc-Recommendations-item">
-            <props.itemComponent item={item} />
-          </li>
-        ))}
-      </ol>
-    </div>
   );
 }
 ```

@@ -70,6 +70,28 @@ The container for the `relatedProducts` component. You can either pass a [CSS se
 
 The product component to display.
 
+##### `classNames`
+
+<blockquote>
+<details>
+
+<summary><code>RelatedProductsClassNames</code></summary>
+
+```ts
+type RelatedProductsClassNames = Partial<{
+  root: string;
+  title: string;
+  container: string;
+  list: string;
+  item: string;
+}>;
+```
+
+</details>
+</blockquote>
+
+The class names for the component.
+
 ##### `translations`
 
 <blockquote>
@@ -184,6 +206,28 @@ The container for the `frequentlyBoughtTogether` component. You can either pass 
 > `({ item }) => JSX.Element` | **required**
 
 The product component to display.
+
+##### `classNames`
+
+<blockquote>
+<details>
+
+<summary><code>FrequentlyBoughtTogetherClassNames</code></summary>
+
+```ts
+type FrequentlyBoughtTogetherClassNames = Partial<{
+  root: string;
+  title: string;
+  container: string;
+  list: string;
+  item: string;
+}>;
+```
+
+</details>
+</blockquote>
+
+The class names for the component.
 
 ##### `translations`
 
