@@ -20,7 +20,7 @@ export function getOptionalFilters<TObject>({
 
   const recommendationFilters = recommendations
     .filter((recommendation) => recommendation.score > threshold)
-    .map(({ objectID, score }) => `objectID:${objectID}<score=${score}>`);
+    .map(({ objectID, score }) => `objectID:${objectID}<score=${score * 100}>`);
 
   return [...recommendationFilters, ...fallbackFilters];
 }
