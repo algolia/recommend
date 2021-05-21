@@ -1,4 +1,5 @@
 export * from './ProductRecord';
+export * from './RecommendationClassNames';
 export * from './RecommendationModel';
 export * from './RecommendationRecord';
 export * from './RecommendationsComponentProps';
