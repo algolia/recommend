@@ -189,8 +189,9 @@ function ListView(props) {
 
 ```ts
 type ChildrenProps<TObject> = {
+  classNames: RecommendationClassNames;
   recommendations: TObject[];
-  translations: RelatedProductTranslations;
+  translations: Required<RecommendationTranslations>;
   View(props: unknown): JSX.Element;
 };
 ```
@@ -446,8 +447,9 @@ function ListView(props) {
 
 ```ts
 type ChildrenProps<TObject> = {
+  classNames: RecommendationClassNames;
   recommendations: TObject[];
-  translations: RecommendationTranslations;
+  translations: Required<RecommendationTranslations>;
   View(props: unknown): JSX.Element;
 };
 ```

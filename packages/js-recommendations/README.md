@@ -120,8 +120,9 @@ The translations for the component.
 
 ```ts
 type ChildrenProps<TObject> = {
+  classNames: RecommendationClassNames;
   recommendations: TObject[];
-  translations: RecommendationTranslations;
+  translations: Required<RecommendationTranslations>;
   View(props: unknown): JSX.Element;
 };
 ```
@@ -257,8 +258,9 @@ The translations for the component.
 
 ```ts
 type ChildrenProps<TObject> = {
+  classNames: RecommendationClassNames;
   recommendations: TObject[];
-  translations: RelatedProductTranslations;
+  translations: Required<RecommendationTranslations>;
   View(props: unknown): JSX.Element;
 };
 ```
