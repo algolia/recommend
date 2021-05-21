@@ -28,6 +28,11 @@ const hit = {
     'Grey',
   ],
   objectID: 'D06270-9132-995',
+  recommendations: [
+    { objectID: '1', score: 1.99 },
+    { objectID: '2', score: 2.99 },
+    { objectID: '3', score: 3.99 },
+  ],
 };
 
 function createRecommendationsClient() {
@@ -83,8 +88,12 @@ describe('useRecommendations', () => {
           clickAnalytics: false,
           enableABTest: false,
           filters: 'NOT objectID:objectID',
-          hitsPerPage: 0,
-          optionalFilters: [],
+          hitsPerPage: 3,
+          optionalFilters: [
+            'objectID:1<score=199>',
+            'objectID:2<score=299>',
+            'objectID:3<score=399>',
+          ],
           ruleContexts: ['alg-recommend_related-products_objectID'],
           typoTolerance: false,
         },
@@ -122,8 +131,12 @@ describe('useRecommendations', () => {
           clickAnalytics: false,
           enableABTest: false,
           filters: 'NOT objectID:objectID',
-          hitsPerPage: 0,
-          optionalFilters: [],
+          hitsPerPage: 3,
+          optionalFilters: [
+            'objectID:1<score=199>',
+            'objectID:2<score=299>',
+            'objectID:3<score=399>',
+          ],
           ruleContexts: ['alg-recommend_bought-together_objectID'],
           typoTolerance: false,
         },
@@ -170,6 +183,20 @@ describe('useRecommendations', () => {
         name: 'Landoh 4-Pocket Jumpsuit',
         objectID: 'D06270-9132-995',
         price: 250,
+        recommendations: [
+          {
+            objectID: '1',
+            score: 1.99,
+          },
+          {
+            objectID: '2',
+            score: 2.99,
+          },
+          {
+            objectID: '3',
+            score: 3.99,
+          },
+        ],
         url: 'women/jumpsuits-overalls/d06270-9132-995',
       },
     ]);
