@@ -100,6 +100,28 @@ The component accepts all the [shared props](#shared-props) and the following:
 
 The product component to display.
 
+#### `classNames`
+
+<blockquote>
+<details>
+
+<summary><code>RelatedProductsClassNames</code></summary>
+
+```ts
+type RelatedProductsClassNames = Partial<{
+  root: string;
+  title: string;
+  container: string;
+  list: string;
+  item: string;
+}>;
+```
+
+</details>
+</blockquote>
+
+The class names for the component.
+
 #### `translations`
 
 <blockquote>
@@ -120,44 +142,6 @@ type RelatedProductTranslations = Partial<{
 The translations for the component.
 
 </details>
-
-#### `children`
-
-<blockquote>
-<details>
-
-<summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
-
-```ts
-type ChildrenProps<TObject> = {
-  recommendations: TObject[];
-  translations: RelatedProductTranslations;
-  View(props: unknown): JSX.Element;
-};
-```
-
-</details>
-</blockquote>
-
-Render function to modify the default rendering.
-
-The default implementation is:
-
-```js
-function defaultRender(props) {
-  if (props.recommendations.length === 0) {
-    return null;
-  }
-
-  return (
-    <section className="auc-Recommendations">
-      {props.translations.title && <h3>{props.translations.title}</h3>}
-
-      <props.View />
-    </section>
-  );
-}
-```
 
 #### `view`
 
@@ -192,6 +176,45 @@ function ListView(props) {
         ))}
       </ol>
     </div>
+  );
+}
+```
+
+#### `children`
+
+<blockquote>
+<details>
+
+<summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
+
+```ts
+type ChildrenProps<TObject> = {
+  classNames: RecommendationClassNames;
+  recommendations: TObject[];
+  translations: Required<RecommendationTranslations>;
+  View(props: unknown): JSX.Element;
+};
+```
+
+</details>
+</blockquote>
+
+Render function to modify the default rendering.
+
+The default implementation is:
+
+```js
+function defaultRender(props) {
+  if (props.recommendations.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="auc-Recommendations">
+      {props.translations.title && <h3>{props.translations.title}</h3>}
+
+      <props.View />
+    </section>
   );
 }
 ```
@@ -337,6 +360,28 @@ The component accepts all the [shared props](#shared-props) and the following:
 
 The product component to display.
 
+#### `classNames`
+
+<blockquote>
+<details>
+
+<summary><code>FrequentlyBoughtTogetherClassNames</code></summary>
+
+```ts
+type FrequentlyBoughtTogetherClassNames = Partial<{
+  root: string;
+  title: string;
+  container: string;
+  list: string;
+  item: string;
+}>;
+```
+
+</details>
+</blockquote>
+
+The class names for the component.
+
 #### `translations`
 
 <blockquote>
@@ -355,44 +400,6 @@ type FrequentlyBoughtTogetherTranslations = Partial<{
 </blockquote>
 
 The translations for the component.
-
-#### `children`
-
-<blockquote>
-<details>
-
-<summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
-
-```ts
-type ChildrenProps<TObject> = {
-  recommendations: TObject[];
-  translations: RecommendationTranslations;
-  View(props: unknown): JSX.Element;
-};
-```
-
-</details>
-</blockquote>
-
-Render function to modify the default rendering.
-
-The default implementation is:
-
-```js
-function defaultRender(props) {
-  if (props.recommendations.length === 0) {
-    return null;
-  }
-
-  return (
-    <section className="auc-Recommendations">
-      {props.translations.title && <h3>{props.translations.title}</h3>}
-
-      <props.View />
-    </section>
-  );
-}
-```
 
 #### `view`
 
@@ -427,6 +434,45 @@ function ListView(props) {
         ))}
       </ol>
     </div>
+  );
+}
+```
+
+#### `children`
+
+<blockquote>
+<details>
+
+<summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
+
+```ts
+type ChildrenProps<TObject> = {
+  classNames: RecommendationClassNames;
+  recommendations: TObject[];
+  translations: Required<RecommendationTranslations>;
+  View(props: unknown): JSX.Element;
+};
+```
+
+</details>
+</blockquote>
+
+Render function to modify the default rendering.
+
+The default implementation is:
+
+```js
+function defaultRender(props) {
+  if (props.recommendations.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="auc-Recommendations">
+      {props.translations.title && <h3>{props.translations.title}</h3>}
+
+      <props.View />
+    </section>
   );
 }
 ```

@@ -10,13 +10,14 @@ import {
   useRelatedProducts,
   UseRelatedProductsProps,
 } from './useRelatedProducts';
+import { cx } from './utils';
 
 export type RelatedProductsProps<TObject> = UseRelatedProductsProps<TObject> &
   RecommendationsComponentProps<TObject>;
 
 export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
   const { recommendations } = useRelatedProducts<TObject>(props);
-  const translations = useMemo<RecommendationTranslations>(
+  const translations = useMemo<Required<RecommendationTranslations>>(
     () => ({
       title: 'Related products',
       sliderLabel: 'Related products',
@@ -25,11 +26,13 @@ export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
     }),
     [props.translations]
   );
+  const classNames = props.classNames ?? {};
 
   const render = props.children ?? defaultRender;
   const ViewComponent = props.view ?? ListView;
   const View = (viewProps: unknown) => (
     <ViewComponent
+      classNames={classNames}
       items={recommendations}
       itemComponent={props.itemComponent}
       translations={translations}
@@ -37,7 +40,7 @@ export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
     />
   );
 
-  return render({ recommendations, translations, View });
+  return render({ classNames, recommendations, translations, View });
 }
 
 function defaultRender<TObject>(props: ChildrenProps<TObject>) {
@@ -46,8 +49,12 @@ function defaultRender<TObject>(props: ChildrenProps<TObject>) {
   }
 
   return (
-    <section className="auc-Recommendations">
-      {props.translations.title && <h3>{props.translations.title}</h3>}
+    <section className={cx('auc-Recommendations', props.classNames.root)}>
+      {props.translations.title && (
+        <h3 className={cx('auc-Recommendations-title', props.classNames.title)}>
+          {props.translations.title}
+        </h3>
+      )}
 
       <props.View />
     </section>

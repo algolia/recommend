@@ -70,6 +70,28 @@ The container for the `relatedProducts` component. You can either pass a [CSS se
 
 The product component to display.
 
+##### `classNames`
+
+<blockquote>
+<details>
+
+<summary><code>RelatedProductsClassNames</code></summary>
+
+```ts
+type RelatedProductsClassNames = Partial<{
+  root: string;
+  title: string;
+  container: string;
+  list: string;
+  item: string;
+}>;
+```
+
+</details>
+</blockquote>
+
+The class names for the component.
+
 ##### `translations`
 
 <blockquote>
@@ -98,8 +120,9 @@ The translations for the component.
 
 ```ts
 type ChildrenProps<TObject> = {
+  classNames: RecommendationClassNames;
   recommendations: TObject[];
-  translations: RecommendationTranslations;
+  translations: Required<RecommendationTranslations>;
   View(props: unknown): JSX.Element;
 };
 ```
@@ -185,6 +208,28 @@ The container for the `frequentlyBoughtTogether` component. You can either pass 
 
 The product component to display.
 
+##### `classNames`
+
+<blockquote>
+<details>
+
+<summary><code>FrequentlyBoughtTogetherClassNames</code></summary>
+
+```ts
+type FrequentlyBoughtTogetherClassNames = Partial<{
+  root: string;
+  title: string;
+  container: string;
+  list: string;
+  item: string;
+}>;
+```
+
+</details>
+</blockquote>
+
+The class names for the component.
+
 ##### `translations`
 
 <blockquote>
@@ -213,8 +258,9 @@ The translations for the component.
 
 ```ts
 type ChildrenProps<TObject> = {
+  classNames: RecommendationClassNames;
   recommendations: TObject[];
-  translations: RelatedProductTranslations;
+  translations: Required<RecommendationTranslations>;
   View(props: unknown): JSX.Element;
 };
 ```

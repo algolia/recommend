@@ -5,8 +5,8 @@ export type ViewProps<
   TTranslations extends Record<string, string>,
   TClassNames extends Record<string, string>
 > = {
-  items: TItem[];
+  classNames: TClassNames;
   itemComponent({ item: TItem }): JSX.Element;
-  classNames?: Partial<TClassNames>;
-  translations?: Partial<TTranslations>;
+  items: TItem[];
+  translations: TTranslations;
 };
