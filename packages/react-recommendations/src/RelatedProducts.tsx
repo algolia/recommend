@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
 
+import { DefaultChildren } from './DefaultChildren';
+import { DefaultHeader } from './DefaultHeader';
 import { ListView } from './ListView';
 import {
-  ChildrenProps,
   RecommendationsComponentProps,
   RecommendationTranslations,
 } from './types';
@@ -10,7 +11,6 @@ import {
   useRelatedProducts,
   UseRelatedProductsProps,
 } from './useRelatedProducts';
-import { cx } from './utils';
 
 export type RelatedProductsProps<TObject> = UseRelatedProductsProps<TObject> &
   RecommendationsComponentProps<TObject>;
@@ -28,7 +28,8 @@ export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
   );
   const classNames = props.classNames ?? {};
 
-  const render = props.children ?? defaultRender;
+  const children = props.children ?? DefaultChildren;
+  const Header = props.headerComponent ?? DefaultHeader;
   const ViewComponent = props.view ?? ListView;
   const View = (viewProps: unknown) => (
     <ViewComponent
@@ -40,23 +41,5 @@ export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
     />
   );
 
-  return render({ classNames, recommendations, translations, View });
-}
-
-function defaultRender<TObject>(props: ChildrenProps<TObject>) {
-  if (props.recommendations.length === 0) {
-    return null;
-  }
-
-  return (
-    <section className={cx('auc-Recommendations', props.classNames.root)}>
-      {props.translations.title && (
-        <h3 className={cx('auc-Recommendations-title', props.classNames.title)}>
-          {props.translations.title}
-        </h3>
-      )}
-
-      <props.View />
-    </section>
-  );
+  return children({ classNames, Header, recommendations, translations, View });
 }
