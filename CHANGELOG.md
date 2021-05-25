@@ -1,3 +1,14 @@
+# [](https://github.com/algolia/react-recommendations/compare/v1.0.0-experimental.1...v) (2021-05-25)
+
+
+### Features
+
+* **fbt:** update filter strategy without fallbacks ([#22](https://github.com/algolia/react-recommendations/issues/22)) ([7ebf4f7](https://github.com/algolia/react-recommendations/commit/7ebf4f7d24ffdb963971a5d8591fb11ef72bd9bc))
+* **recommendations:** add `fallbackComponent` prop ([#23](https://github.com/algolia/react-recommendations/issues/23)) ([3c6b8b8](https://github.com/algolia/react-recommendations/commit/3c6b8b84beab8cbe8f4af59071872e7a2ed6c191))
+* **recommendations:** add `headerComponent` prop ([a23f38c](https://github.com/algolia/react-recommendations/commit/a23f38c885ce02580b9166ea0ba3267ccf57907c))
+
+
+
 # [1.0.0-experimental.1](https://github.com/algolia/react-recommendations/compare/v1.0.0-experimental.0...v1.0.0-experimental.1) (2021-05-21)
 
 ### Bug Fixes
