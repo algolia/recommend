@@ -5,7 +5,7 @@ import { cx } from './utils';
 
 export function DefaultChildren<TObject>(props: ChildrenProps<TObject>) {
   if (props.recommendations.length === 0) {
-    return null;
+    return <props.Fallback />;
   }
 
   return (

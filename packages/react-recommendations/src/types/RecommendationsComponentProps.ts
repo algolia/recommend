@@ -10,6 +10,7 @@ export type ComponentProps<TObject> = {
 };
 
 export type ChildrenProps<TObject> = ComponentProps<TObject> & {
+  Fallback(): JSX.Element | null;
   Header(props: ComponentProps<TObject>): JSX.Element | null;
   View(props: unknown): JSX.Element;
 };
@@ -18,6 +19,7 @@ export type RecommendationsComponentProps<TObject> = {
   itemComponent({ item: TObject }): JSX.Element;
   classNames?: RecommendationClassNames;
   children?(props: ChildrenProps<TObject>): JSX.Element;
+  fallbackComponent?(): JSX.Element;
   headerComponent?(props: ComponentProps<TObject>): JSX.Element;
   translations?: Required<RecommendationTranslations>;
   view?(

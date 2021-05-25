@@ -14,7 +14,7 @@
     },
     {
       "path": "packages/react-recommendations/dist/umd/index.js",
-      "maxSize": "2.75 kB"
+      "maxSize": "3 kB"
     }
   ]
 }

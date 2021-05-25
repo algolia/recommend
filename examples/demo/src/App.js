@@ -24,6 +24,10 @@ const searchClient = algoliasearch(appId, apiKey);
 
 insights('init', { appId, apiKey });
 
+function RecommendedItem({ item }) {
+  return <Hit hit={item} insights={insights} />;
+}
+
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -121,41 +125,42 @@ function App() {
             searchClient={searchClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={({ item }) => <Hit hit={item} insights={insights} />}
+            itemComponent={RecommendedItem}
             maxRecommendations={3}
             searchParameters={{
               analytics: true,
               clickAnalytics: true,
             }}
+            fallbackComponent={() => (
+              <RelatedProducts
+                searchClient={searchClient}
+                indexName={indexName}
+                objectIDs={[selectedProduct.objectID]}
+                itemComponent={RecommendedItem}
+                view={HorizontalSlider}
+                maxRecommendations={10}
+                translations={{
+                  title: 'Related products (fallback)',
+                }}
+                fallbackFilters={[
+                  `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+                ]}
+                searchParameters={{
+                  analytics: true,
+                  clickAnalytics: true,
+                  facetFilters: [
+                    `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+                  ],
+                }}
+              />
+            )}
           />
 
           <RelatedProducts
             searchClient={searchClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={({ item }) => <Hit hit={item} insights={insights} />}
-            view={HorizontalSlider}
-            maxRecommendations={10}
-            translations={{
-              title: 'Related products (slider)',
-            }}
-            fallbackFilters={[
-              `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-            ]}
-            searchParameters={{
-              analytics: true,
-              clickAnalytics: true,
-              facetFilters: [
-                `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-              ],
-            }}
-          />
-
-          <RelatedProducts
-            searchClient={searchClient}
-            indexName={indexName}
-            objectIDs={[selectedProduct.objectID]}
-            itemComponent={({ item }) => <Hit hit={item} insights={insights} />}
+            itemComponent={RecommendedItem}
             maxRecommendations={10}
             translations={{
               title: 'Related products',

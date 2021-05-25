@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 
 import { DefaultChildren } from './DefaultChildren';
+import { DefaultFallback } from './DefaultFallback';
 import { DefaultHeader } from './DefaultHeader';
 import { ListView } from './ListView';
 import {
@@ -33,6 +34,7 @@ export function FrequentlyBoughtTogether<TObject>(
   const classNames = props.classNames ?? {};
 
   const children = props.children ?? DefaultChildren;
+  const Fallback = props.fallbackComponent ?? DefaultFallback;
   const Header = props.headerComponent ?? DefaultHeader;
   const ViewComponent = props.view ?? ListView;
   const View = (viewProps: unknown) => (
@@ -45,5 +47,12 @@ export function FrequentlyBoughtTogether<TObject>(
     />
   );
 
-  return children({ classNames, Header, recommendations, translations, View });
+  return children({
+    classNames,
+    Fallback,
+    Header,
+    recommendations,
+    translations,
+    View,
+  });
 }
