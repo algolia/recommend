@@ -12,7 +12,7 @@ import {
 import {
   getHitsPerPage,
   getIndexNameFromModel,
-  getOptionalFilters,
+  getSearchParametersForModel,
   sortBy,
   uniqBy,
 } from './utils';
@@ -47,6 +47,9 @@ function getDefaultedProps<TObject>(
   return {
     fallbackFilters: [],
     maxRecommendations: 0,
+    threshold: 0,
+    transformItems: (items) => items,
+    ...props,
     searchParameters: {
       analytics: false,
       analyticsTags: [`alg-recommend_${props.model}`],
@@ -61,9 +64,6 @@ function getDefaultedProps<TObject>(
       typoTolerance: false,
       ...props.searchParameters,
     },
-    threshold: 0,
-    transformItems: (items) => items,
-    ...props,
   };
 }
 
@@ -108,17 +108,26 @@ export function useRecommendations<TObject>(
                 globalHitsPerPage > 0
                   ? Math.ceil(globalHitsPerPage / props.objectIDs.length)
                   : globalHitsPerPage;
+              const searchParametersForModel = getSearchParametersForModel({
+                fallbackFilters: props.fallbackFilters,
+                recommendations,
+                threshold: props.threshold,
+              })(props.model);
 
               return {
                 indexName: props.indexName,
                 params: {
                   hitsPerPage,
-                  optionalFilters: getOptionalFilters({
-                    fallbackFilters: props.fallbackFilters,
-                    recommendations,
-                    threshold: props.threshold,
-                  }),
+                  ...searchParametersForModel,
                   ...props.searchParameters,
+                  facetFilters: ((searchParametersForModel.facetFilters ||
+                    []) as string[]).concat(
+                    (props.searchParameters.facetFilters || []) as string[]
+                  ),
+                  optionalFilters: ((searchParametersForModel.optionalFilters ||
+                    []) as string[]).concat(
+                    (props.searchParameters.optionalFilters || []) as string[]
+                  ),
                 },
               };
             })

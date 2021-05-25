@@ -65,6 +65,10 @@ describe('useRecommendations', () => {
       searchClient,
       indexName: 'indexName',
       objectIDs: ['objectID'],
+      searchParameters: {
+        facetFilters: [['brand:Apple']],
+        optionalFilters: ['category:Laptops'],
+      },
     };
 
     const { waitForNextUpdate } = renderHook(() => useRecommendations(props));
@@ -87,12 +91,14 @@ describe('useRecommendations', () => {
           analyticsTags: ['alg-recommend_related-products'],
           clickAnalytics: false,
           enableABTest: false,
+          facetFilters: [['brand:Apple']],
           filters: 'NOT objectID:objectID',
           hitsPerPage: 3,
           optionalFilters: [
             'objectID:1<score=199>',
             'objectID:2<score=299>',
             'objectID:3<score=399>',
+            'category:Laptops',
           ],
           ruleContexts: ['alg-recommend_related-products_objectID'],
           typoTolerance: false,
@@ -108,6 +114,10 @@ describe('useRecommendations', () => {
       searchClient,
       indexName: 'indexName',
       objectIDs: ['objectID'],
+      searchParameters: {
+        facetFilters: [['brand:Apple']],
+        optionalFilters: ['category:Laptops'],
+      },
     };
 
     const { waitForNextUpdate } = renderHook(() => useRecommendations(props));
@@ -130,13 +140,13 @@ describe('useRecommendations', () => {
           analyticsTags: ['alg-recommend_bought-together'],
           clickAnalytics: false,
           enableABTest: false,
+          facetFilters: [
+            ['objectID:1', 'objectID:2', 'objectID:3'],
+            ['brand:Apple'],
+          ],
           filters: 'NOT objectID:objectID',
           hitsPerPage: 3,
-          optionalFilters: [
-            'objectID:1<score=199>',
-            'objectID:2<score=299>',
-            'objectID:3<score=399>',
-          ],
+          optionalFilters: ['category:Laptops'],
           ruleContexts: ['alg-recommend_bought-together_objectID'],
           typoTolerance: false,
         },

@@ -34,8 +34,8 @@ export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
   const View = (viewProps: unknown) => (
     <ViewComponent
       classNames={classNames}
-      items={recommendations}
       itemComponent={props.itemComponent}
+      items={recommendations}
       translations={translations}
       {...viewProps}
     />

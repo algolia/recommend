@@ -38,8 +38,8 @@ export function FrequentlyBoughtTogether<TObject>(
   const View = (viewProps: unknown) => (
     <ViewComponent
       classNames={classNames}
-      items={recommendations}
       itemComponent={props.itemComponent}
+      items={recommendations}
       translations={translations}
       {...viewProps}
     />
