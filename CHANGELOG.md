@@ -1,13 +1,21 @@
-# [1.0.0-experimental.1](https://github.com/algolia/react-recommendations/compare/v1.0.0-experimental.0...v1.0.0-experimental.1) (2021-05-21)
-
-### Bug Fixes
-
-- **recommendations:** convert scores to integers ([#19](https://github.com/algolia/react-recommendations/issues/19)) ([1d43a04](https://github.com/algolia/react-recommendations/commit/1d43a04642f8481c5c9762030ec2dfa1bc9ea7b7))
-- **types:** fix missing types ([#17](https://github.com/algolia/react-recommendations/issues/17)) ([b28963e](https://github.com/algolia/react-recommendations/commit/b28963e144ac97bdd1b3d20cbc05e67f11be8be6))
+# [1.0.0-experimental.2](https://github.com/algolia/ui-components/compare/v1.0.0-experimental.1...v1.0.0-experimental.2) (2021-05-25)
 
 ### Features
 
-- **recommendations:** support `classNames` prop ([#20](https://github.com/algolia/react-recommendations/issues/20)) ([2a006fc](https://github.com/algolia/react-recommendations/commit/2a006fc24099163f9d5c83cdbd99641f66a00f5f))
+- **fbt:** update filter strategy without fallbacks ([#22](https://github.com/algolia/ui-components/issues/22)) ([7ebf4f7](https://github.com/algolia/ui-components/commit/7ebf4f7d24ffdb963971a5d8591fb11ef72bd9bc))
+- **recommendations:** add `fallbackComponent` prop ([#23](https://github.com/algolia/ui-components/issues/23)) ([3c6b8b8](https://github.com/algolia/ui-components/commit/3c6b8b84beab8cbe8f4af59071872e7a2ed6c191))
+- **recommendations:** add `headerComponent` prop ([a23f38c](https://github.com/algolia/ui-components/commit/a23f38c885ce02580b9166ea0ba3267ccf57907c))
+
+# [1.0.0-experimental.1](https://github.com/algolia/ui-components/compare/v1.0.0-experimental.0...v1.0.0-experimental.1) (2021-05-21)
+
+### Bug Fixes
+
+- **recommendations:** convert scores to integers ([#19](https://github.com/algolia/ui-components/issues/19)) ([1d43a04](https://github.com/algolia/ui-components/commit/1d43a04642f8481c5c9762030ec2dfa1bc9ea7b7))
+- **types:** fix missing types ([#17](https://github.com/algolia/ui-components/issues/17)) ([b28963e](https://github.com/algolia/ui-components/commit/b28963e144ac97bdd1b3d20cbc05e67f11be8be6))
+
+### Features
+
+- **recommendations:** support `classNames` prop ([#20](https://github.com/algolia/ui-components/issues/20)) ([2a006fc](https://github.com/algolia/ui-components/commit/2a006fc24099163f9d5c83cdbd99641f66a00f5f))
 
 # [1.0.0-experimental.0](https://github.com/algolia/ui-components/compare/v1.0.0-beta.9...v1.0.0-experimental.0) (2021-05-19)
 
