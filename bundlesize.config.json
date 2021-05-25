@@ -6,7 +6,7 @@
     },
     {
       "path": "packages/js-recommendations/dist/umd/index.js",
-      "maxSize": "8.5 kB"
+      "maxSize": "8.75 kB"
     },
     {
       "path": "packages/react-horizontal-slider/dist/umd/index.js",
