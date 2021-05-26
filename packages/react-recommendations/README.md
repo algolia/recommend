@@ -461,18 +461,18 @@ function RelatedItem({ item }) {
   );
 }
 
-function App() {
+function App({ currentObjectID }) {
   return (
     <FrequentlyBoughtTogether
       searchClient={searchClient}
       indexName={indexName}
-      objectIDs={[selectedProduct.objectID]}
+      objectIDs={[currentObjectID]}
       itemComponent={RelatedItem}
       fallbackComponent={() => (
         <RelatedProducts
           searchClient={searchClient}
           indexName={indexName}
-          objectIDs={[selectedProduct.objectID]}
+          objectIDs={[currentObjectID]}
           itemComponent={RelatedItem}
         />
       )}

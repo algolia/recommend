@@ -130,7 +130,7 @@ type ChildrenProps<TObject> = {
 </details>
 </blockquote>
 
-Render function to modify the default rendering.
+Render function to modify the complete rendering.
 
 The default implementation is:
 
@@ -268,7 +268,7 @@ type ChildrenProps<TObject> = {
 </details>
 </blockquote>
 
-Render function to modify the default rendering.
+Render function to modify the complete rendering.
 
 The default implementation is:
 
