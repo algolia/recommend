@@ -180,6 +180,12 @@ function ListView(props) {
 }
 ```
 
+#### `fallbackComponent`
+
+> `() => JSX.Element`
+
+The fallback component to render when no recommendations are returned.
+
 #### `children`
 
 <blockquote>
@@ -199,7 +205,7 @@ type ChildrenProps<TObject> = {
 </details>
 </blockquote>
 
-Render function to modify the default rendering.
+Render function to modify the complete rendering.
 
 The default implementation is:
 
@@ -438,6 +444,43 @@ function ListView(props) {
 }
 ```
 
+#### `fallbackComponent`
+
+> `() => JSX.Element`
+
+The fallback component to render when no recommendations are returned.
+
+Example with a [`<RelatedProducts />`](#relatedproducts-) fallback:
+
+```js
+function RelatedItem({ item }) {
+  return (
+    <pre>
+      <code>{JSON.stringify(item)}</code>
+    </pre>
+  );
+}
+
+function App() {
+  return (
+    <FrequentlyBoughtTogether
+      searchClient={searchClient}
+      indexName={indexName}
+      objectIDs={[selectedProduct.objectID]}
+      itemComponent={RelatedItem}
+      fallbackComponent={() => (
+        <RelatedProducts
+          searchClient={searchClient}
+          indexName={indexName}
+          objectIDs={[selectedProduct.objectID]}
+          itemComponent={RelatedItem}
+        />
+      )}
+    />
+  );
+}
+```
+
 #### `children`
 
 <blockquote>
@@ -457,7 +500,7 @@ type ChildrenProps<TObject> = {
 </details>
 </blockquote>
 
-Render function to modify the default rendering.
+Render function to modify the complete rendering.
 
 The default implementation is:
 
