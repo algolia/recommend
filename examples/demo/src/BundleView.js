@@ -35,7 +35,7 @@ export function BundleView(props) {
 
   useEffect(() => {
     setPrice(getAmount(selectedItems));
-  }, [selectedItems]);
+  }, [selectedItems, getAmount]);
 
   return (
     <div className="uic-BundleView-container">
