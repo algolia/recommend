@@ -10,6 +10,7 @@ import insights from 'search-insights';
 import '@algolia/autocomplete-theme-classic';
 
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
+import { BundleView } from './BundleView';
 import { Hit } from './Hit';
 
 import '@algolia/ui-components-react-horizontal-slider/HorizontalSlider.css';
@@ -26,6 +27,30 @@ insights('init', { appId, apiKey });
 
 function RecommendedItem({ item }) {
   return <Hit hit={item} insights={insights} />;
+}
+
+function BundleItem({ item }) {
+  return (
+    <a
+      className="Hit Hit-link"
+      href={item.url}
+      onClick={(event) => {
+        event.preventDefault();
+
+        insights('clickedObjectIDs', {
+          objectIDs: [item.objectID],
+          positions: [item.__position],
+          eventName: 'Product Clicked',
+          queryID: item.__queryID,
+          index: item.__indexName,
+        });
+      }}
+    >
+      <div className="Hit-Image">
+        <img src={item.image_link} alt={item.name} />
+      </div>
+    </a>
+  );
 }
 
 function App() {
@@ -125,12 +150,15 @@ function App() {
             searchClient={searchClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={RecommendedItem}
-            maxRecommendations={3}
+            itemComponent={BundleItem}
+            maxRecommendations={2}
             searchParameters={{
               analytics: true,
               clickAnalytics: true,
             }}
+            view={(props) => (
+              <BundleView {...props} currentItem={selectedProduct} />
+            )}
             fallbackComponent={() => (
               <RelatedProducts
                 searchClient={searchClient}
