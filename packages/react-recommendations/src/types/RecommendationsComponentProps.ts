@@ -3,6 +3,16 @@ import { RecommendationTranslations } from './RecommendationTranslations';
 import { RecordWithObjectID } from './RecordWithObjectID';
 import { ViewProps } from './ViewProps';
 
+type ComponentChild =
+  | JSX.Element
+  | object
+  | string
+  | number
+  | boolean
+  | null
+  | undefined;
+type ComponentChildren = ComponentChild[] | ComponentChild;
+
 export type ComponentProps<TObject> = RendererProps & {
   classNames: RecommendationClassNames;
   recommendations: TObject[];
@@ -28,7 +38,7 @@ export type RendererProps = {
   createElement: (
     type: any,
     props: Record<string, any> | null,
-    ...children: JSX.Element[]
+    ...children: ComponentChildren[]
   ) => JSX.Element;
   /**
    * The component to use to create fragments.
