@@ -16,6 +16,16 @@ function cx(...classNames: Array<string | undefined>) {
   return classNames.filter(Boolean).join(' ');
 }
 
+type ComponentChild =
+  | JSX.Element
+  | object
+  | string
+  | number
+  | boolean
+  | null
+  | undefined;
+type ComponentChildren = ComponentChild[] | ComponentChild;
+
 type RecordWithObjectID<TObject = {}> = TObject & {
   objectID: string;
 };
@@ -50,7 +60,7 @@ export type RendererProps = {
   createElement: (
     type: any,
     props: Record<string, any> | null,
-    ...children: JSX.Element[]
+    ...children: ComponentChildren[]
   ) => JSX.Element;
   /**
    * The component to use to create fragments.
