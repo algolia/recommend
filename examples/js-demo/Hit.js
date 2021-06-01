@@ -1,4 +1,5 @@
-import React from 'preact/compat';
+/** @jsx h */
+import { h } from 'preact';
 import './Hit.css';
 
 export function Hit({ hit, insights }) {

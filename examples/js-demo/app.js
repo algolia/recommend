@@ -1,10 +1,11 @@
+/** @jsx h */
 import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
 import {
   frequentlyBoughtTogether,
   relatedProducts,
-} from '@algolia/js-recommendations';
+} from '@algolia/recommendations-js';
 import algoliasearch from 'algoliasearch';
-import React, { render } from 'preact/compat';
+import { h, render } from 'preact';
 import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
