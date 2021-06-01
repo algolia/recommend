@@ -6,7 +6,7 @@ import { RelatedProducts } from '../RelatedProducts';
 
 const { searchClient } = createRecommendationsClient();
 
-const ItemComponent = ({ item }) => <div>{item.name}</div>;
+const Item = ({ item }) => <div>{item.name}</div>;
 
 describe('RelatedProducts', () => {
   beforeEach(() => {
@@ -18,9 +18,9 @@ describe('RelatedProducts', () => {
       <RelatedProducts
         // @ts-expect-error
         searchClient={searchClient}
-        indexName={'indexName'}
+        indexName="indexName"
         objectIDs={['objectID']}
-        itemComponent={ItemComponent}
+        itemComponent={Item}
       />
     );
 
@@ -37,9 +37,9 @@ describe('RelatedProducts', () => {
         <RelatedProducts
           // @ts-expect-error
           searchClient={searchClient}
-          indexName={'indexName'}
+          indexName="indexName"
           objectIDs={['objectID']}
-          itemComponent={ItemComponent}
+          itemComponent={Item}
           view={({ createElement, Fragment }: any) => {
             expect(createElement).toBe(React.createElement);
             expect(Fragment).toBe(React.Fragment);
@@ -63,7 +63,7 @@ describe('RelatedProducts', () => {
         <RelatedProducts
           // @ts-expect-error
           searchClient={searchClient}
-          indexName={'indexName'}
+          indexName="indexName"
           objectIDs={['objectID']}
           itemComponent={({ item, createElement, Fragment }: any) => {
             expect(createElement).toBe(React.createElement);
@@ -88,9 +88,9 @@ describe('RelatedProducts', () => {
         <RelatedProducts
           // @ts-expect-error
           searchClient={searchClient}
-          indexName={'indexName'}
+          indexName="indexName"
           objectIDs={['objectID']}
-          itemComponent={ItemComponent}
+          itemComponent={Item}
           headerComponent={({ createElement, Fragment }: any) => {
             expect(createElement).toBe(React.createElement);
             expect(Fragment).toBe(React.Fragment);
@@ -114,9 +114,9 @@ describe('RelatedProducts', () => {
         <RelatedProducts
           // @ts-expect-error
           searchClient={searchClient}
-          indexName={'indexName'}
+          indexName="indexName"
           objectIDs={['objectID']}
-          itemComponent={ItemComponent}
+          itemComponent={Item}
           fallbackComponent={({ createElement, Fragment }: any) => {
             expect(createElement).toBe(React.createElement);
             expect(Fragment).toBe(React.Fragment);

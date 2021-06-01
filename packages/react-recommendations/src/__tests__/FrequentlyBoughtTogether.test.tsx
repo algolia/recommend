@@ -6,7 +6,7 @@ import { FrequentlyBoughtTogether } from '../FrequentlyBoughtTogether';
 
 const { searchClient } = createRecommendationsClient();
 
-const ItemComponent = ({ item }) => <div>{item.name}</div>;
+const Item = ({ item }) => <div>{item.name}</div>;
 
 describe('FrequentlyBoughtTogether', () => {
   beforeEach(() => {
@@ -18,9 +18,9 @@ describe('FrequentlyBoughtTogether', () => {
       <FrequentlyBoughtTogether
         // @ts-expect-error
         searchClient={searchClient}
-        indexName={'indexName'}
+        indexName="indexName"
         objectIDs={['objectID']}
-        itemComponent={ItemComponent}
+        itemComponent={Item}
       />
     );
 
@@ -37,9 +37,9 @@ describe('FrequentlyBoughtTogether', () => {
         <FrequentlyBoughtTogether
           // @ts-expect-error
           searchClient={searchClient}
-          indexName={'indexName'}
+          indexName="indexName"
           objectIDs={['objectID']}
-          itemComponent={ItemComponent}
+          itemComponent={Item}
           view={({ createElement, Fragment }) => {
             expect(createElement).toBe(React.createElement);
             expect(Fragment).toBe(React.Fragment);
@@ -63,7 +63,7 @@ describe('FrequentlyBoughtTogether', () => {
         <FrequentlyBoughtTogether
           // @ts-expect-error
           searchClient={searchClient}
-          indexName={'indexName'}
+          indexName="indexName"
           objectIDs={['objectID']}
           itemComponent={({ createElement, Fragment }) => {
             expect(createElement).toBe(React.createElement);
@@ -88,9 +88,9 @@ describe('FrequentlyBoughtTogether', () => {
         <FrequentlyBoughtTogether
           // @ts-expect-error
           searchClient={searchClient}
-          indexName={'indexName'}
+          indexName="indexName"
           objectIDs={['objectID']}
-          itemComponent={ItemComponent}
+          itemComponent={Item}
           headerComponent={({ createElement, Fragment }) => {
             expect(createElement).toBe(React.createElement);
             expect(Fragment).toBe(React.Fragment);
@@ -114,9 +114,9 @@ describe('FrequentlyBoughtTogether', () => {
         <FrequentlyBoughtTogether
           // @ts-expect-error
           searchClient={searchClient}
-          indexName={'indexName'}
+          indexName="indexName"
           objectIDs={['objectID']}
-          itemComponent={ItemComponent}
+          itemComponent={Item}
           fallbackComponent={({ createElement, Fragment }) => {
             expect(createElement).toBe(React.createElement);
             expect(Fragment).toBe(React.Fragment);
