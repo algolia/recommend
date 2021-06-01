@@ -31,7 +31,7 @@ export type ItemComponentProps<TObject> = RendererProps & {
 
 export type RendererProps = {
   /**
-   * The function to create virtual nodes.
+   * The function to create JSX Elements.
    *
    * @default React.createElement
    */

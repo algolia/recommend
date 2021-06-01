@@ -34,9 +34,22 @@ export function FrequentlyBoughtTogether<TObject>(
   const classNames = props.classNames ?? {};
 
   const children = props.children ?? DefaultChildren;
-  const Fallback = props.fallbackComponent ?? DefaultFallback;
-  const Header = props.headerComponent ?? DefaultHeader;
+  const FallbackComponent = props.fallbackComponent ?? DefaultFallback;
+  const HeaderComponent = props.headerComponent ?? DefaultHeader;
   const ViewComponent = props.view ?? ListView;
+
+  const Fallback = () => (
+    <FallbackComponent createElement={createElement} Fragment={Fragment} />
+  );
+  const Header = () => (
+    <HeaderComponent
+      classNames={classNames}
+      createElement={createElement}
+      Fragment={Fragment}
+      recommendations={recommendations}
+      translations={translations}
+    />
+  );
   const View = (viewProps: unknown) => (
     <ViewComponent
       classNames={classNames}
