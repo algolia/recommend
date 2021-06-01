@@ -318,8 +318,10 @@ The translations for the component.
 <summary><code>(props: ChildrenProps) => JSX.Element</code></summary>
 
 ```ts
-type ComponentProps<TObject> = RendererProps & {
+type ComponentProps<TObject> = {
+  createElement: Preact.createElement;
   classNames: RecommendationClassNames;
+  Fragment: Preact.Fragment;
   recommendations: TObject[];
   translations: Required<RecommendationTranslations>;
 };
