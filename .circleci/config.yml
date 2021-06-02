@@ -25,13 +25,17 @@ aliases:
 
       mkdir -p packages/js-horizontal-slider/dist
       mkdir -p packages/react-horizontal-slider/dist
+      mkdir -p packages/recommendations-core/dist
       mkdir -p packages/recommendations-js/dist
       mkdir -p packages/recommendations-react/dist
+      mkdir -p packages/recommendations-vdom/dist
 
       cp -R /tmp/workspace/packages/js-horizontal-slider/dist packages/js-horizontal-slider
       cp -R /tmp/workspace/packages/react-horizontal-slider/dist packages/react-horizontal-slider
+      cp -R /tmp/workspace/packages/recommendations-core/dist packages/recommendations-core
       cp -R /tmp/workspace/packages/recommendations-js/dist packages/recommendations-js
       cp -R /tmp/workspace/packages/recommendations-react/dist packages/recommendations-react
+      cp -R /tmp/workspace/packages/recommendations-vdom/dist packages/recommendations-vdom
 
 defaults: &defaults
   working_directory: ~/ui-components
@@ -63,13 +67,17 @@ jobs:
 
             mkdir -p /tmp/workspace/packages/js-horizontal-slider/dist
             mkdir -p /tmp/workspace/packages/react-horizontal-slider/dist
+            mkdir -p /tmp/workspace/packages/recommendations-core/dist
             mkdir -p /tmp/workspace/packages/recommendations-js/dist
             mkdir -p /tmp/workspace/packages/recommendations-react/dist
+            mkdir -p /tmp/workspace/packages/recommendations-vdom/dist
 
             cp -R packages/js-horizontal-slider/dist /tmp/workspace/packages/js-horizontal-slider
             cp -R packages/react-horizontal-slider/dist /tmp/workspace/packages/react-horizontal-slider
+            cp -R packages/recommendations-core/dist /tmp/workspace/packages/recommendations-core
             cp -R packages/recommendations-js/dist /tmp/workspace/packages/recommendations-js
             cp -R packages/recommendations-react/dist /tmp/workspace/packages/recommendations-react
+            cp -R packages/recommendations-vdom/dist /tmp/workspace/packages/recommendations-vdom
       - persist_to_workspace:
           root: *workspace_root
           paths:
