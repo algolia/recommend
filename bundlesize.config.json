@@ -10,11 +10,11 @@
     },
     {
       "path": "packages/recommendations-js/dist/umd/index.js",
-      "maxSize": "8.75 kB"
+      "maxSize": "7.25 kB"
     },
     {
       "path": "packages/recommendations-react/dist/umd/index.js",
-      "maxSize": "3 kB"
+      "maxSize": "3.25 kB"
     }
   ]
 }
