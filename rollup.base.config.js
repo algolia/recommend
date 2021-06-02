@@ -6,18 +6,6 @@ import replace from '@rollup/plugin-replace';
 import filesize from 'rollup-plugin-filesize';
 import { terser } from 'rollup-plugin-terser';
 
-const preactPlugins = [
-  [
-    'module-resolver',
-    {
-      alias: {
-        react: 'preact/compat',
-        'react-dom': 'preact/compat',
-      },
-    },
-  ],
-];
-
 export const plugins = [
   replace({
     preventAssignment: true,
@@ -35,7 +23,6 @@ export const plugins = [
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     rootMode: 'upward',
     babelHelpers: 'bundled',
-    plugins: process.env.BUILD_PREACT ? preactPlugins : [],
   }),
   terser(),
   filesize({

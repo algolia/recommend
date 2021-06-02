@@ -2,7 +2,7 @@ import {
   FrequentlyBoughtTogether,
   RelatedProducts,
 } from '@algolia/recommendations-react';
-import { HorizontalSlider } from '@algolia/ui-components-react-horizontal-slider';
+import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 import React, { Fragment, useState } from 'react';
 import insights from 'search-insights';
@@ -13,7 +13,7 @@ import { Autocomplete, getAlgoliaResults } from './Autocomplete';
 import { BundleView } from './BundleView';
 import { Hit } from './Hit';
 
-import '@algolia/ui-components-react-horizontal-slider/HorizontalSlider.css';
+import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
 import './Recommendations.css';
 

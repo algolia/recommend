@@ -55,8 +55,13 @@ export function frequentlyBoughtTogether<TObject>({
   environment = window,
   ...props
 }: FrequentlyBoughtTogetherProps<TObject> & EnvironmentProps) {
-  render(
-    <FrequentlyBoughtTogether {...props} />,
-    getHTMLElement(container, environment)
-  );
+  const children = <FrequentlyBoughtTogether {...props} />;
+
+  if (!container) {
+    return children;
+  }
+
+  render(children, getHTMLElement(container, environment));
+
+  return undefined;
 }

@@ -52,14 +52,14 @@ function App({ currentObjectID }) {
 
 #### Horizontal slider view
 
-Example with the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component:
+Example with the [`HorizontalSlider`](/packages/horizontal-slider-react) UI component:
 
 ```js
 import { RelatedProducts } from '@algolia/recommendations-react';
-import { HorizontalSlider } from '@algolia/ui-components-react-horizontal-slider';
+import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 
-import '@algolia/ui-components-react-horizontal-slider/HorizontalSlider.css';
+import '@algolia/ui-components-horizontal-slider-theme';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
@@ -160,7 +160,7 @@ type ViewProps<TItem extends RecordWithObjectID> = {
 </details>
 </blockquote>
 
-The view component to render your items into. You can use the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component.
+The view component to render your items into. You can use the [`HorizontalSlider`](/packages/horizontal-slider-react) UI component.
 
 The default implementation is:
 
@@ -318,14 +318,14 @@ function App({ currentObjectID }) {
 
 #### Horizontal slider view
 
-Example with the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component:
+Example with the [`HorizontalSlider`](/packages/horizontal-slider-react) UI component:
 
 ```js
 import { FrequentlyBoughtTogether } from '@algolia/recommendations-react';
-import { HorizontalSlider } from '@algolia/ui-components-react-horizontal-slider';
+import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 
-import '@algolia/ui-components-react-horizontal-slider/HorizontalSlider.css';
+import '@algolia/ui-components-horizontal-slider-theme';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
@@ -424,7 +424,7 @@ type ViewProps<TItem extends RecordWithObjectID> = {
 </details>
 </blockquote>
 
-The view component to render your items into. You can use the [`HorizontalSlider`](/packages/react-horizontal-slider) UI component.
+The view component to render your items into. You can use the [`HorizontalSlider`](/packages/horizontal-slider-react) UI component.
 
 The default implementation is:
 

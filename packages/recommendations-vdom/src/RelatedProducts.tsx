@@ -24,7 +24,6 @@ export function createRelatedProductsComponent({
     const translations: Required<RecommendationTranslations> = {
       title: 'Related products',
       sliderLabel: 'Related products',
-      showMore: 'Show more',
       ...props.translations,
     };
     const classNames = props.classNames ?? {};

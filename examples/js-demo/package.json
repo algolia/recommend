@@ -1,6 +1,6 @@
 {
-  "name": "@algolia/js-recommendations-example",
-  "description": "JavaScript Recommendations examples",
+  "name": "@algolia/recommendations-js-example",
+  "description": "Recommendations JavaScript example",
   "version": "1.0.0-experimental.2",
   "private": true,
   "license": "MIT",
@@ -9,13 +9,14 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "@algolia/autocomplete-js": "1.0.1",
-    "@algolia/autocomplete-theme-classic": "1.0.1",
+    "@algolia/autocomplete-js": "1.1.0",
+    "@algolia/autocomplete-theme-classic": "1.1.0",
     "@algolia/recommendations-js": "1.0.0-experimental.2",
-    "@algolia/ui-components-js-horizontal-slider": "1.0.0-experimental.2",
+    "@algolia/ui-components-horizontal-slider-js": "1.0.0-experimental.2",
+    "@algolia/ui-components-horizontal-slider-theme": "1.0.0-experimental.2",
     "algoliasearch": "4.9.1",
     "preact": "10.5.13",
-    "search-insights": "1.8.0"
+    "search-insights": "2.0.0"
   },
   "devDependencies": {
     "parcel": "2.0.0-beta.2"
