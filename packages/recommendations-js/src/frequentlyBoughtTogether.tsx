@@ -8,12 +8,12 @@ import {
   createFrequentlyBoughtTogetherComponent,
   FrequentlyBoughtTogetherProps,
 } from '@algolia/recommendations-vdom';
-import { h, render, createElement, Fragment } from 'preact';
+import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import { getHTMLElement } from './getHTMLElement';
 import { EnvironmentProps } from './types';
-import { version } from './version';
+import { useAlgoliaAgent } from './useAlgoliaAgent';
 
 const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherComponent(
   {
@@ -27,9 +27,7 @@ function useFrequentlyBoughtTogether<TObject>(
 ) {
   const [items, setItems] = useState<Array<RecordWithObjectID<TObject>>>([]);
 
-  useEffect(() => {
-    props.searchClient.addAlgoliaAgent('recommendations-js', version);
-  }, [props.searchClient]);
+  useAlgoliaAgent({ searchClient: props.searchClient });
 
   useEffect(() => {
     getFrequentlyBoughtTogether(props).then((recommendations) => {
