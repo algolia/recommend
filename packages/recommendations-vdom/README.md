@@ -1,1 +1,1 @@
-# `@algolia/recommendations-core`
+# `@algolia/recommendations-vdom`

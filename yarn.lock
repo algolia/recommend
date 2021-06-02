@@ -146,6 +146,11 @@
   dependencies:
     "@algolia/logger-common" "4.9.1"
 
+"@algolia/react-recommendations@1.0.0-experimental.2":
+  version "1.0.0-experimental.2"
+  resolved "https://registry.yarnpkg.com/@algolia/react-recommendations/-/react-recommendations-1.0.0-experimental.2.tgz#36b75675f31c641165025144cdde3135de706c12"
+  integrity sha512-s4i7bEJG/ArKBIUVsJMTPM/BG+SilbomXuOcJE/0AbyuHOddkL6qatDCRwmF2W51wD8pzia8Cyqh/zkYNvgBgg==
+
 "@algolia/requester-browser-xhr@4.9.1":
   version "4.9.1"
   resolved "https://registry.yarnpkg.com/@algolia/requester-browser-xhr/-/requester-browser-xhr-4.9.1.tgz#0812f3c7c4105a4646c0fba8429b172b2d0e01c5"

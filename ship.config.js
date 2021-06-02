@@ -8,9 +8,9 @@ module.exports = {
     packagesToBump: [],
     packagesToPublish: [
       'packages/js-horizontal-slider',
-      'packages/js-recommendations',
       'packages/react-horizontal-slider',
-      'packages/react-recommendations',
+      'packages/recommendations-js',
+      'packages/recommendations-react',
     ],
   },
   publishCommand({ tag }) {
