@@ -13,7 +13,7 @@ export function useRecommendations<TObject>(
   const [items, setItems] = useState<Array<RecordWithObjectID<TObject>>>([]);
 
   useEffect(() => {
-    props.searchClient.addAlgoliaAgent('react-recommendations', version);
+    props.searchClient.addAlgoliaAgent('recommendations-react', version);
   }, [props.searchClient]);
 
   useEffect(() => {

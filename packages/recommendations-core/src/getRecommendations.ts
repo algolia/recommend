@@ -70,7 +70,7 @@ export function getRecommendations<TObject>(
 ): Promise<Array<RecordWithObjectID<TObject>>> {
   const props = getDefaultedProps(userProps);
 
-  props.searchClient.addAlgoliaAgent('recommendations', version);
+  props.searchClient.addAlgoliaAgent('recommendations-core', version);
 
   return props.searchClient
     .initIndex(getIndexNameFromModel(props.model, props.indexName))

@@ -24,7 +24,7 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
   const [items, setItems] = useState<Array<RecordWithObjectID<TObject>>>([]);
 
   useEffect(() => {
-    props.searchClient.addAlgoliaAgent('js-recommendations', version);
+    props.searchClient.addAlgoliaAgent('recommendations-js', version);
   }, [props.searchClient]);
 
   useEffect(() => {
