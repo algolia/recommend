@@ -1,4 +1,6 @@
 export type RecommendationTranslations = Partial<{
   title: string;
-}> &
-  Record<string, string>;
+
+  // Horizontal Slider
+  sliderLabel: string;
+}>;

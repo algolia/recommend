@@ -26,7 +26,6 @@ export function createFrequentlyBoughtTogetherComponent({
     const translations: Required<RecommendationTranslations> = {
       title: 'Related products',
       sliderLabel: 'Frequently bought together products',
-      showMore: 'Show more',
       ...props.translations,
     };
     const classNames = props.classNames ?? {};
