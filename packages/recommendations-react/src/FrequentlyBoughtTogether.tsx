@@ -16,7 +16,9 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
 export function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>
 ) {
-  const items = useRelatedProducts<TObject>(props);
+  const { recommendations } = useRelatedProducts<TObject>(props);
 
-  return <UncontrolledFrequentlyBoughtTogether {...props} items={items} />;
+  return (
+    <UncontrolledFrequentlyBoughtTogether {...props} items={recommendations} />
+  );
 }

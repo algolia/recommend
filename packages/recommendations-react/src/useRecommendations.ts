@@ -1,26 +1,26 @@
 import {
   getRecommendations,
   GetRecommendationsProps,
-  RecordWithObjectID,
+  GetRecommendationsReturn,
 } from '@algolia/recommendations-core';
 import { useEffect, useState } from 'react';
 
-import { version } from './version';
+import { useAlgoliaAgent } from './useAlgoliaAgent';
 
 export function useRecommendations<TObject>(
   props: GetRecommendationsProps<TObject>
 ) {
-  const [items, setItems] = useState<Array<RecordWithObjectID<TObject>>>([]);
+  const [result, setResult] = useState<GetRecommendationsReturn<TObject>>({
+    recommendations: [],
+  });
+
+  useAlgoliaAgent({ searchClient: props.searchClient });
 
   useEffect(() => {
-    props.searchClient.addAlgoliaAgent('recommendations-react', version);
-  }, [props.searchClient]);
-
-  useEffect(() => {
-    getRecommendations(props).then((recommendations) => {
-      setItems(recommendations);
+    getRecommendations(props).then((response) => {
+      setResult(response);
     });
   }, [props]);
 
-  return items;
+  return result;
 }

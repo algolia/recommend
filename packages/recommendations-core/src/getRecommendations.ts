@@ -39,6 +39,10 @@ export type GetRecommendationsInternalProps<TObject> = Required<
   GetRecommendationsProps<TObject>
 >;
 
+export type GetRecommendationsReturn<TObject> = {
+  recommendations: Array<RecordWithObjectID<TObject>>;
+};
+
 function getDefaultedProps<TObject>(
   props: GetRecommendationsProps<TObject>
 ): GetRecommendationsInternalProps<TObject> {
@@ -67,7 +71,7 @@ function getDefaultedProps<TObject>(
 
 export function getRecommendations<TObject>(
   userProps: GetRecommendationsProps<TObject>
-): Promise<Array<RecordWithObjectID<TObject>>> {
+): Promise<GetRecommendationsReturn<TObject>> {
   const props = getDefaultedProps(userProps);
 
   props.searchClient.addAlgoliaAgent('recommendations-core', version);
@@ -160,11 +164,15 @@ export function getRecommendations<TObject>(
                 : undefined
             );
 
-          return props.transformItems(hits);
+          return {
+            recommendations: props.transformItems(hits),
+          };
         });
     })
     .catch(() => {
       // The `objectID` doesn't exist, we cannot get recommendations.
-      return [];
+      return {
+        recommendations: [],
+      };
     });
 }

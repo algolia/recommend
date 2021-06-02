@@ -1,8 +1,8 @@
 /** @jsx h */
 import {
+  GetRecommendationsReturn,
   getRelatedProducts,
   GetRelatedProductsProps,
-  RecordWithObjectID,
 } from '@algolia/recommendations-core';
 import {
   createRelatedProductsComponent,
@@ -21,23 +21,25 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
 });
 
 function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
-  const [items, setItems] = useState<Array<RecordWithObjectID<TObject>>>([]);
+  const [result, setResult] = useState<GetRecommendationsReturn<TObject>>({
+    recommendations: [],
+  });
 
   useAlgoliaAgent({ searchClient: props.searchClient });
 
   useEffect(() => {
-    getRelatedProducts(props).then((recommendations) => {
-      setItems(recommendations);
+    getRelatedProducts(props).then((response) => {
+      setResult(response);
     });
   }, [props]);
 
-  return items;
+  return result;
 }
 
 function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
-  const items = useRelatedProducts<TObject>(props);
+  const { recommendations } = useRelatedProducts<TObject>(props);
 
-  return <UncontrolledRelatedProducts {...props} items={items} />;
+  return <UncontrolledRelatedProducts {...props} items={recommendations} />;
 }
 
 export function relatedProducts<TObject>({

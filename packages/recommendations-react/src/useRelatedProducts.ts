@@ -1,20 +1,26 @@
 import {
   getRelatedProducts,
   GetRelatedProductsProps,
-  RecordWithObjectID,
+  GetRecommendationsReturn,
 } from '@algolia/recommendations-core';
 import { useEffect, useState } from 'react';
+
+import { useAlgoliaAgent } from './useAlgoliaAgent';
 
 export function useRelatedProducts<TObject>(
   props: GetRelatedProductsProps<TObject>
 ) {
-  const [items, setItems] = useState<Array<RecordWithObjectID<TObject>>>([]);
+  const [result, setResult] = useState<GetRecommendationsReturn<TObject>>({
+    recommendations: [],
+  });
+
+  useAlgoliaAgent({ searchClient: props.searchClient });
 
   useEffect(() => {
-    getRelatedProducts(props).then((recommendations) => {
-      setItems(recommendations);
+    getRelatedProducts(props).then((response) => {
+      setResult(response);
     });
   }, [props]);
 
-  return items;
+  return result;
 }

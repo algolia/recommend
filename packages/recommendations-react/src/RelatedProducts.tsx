@@ -12,7 +12,7 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
 });
 
 export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
-  const items = useRelatedProducts<TObject>(props);
+  const { recommendations } = useRelatedProducts<TObject>(props);
 
-  return <UncontrolledRelatedProducts {...props} items={items} />;
+  return <UncontrolledRelatedProducts {...props} items={recommendations} />;
 }

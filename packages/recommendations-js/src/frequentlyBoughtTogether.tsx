@@ -2,7 +2,7 @@
 import {
   getFrequentlyBoughtTogether,
   GetFrequentlyBoughtTogetherProps,
-  RecordWithObjectID,
+  GetRecommendationsReturn,
 } from '@algolia/recommendations-core';
 import {
   createFrequentlyBoughtTogetherComponent,
@@ -25,25 +25,29 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
 function useFrequentlyBoughtTogether<TObject>(
   props: GetFrequentlyBoughtTogetherProps<TObject>
 ) {
-  const [items, setItems] = useState<Array<RecordWithObjectID<TObject>>>([]);
+  const [result, setResult] = useState<GetRecommendationsReturn<TObject>>({
+    recommendations: [],
+  });
 
   useAlgoliaAgent({ searchClient: props.searchClient });
 
   useEffect(() => {
-    getFrequentlyBoughtTogether(props).then((recommendations) => {
-      setItems(recommendations);
+    getFrequentlyBoughtTogether(props).then((response) => {
+      setResult(response);
     });
   }, [props]);
 
-  return items;
+  return result;
 }
 
 function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>
 ) {
-  const items = useFrequentlyBoughtTogether<TObject>(props);
+  const { recommendations } = useFrequentlyBoughtTogether<TObject>(props);
 
-  return <UncontrolledFrequentlyBoughtTogether {...props} items={items} />;
+  return (
+    <UncontrolledFrequentlyBoughtTogether {...props} items={recommendations} />
+  );
 }
 
 export function frequentlyBoughtTogether<TObject>({
