@@ -74,9 +74,7 @@ export function createHorizontalSliderComponent({ createElement }: Renderer) {
     }
 
     return (
-      <div
-        className={cx('uic-HorizontalSlider-container', props.classNames?.root)}
-      >
+      <div className={cx('uic-HorizontalSlider-container', classNames.root)}>
         <button
           ref={previousButtonRef}
           title={translations.previousButtonTitle}

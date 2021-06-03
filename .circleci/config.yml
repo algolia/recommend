@@ -83,7 +83,7 @@ jobs:
             cp -R packages/horizontal-slider-vdom/dist /tmp/workspace/packages/horizontal-slider-vdom
             cp -R packages/horizontal-slider-theme/dist /tmp/workspace/packages/horizontal-slider-theme
             cp -R packages/recommendations-core/dist /tmp/workspace/packages/recommendations-core
-            cp -R packages/recommendations-js/dist   /tmp/workspace/packages/recommendations-js
+            cp -R packages/recommendations-js/dist /tmp/workspace/packages/recommendations-js
             cp -R packages/recommendations-react/dist /tmp/workspace/packages/recommendations-react
             cp -R packages/recommendations-vdom/dist /tmp/workspace/packages/recommendations-vdom
       - persist_to_workspace:
