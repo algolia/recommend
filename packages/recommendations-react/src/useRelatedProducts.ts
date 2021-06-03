@@ -1,7 +1,7 @@
 import {
   getRelatedProducts,
   GetRelatedProductsProps,
-  GetRecommendationsReturn,
+  GetRecommendationsResult,
 } from '@algolia/recommendations-core';
 import { useEffect, useState } from 'react';
 
@@ -10,7 +10,7 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 export function useRelatedProducts<TObject>(
   props: GetRelatedProductsProps<TObject>
 ) {
-  const [result, setResult] = useState<GetRecommendationsReturn<TObject>>({
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
 

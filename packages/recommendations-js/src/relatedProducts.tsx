@@ -1,6 +1,6 @@
 /** @jsx h */
 import {
-  GetRecommendationsReturn,
+  GetRecommendationsResult,
   getRelatedProducts,
   GetRelatedProductsProps,
 } from '@algolia/recommendations-core';
@@ -21,7 +21,7 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
 });
 
 function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
-  const [result, setResult] = useState<GetRecommendationsReturn<TObject>>({
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
 
