@@ -1,4 +1,4 @@
-import { RecordWithObjectID } from './RecordWithObjectID';
+import { RecordWithObjectID } from '@algolia/recommendations-core';
 
 export type ViewProps<
   TItem extends RecordWithObjectID,
