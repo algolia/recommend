@@ -1,9 +1,9 @@
 /** @jsx createElement */
+import { RecordWithObjectID } from '@algolia/recommendations-core';
 
 import {
   RecommendationClassNames,
   RecommendationTranslations,
-  RecordWithObjectID,
   Renderer,
   ViewProps,
 } from './types';

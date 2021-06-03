@@ -39,7 +39,7 @@ export type GetRecommendationsInternalProps<TObject> = Required<
   GetRecommendationsProps<TObject>
 >;
 
-export type GetRecommendationsReturn<TObject> = {
+export type GetRecommendationsResult<TObject> = {
   recommendations: Array<RecordWithObjectID<TObject>>;
 };
 
@@ -71,7 +71,7 @@ function getDefaultedProps<TObject>(
 
 export function getRecommendations<TObject>(
   userProps: GetRecommendationsProps<TObject>
-): Promise<GetRecommendationsReturn<TObject>> {
+): Promise<GetRecommendationsResult<TObject>> {
   const props = getDefaultedProps(userProps);
 
   props.searchClient.addAlgoliaAgent('recommendations-core', version);

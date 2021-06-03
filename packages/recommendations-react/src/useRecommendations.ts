@@ -1,7 +1,7 @@
 import {
   getRecommendations,
   GetRecommendationsProps,
-  GetRecommendationsReturn,
+  GetRecommendationsResult,
 } from '@algolia/recommendations-core';
 import { useEffect, useState } from 'react';
 
@@ -10,7 +10,7 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 export function useRecommendations<TObject>(
   props: GetRecommendationsProps<TObject>
 ) {
-  const [result, setResult] = useState<GetRecommendationsReturn<TObject>>({
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
 

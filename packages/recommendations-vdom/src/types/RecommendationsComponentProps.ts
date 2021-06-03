@@ -1,6 +1,7 @@
+import { RecordWithObjectID } from '@algolia/recommendations-core';
+
 import { RecommendationClassNames } from './RecommendationClassNames';
 import { RecommendationTranslations } from './RecommendationTranslations';
-import { RecordWithObjectID } from './RecordWithObjectID';
 import { ViewProps } from './ViewProps';
 
 export type ComponentProps<TObject> = {

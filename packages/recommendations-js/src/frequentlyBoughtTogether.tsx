@@ -2,7 +2,7 @@
 import {
   getFrequentlyBoughtTogether,
   GetFrequentlyBoughtTogetherProps,
-  GetRecommendationsReturn,
+  GetRecommendationsResult,
 } from '@algolia/recommendations-core';
 import {
   createFrequentlyBoughtTogetherComponent,
@@ -25,7 +25,7 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
 function useFrequentlyBoughtTogether<TObject>(
   props: GetFrequentlyBoughtTogetherProps<TObject>
 ) {
-  const [result, setResult] = useState<GetRecommendationsReturn<TObject>>({
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
 

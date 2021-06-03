@@ -22,7 +22,7 @@ export const plugins = [
     exclude: 'node_modules/**',
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     rootMode: 'upward',
-    babelHelpers: 'bundled',
+    babelHelpers: 'runtime',
   }),
   terser(),
   filesize({
