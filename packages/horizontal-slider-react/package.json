@@ -11,10 +11,10 @@
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",
-  "main": "dist/umd/index.js",
+  "main": "dist/esm/index.js",
   "umd:main": "dist/umd/index.js",
-  "unpkg": "dist/umd/index.js",
-  "jsdelivr": "dist/umd/index.js",
+  "unpkg": "dist/esm/index.js",
+  "jsdelivr": "dist/esm/index.js",
   "sideEffects": false,
   "files": [
     "dist/"
@@ -31,7 +31,6 @@
     "@algolia/ui-components-horizontal-slider-vdom": "1.0.0-experimental.2"
   },
   "peerDependencies": {
-    "algoliasearch": "^4.9.1",
     "react": ">= 16.8.0 < 18",
     "react-dom": ">= 16.8.0 < 18"
   }

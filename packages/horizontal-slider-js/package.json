@@ -1,5 +1,6 @@
 {
   "name": "@algolia/ui-components-horizontal-slider-js",
+  "description": "Horizontal slider UI component.",
   "version": "1.0.0-experimental.2",
   "license": "MIT",
   "homepage": "https://github.com/algolia/ui-components",
@@ -11,10 +12,10 @@
   "source": "src/index.ts",
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",
-  "main": "dist/umd/index.js",
+  "main": "dist/esm/index.js",
   "umd:main": "dist/umd/index.js",
-  "unpkg": "dist/umd/index.js",
-  "jsdelivr": "dist/umd/index.js",
+  "unpkg": "dist/esm/index.js",
+  "jsdelivr": "dist/esm/index.js",
   "sideEffects": false,
   "files": [
     "dist/"
@@ -26,9 +27,6 @@
     "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm",
     "build": "yarn build:clean && yarn build:esm && yarn build:umd && yarn build:types",
     "prepare": "yarn build:esm && yarn build:types"
-  },
-  "peerDependencies": {
-    "algoliasearch": "^4.9.1"
   },
   "dependencies": {
     "@algolia/ui-components-horizontal-slider-vdom": "1.0.0-experimental.2",
