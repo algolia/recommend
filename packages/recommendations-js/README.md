@@ -97,7 +97,7 @@ The function accepts all the [shared props](#shared-props) and the following:
 
 ##### `container`
 
-> `string | HTMLElement` | **required**
+> `string | HTMLElement` |
 
 The container for the `relatedProducts` component. You can either pass a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
 
@@ -235,7 +235,7 @@ The function accepts all the [shared props](#shared-props) and the following:
 
 ##### `container`
 
-> `string | HTMLElement` | **required**
+> `string | HTMLElement` |
 
 The container for the `frequentlyBoughtTogether` component. You can either pass a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
 
