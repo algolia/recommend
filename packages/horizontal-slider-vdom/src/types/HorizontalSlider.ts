@@ -12,16 +12,16 @@ export type HorizontalSliderClassnames = Partial<{
 }>;
 
 export type HorizontalSliderTranslations = Partial<{
-  sliderLabel: string;
-  previousButtonLabel: string;
-  previousButtonTitle: string;
   nextButtonLabel: string;
   nextButtonTitle: string;
+  previousButtonLabel: string;
+  previousButtonTitle: string;
+  sliderLabel: string;
 }>;
 
 export type HorizontalSliderProps<TItem extends RecordWithObjectID> = {
+  classNames?: HorizontalSliderClassnames;
   items: TItem[];
   itemComponent({ item: TItem }): JSX.Element;
-  classNames?: HorizontalSliderClassnames;
   translations?: HorizontalSliderTranslations;
 };

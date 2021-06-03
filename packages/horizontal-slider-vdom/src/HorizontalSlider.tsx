@@ -1,6 +1,6 @@
 /** @jsx createElement */
 import {
-  DOMref,
+  FrameworkProps,
   HorizontalSliderProps,
   HorizontalSliderTranslations,
   RecordWithObjectID,
@@ -15,9 +15,9 @@ export function generateHorizontalSliderId() {
 
 export function updateNavigationButtonsProps({
   listRef,
-  previousButtonRef,
   nextButtonRef,
-}: Pick<DOMref, 'listRef' | 'previousButtonRef' | 'nextButtonRef'>) {
+  previousButtonRef,
+}: Pick<FrameworkProps, 'listRef' | 'nextButtonRef' | 'previousButtonRef'>) {
   if (
     !listRef.current ||
     !previousButtonRef.current ||
@@ -38,8 +38,15 @@ function cx(...classNames: Array<string | undefined>) {
 
 export function createHorizontalSliderComponent({ createElement }: Renderer) {
   return function HorizontalSlider<TObject extends RecordWithObjectID>(
-    props: HorizontalSliderProps<TObject> & DOMref
+    props: HorizontalSliderProps<TObject> & FrameworkProps
   ) {
+    const {
+      listRef,
+      nextButtonRef,
+      previousButtonRef,
+      sliderIdRef,
+      updateNavigationButtonsProps,
+    } = props;
     const translations: Required<HorizontalSliderTranslations> = {
       sliderLabel: 'Items',
       nextButtonLabel: 'Next',
@@ -48,13 +55,6 @@ export function createHorizontalSliderComponent({ createElement }: Renderer) {
       previousButtonTitle: 'Previous',
       ...props.translations,
     };
-    const {
-      listRef,
-      previousButtonRef,
-      nextButtonRef,
-      sliderIdRef,
-      updateNavigationButtonsProps,
-    } = props;
     const classNames = props.classNames ?? {};
 
     function scrollLeft() {

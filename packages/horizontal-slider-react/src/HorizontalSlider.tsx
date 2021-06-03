@@ -16,26 +16,26 @@ export function HorizontalSlider<TObject extends RecordWithObjectID>(
   props: HorizontalSliderProps<TObject>
 ) {
   const listRef = useRef<HTMLOListElement>(null);
-  const previousButtonRef = useRef<HTMLButtonElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const previousButtonRef = useRef<HTMLButtonElement>(null);
   const sliderIdRef = useRef(generateHorizontalSliderId());
 
   useEffect(() => {
-    updateNavigationButtonsProps({ listRef, previousButtonRef, nextButtonRef });
+    updateNavigationButtonsProps({ listRef, nextButtonRef, previousButtonRef });
   });
 
   return (
     <UncontrolledHorizontalSlider
       {...props}
       listRef={listRef}
-      previousButtonRef={previousButtonRef}
       nextButtonRef={nextButtonRef}
+      previousButtonRef={previousButtonRef}
       sliderIdRef={sliderIdRef}
       updateNavigationButtonsProps={() =>
         updateNavigationButtonsProps({
           listRef,
-          previousButtonRef,
           nextButtonRef,
+          previousButtonRef,
         })
       }
     />
