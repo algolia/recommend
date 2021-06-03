@@ -12,8 +12,6 @@
     "@algolia/autocomplete-js": "1.1.0",
     "@algolia/autocomplete-theme-classic": "1.1.0",
     "@algolia/recommendations-react": "1.0.0-experimental.2",
-    "@algolia/recommendations-core": "1.0.0-experimental.2",
-    "@algolia/recommendations-vdom": "1.0.0-experimental.2",
     "@algolia/ui-components-horizontal-slider-react": "1.0.0-experimental.2",
     "@algolia/ui-components-horizontal-slider-theme": "1.0.0-experimental.2",
     "algoliasearch": "4.9.1",
