@@ -21,5 +21,15 @@ module.exports = (api) => {
         },
       ],
     ],
+    plugins: [
+      [
+        '@babel/plugin-transform-runtime',
+        {
+          corejs: false,
+          helpers: true,
+          regenerator: true,
+        },
+      ],
+    ],
   };
 };

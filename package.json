@@ -27,6 +27,7 @@
     "@algolia/client-search": "4.9.1",
     "@babel/cli": "7.13.0",
     "@babel/plugin-transform-react-jsx": "7.13.12",
+    "@babel/plugin-transform-runtime": "7.14.3",
     "@babel/preset-env": "7.13.8",
     "@babel/preset-react": "7.12.13",
     "@babel/preset-typescript": "7.13.0",
