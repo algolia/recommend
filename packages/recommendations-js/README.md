@@ -56,7 +56,7 @@ relatedProducts({
 });
 ```
 
-#### Horizontal slider view
+### Horizontal slider view
 
 Example with the [`HorizontalSlider`](/packages/horizontal-slider-js) UI component:
 
