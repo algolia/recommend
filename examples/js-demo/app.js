@@ -4,12 +4,13 @@ import {
   frequentlyBoughtTogether,
   relatedProducts,
 } from '@algolia/recommendations-js';
+import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
 import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
-import '@algolia/ui-components-js-horizontal-slider/HorizontalSlider.css';
+import '@algolia/ui-components-horizontal-slider-theme';
 import { Hit } from './Hit';
 
 const appId = 'HYDY1KWTWB';
@@ -119,6 +120,31 @@ function renderRecommendations(selectedProduct) {
       analytics: true,
       clickAnalytics: true,
     },
+    fallbackComponent() {
+      return relatedProducts({
+        searchClient,
+        indexName,
+        objectIDs: [selectedProduct.objectID],
+        itemComponent({ item }) {
+          return <Hit hit={item} insights={insights} />;
+        },
+        view: horizontalSlider,
+        maxRecommendations: 10,
+        translations: {
+          title: 'Related products (fallback)',
+        },
+        fallbackFilters: [
+          `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+        ],
+        searchParameters: {
+          analytics: true,
+          clickAnalytics: true,
+          facetFilters: [
+            `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+          ],
+        },
+      });
+    },
   });
 
   relatedProducts({
@@ -129,6 +155,7 @@ function renderRecommendations(selectedProduct) {
     itemComponent({ item }) {
       return <Hit hit={item} insights={insights} />;
     },
+    view: horizontalSlider,
     maxRecommendations: 10,
     translations: {
       title: 'Related products',

@@ -47,8 +47,13 @@ export function relatedProducts<TObject>({
   environment = window,
   ...props
 }: RelatedProductsProps<TObject> & EnvironmentProps) {
-  render(
-    <RelatedProducts {...props} />,
-    getHTMLElement(container, environment)
-  );
+  const children = <RelatedProducts {...props} />;
+
+  if (!container) {
+    return children;
+  }
+
+  render(children, getHTMLElement(container, environment));
+
+  return undefined;
 }

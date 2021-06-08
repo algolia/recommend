@@ -26,11 +26,48 @@ To get started, you need a container for your results to go in. If you don’t h
 
 Then, inject results into it by calling the `relatedProducts` function and providing the [`container`](#container). It can be a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
 
+### Default view
+
 ```js
 /** @jsx h */
 import { h } from 'preact';
 import { relatedProducts } from '@algolia/recommendations-js';
 import algoliasearch from 'algoliasearch';
+
+const appId = 'HYDY1KWTWB';
+const apiKey = '28cf6d38411215e2eef188e635216508';
+const indexName = 'gstar_demo_test';
+
+const searchClient = algoliasearch(appId, apiKey);
+const currentObjectID = 'YOUR_OBJECT_ID';
+
+relatedProducts({
+  container: '#relatedProducts',
+  searchClient,
+  indexName,
+  objectIDs: [currentObjectID],
+  itemComponent({ item }) {
+    return (
+      <pre>
+        <code>{JSON.stringify(item)}</code>
+      </pre>
+    );
+  },
+});
+```
+
+### Horizontal slider view
+
+Example with the [`HorizontalSlider`](/packages/horizontal-slider-js) UI component:
+
+```js
+/** @jsx h */
+import { h } from 'preact';
+import { relatedProducts } from '@algolia/recommendations-js';
+import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
+import algoliasearch from 'algoliasearch';
+
+import '@algolia/ui-components-horizontal-slider-theme';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
@@ -60,7 +97,7 @@ The function accepts all the [shared props](#shared-props) and the following:
 
 ##### `container`
 
-> `string | HTMLElement` | **required**
+> `string | HTMLElement`
 
 The container for the `relatedProducts` component. You can either pass a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
 
@@ -198,7 +235,7 @@ The function accepts all the [shared props](#shared-props) and the following:
 
 ##### `container`
 
-> `string | HTMLElement` | **required**
+> `string | HTMLElement`
 
 The container for the `frequentlyBoughtTogether` component. You can either pass a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
 

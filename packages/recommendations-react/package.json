@@ -1,5 +1,6 @@
 {
   "name": "@algolia/recommendations-react",
+  "description": "Horizontal slider UI component.",
   "version": "1.0.0-experimental.2",
   "license": "MIT",
   "homepage": "https://github.com/algolia/ui-components",
@@ -23,7 +24,7 @@
     "build:clean": "rm -rf ./dist",
     "build:esm": "babel src --root-mode upward --extensions '.ts,.tsx' --out-dir dist/esm --ignore '**/*/__tests__/'",
     "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm",
-    "build:umd": "cross-env BUILD=umd rollup --config",
+    "build:umd": "rollup --config",
     "build": "yarn build:clean && yarn build:esm && yarn build:umd && yarn build:types",
     "prepare": "yarn build:esm && yarn build:types"
   },

@@ -1,5 +1,5 @@
 {
-  "name": "@algolia/ui-components-js-horizontal-slider",
+  "name": "@algolia/ui-components-horizontal-slider-vdom",
   "version": "1.0.0-experimental.2",
   "license": "MIT",
   "homepage": "https://github.com/algolia/ui-components",
@@ -17,19 +17,14 @@
   "jsdelivr": "dist/umd/index.js",
   "sideEffects": false,
   "files": [
-    "dist/",
-    "HorizontalSlider.css"
+    "dist/"
   ],
   "scripts": {
     "build:clean": "rm -rf ./dist",
-    "build:esm": "cross-env BUILD=esm BUILD_PREACT=true rollup --config",
-    "build:umd": "cross-env BUILD=umd BUILD_PREACT=true rollup --config",
+    "build:esm": "babel src --root-mode upward --extensions '.ts,.tsx' --out-dir dist/esm --ignore '**/*/__tests__/'",
     "build:types": "tsc -p ./tsconfig.declaration.json --outDir ./dist/esm",
+    "build:umd": "rollup --config",
     "build": "yarn build:clean && yarn build:esm && yarn build:umd && yarn build:types",
     "prepare": "yarn build:esm && yarn build:types"
-  },
-  "dependencies": {
-    "@algolia/ui-components-react-horizontal-slider": "1.0.0-experimental.2",
-    "preact": "^10.0.0"
   }
 }

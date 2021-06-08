@@ -1,12 +1,20 @@
 {
   "files": [
     {
-      "path": "packages/js-horizontal-slider/dist/umd/index.js",
-      "maxSize": "7.5 kB"
+      "path": "packages/horizontal-slider-js/dist/umd/index.js",
+      "maxSize": "6 kB"
     },
     {
-      "path": "packages/react-horizontal-slider/dist/umd/index.js",
+      "path": "packages/horizontal-slider-react/dist/umd/index.js",
+      "maxSize": "2 kB"
+    },
+    {
+      "path": "packages/horizontal-slider-vdom/dist/umd/index.js",
       "maxSize": "1.75 kB"
+    },
+    {
+      "path": "packages/recommendations-core/dist/umd/index.js",
+      "maxSize": "2 kB"
     },
     {
       "path": "packages/recommendations-js/dist/umd/index.js",
@@ -15,6 +23,10 @@
     {
       "path": "packages/recommendations-react/dist/umd/index.js",
       "maxSize": "3.25 kB"
+    },
+    {
+      "path": "packages/recommendations-vdom/dist/umd/index.js",
+      "maxSize": "1.25 kB"
     }
   ]
 }

@@ -1,13 +1,13 @@
-# `@algolia/ui-components-js-horizontal-slider`
+# `@algolia/ui-components-horizontal-slider-js`
 
 Horizontal slider UI component for JavaScript.
 
 ## Installation
 
 ```sh
-yarn add @algolia/ui-components-js-horizontal-slider@experimental
+yarn add @algolia/ui-components-horizontal-slider-js@experimental
 # or
-npm install @algolia/ui-components-js-horizontal-slider@experimental
+npm install @algolia/ui-components-horizontal-slider-js@experimental
 ```
 
 ## Usage
@@ -21,9 +21,9 @@ To get started, you need a container for your slider to go in. If you don’t ha
 Then, insert your slider into it by calling the `horizontalSlider` function and providing the [`container`](#container). It can be a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
 
 ```js
-import { horizontalSlider } from '@algolia/ui-components-js-horizontal-slider';
+import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 
-import '@algolia/ui-components-js-horizontal-slider/HorizontalSlider.css';
+import '@algolia/ui-components-horizontal-slider-theme';
 
 const items = [
   { objectID: '1', name: 'Item 1' },
@@ -43,7 +43,7 @@ horizontalSlider({
 
 ### `container`
 
-> `string | HTMLElement` | **required**
+> `string | HTMLElement`
 
 The container for the horizontal slider. You can either pass a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
 

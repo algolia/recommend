@@ -1,13 +1,13 @@
-# `@algolia/ui-components-react-horizontal-slider`
+# `@algolia/ui-components-horizontal-slider-react`
 
 Horizontal slider UI component for React.
 
 ## Installation
 
 ```sh
-yarn add @algolia/ui-components-react-horizontal-slider@experimental
+yarn add @algolia/ui-components-horizontal-slider-react@experimental
 # or
-npm install @algolia/ui-components-react-horizontal-slider@experimental
+npm install @algolia/ui-components-horizontal-slider-react@experimental
 ```
 
 ## Usage
@@ -15,9 +15,9 @@ npm install @algolia/ui-components-react-horizontal-slider@experimental
 ### Standalone
 
 ```js
-import { HorizontalSlider } from '@algolia/ui-components-react-horizontal-slider';
+import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 
-import '@algolia/ui-components-react-horizontal-slider/HorizontalSlider.css';
+import '@algolia/ui-components-horizontal-slider-theme';
 
 function Item({ item }) {
   return (
@@ -36,7 +36,7 @@ function App() {
 
 ### With recommendations
 
-See usage for [Recommendations](/packages/react-recommendations#horizontal-slider-view).
+See usage for [Recommendations](/packages/recommendations-react#horizontal-slider-view).
 
 ## Props
 

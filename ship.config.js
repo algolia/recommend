@@ -7,10 +7,14 @@ module.exports = {
     // We rely on Lerna to bump our dependencies.
     packagesToBump: [],
     packagesToPublish: [
-      'packages/js-horizontal-slider',
-      'packages/react-horizontal-slider',
+      'packages/horizontal-slider-js',
+      'packages/horizontal-slider-react',
+      'packages/horizontal-slider-theme',
+      'packages/horizontal-slider-vdom',
+      'packages/recommendations-core',
       'packages/recommendations-js',
       'packages/recommendations-react',
+      'packages/recommendations-vdom',
     ],
   },
   publishCommand({ tag }) {
@@ -33,14 +37,14 @@ module.exports = {
         path.resolve(
           dir,
           'packages',
-          'react-recommendations',
+          'recommendations-react',
           'src',
           'version.ts'
         ),
         path.resolve(
           dir,
           'packages',
-          'js-recommendations',
+          'recommendations-js',
           'src',
           'version.ts'
         ),
