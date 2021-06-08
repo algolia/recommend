@@ -1,7 +1,7 @@
 import {
   FrequentlyBoughtTogether,
   RelatedProducts,
-} from '@algolia/react-recommendations';
+} from '@algolia/recommendations-react';
 import { HorizontalSlider } from '@algolia/ui-components-react-horizontal-slider';
 import algoliasearch from 'algoliasearch';
 import React, { Fragment, useState } from 'react';
@@ -190,6 +190,7 @@ function App() {
             objectIDs={[selectedProduct.objectID]}
             itemComponent={RecommendedItem}
             maxRecommendations={10}
+            view={HorizontalSlider}
             translations={{
               title: 'Related products',
             }}
