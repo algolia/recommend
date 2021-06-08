@@ -23,6 +23,7 @@ export const plugins = [
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     rootMode: 'upward',
     babelHelpers: 'runtime',
+    plugins: process.env.BUILD_PREACT ? preactPlugins : [],
   }),
   terser(),
   filesize({

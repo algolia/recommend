@@ -7,6 +7,6 @@ type UseAlgoliaAgentProps = Pick<GetRelatedProductsProps<any>, 'searchClient'>;
 
 export function useAlgoliaAgent(props: UseAlgoliaAgentProps) {
   useEffect(() => {
-    props.searchClient.addAlgoliaAgent('recommendations-js', version);
+    props.searchClient.addAlgoliaAgent('recommendations-react', version);
   }, [props.searchClient]);
 }
