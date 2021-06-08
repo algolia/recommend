@@ -6,7 +6,12 @@ import replace from '@rollup/plugin-replace';
 import filesize from 'rollup-plugin-filesize';
 import { terser } from 'rollup-plugin-terser';
 
-export const plugins = [
+import { getBundleBanner } from '../getBundleBanner.mjs';
+
+const isReactBuild = process.env.BUILD === 'react';
+
+const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json'];
+const plugins = [
   replace({
     preventAssignment: true,
     values: {
@@ -15,12 +20,12 @@ export const plugins = [
   }),
   json(),
   resolve({
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    extensions,
   }),
   commonjs(),
   babel({
     exclude: 'node_modules/**',
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    extensions,
     rootMode: 'upward',
     babelHelpers: 'runtime',
   }),
@@ -30,3 +35,23 @@ export const plugins = [
     showGzippedSize: true,
   }),
 ];
+const external = isReactBuild ? ['react', 'react-dom'] : undefined;
+const globals = isReactBuild
+  ? { react: 'React', 'react-dom': 'ReactDOM' }
+  : undefined;
+
+export function createRollupConfig(pkg) {
+  return {
+    input: pkg.source,
+    external,
+    output: {
+      banner: getBundleBanner(pkg),
+      file: pkg['umd:main'],
+      format: 'umd',
+      name: pkg.name,
+      sourcemap: true,
+      globals,
+    },
+    plugins,
+  };
+}
