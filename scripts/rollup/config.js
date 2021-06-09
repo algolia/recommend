@@ -8,8 +8,6 @@ import { terser } from 'rollup-plugin-terser';
 
 import { getBundleBanner } from '../getBundleBanner.mjs';
 
-const isReactBuild = process.env.BUILD === 'react';
-
 const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json'];
 const plugins = [
   replace({
@@ -35,23 +33,33 @@ const plugins = [
     showGzippedSize: true,
   }),
 ];
-const external = isReactBuild ? ['react', 'react-dom'] : undefined;
-const globals = isReactBuild
-  ? { react: 'React', 'react-dom': 'ReactDOM' }
-  : undefined;
 
 export function createRollupConfig(pkg) {
   return {
     input: pkg.source,
-    external,
     output: {
       banner: getBundleBanner(pkg),
       file: pkg['umd:main'],
       format: 'umd',
       name: pkg.name,
       sourcemap: true,
-      globals,
     },
     plugins,
+  };
+}
+
+export function createRollupConfigForReact(pkg) {
+  const config = createRollupConfig(pkg);
+
+  return {
+    ...config,
+    external: ['react', 'react-dom'],
+    output: {
+      ...config.output,
+      globals: {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+      },
+    },
   };
 }

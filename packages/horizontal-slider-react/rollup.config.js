@@ -1,5 +1,5 @@
-import { createRollupConfig } from '../../scripts/rollup/config';
+import { createRollupConfigForReact } from '../../scripts/rollup/config';
 
 import pkg from './package.json';
 
-export default createRollupConfig(pkg);
+export default createRollupConfigForReact(pkg);
