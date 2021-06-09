@@ -6,6 +6,8 @@ import postcss from 'postcss';
 
 import postCssConfig from '../postcss.config.mjs';
 
+import { getBundleBanner } from './getBundleBanner.mjs';
+
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const mkdir = util.promisify(fs.mkdir);
@@ -31,7 +33,11 @@ async function buildCss() {
     from: input,
     to: output,
   });
-  await writeFile(output, [result.css].join('\n'), () => true);
+  const banner = getBundleBanner(
+    JSON.parse(await readFile(path.join(process.cwd(), 'package.json')))
+  );
+
+  await writeFile(output, [banner, result.css].join('\n'), () => true);
 }
 
 buildCss();
