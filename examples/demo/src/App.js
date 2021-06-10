@@ -1,7 +1,7 @@
 import {
   FrequentlyBoughtTogether,
   RelatedProducts,
-} from '@algolia/recommendations-react';
+} from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 import React, { Fragment, useState } from 'react';
@@ -15,7 +15,7 @@ import { Hit } from './Hit';
 
 import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
-import './Recommendations.css';
+import './Recommend.css';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
@@ -58,7 +58,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Algolia Recommendations</h1>
+      <h1>Algolia Recommend</h1>
 
       <Autocomplete
         placeholder="Search for a product"

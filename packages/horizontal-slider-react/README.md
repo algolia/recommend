@@ -36,7 +36,7 @@ function App() {
 
 ### With recommendations
 
-See usage for [Recommendations](/packages/recommendations-react#horizontal-slider-view).
+See usage for [Recommend](/packages/recommend-react#horizontal-slider-view).
 
 ## Props
 
