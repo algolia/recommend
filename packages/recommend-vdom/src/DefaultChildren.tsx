@@ -10,7 +10,7 @@ export function createDefaultChildrenComponent({ createElement }: Renderer) {
     }
 
     return (
-      <section className={cx('auc-Recommendations', props.classNames.root)}>
+      <section className={cx('auc-Recommend', props.classNames.root)}>
         <props.Header
           classNames={props.classNames}
           recommendations={props.recommendations}

@@ -216,7 +216,7 @@ function defaultRender(props) {
   }
 
   return (
-    <section className="auc-Recommendations">
+    <section className="auc-Recommend">
       {props.translations.title && <h3>{props.translations.title}</h3>}
 
       <props.View />
@@ -252,7 +252,7 @@ function App({ currentObjectID }) {
   });
 
   return (
-    <div className="auc-Recommendations">
+    <div className="auc-Recommend">
       {recommendations.length > 0 && (
         <ol className="auc-Recommend-list">
           {recommendations.map((recommendation) => (
@@ -508,7 +508,7 @@ function defaultRender(props) {
   }
 
   return (
-    <section className="auc-Recommendations">
+    <section className="auc-Recommend">
       {props.translations.title && <h3>{props.translations.title}</h3>}
 
       <props.View />
@@ -544,7 +544,7 @@ function App({ currentObjectID }) {
   });
 
   return (
-    <div className="auc-Recommendations">
+    <div className="auc-Recommend">
       {recommendations.length > 0 && (
         <ol className="auc-Recommend-list">
           {recommendations.map((recommendation) => (
@@ -593,7 +593,7 @@ function App({ currentObjectID }) {
   });
 
   return (
-    <div className="auc-Recommendations">
+    <div className="auc-Recommend">
       {recommendations.length > 0 && (
         <ol className="auc-Recommend-list">
           {recommendations.map((recommendation) => (

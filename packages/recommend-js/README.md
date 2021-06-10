@@ -178,7 +178,7 @@ function defaultRender(props) {
   }
 
   return (
-    <section className="auc-Recommendations">
+    <section className="auc-Recommend">
       {props.translations.title && <h3>{props.translations.title}</h3>}
 
       <props.View />
@@ -316,7 +316,7 @@ function defaultRender(props) {
   }
 
   return (
-    <section className="auc-Recommendations">
+    <section className="auc-Recommend">
       {props.translations.title && <h3>{props.translations.title}</h3>}
 
       <props.View />
