@@ -11,10 +11,10 @@ module.exports = {
       'packages/horizontal-slider-react',
       'packages/horizontal-slider-theme',
       'packages/horizontal-slider-vdom',
-      'packages/recommendations-core',
-      'packages/recommendations-js',
-      'packages/recommendations-react',
-      'packages/recommendations-vdom',
+      'packages/recommend-core',
+      'packages/recommend-js',
+      'packages/recommend-react',
+      'packages/recommend-vdom',
     ],
   },
   publishCommand({ tag }) {
@@ -34,20 +34,8 @@ module.exports = {
     updatePackagesVersionFile({
       version,
       files: [
-        path.resolve(
-          dir,
-          'packages',
-          'recommendations-react',
-          'src',
-          'version.ts'
-        ),
-        path.resolve(
-          dir,
-          'packages',
-          'recommendations-js',
-          'src',
-          'version.ts'
-        ),
+        path.resolve(dir, 'packages', 'recommend-react', 'src', 'version.ts'),
+        path.resolve(dir, 'packages', 'recommend-js', 'src', 'version.ts'),
       ],
     });
   },
