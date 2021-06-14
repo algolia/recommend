@@ -1,6 +1,6 @@
 {
   "name": "@algolia/recommend-js",
-  "version": "1.0.0-experimental.2",
+  "version": "1.0.0-experimental.3",
   "license": "MIT",
   "homepage": "https://github.com/algolia/ui-components",
   "repository": "algolia/ui-components",
@@ -31,8 +31,8 @@
     "algoliasearch": "^4.9.1"
   },
   "dependencies": {
-    "@algolia/recommend-core": "1.0.0-experimental.2",
-    "@algolia/recommend-vdom": "1.0.0-experimental.2",
+    "@algolia/recommend-core": "1.0.0-experimental.3",
+    "@algolia/recommend-vdom": "1.0.0-experimental.3",
     "preact": "^10.0.0"
   }
 }
