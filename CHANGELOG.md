@@ -1,3 +1,14 @@
+# [](https://github.com/algolia/ui-components/compare/v1.0.0-experimental.2...v) (2021-06-14)
+
+
+### Features
+
+* rename packages to Recommend ([#33](https://github.com/algolia/ui-components/issues/33)) ([4612d0d](https://github.com/algolia/ui-components/commit/4612d0dcdd88a11682615498784d48ba69e514c1))
+* **horizontal-slider:** change renderer implementation to VDOM ([#28](https://github.com/algolia/ui-components/issues/28)) ([e297a92](https://github.com/algolia/ui-components/commit/e297a923eebab60e9227d54bd48a8e4472717be8))
+* **recommendations:** change renderer implementation to VDOM ([#27](https://github.com/algolia/ui-components/issues/27)) ([29edf36](https://github.com/algolia/ui-components/commit/29edf36dd1a9f40c91a4d179916298f6c51cb88a))
+
+
+
 # [1.0.0-experimental.2](https://github.com/algolia/ui-components/compare/v1.0.0-experimental.1...v1.0.0-experimental.2) (2021-05-25)
 
 ### Features
