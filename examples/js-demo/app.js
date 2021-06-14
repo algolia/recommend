@@ -11,7 +11,8 @@ import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
-import { Hit } from './Hit';
+
+import { RelatedItem } from './RelatedItem';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
@@ -20,6 +21,15 @@ const indexName = 'gstar_demo_test';
 const searchClient = algoliasearch(appId, apiKey);
 
 insights('init', { appId, apiKey });
+insights('setUserToken', 'user-token-1');
+
+function updateReferenceItem(item) {
+  render(
+    <ReferenceItem item={item} />,
+    document.querySelector('#referenceHit')
+  );
+  renderRecommendations(item);
+}
 
 autocomplete({
   container: '#autocomplete',
@@ -48,8 +58,7 @@ autocomplete({
           return item.name;
         },
         onSelect({ item }) {
-          render(hitShowcase(item), document.querySelector('#hitShowcase'));
-          renderRecommendations(item);
+          updateReferenceItem(item);
         },
         templates: {
           item({ item, components }) {
@@ -83,23 +92,49 @@ autocomplete({
   },
 });
 
-function hitShowcase(selectedProduct) {
+function ReferenceItem({ item }) {
   return (
-    <div style={{ padding: '1rem 0' }}>
+    <div className="my-2">
       <div
-        className="Hit"
-        style={{ gridTemplateColumns: '150px 1fr', gap: '1rem' }}
+        className="grid gap-4"
+        style={{
+          gridTemplateColumns: '150px 1fr',
+        }}
       >
-        <div className="Hit-Image" style={{ maxWidth: 150 }}>
-          <img src={selectedProduct.image_link} alt={selectedProduct.name} />
+        <div>
+          <img src={item.image_link} alt={item.name} className="max-w-full" />
         </div>
 
-        <div className="Hit-Content">
-          <div className="Hit-Name">{selectedProduct.name}</div>
-          <div className="Hit-Description">{selectedProduct.objectID}</div>
-          <footer className="Hit-Footer">
-            <span className="Hit-Price">${selectedProduct.price}</span>
-          </footer>
+        <div>
+          <div className="text-sm text-gray-500">{item.category}</div>
+
+          <div className="text-gray-900 font-semibold mb-1 whitespace-normal">
+            {item.name}
+          </div>
+
+          {Boolean(item.reviewScore) && (
+            <div className="items-center flex flex-grow text-sm text-gray-700">
+              <svg
+                className="mr-1 text-orange-500"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+              <span className="mr-1">
+                {item.reviewScore.toFixed(1) || '--'}
+              </span>
+              <span className="text-gray-400">
+                ({item.reviewCount} reviews)
+              </span>
+            </div>
+          )}
+
+          <div className="my-2 font-semibold text-gray-800">${item.price}</div>
         </div>
       </div>
     </div>
@@ -113,7 +148,13 @@ function renderRecommendations(selectedProduct) {
     indexName,
     objectIDs: [selectedProduct.objectID],
     itemComponent({ item }) {
-      return <Hit hit={item} insights={insights} />;
+      return (
+        <RelatedItem
+          item={item}
+          insights={insights}
+          onSelect={updateReferenceItem}
+        />
+      );
     },
     maxRecommendations: 3,
     searchParameters: {
@@ -126,7 +167,13 @@ function renderRecommendations(selectedProduct) {
         indexName,
         objectIDs: [selectedProduct.objectID],
         itemComponent({ item }) {
-          return <Hit hit={item} insights={insights} />;
+          return (
+            <RelatedItem
+              item={item}
+              insights={insights}
+              onSelect={updateReferenceItem}
+            />
+          );
         },
         view: horizontalSlider,
         maxRecommendations: 10,
@@ -153,7 +200,13 @@ function renderRecommendations(selectedProduct) {
     indexName,
     objectIDs: [selectedProduct.objectID],
     itemComponent({ item }) {
-      return <Hit hit={item} insights={insights} />;
+      return (
+        <RelatedItem
+          item={item}
+          insights={insights}
+          onSelect={updateReferenceItem}
+        />
+      );
     },
     view: horizontalSlider,
     maxRecommendations: 10,
