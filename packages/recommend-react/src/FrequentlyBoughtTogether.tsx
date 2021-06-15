@@ -4,7 +4,7 @@ import {
 } from '@algolia/recommend-vdom';
 import React, { createElement, Fragment } from 'react';
 
-import { useRelatedProducts } from './useRelatedProducts';
+import { useFrequentlyBoughtTogether } from './useFrequentlyBoughtTogether';
 
 const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherComponent(
   {
@@ -16,7 +16,7 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
 export function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>
 ) {
-  const { recommendations } = useRelatedProducts<TObject>(props);
+  const { recommendations } = useFrequentlyBoughtTogether<TObject>(props);
 
   return (
     <UncontrolledFrequentlyBoughtTogether {...props} items={recommendations} />
