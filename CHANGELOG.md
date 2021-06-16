@@ -1,3 +1,13 @@
+# [1.0.0-experimental.4](https://github.com/algolia/ui-components/compare/v1.0.0-experimental.3...v1.0.0-experimental.4) (2021-06-16)
+
+
+### Bug Fixes
+
+* **horizontal-slider:** add `z-index` to navigation arrows ([8803d29](https://github.com/algolia/ui-components/commit/8803d294ee2e64542de17abbe5bbaafb19392368))
+* **react:** use FBT hook in `FrequentlyBoughtTogether` component ([#35](https://github.com/algolia/ui-components/issues/35)) ([8193798](https://github.com/algolia/ui-components/commit/8193798f12ece31662f7dac6ebc85dae1ed48580))
+
+
+
 # [1.0.0-experimental.3](https://github.com/algolia/ui-components/compare/v1.0.0-experimental.2...v1.0.0-experimental.3) (2021-06-14)
 
 This release renames the packages:
