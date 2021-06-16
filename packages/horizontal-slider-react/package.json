@@ -1,6 +1,6 @@
 {
   "name": "@algolia/ui-components-horizontal-slider-react",
-  "version": "1.0.0-experimental.3",
+  "version": "1.0.0-experimental.4",
   "license": "MIT",
   "homepage": "https://github.com/algolia/ui-components",
   "repository": "algolia/ui-components",
@@ -28,7 +28,7 @@
     "prepare": "yarn build:esm && yarn build:types"
   },
   "dependencies": {
-    "@algolia/ui-components-horizontal-slider-vdom": "1.0.0-experimental.3"
+    "@algolia/ui-components-horizontal-slider-vdom": "1.0.0-experimental.4"
   },
   "peerDependencies": {
     "react": ">= 16.8.0 < 18",
