@@ -1,6 +1,7 @@
+import { GetFrequentlyBoughtTogetherProps } from '@algolia/recommend-core';
 import {
   createFrequentlyBoughtTogetherComponent,
-  FrequentlyBoughtTogetherProps,
+  FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherVDomProps,
 } from '@algolia/recommend-vdom';
 import React, { createElement, Fragment } from 'react';
 
@@ -12,6 +13,11 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
     Fragment,
   }
 );
+
+type FrequentlyBoughtTogetherProps<
+  TObject
+> = GetFrequentlyBoughtTogetherProps<TObject> &
+  Omit<FrequentlyBoughtTogetherVDomProps<TObject>, 'items'>;
 
 export function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>
