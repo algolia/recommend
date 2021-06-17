@@ -26,7 +26,7 @@ export type GetRecommendationsProps<TObject> = {
   objectIDs: string[];
   searchClient: SearchClient;
 
-  fallbackParameters?: { facetFilters: SearchOptions['facetFilters'] };
+  fallbackParameters?: Pick<SearchOptions, 'facetFilters'>;
   maxRecommendations?: number;
   searchParameters?: SearchOptions;
   threshold?: number;
