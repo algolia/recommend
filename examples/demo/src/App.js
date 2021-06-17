@@ -170,9 +170,11 @@ function App() {
                 translations={{
                   title: 'Related products (fallback)',
                 }}
-                fallbackFilters={[
-                  `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-                ]}
+                fallbackParameters={{
+                  facetFilters: [
+                    `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+                  ],
+                }}
                 searchParameters={{
                   analytics: true,
                   clickAnalytics: true,
@@ -194,9 +196,11 @@ function App() {
             translations={{
               title: 'Related products',
             }}
-            fallbackFilters={[
-              `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-            ]}
+            fallbackParameters={{
+              facetFilters: [
+                `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+              ],
+            }}
             searchParameters={{
               analytics: true,
               clickAnalytics: true,

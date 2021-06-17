@@ -1,17 +1,17 @@
 import { GetRecommendationsInternalProps } from '../getRecommendations';
 
 type GetHitsPerPageParams<TObject> = {
-  fallbackFilters: GetRecommendationsInternalProps<TObject>['fallbackFilters'];
+  fallbackParameters: GetRecommendationsInternalProps<TObject>['fallbackParameters'];
   maxRecommendations: GetRecommendationsInternalProps<TObject>['maxRecommendations'];
   recommendationsCount: number;
 };
 
 export function getHitsPerPage<TObject>({
-  fallbackFilters,
+  fallbackParameters,
   maxRecommendations,
   recommendationsCount,
 }: GetHitsPerPageParams<TObject>) {
-  const hasFallback = fallbackFilters.length > 0;
+  const hasFallback = fallbackParameters.facetFilters!.length > 0;
 
   if (recommendationsCount === 0) {
     return hasFallback ? maxRecommendations : 0;

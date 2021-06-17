@@ -5,7 +5,7 @@ import {
 
 export type GetFrequentlyBoughtTogetherProps<TObject> = Omit<
   GetRecommendationsProps<TObject>,
-  'model' | 'fallbackFilters'
+  'model' | 'fallbackParameters'
 >;
 
 export function getFrequentlyBoughtTogether<TObject>(
@@ -13,7 +13,7 @@ export function getFrequentlyBoughtTogether<TObject>(
 ) {
   const props: GetRecommendationsProps<TObject> = {
     ...userProps,
-    fallbackFilters: [],
+    fallbackParameters: { facetFilters: [] },
     model: 'bought-together',
   };
 

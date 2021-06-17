@@ -519,7 +519,7 @@ function defaultRender(props) {
 
 ## `useFrequentlyBoughtTogether`
 
-> [`(props: Omit<SharedProps, 'fallbackFilters'>) => { recommendations }`](#shared-props)
+> [`(props: Omit<SharedProps, 'fallbackParameters'>) => { recommendations }`](#shared-props)
 
 Hook to retrieve frequently bought together products.
 
@@ -646,11 +646,11 @@ An array of `objectID`s of the products to get recommendations from.
 
 The number of recommendations to retrieve.
 
-### `fallbackFilters`
+### `fallbackParameters`
 
-> list of strings
+> `{ facetFilters: string | string[] | Array<string[]> }`
 
-Additional filters to use as fallback should there not be enough recommendations.
+Additional filters to use as fallback when there is not enough recommendations.
 
 ### `searchParameters`
 

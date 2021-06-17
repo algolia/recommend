@@ -26,7 +26,7 @@ export type GetRecommendationsProps<TObject> = {
   objectIDs: string[];
   searchClient: SearchClient;
 
-  fallbackFilters?: SearchOptions['optionalFilters'];
+  fallbackParameters?: { facetFilters: SearchOptions['facetFilters'] };
   maxRecommendations?: number;
   searchParameters?: SearchOptions;
   threshold?: number;
@@ -47,7 +47,7 @@ function getDefaultedProps<TObject>(
   props: GetRecommendationsProps<TObject>
 ): GetRecommendationsInternalProps<TObject> {
   return {
-    fallbackFilters: [],
+    fallbackParameters: { facetFilters: [] },
     maxRecommendations: 0,
     threshold: 0,
     transformItems: (items) => items,
@@ -90,7 +90,7 @@ export function getRecommendations<TObject>(
             // This computes the `hitsPerPage` value as if a single `objectID`
             // was passed.
             const globalHitsPerPage = getHitsPerPage({
-              fallbackFilters: props.fallbackFilters,
+              fallbackParameters: props.fallbackParameters,
               maxRecommendations: props.maxRecommendations,
               recommendationsCount: recommendations.length,
             });
@@ -101,7 +101,7 @@ export function getRecommendations<TObject>(
                 ? Math.ceil(globalHitsPerPage / props.objectIDs.length)
                 : globalHitsPerPage;
             const searchParametersForModel = getSearchParametersForModel({
-              fallbackFilters: props.fallbackFilters,
+              fallbackParameters: props.fallbackParameters,
               recommendations,
               threshold: props.threshold,
             })(props.model);

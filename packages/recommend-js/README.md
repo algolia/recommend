@@ -351,11 +351,11 @@ An array of `objectID`s of the products to get recommendations from.
 
 The number of recommendations to retrieve.
 
-### `fallbackFilters`
+### `fallbackParameters`
 
-> list of strings
+> `{ facetFilters: string | string[] | Array<string[]> }`
 
-Additional filters to use as fallback should there not be enough recommendations.
+Additional filters to use as fallback when there is not enough recommendations.
 
 ### `searchParameters`
 

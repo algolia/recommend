@@ -4,35 +4,35 @@ import { GetRecommendationsInternalProps } from '../getRecommendations';
 import { RecommendModel, RecommendRecord } from '../types';
 
 type GetSearchParametersParams<TObject> = {
-  fallbackFilters: GetRecommendationsInternalProps<TObject>['fallbackFilters'];
+  fallbackParameters: GetRecommendationsInternalProps<TObject>['fallbackParameters'];
   recommendations: RecommendRecord[];
   threshold: GetRecommendationsInternalProps<TObject>['threshold'];
 };
 
 function getFiltersFromRecommendations<TObject>({
-  fallbackFilters,
+  fallbackParameters,
   recommendations,
   threshold,
 }: GetSearchParametersParams<TObject>): SearchOptions['optionalFilters'] {
   if (recommendations.length === 0) {
-    return fallbackFilters;
+    return fallbackParameters.facetFilters;
   }
 
   const recommendationFilters = recommendations
     .filter((recommendation) => recommendation.score > threshold)
     .map(({ objectID, score }) => `objectID:${objectID}<score=${score * 100}>`);
 
-  return [...recommendationFilters, ...fallbackFilters];
+  return [...recommendationFilters, ...fallbackParameters.facetFilters!];
 }
 
 function getSearchParametersForRelatedProducts<TObject>({
-  fallbackFilters,
+  fallbackParameters,
   recommendations,
   threshold,
 }: GetSearchParametersParams<TObject>): SearchOptions {
   return {
     optionalFilters: getFiltersFromRecommendations({
-      fallbackFilters,
+      fallbackParameters,
       recommendations,
       threshold,
     }),
@@ -40,11 +40,11 @@ function getSearchParametersForRelatedProducts<TObject>({
 }
 
 function getSearchParametersForFrequentlyBoughtTogether<TObject>({
-  fallbackFilters,
+  fallbackParameters,
   recommendations,
   threshold,
 }: GetSearchParametersParams<TObject>): SearchOptions {
-  if (fallbackFilters.length === 0) {
+  if (fallbackParameters.facetFilters!.length === 0) {
     return {
       // We want strict recommendations for FBT when there's no fallback because
       // we cannot guess what products were bought with the reference product.
@@ -58,7 +58,7 @@ function getSearchParametersForFrequentlyBoughtTogether<TObject>({
 
   return {
     optionalFilters: getFiltersFromRecommendations({
-      fallbackFilters,
+      fallbackParameters,
       recommendations,
       threshold,
     }),
