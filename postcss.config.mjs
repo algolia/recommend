@@ -3,6 +3,7 @@ import cssnano from 'cssnano';
 import color from 'postcss-color-rgb';
 import comment from 'postcss-comment';
 import presetEnv from 'postcss-preset-env';
+import tailwindcss from 'tailwindcss';
 
 export default {
   parser: comment,
@@ -14,6 +15,7 @@ export default {
     }),
     color,
     autoprefixer,
+    tailwindcss,
     cssnano,
   ],
 };

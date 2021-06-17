@@ -1,28 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* @TODO: these variables will end up in the global theme */
 :root {
-  --aui-primary-color: #9698c3;
+  --aui-primary-color: pink;
   --aui-muted-color: #c4c4c4;
   --aui-dark-color: #0f0f0f;
 }
 
 .uic-HorizontalSlider-container {
-  position: relative;
+  @apply relative;
 }
 
 .uic-HorizontalSlider-navigation {
-  align-items: center;
-  background: #f1f1f1;
-  border: 1px solid #fff;
-  border-radius: 2px;
+  @apply absolute flex items-center bg-gray-100 border b-white rounded;
+
   box-shadow: 0px 2px 6px rgba(90, 94, 154, 0.44);
   color: var(--aui-primary-color);
   cursor: pointer;
-  display: flex;
   height: 40px;
   justify-content: center;
   outline-color: var(--aui-primary-color);
-  padding: 0;
-  position: absolute;
   top: 35%;
   transition: opacity 150ms;
   width: 32px;
