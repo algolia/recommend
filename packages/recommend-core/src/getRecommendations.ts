@@ -37,7 +37,7 @@ export type GetRecommendationsProps<TObject> = {
 
 export type GetRecommendationsInternalProps<TObject> = Required<
   GetRecommendationsProps<TObject>
->;
+> & { fallbackParameters: Required<Pick<SearchOptions, 'facetFilters'>> };
 
 export type GetRecommendationsResult<TObject> = {
   recommendations: Array<RecordWithObjectID<TObject>>;
@@ -47,11 +47,13 @@ function getDefaultedProps<TObject>(
   props: GetRecommendationsProps<TObject>
 ): GetRecommendationsInternalProps<TObject> {
   return {
-    fallbackParameters: { facetFilters: [] },
     maxRecommendations: 0,
     threshold: 0,
     transformItems: (items) => items,
     ...props,
+    fallbackParameters: {
+      facetFilters: props.fallbackParameters?.facetFilters || [],
+    },
     searchParameters: {
       analytics: false,
       analyticsTags: [`alg-recommend_${props.model}`],

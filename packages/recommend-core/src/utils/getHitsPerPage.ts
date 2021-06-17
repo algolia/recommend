@@ -11,7 +11,7 @@ export function getHitsPerPage<TObject>({
   maxRecommendations,
   recommendationsCount,
 }: GetHitsPerPageParams<TObject>) {
-  const hasFallback = fallbackParameters.facetFilters!.length > 0;
+  const hasFallback = fallbackParameters.facetFilters.length > 0;
 
   if (recommendationsCount === 0) {
     return hasFallback ? maxRecommendations : 0;

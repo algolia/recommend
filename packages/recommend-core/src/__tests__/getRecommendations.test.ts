@@ -3,7 +3,7 @@ import {
   createSearchClient,
 } from '../../../../test/utils';
 import { getRecommendations } from '../getRecommendations';
-import { RecommendationModel } from '../types';
+import { RecommendModel } from '../types';
 
 const hit = {
   name: 'Landoh 4-Pocket Jumpsuit',
@@ -59,7 +59,7 @@ describe('getRecommendations', () => {
   test('calls the correct index for "related-products"', async () => {
     const { index, searchClient } = createRecommendationsClient();
     const props = {
-      model: 'related-products' as RecommendationModel,
+      model: 'related-products' as RecommendModel,
       searchClient: searchClient as any,
       indexName: 'indexName',
       objectIDs: ['objectID'],
@@ -107,7 +107,7 @@ describe('getRecommendations', () => {
   test('calls the correct index for "bought-together"', async () => {
     const { index, searchClient } = createRecommendationsClient();
     const props = {
-      model: 'bought-together' as RecommendationModel,
+      model: 'bought-together' as RecommendModel,
       searchClient: searchClient as any,
       indexName: 'indexName',
       objectIDs: ['objectID'],
@@ -153,10 +153,66 @@ describe('getRecommendations', () => {
   test('returns recommended hits', async () => {
     const { searchClient } = createRecommendationsClient();
     const props = {
-      model: 'related-products' as RecommendationModel,
+      model: 'related-products' as RecommendModel,
       searchClient: searchClient as any,
       indexName: 'indexName',
       objectIDs: ['objectID'],
+    };
+
+    const { recommendations } = await getRecommendations(props);
+
+    expect(recommendations).toEqual([
+      {
+        __indexName: 'indexName',
+        __position: 1,
+        __queryID: undefined,
+        __recommendScore: null,
+        category: 'Women - Jumpsuits-Overalls',
+        hierarchical_categories: {
+          lvl0: 'women',
+          lvl1: 'women > jeans & bottoms',
+          lvl2: 'women > jeans & bottoms > jumpsuits & overalls',
+        },
+        keywords: [
+          'women',
+          'jeans & bottoms',
+          'jumpsuits & overalls',
+          'Jumpsuits',
+          'Loose',
+          'Woven',
+          'Long sleeve',
+          'Grey',
+        ],
+        name: 'Landoh 4-Pocket Jumpsuit',
+        objectID: 'D06270-9132-995',
+        price: 250,
+        recommendations: [
+          {
+            objectID: '1',
+            score: 1.99,
+          },
+          {
+            objectID: '2',
+            score: 2.99,
+          },
+          {
+            objectID: '3',
+            score: 3.99,
+          },
+        ],
+        url: 'women/jumpsuits-overalls/d06270-9132-995',
+      },
+    ]);
+  });
+
+  test('does not throw with empty `fallbackParameters`', async () => {
+    const { searchClient } = createRecommendationsClient();
+    const props = {
+      model: 'related-products' as RecommendModel,
+      searchClient: searchClient as any,
+      indexName: 'indexName',
+      objectIDs: ['objectID'],
+      fallbackParameters: {},
     };
 
     const { recommendations } = await getRecommendations(props);

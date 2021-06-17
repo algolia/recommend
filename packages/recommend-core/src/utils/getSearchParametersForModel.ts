@@ -22,7 +22,7 @@ function getFiltersFromRecommendations<TObject>({
     .filter((recommendation) => recommendation.score > threshold)
     .map(({ objectID, score }) => `objectID:${objectID}<score=${score * 100}>`);
 
-  return [...recommendationFilters, ...fallbackParameters.facetFilters!];
+  return [...recommendationFilters, ...fallbackParameters.facetFilters];
 }
 
 function getSearchParametersForRelatedProducts<TObject>({
@@ -44,7 +44,7 @@ function getSearchParametersForFrequentlyBoughtTogether<TObject>({
   recommendations,
   threshold,
 }: GetSearchParametersParams<TObject>): SearchOptions {
-  if (fallbackParameters.facetFilters!.length === 0) {
+  if (fallbackParameters.facetFilters.length === 0) {
     return {
       // We want strict recommendations for FBT when there's no fallback because
       // we cannot guess what products were bought with the reference product.
