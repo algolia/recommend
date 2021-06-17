@@ -1,6 +1,4 @@
 /** @jsx createElement */
-import { GetFrequentlyBoughtTogetherProps } from '@algolia/recommend-core';
-
 import { createDefaultChildrenComponent } from './DefaultChildren';
 import { createDefaultFallbackComponent } from './DefaultFallback';
 import { createDefaultHeaderComponent } from './DefaultHeader';
@@ -13,8 +11,7 @@ import {
 
 export type FrequentlyBoughtTogetherProps<
   TObject
-> = GetFrequentlyBoughtTogetherProps<TObject> &
-  RecommendComponentProps<TObject>;
+> = RecommendComponentProps<TObject>;
 
 export function createFrequentlyBoughtTogetherComponent({
   createElement,
