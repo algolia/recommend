@@ -6,7 +6,7 @@ import {
 } from '@algolia/recommend-core';
 import {
   createRelatedProductsComponent,
-  RelatedProductsProps as RelatedProductsVDomProps,
+  RelatedProductsProps as RelatedProductsVDOMProps,
 } from '@algolia/recommend-vdom';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -37,7 +37,7 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
 }
 
 type RelatedProductsProps<TObject> = GetRelatedProductsProps<TObject> &
-  Omit<RelatedProductsVDomProps<TObject>, 'items'>;
+  Omit<RelatedProductsVDOMProps<TObject>, 'items'>;
 
 function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
   const { recommendations } = useRelatedProducts<TObject>(props);

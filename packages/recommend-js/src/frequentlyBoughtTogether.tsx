@@ -6,7 +6,7 @@ import {
 } from '@algolia/recommend-core';
 import {
   createFrequentlyBoughtTogetherComponent,
-  FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherVDomProps,
+  FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherVDOMProps,
 } from '@algolia/recommend-vdom';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -43,7 +43,7 @@ function useFrequentlyBoughtTogether<TObject>(
 type FrequentlyBoughtTogetherProps<
   TObject
 > = GetFrequentlyBoughtTogetherProps<TObject> &
-  Omit<FrequentlyBoughtTogetherVDomProps<TObject>, 'items'>;
+  Omit<FrequentlyBoughtTogetherVDOMProps<TObject>, 'items'>;
 
 function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>
