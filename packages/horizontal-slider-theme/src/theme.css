@@ -14,13 +14,8 @@
 }
 
 .uic-HorizontalSlider-navigation {
-  @apply absolute flex items-center bg-gray-100 border rounded z-10 cursor-pointer justify-center h-10 w-8 text-center;
-
-  box-shadow: 0px 2px 6px rgba(90, 94, 154, 0.44);
-  color: var(--aui-primary-color);
+  @apply absolute flex items-center bg-gray-100 text-gray-700 border rounded z-10 cursor-pointer justify-center h-10 w-8 text-center shadow top-10 transition-opacity;
   outline-color: var(--aui-primary-color);
-  top: 35%;
-  transition: opacity 150ms;
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -31,7 +26,7 @@
 
 .uic-HorizontalSlider-container:hover
   .uic-HorizontalSlider-navigation:not([hidden]) {
-    @apply visible opacity-100;
+  @apply visible opacity-100;
 }
 
 .uic-HorizontalSlider-navigation,
@@ -69,11 +64,11 @@
 }
 
 .uic-HorizontalSlider-list::-webkit-scrollbar-track {
-  background-color: var(--aui-muted-color);
+  @apply bg-gray-500;
 }
 
 .uic-HorizontalSlider-list::-webkit-scrollbar-thumb {
-  background-color: var(--aui-dark-color);
+  @apply bg-gray-800;
 }
 
 @media (min-width: 999px) {
@@ -87,6 +82,63 @@
 }
 
 .uic-HorizontalSlider-item * {
-  outline-color: var(--aui-primary-color);
+  @apply ring-offset-indigo-700;
   outline-offset: 3px;
+}
+
+/* Bundle */
+.uic-BundleView-container {
+  @apply grid gap-4;
+  grid-template-columns: 3fr 1fr;
+}
+
+.uic-BundleView-list {
+  @apply grid gap-2 list-none pb-2 ring-offset-indigo-700 grid-flow-col;
+  outline-offset: 0.5rem;
+}
+
+.uic-BundleView-itemContainer {
+  @apply flex items-center;
+}
+
+.uic-BundleView-itemContainer-hit {
+  @apply opacity-40;
+}
+
+.uic-BundleView-item--selected .uic-BundleView-itemContainer-hit {
+  @apply opacity-100;
+}
+
+.uic-BundleView-plus {
+  @apply text-indigo-700 pl-2;
+}
+
+.uic-BundleView-plus > svg {
+  @apply h-6 w-6;
+}
+
+.uic-BundleView-item * {
+  @apply ring-offset-indigo-700;
+  outline-offset: 3px;
+}
+
+.uic-BundleView-label {
+  @apply grid gap-1;
+}
+
+.uic-BundleView-label:hover {
+  @apply text-indigo-700;
+}
+
+.uic-BundleView-label-currentArticle,
+.uic-BundleView-label-price {
+  @apply font-bold;
+}
+
+.uic-BundleView-cart {
+  @apply flex items-start flex-col gap-2 justify-center;
+}
+
+.uic-BundleView-addToCart {
+  @apply relative flex items-center bg-white border bg-indigo-700 rounded text-indigo-900 cursor-pointer font-medium p-1.5 content-center;
 }
