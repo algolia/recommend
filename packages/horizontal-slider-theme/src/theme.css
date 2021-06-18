@@ -4,7 +4,7 @@
 
 /* @TODO: these variables will end up in the global theme */
 :root {
-  --aui-primary-color: pink;
+  --aui-primary-color: green;
   --aui-muted-color: #c4c4c4;
   --aui-dark-color: #0f0f0f;
 }
@@ -14,69 +14,58 @@
 }
 
 .uic-HorizontalSlider-navigation {
-  @apply absolute flex items-center bg-gray-100 border b-white rounded;
+  @apply absolute flex items-center bg-gray-100 border rounded z-10 cursor-pointer justify-center h-10 w-8 text-center;
 
   box-shadow: 0px 2px 6px rgba(90, 94, 154, 0.44);
   color: var(--aui-primary-color);
-  cursor: pointer;
-  height: 40px;
-  justify-content: center;
   outline-color: var(--aui-primary-color);
   top: 35%;
   transition: opacity 150ms;
-  width: 32px;
-  z-index: 1;
 }
 
 @media (hover: none) and (pointer: coarse) {
   .uic-HorizontalSlider-navigation {
-    display: none;
+    @apply invisible;
   }
 }
 
 .uic-HorizontalSlider-container:hover
   .uic-HorizontalSlider-navigation:not([hidden]) {
-  opacity: 1;
-  visibility: visible;
+    @apply visible opacity-100;
 }
 
 .uic-HorizontalSlider-navigation,
 .uic-HorizontalSlider-navigation[hidden] {
-  opacity: 0;
-  visibility: hidden;
+  @apply invisible opacity-0;
 }
 
 .uic-HorizontalSlider-navigation--previous {
-  left: 0;
+  @apply left-0;
   transform: translateX(-25%);
 }
 
 .uic-HorizontalSlider-navigation--next {
-  right: 0;
+  @apply right-0;
   transform: translateX(25%);
 }
 
 .uic-HorizontalSlider-list {
-  display: grid;
-  gap: 0.5rem;
-  list-style: none;
-  margin: 0;
+  @apply grid gap-2 list-none pb-2;
+
   outline-color: var(--aui-primary-color);
   outline-offset: 0.5rem;
-  padding: 0;
   scroll-behavior: smooth;
   scroll-snap-type: mandatory;
   grid-auto-columns: 42%;
   grid-auto-flow: column;
   overflow-x: auto;
-  padding-bottom: 0.5rem;
   scroll-snap-type: x proximity;
   scrollbar-color: var(--aui-dark-color) var(--aui-muted-color);
   scrollbar-width: thin;
 }
 
 .uic-HorizontalSlider-list::-webkit-scrollbar {
-  height: 2px;
+  @apply h-1;
 }
 
 .uic-HorizontalSlider-list::-webkit-scrollbar-track {
