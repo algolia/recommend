@@ -6,7 +6,7 @@
 }
 
 /* Shared */
-.auc-Recommend-title{
+.auc-Recommend-title {
   @apply pt-8 pb-4 text-xl font-medium;
 }
 
@@ -49,20 +49,20 @@
   scroll-snap-type: mandatory;
   grid-auto-columns: 42%;
   scroll-snap-type: x proximity;
-  scrollbar-color: var(--aui-dark-color) var(--aui-muted-color);
+  scrollbar-color: var(--tw-text-gray-300) var(--tw-text-gray-700);
   scrollbar-width: thin;
 }
 
 .uic-HorizontalSlider-list::-webkit-scrollbar {
-  @apply h-1;
+  @apply h-1 mt-4;
 }
 
 .uic-HorizontalSlider-list::-webkit-scrollbar-track {
-  @apply bg-gray-500;
+  @apply bg-gray-300;
 }
 
 .uic-HorizontalSlider-list::-webkit-scrollbar-thumb {
-  @apply bg-gray-800;
+  @apply bg-gray-700;
 }
 
 @media (min-width: 999px) {
@@ -86,6 +86,13 @@
 
 .uic-BundleView-list {
   @apply flex;
+}
+
+.uic-BundleView-item{
+  @apply p-4 rounded shadow w-6/12 relative h-full
+}
+
+.uic-BundleView-itemContainer{
 }
 
 .uic-BundleView-itemContainer-hit {
@@ -115,7 +122,7 @@
 .uic-BundleView-checkbox {
 }
 
-.uic-BundleView-label-currentArticle{
+.uic-BundleView-label-currentArticle {
   @apply pl-2;
 }
 
@@ -129,7 +136,7 @@
 
 .uic-BundleView-label-currentArticle,
 .uic-BundleView-label-price {
-  @apply font-bold;
+  @apply font-medium pt-4;
 }
 
 .uic-BundleView-cart {
@@ -139,7 +146,6 @@
 .uic-BundleView-addToCart {
   @apply relative flex items-center bg-white border border-indigo-700 rounded text-indigo-900 cursor-pointer font-medium p-1.5 content-center;
 }
-
 
 /* Default list */
 
@@ -189,4 +195,3 @@
 .Hit-ButtonIcon {
   @apply m-2;
 }
-
