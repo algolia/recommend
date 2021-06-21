@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './Hit.css';
-
 export function Hit({ hit, insights }) {
   return (
     <a
@@ -25,8 +23,6 @@ export function Hit({ hit, insights }) {
 
       <div className="Hit-Content">
         <div className="Hit-Name">{hit.name}</div>
-        <div className="Hit-Description">{hit.objectID}</div>
-
         <div className="Hit-Price">${hit.price}</div>
 
         <button

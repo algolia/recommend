@@ -15,7 +15,6 @@ import { Hit } from './Hit';
 
 import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
-import './Recommend.css';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
@@ -202,6 +201,27 @@ function App() {
               clickAnalytics: true,
               facetFilters: [
                 `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+              ],
+            }}
+          />
+
+          <RelatedProducts
+            searchClient={searchClient}
+            indexName={indexName}
+            objectIDs={[selectedProduct.objectID]}
+            itemComponent={RecommendedItem}
+            maxRecommendations={10}
+            translations={{
+              title: 'Related products',
+            }}
+            fallbackFilters={[
+              `hierarchical_categories.lvl3:${selectedProduct.hierarchical_categories.lvl3}`,
+            ]}
+            searchParameters={{
+              analytics: true,
+              clickAnalytics: true,
+              facetFilters: [
+                `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
               ],
             }}
           />

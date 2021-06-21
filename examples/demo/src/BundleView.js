@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import './BundleView.css';
-
 function getAmountDefault(items) {
   return items.reduce((sum, current) => sum + current.price, 0);
 }

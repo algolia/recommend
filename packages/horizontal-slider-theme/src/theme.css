@@ -9,13 +9,13 @@
   --aui-dark-color: #0f0f0f;
 }
 
+/* HorizontalSlider */
 .uic-HorizontalSlider-container {
   @apply relative;
 }
 
 .uic-HorizontalSlider-navigation {
-  @apply absolute flex items-center bg-gray-100 text-gray-700 border rounded z-10 cursor-pointer justify-center h-10 w-8 text-center shadow top-10 transition-opacity;
-  outline-color: var(--aui-primary-color);
+  @apply absolute flex items-center bg-gray-100 text-gray-700 border rounded z-10 cursor-pointer justify-center h-10 w-8 text-center shadow top-10 transition-opacity ring-offset-indigo-700;
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -35,25 +35,18 @@
 }
 
 .uic-HorizontalSlider-navigation--previous {
-  @apply left-0;
-  transform: translateX(-25%);
+  @apply left-0 transform -translate-x-1/4;
 }
 
 .uic-HorizontalSlider-navigation--next {
-  @apply right-0;
-  transform: translateX(25%);
+  @apply right-0 transform translate-x-1/4;
 }
 
 .uic-HorizontalSlider-list {
-  @apply grid gap-2 list-none pb-2;
-
-  outline-color: var(--aui-primary-color);
-  outline-offset: 0.5rem;
+  @apply grid gap-2 list-none pb-2 grid-flow-col overflow-x-auto ring-offset-indigo-700 ring-offset-8;
   scroll-behavior: smooth;
   scroll-snap-type: mandatory;
   grid-auto-columns: 42%;
-  grid-auto-flow: column;
-  overflow-x: auto;
   scroll-snap-type: x proximity;
   scrollbar-color: var(--aui-dark-color) var(--aui-muted-color);
   scrollbar-width: thin;
@@ -82,19 +75,16 @@
 }
 
 .uic-HorizontalSlider-item * {
-  @apply ring-offset-indigo-700;
-  outline-offset: 3px;
+  @apply ring-offset-indigo-700 ring-offset-3;
 }
 
 /* Bundle */
 .uic-BundleView-container {
-  @apply grid gap-4;
-  grid-template-columns: 3fr 1fr;
+  @apply grid gap-4 grid-cols-3;
 }
 
 .uic-BundleView-list {
-  @apply grid gap-2 list-none pb-2 ring-offset-indigo-700 grid-flow-col;
-  outline-offset: 0.5rem;
+  @apply grid gap-2 list-none pb-2 ring-offset-indigo-700 grid-flow-col ring-offset-8;
 }
 
 .uic-BundleView-itemContainer {
@@ -118,8 +108,7 @@
 }
 
 .uic-BundleView-item * {
-  @apply ring-offset-indigo-700;
-  outline-offset: 3px;
+  @apply ring-offset-indigo-700 ring-offset-3;
 }
 
 .uic-BundleView-label {
@@ -140,5 +129,57 @@
 }
 
 .uic-BundleView-addToCart {
-  @apply relative flex items-center bg-white border bg-indigo-700 rounded text-indigo-900 cursor-pointer font-medium p-1.5 content-center;
+  @apply relative flex items-center bg-white border border-indigo-700 rounded text-indigo-900 cursor-pointer font-medium p-1.5 content-center;
+}
+
+
+/* Default list */
+
+.auc-Recommend-list {
+  @apply grid gap-2 list-none ring-offset-indigo-700 ring-offset-8;
+}
+
+.auc-Recommend-list {
+  @apply grid grid-cols-2;
+}
+
+@media (min-width: 999px) {
+  .auc-Recommend-list {
+    @apply grid grid-cols-5;
+  }
+}
+
+/* Hit */
+.Hit {
+  @apply grid gap-2;
+}
+
+.Hit-link {
+  @apply no-underline;
+}
+
+.Hit-Image img {
+  @apply w-full;
+}
+
+.Hit-Content {
+  @apply grid gap-2;
+}
+
+.Hit-Name {
+}
+
+.Hit-Price {
+  @apply font-medium;
+}
+
+.Hit-Button {
+  @apply relative flex items-center border border-indigo-700 rounded cursor-pointer text-indigo-900 justify-center font-medium p-2;
+}
+
+.Hit-ButtonIcon {
+}
+
+.auc-Recommend-title{
+  @apply pt-8 pb-4 text-xl font-medium;
 }
