@@ -89,7 +89,7 @@
 }
 
 .uic-BundleView-item{
-  @apply p-4 rounded shadow w-6/12 relative h-full
+  @apply rounded w-6/12 relative h-full;
 }
 
 .uic-BundleView-itemContainer{
