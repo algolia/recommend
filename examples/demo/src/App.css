@@ -21,6 +21,6 @@
   margin-top: 1em;
 }
 
-.demo-col-8 {
-  width: 66%;
+.demo-bundle-wrapper {
+  max-width: 650px;
 }

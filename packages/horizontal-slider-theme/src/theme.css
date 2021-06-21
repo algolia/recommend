@@ -49,7 +49,7 @@
   scroll-snap-type: mandatory;
   grid-auto-columns: 42%;
   scroll-snap-type: x proximity;
-  scrollbar-color: var(--tw-text-indigo-500) var(--aui-muted-color);
+  scrollbar-color: var(--aui-dark-color) var(--aui-muted-color);
   scrollbar-width: thin;
 }
 
@@ -81,7 +81,7 @@
 
 /* Bundle */
 .uic-BundleView-container {
-  @apply border border-blue-200 p-4 rounded grid grid-flow-row md:grid-flow-col md:auto-cols-auto gap-4;
+  @apply rounded grid grid-flow-row md:grid-flow-col md:auto-cols-auto gap-4;
 }
 
 .uic-BundleView-list {

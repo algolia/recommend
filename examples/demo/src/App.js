@@ -153,7 +153,7 @@ function App() {
               <BundleView {...props} currentItem={selectedProduct} />
             )}
             classNames={{
-              root: "demo-col-8"
+              root: 'demo-bundle-wrapper',
             }}
             fallbackComponent={() => (
               <RelatedProducts
