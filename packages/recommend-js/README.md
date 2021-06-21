@@ -353,7 +353,7 @@ The number of recommendations to retrieve.
 
 ### `fallbackParameters`
 
-> `{ facetFilters: string | string[] | Array<string[]> }`
+> `Omit<SearchOptions, 'page' | 'hitsPerPage' | 'offset' | 'length'>`
 
 Additional filters to use as fallback when there is not enough recommendations.
 

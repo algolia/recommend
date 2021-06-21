@@ -20,24 +20,34 @@ type RecommendedRecord = RecordWithObjectID<{
   recommendations?: RecommendRecord[];
 }>;
 
+export type RecommendSearchParameters = Omit<
+  SearchOptions,
+  'page' | 'hitsPerPage' | 'offset' | 'length'
+>;
+
 export type GetRecommendationsProps<TObject> = {
   model: RecommendModel;
   indexName: string;
   objectIDs: string[];
   searchClient: SearchClient;
 
-  fallbackParameters?: Pick<SearchOptions, 'facetFilters'>;
+  fallbackParameters?: RecommendSearchParameters;
   maxRecommendations?: number;
-  searchParameters?: SearchOptions;
+  searchParameters?: RecommendSearchParameters;
   threshold?: number;
   transformItems?: (
     items: Array<ProductRecord<TObject>>
   ) => Array<ProductRecord<TObject>>;
 };
 
+type GetRecommendationsInternalSearchParameters = RecommendSearchParameters &
+  Required<Pick<RecommendSearchParameters, 'facetFilters'>>;
+
 export type GetRecommendationsInternalProps<TObject> = Required<
   GetRecommendationsProps<TObject>
-> & { fallbackParameters: Required<Pick<SearchOptions, 'facetFilters'>> };
+> & {
+  fallbackParameters: GetRecommendationsInternalSearchParameters;
+};
 
 export type GetRecommendationsResult<TObject> = {
   recommendations: Array<RecordWithObjectID<TObject>>;
@@ -52,7 +62,8 @@ function getDefaultedProps<TObject>(
     transformItems: (items) => items,
     ...props,
     fallbackParameters: {
-      facetFilters: props.fallbackParameters?.facetFilters || [],
+      facetFilters: [],
+      ...props.fallbackParameters,
     },
     searchParameters: {
       analytics: false,
