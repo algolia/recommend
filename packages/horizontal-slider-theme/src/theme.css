@@ -81,19 +81,15 @@
 
 /* Bundle */
 .uic-BundleView-container {
-  @apply grid gap-4 grid-cols-2;
+  @apply border border-blue-200 p-4 rounded grid grid-flow-row md:grid-flow-col md:auto-cols-auto gap-4;
 }
 
 .uic-BundleView-list {
-  @apply grid gap-2 list-none pb-2 ring-offset-indigo-700 grid-flow-col ring-offset-8;
-}
-
-.uic-BundleView-itemContainer {
-  @apply flex items-center;
+  @apply flex;
 }
 
 .uic-BundleView-itemContainer-hit {
-  @apply opacity-40;
+  @apply opacity-40 ;
 }
 
 .uic-BundleView-item--selected .uic-BundleView-itemContainer-hit {
@@ -101,7 +97,7 @@
 }
 
 .uic-BundleView-plus {
-  @apply text-indigo-700 pl-2;
+  @apply text-indigo-500 pl-2 p-2 top-1/4 relative;
 }
 
 .uic-BundleView-plus > svg {
@@ -113,7 +109,18 @@
 }
 
 .uic-BundleView-label {
-  @apply grid gap-1;
+  @apply pt-2;
+}
+
+.uic-BundleView-checkbox {
+}
+
+.uic-BundleView-label-currentArticle{
+  @apply pl-2;
+}
+
+.uic-BundleView-label-name {
+  @apply pl-2;
 }
 
 .uic-BundleView-label:hover {

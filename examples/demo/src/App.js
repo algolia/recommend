@@ -36,7 +36,6 @@ function BundleItem({ item }) {
       href={item.url}
       onClick={(event) => {
         event.preventDefault();
-
         insights('clickedObjectIDs', {
           objectIDs: [item.objectID],
           positions: [item.__position],
@@ -153,6 +152,9 @@ function App() {
             view={(props) => (
               <BundleView {...props} currentItem={selectedProduct} />
             )}
+            classNames={{
+              root: "demo-col-8"
+            }}
             fallbackComponent={() => (
               <RelatedProducts
                 searchClient={searchClient}
