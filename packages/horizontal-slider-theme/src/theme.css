@@ -1,12 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* @TODO: these variables will end up in the global theme */
 :root {
   --aui-primary-color: green;
   --aui-muted-color: #c4c4c4;
   --aui-dark-color: #0f0f0f;
+}
+
+/* Shared */
+.auc-Recommend-title{
+  @apply pt-8 pb-4 text-xl font-medium;
 }
 
 /* HorizontalSlider */
@@ -15,7 +16,7 @@
 }
 
 .uic-HorizontalSlider-navigation {
-  @apply absolute flex items-center bg-gray-100 text-gray-700 border rounded z-10 cursor-pointer justify-center h-10 w-8 text-center shadow top-10 transition-opacity ring-offset-indigo-700;
+  @apply absolute flex items-center bg-gray-100 text-gray-700 border rounded z-10 cursor-pointer justify-center h-10 w-8 text-center shadow top-1/4 transition-opacity ring-offset-indigo-700;
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -48,7 +49,7 @@
   scroll-snap-type: mandatory;
   grid-auto-columns: 42%;
   scroll-snap-type: x proximity;
-  scrollbar-color: var(--aui-dark-color) var(--aui-muted-color);
+  scrollbar-color: var(--tw-text-indigo-500) var(--aui-muted-color);
   scrollbar-width: thin;
 }
 
@@ -75,12 +76,12 @@
 }
 
 .uic-HorizontalSlider-item * {
-  @apply ring-offset-indigo-700 ring-offset-3;
+  @apply ring-offset-indigo-700 ring-offset-4;
 }
 
 /* Bundle */
 .uic-BundleView-container {
-  @apply grid gap-4 grid-cols-3;
+  @apply grid gap-4 grid-cols-2;
 }
 
 .uic-BundleView-list {
@@ -108,7 +109,7 @@
 }
 
 .uic-BundleView-item * {
-  @apply ring-offset-indigo-700 ring-offset-3;
+  @apply ring-offset-indigo-700 ring-offset-4;
 }
 
 .uic-BundleView-label {
@@ -136,7 +137,7 @@
 /* Default list */
 
 .auc-Recommend-list {
-  @apply grid gap-2 list-none ring-offset-indigo-700 ring-offset-8;
+  @apply grid gap-x-2 gap-y-4 list-none ring-offset-indigo-700 ring-offset-8;
 }
 
 .auc-Recommend-list {
@@ -151,7 +152,7 @@
 
 /* Hit */
 .Hit {
-  @apply grid gap-2;
+  @apply flex flex-col h-full gap-2;
 }
 
 .Hit-link {
@@ -163,10 +164,11 @@
 }
 
 .Hit-Content {
-  @apply grid gap-2;
+  @apply flex flex-col flex-grow gap-2;
 }
 
 .Hit-Name {
+  @apply leading-tight flex-grow;
 }
 
 .Hit-Price {
@@ -174,12 +176,10 @@
 }
 
 .Hit-Button {
-  @apply relative flex items-center border border-indigo-700 rounded cursor-pointer text-indigo-900 justify-center font-medium p-2;
+  @apply flex flex-grow-0 items-center border border-indigo-700 rounded cursor-pointer text-indigo-900 justify-center font-medium;
 }
 
 .Hit-ButtonIcon {
+  @apply m-2;
 }
 
-.auc-Recommend-title{
-  @apply pt-8 pb-4 text-xl font-medium;
-}

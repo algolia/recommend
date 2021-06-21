@@ -14,6 +14,7 @@ import { BundleView } from './BundleView';
 import { Hit } from './Hit';
 
 import '@algolia/ui-components-horizontal-slider-theme';
+import './preflight.css';
 import './App.css';
 
 const appId = 'HYDY1KWTWB';
@@ -56,8 +57,8 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   return (
-    <div className="container">
-      <h1>Algolia Recommend</h1>
+    <div className="demo-container">
+      <h1 className="demo-container-title">Algolia Recommend</h1>
 
       <Autocomplete
         placeholder="Search for a product"
@@ -121,23 +122,17 @@ function App() {
 
       {selectedProduct && (
         <Fragment>
-          <div style={{ padding: '1rem 0' }}>
-            <div
-              className="Hit"
-              style={{ gridTemplateColumns: '150px 1fr', gap: '1rem' }}
-            >
-              <div className="Hit-Image" style={{ maxWidth: 150 }}>
+          <div className="demo-selected-product">
+            <h2 className="demo-selected-product-title">Selected Product</h2>
+            <div className="Hit">
+              <div className="Hit-Image">
                 <img
                   src={selectedProduct.image_link}
                   alt={selectedProduct.name}
                 />
               </div>
-
               <div className="Hit-Content">
                 <div className="Hit-Name">{selectedProduct.name}</div>
-                <div className="Hit-Description">
-                  {selectedProduct.objectID}
-                </div>
                 <footer className="Hit-Footer">
                   <span className="Hit-Price">${selectedProduct.price}</span>
                 </footer>
@@ -150,7 +145,7 @@ function App() {
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={BundleItem}
-            maxRecommendations={2}
+            maxRecommendations={1}
             searchParameters={{
               analytics: true,
               clickAnalytics: true,
@@ -181,6 +176,18 @@ function App() {
                 }}
               />
             )}
+          />
+
+          <FrequentlyBoughtTogether
+            searchClient={searchClient}
+            indexName={indexName}
+            objectIDs={[selectedProduct.objectID]}
+            itemComponent={RecommendedItem}
+            maxRecommendations={3}
+            searchParameters={{
+              analytics: true,
+              clickAnalytics: true,
+            }}
           />
 
           <RelatedProducts
