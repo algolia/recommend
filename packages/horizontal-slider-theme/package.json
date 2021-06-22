@@ -19,7 +19,7 @@
   "jsdelivr": "dist/theme.css",
   "scripts": {
     "build:clean": "rm -rf ./dist",
-    "build:css": "node ../../scripts/buildCss.mjs src/theme.css dist/theme.css",
+    "build:css": "node ../../scripts/buildCss.mjs ./src/theme.css ./dist/theme.css ./dist/theme.min.css ./dist/theme.tailwind.css",
     "build": "yarn build:clean && yarn build:css",
     "on:change": "yarn build:css",
     "prepare": "yarn build:css",

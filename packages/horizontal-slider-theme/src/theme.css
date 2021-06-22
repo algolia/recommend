@@ -1,6 +1,6 @@
 /* @TODO: these variables will end up in the global theme */
 :root {
-  --aui-primary-color: green;
+  --aui-primary-color: #9698c3;
   --aui-muted-color: #c4c4c4;
   --aui-dark-color: #0f0f0f;
 }
