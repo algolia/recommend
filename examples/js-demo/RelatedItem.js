@@ -4,7 +4,7 @@ import { h } from 'preact';
 export function RelatedItem({ item, insights, onSelect }) {
   return (
     <a
-      className="RelatedItem grid gap-2 color-inherit no-underline"
+      className="flex flex-col h-full gap-2 no-underline"
       href={item.url}
       onClick={(event) => {
         event.preventDefault();
@@ -26,7 +26,7 @@ export function RelatedItem({ item, insights, onSelect }) {
       <div className="relative">
         <img src={item.image_link} alt={item.name} className="max-w-full" />
 
-        <div className="RelatedItem-info">
+        <div>
           {item.__recommendScore && (
             <div
               className="flex items-center absolute right-0 top-0 text-gray-500 font-semibold text-xs rounded-lg m-2 py-1 px-2"
@@ -50,17 +50,15 @@ export function RelatedItem({ item, insights, onSelect }) {
         </div>
       </div>
 
-      <div>
+      <div className="flex flex-col flex-grow gap-2">
         <div className="text-sm text-gray-500">{item.category}</div>
 
-        <div className="text-gray-900 font-semibold mb-1 whitespace-normal">
-          {item.name}
-        </div>
+        <div className="leading-tight flex-grow">{item.name}</div>
 
         {Boolean(item.reviewScore) && (
-          <div className="items-center flex flex-grow text-sm text-gray-700">
+          <div className="flex flex-grow items-center text-sm text-gray-700">
             <svg
-              className="mr-1 text-orange-500"
+              className="mr-1 text-yellow-500"
               width="16"
               height="16"
               viewBox="0 0 24 24"
@@ -78,7 +76,7 @@ export function RelatedItem({ item, insights, onSelect }) {
         <div className="my-2 font-semibold text-gray-800">${item.price}</div>
 
         <button
-          className="flex items-center justify-center w-full bg-white border-nebula-500 border-solid border rounded text-nebula-900 cursor-pointer py-1 px-2 font-semibold"
+          className="flex items-center justify-center w-full bg-white border-indigo-500 border-solid border rounded text-indigo-700 cursor-pointer py-1 px-2 font-semibold"
           onClick={(event) => {
             event.preventDefault();
 

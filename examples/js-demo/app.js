@@ -95,14 +95,10 @@ autocomplete({
 function ReferenceItem({ item }) {
   return (
     <div className="my-2">
-      <div
-        className="grid gap-4"
-        style={{
-          gridTemplateColumns: '150px 1fr',
-        }}
-      >
+      <h2 className="pt-8 pb-4 text-xl font-medium">Selected</h2>
+      <div className="flex flex-row gap-4">
         <div>
-          <img src={item.image_link} alt={item.name} className="max-w-full" />
+          <img src={item.image_link} alt={item.name} className="w-60" />
         </div>
 
         <div>
@@ -115,7 +111,7 @@ function ReferenceItem({ item }) {
           {Boolean(item.reviewScore) && (
             <div className="items-center flex flex-grow text-sm text-gray-700">
               <svg
-                className="mr-1 text-orange-500"
+                className="mr-1 text-yellow-500"
                 width="16"
                 height="16"
                 viewBox="0 0 24 24"
