@@ -189,9 +189,5 @@
 }
 
 .Hit-Button {
-  @apply flex flex-grow-0 items-center border border-indigo-700 rounded cursor-pointer text-indigo-900 justify-center font-medium;
-}
-
-.Hit-ButtonIcon {
-  @apply m-2;
+  @apply flex flex-grow-0 h-8 items-center border border-indigo-700 rounded cursor-pointer text-indigo-900 justify-center font-medium;
 }
