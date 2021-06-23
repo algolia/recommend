@@ -12,14 +12,7 @@ export function createRecommendClient(
     appId: '',
     addAlgoliaAgent: jest.fn(),
     clearCache: jest.fn(),
-    transporter: {
-      userAgent: {
-        value: '',
-        add() {
-          return {};
-        },
-      },
-    } as any,
+    destroy: jest.fn(),
     getRecommendations: jest.fn((requests) =>
       Promise.resolve(
         createMultiSearchResponse(
@@ -41,6 +34,14 @@ export function createRecommendClient(
         )
       )
     ),
+    transporter: {
+      userAgent: {
+        value: '',
+        add() {
+          return {};
+        },
+      },
+    } as any,
     ...args,
   };
 }
