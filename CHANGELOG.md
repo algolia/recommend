@@ -1,3 +1,17 @@
+# [1.0.0-experimental.5](https://github.com/algolia/recommend/compare/v1.0.0-experimental.4...v1.0.0-experimental.5) (2021-06-23)
+
+
+### Bug Fixes
+
+* **recommend:** ignore `items` type in components ([#37](https://github.com/algolia/recommend/issues/37)) ([63121fa](https://github.com/algolia/recommend/commit/63121fa432d96b548ac4ea7632d89afec7f60eea))
+
+
+### Features
+
+* **recommend:** leverage the new Recommend API client ([#40](https://github.com/algolia/recommend/issues/40)) ([618ee07](https://github.com/algolia/recommend/commit/618ee0759702d46174126832192d314db351242f))
+
+
+
 # [1.0.0-experimental.4](https://github.com/algolia/ui-components/compare/v1.0.0-experimental.3...v1.0.0-experimental.4) (2021-06-16)
 
 

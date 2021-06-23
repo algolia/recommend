@@ -1,6 +1,6 @@
 {
   "name": "@algolia/recommend-vdom",
-  "version": "1.0.0-experimental.4",
+  "version": "1.0.0-experimental.5",
   "license": "MIT",
   "homepage": "https://github.com/algolia/ui-components",
   "repository": "algolia/ui-components",
@@ -28,6 +28,6 @@
     "prepare": "yarn build:esm && yarn build:types"
   },
   "devDependencies": {
-    "@algolia/recommend-core": "1.0.0-experimental.4"
+    "@algolia/recommend-core": "1.0.0-experimental.5"
   }
 }

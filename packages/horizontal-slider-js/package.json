@@ -1,7 +1,7 @@
 {
   "name": "@algolia/ui-components-horizontal-slider-js",
   "description": "Horizontal slider UI component.",
-  "version": "1.0.0-experimental.4",
+  "version": "1.0.0-experimental.5",
   "license": "MIT",
   "homepage": "https://github.com/algolia/ui-components",
   "repository": "algolia/ui-components",
@@ -29,7 +29,7 @@
     "prepare": "yarn build:esm && yarn build:types"
   },
   "dependencies": {
-    "@algolia/ui-components-horizontal-slider-vdom": "1.0.0-experimental.4",
+    "@algolia/ui-components-horizontal-slider-vdom": "1.0.0-experimental.5",
     "preact": "^10.0.0"
   }
 }
