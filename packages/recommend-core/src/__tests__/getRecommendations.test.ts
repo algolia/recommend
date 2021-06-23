@@ -68,7 +68,7 @@ describe('getRecommendations', () => {
     const { recommendClient } = createRecommendationsClient();
     const props = {
       model: 'related-products' as RecommendModel,
-      recommendClient: recommendClient as any,
+      recommendClient,
       indexName: 'indexName',
       objectIDs: ['objectID'],
       queryParameters: {
@@ -97,7 +97,7 @@ describe('getRecommendations', () => {
     const { recommendClient } = createRecommendationsClient();
     const props = {
       model: 'bought-together' as RecommendModel,
-      recommendClient: recommendClient as any,
+      recommendClient,
       indexName: 'indexName',
       objectIDs: ['objectID'],
       queryParameters: {
@@ -126,7 +126,7 @@ describe('getRecommendations', () => {
     const { recommendClient } = createRecommendationsClient();
     const props = {
       model: 'related-products' as RecommendModel,
-      recommendClient: recommendClient as any,
+      recommendClient,
       indexName: 'indexName',
       objectIDs: ['objectID'],
     };
