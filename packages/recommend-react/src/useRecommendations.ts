@@ -14,7 +14,7 @@ export function useRecommendations<TObject>(
     recommendations: [],
   });
 
-  useAlgoliaAgent({ searchClient: props.searchClient });
+  useAlgoliaAgent({ recommendClient: props.recommendClient });
 
   useEffect(() => {
     getRecommendations(props).then((response) => {

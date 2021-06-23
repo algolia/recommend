@@ -1,2 +1,2 @@
 export * from './createApiResponse';
-export * from './createSearchClient';
+export * from './createRecommendClient';

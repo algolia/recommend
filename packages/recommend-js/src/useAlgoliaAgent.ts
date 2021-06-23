@@ -3,10 +3,13 @@ import { useEffect } from 'preact/hooks';
 
 import { version } from './version';
 
-type UseAlgoliaAgentProps = Pick<GetRelatedProductsProps<any>, 'searchClient'>;
+type UseAlgoliaAgentProps = Pick<
+  GetRelatedProductsProps<any>,
+  'recommendClient'
+>;
 
 export function useAlgoliaAgent(props: UseAlgoliaAgentProps) {
   useEffect(() => {
-    props.searchClient.addAlgoliaAgent('recommend-js', version);
-  }, [props.searchClient]);
+    props.recommendClient.addAlgoliaAgent('recommend-js', version);
+  }, [props.recommendClient]);
 }

@@ -20,13 +20,13 @@ Component to display related products.
 
 ```js
 import { RelatedProducts } from '@algolia/recommend-react';
-import algoliasearch from 'algoliasearch';
+import recommend from '@algolia/recommend';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
-const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = recommend(appId, apiKey);
 
 function RelatedItem({ item }) {
   return (
@@ -41,7 +41,7 @@ function App({ currentObjectID }) {
 
   return (
     <RelatedProducts
-      searchClient={searchClient}
+      recommendClient={recommendClient}
       indexName={indexName}
       objectIDs={[currentObjectID]}
       itemComponent={RelatedItem}
@@ -57,7 +57,7 @@ Example with the [`HorizontalSlider`](/packages/horizontal-slider-react) UI comp
 ```js
 import { RelatedProducts } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
-import algoliasearch from 'algoliasearch';
+import recommend from '@algolia/recommend';
 
 import '@algolia/ui-components-horizontal-slider-theme';
 
@@ -65,7 +65,7 @@ const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
-const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = recommend(appId, apiKey);
 
 function RelatedItem({ item }) {
   return (
@@ -80,7 +80,7 @@ function App({ currentObjectID }) {
 
   return (
     <RelatedProducts
-      searchClient={searchClient}
+      recommendClient={recommendClient}
       indexName={indexName}
       objectIDs={[currentObjectID]}
       itemComponent={RelatedItem}
@@ -235,18 +235,18 @@ Hook to retrieve related products.
 
 ```jsx
 import { useRelatedProducts } from '@algolia/recommend-react';
-import algoliasearch from 'algoliasearch';
+import recommend from '@algolia/recommend';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
-const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = recommend(appId, apiKey);
 
 function App({ currentObjectID }) {
   // ...
   const { recommendations } = useRelatedProducts({
-    searchClient,
+    recommendClient,
     indexName,
     objectIDs: [currentObjectID],
   });
@@ -283,13 +283,13 @@ Component to display frequently bought together products.
 
 ```js
 import { FrequentlyBoughtTogether } from '@algolia/recommend-react';
-import algoliasearch from 'algoliasearch';
+import recommend from '@algolia/recommend';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
-const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = recommend(appId, apiKey);
 
 function RelatedItem({ item }) {
   return (
@@ -304,7 +304,7 @@ function App({ currentObjectID }) {
 
   return (
     <FrequentlyBoughtTogether
-      searchClient={searchClient}
+      recommendClient={recommendClient}
       indexName={indexName}
       objectIDs={[currentObjectID]}
       itemComponent={RelatedItem}
@@ -320,7 +320,7 @@ Example with the [`HorizontalSlider`](/packages/horizontal-slider-react) UI comp
 ```js
 import { FrequentlyBoughtTogether } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
-import algoliasearch from 'algoliasearch';
+import recommend from '@algolia/recommend';
 
 import '@algolia/ui-components-horizontal-slider-theme';
 
@@ -328,7 +328,7 @@ const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
-const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = recommend(appId, apiKey);
 
 function RelatedItem({ item }) {
   return (
@@ -343,7 +343,7 @@ function App({ currentObjectID }) {
 
   return (
     <FrequentlyBoughtTogether
-      searchClient={searchClient}
+      recommendClient={recommendClient}
       indexName={indexName}
       objectIDs={[currentObjectID]}
       itemComponent={RelatedItem}
@@ -461,13 +461,13 @@ function RelatedItem({ item }) {
 function App({ currentObjectID }) {
   return (
     <FrequentlyBoughtTogether
-      searchClient={searchClient}
+      recommendClient={recommendClient}
       indexName={indexName}
       objectIDs={[currentObjectID]}
       itemComponent={RelatedItem}
       fallbackComponent={() => (
         <RelatedProducts
-          searchClient={searchClient}
+          recommendClient={recommendClient}
           indexName={indexName}
           objectIDs={[currentObjectID]}
           itemComponent={RelatedItem}
@@ -519,7 +519,7 @@ function defaultRender(props) {
 
 ## `useFrequentlyBoughtTogether`
 
-> [`(props: Omit<SharedProps, 'fallbackFilters'>) => { recommendations }`](#shared-props)
+> [`(props: Omit<SharedProps, 'fallbackParameters'>) => { recommendations }`](#shared-props)
 
 Hook to retrieve frequently bought together products.
 
@@ -527,18 +527,18 @@ Hook to retrieve frequently bought together products.
 
 ```jsx
 import { useFrequentlyBoughtTogether } from '@algolia/recommend-react';
-import algoliasearch from 'algoliasearch';
+import recommend from '@algolia/recommend';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
-const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = recommend(appId, apiKey);
 
 function App({ currentObjectID }) {
   // ...
   const { recommendations } = useFrequentlyBoughtTogether({
-    searchClient,
+    recommendClient,
     indexName,
     objectIDs: [currentObjectID],
   });
@@ -575,19 +575,19 @@ Generic hook to retrieve hits from an AI model.
 
 ```jsx
 import { useRecommendations } from '@algolia/recommend-react';
-import algoliasearch from 'algoliasearch';
+import recommend from '@algolia/recommend';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
-const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = recommend(appId, apiKey);
 
 function App({ currentObjectID }) {
   // ...
   const { recommendations } = useRecommendations({
     model: 'related-products',
-    searchClient,
+    recommendClient,
     indexName,
     objectIDs: [currentObjectID],
   });
@@ -622,9 +622,9 @@ The name of the Recommendation model to use.
 
 ## Shared props
 
-### `searchClient`
+### `recommendClient`
 
-> `SearchClient` | **required**
+> `recommendClient` | **required**
 
 The initialized Algolia search client.
 
@@ -646,13 +646,13 @@ An array of `objectID`s of the products to get recommendations from.
 
 The number of recommendations to retrieve.
 
-### `fallbackFilters`
+### `fallbackParameters`
 
-> list of strings
+> `Omit<SearchOptions, 'page' | 'hitsPerPage' | 'offset' | 'length'>`
 
 Additional filters to use as fallback should there not be enough recommendations.
 
-### `searchParameters`
+### `queryParameters`
 
 > [`SearchParameters`](https://www.algolia.com/doc/api-reference/search-api-parameters/) | defaults to `{ analytics: false, enableABTest: false }`
 

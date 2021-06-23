@@ -1,9 +1,9 @@
 import {
   createMultiSearchResponse,
-  createSearchClient,
+  createRecommendClient,
 } from '../../../../test/utils';
 import { getRecommendations } from '../getRecommendations';
-import { RecommendationModel } from '../types';
+import { RecommendModel } from '../types';
 
 const hit = {
   name: 'Landoh 4-Pocket Jumpsuit',
@@ -34,13 +34,22 @@ const hit = {
 };
 
 function createRecommendationsClient() {
-  const index = {
-    getObjects: jest.fn(() => Promise.resolve({ results: [hit] })),
-  };
-  const searchClient = createSearchClient({
-    // @ts-expect-error `initIndex` is not part of the lite bundle
-    initIndex: jest.fn(() => index),
-    search: jest.fn(() =>
+  const recommendClient = createRecommendClient({
+    getFrequentlyBoughtTogether: jest.fn(() =>
+      Promise.resolve(
+        createMultiSearchResponse({
+          hits: [hit],
+        })
+      )
+    ),
+    getRelatedProducts: jest.fn(() =>
+      Promise.resolve(
+        createMultiSearchResponse({
+          hits: [hit],
+        })
+      )
+    ),
+    getRecommendations: jest.fn(() =>
       Promise.resolve(
         createMultiSearchResponse({
           hits: [hit],
@@ -50,37 +59,28 @@ function createRecommendationsClient() {
   });
 
   return {
-    index,
-    searchClient,
+    recommendClient,
   };
 }
 
 describe('getRecommendations', () => {
   test('calls the correct index for "related-products"', async () => {
-    const { index, searchClient } = createRecommendationsClient();
+    const { recommendClient } = createRecommendationsClient();
     const props = {
-      model: 'related-products' as RecommendationModel,
-      searchClient: searchClient as any,
+      model: 'related-products' as RecommendModel,
+      recommendClient: recommendClient as any,
       indexName: 'indexName',
       objectIDs: ['objectID'],
-      searchParameters: {
+      queryParameters: {
         facetFilters: [['brand:Apple']],
         optionalFilters: ['category:Laptops'],
       },
     };
 
-    await getRecommendations(props);
+    await getRecommendations([props]);
 
-    expect(searchClient.initIndex).toHaveBeenCalledTimes(1);
-    expect(searchClient.initIndex).toHaveBeenCalledWith(
-      'ai_recommend_related-products_indexName'
-    );
-
-    expect(index.getObjects).toHaveBeenCalledTimes(1);
-    expect(index.getObjects).toHaveBeenCalledWith(['objectID']);
-
-    expect(searchClient.search).toHaveBeenCalledTimes(1);
-    expect(searchClient.search).toHaveBeenCalledWith([
+    expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1);
+    expect(recommendClient.getRecommendations).toHaveBeenCalledWith([
       {
         indexName: 'indexName',
         params: {
@@ -105,30 +105,22 @@ describe('getRecommendations', () => {
   });
 
   test('calls the correct index for "bought-together"', async () => {
-    const { index, searchClient } = createRecommendationsClient();
+    const { recommendClient } = createRecommendationsClient();
     const props = {
-      model: 'bought-together' as RecommendationModel,
-      searchClient: searchClient as any,
+      model: 'bought-together' as RecommendModel,
+      recommendClient: recommendClient as any,
       indexName: 'indexName',
       objectIDs: ['objectID'],
-      searchParameters: {
+      queryParameters: {
         facetFilters: [['brand:Apple']],
         optionalFilters: ['category:Laptops'],
       },
     };
 
-    await getRecommendations(props);
+    await getRecommendations([props]);
 
-    expect(searchClient.initIndex).toHaveBeenCalledTimes(1);
-    expect(searchClient.initIndex).toHaveBeenCalledWith(
-      'ai_recommend_bought-together_indexName'
-    );
-
-    expect(index.getObjects).toHaveBeenCalledTimes(1);
-    expect(index.getObjects).toHaveBeenCalledWith(['objectID']);
-
-    expect(searchClient.search).toHaveBeenCalledTimes(1);
-    expect(searchClient.search).toHaveBeenCalledWith([
+    expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1);
+    expect(recommendClient.getRecommendations).toHaveBeenCalledWith([
       {
         indexName: 'indexName',
         params: {
@@ -151,22 +143,19 @@ describe('getRecommendations', () => {
   });
 
   test('returns recommended hits', async () => {
-    const { searchClient } = createRecommendationsClient();
+    const { recommendClient } = createRecommendationsClient();
     const props = {
-      model: 'related-products' as RecommendationModel,
-      searchClient: searchClient as any,
+      model: 'related-products' as RecommendModel,
+      recommendClient: recommendClient as any,
       indexName: 'indexName',
       objectIDs: ['objectID'],
     };
 
-    const { recommendations } = await getRecommendations(props);
+    const { recommendations } = await getRecommendations([props]);
 
     expect(recommendations).toEqual([
       {
-        __indexName: 'indexName',
-        __position: 1,
-        __queryID: undefined,
-        __recommendScore: null,
+        _score: null,
         category: 'Women - Jumpsuits-Overalls',
         hierarchical_categories: {
           lvl0: 'women',

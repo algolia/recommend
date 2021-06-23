@@ -27,7 +27,7 @@ export function RelatedItem({ item, insights, onSelect }) {
         <img src={item.image_link} alt={item.name} className="max-w-full" />
 
         <div className="RelatedItem-info">
-          {item.__recommendScore && (
+          {item._score && (
             <div
               className="flex items-center absolute right-0 top-0 text-gray-500 font-semibold text-xs rounded-lg m-2 py-1 px-2"
               style={{ background: 'rgb(255 255 255 / 92%)' }}
@@ -38,7 +38,7 @@ export function RelatedItem({ item, insights, onSelect }) {
                   d="M18.984 9.984h2.016v4.031h-2.016v-4.031zM15 18v-12h2.016v12h-2.016zM3 14.016v-4.031h2.016v4.031h-2.016zM11.016 21.984v-19.969h1.969v19.969h-1.969zM6.984 18v-12h2.016v12h-2.016z"
                 ></path>
               </svg>
-              {item.__recommendScore}
+              {item._score}
             </div>
           )}
           <div

@@ -29,7 +29,7 @@ function useFrequentlyBoughtTogether<TObject>(
     recommendations: [],
   });
 
-  useAlgoliaAgent({ searchClient: props.searchClient });
+  useAlgoliaAgent({ recommendClient: props.recommendClient });
 
   useEffect(() => {
     getFrequentlyBoughtTogether(props).then((response) => {
