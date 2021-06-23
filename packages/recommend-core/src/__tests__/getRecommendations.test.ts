@@ -77,28 +77,17 @@ describe('getRecommendations', () => {
       },
     };
 
-    await getRecommendations([props]);
+    await getRecommendations(props);
 
     expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1);
     expect(recommendClient.getRecommendations).toHaveBeenCalledWith([
       {
+        model: 'related-products',
         indexName: 'indexName',
-        params: {
-          analytics: false,
-          analyticsTags: ['alg-recommend_related-products'],
-          clickAnalytics: false,
-          enableABTest: false,
+        objectID: 'objectID',
+        queryParameters: {
           facetFilters: [['brand:Apple']],
-          filters: 'NOT objectID:objectID',
-          hitsPerPage: 3,
-          optionalFilters: [
-            'objectID:1<score=199>',
-            'objectID:2<score=299>',
-            'objectID:3<score=399>',
-            'category:Laptops',
-          ],
-          ruleContexts: ['alg-recommend_related-products_objectID'],
-          typoTolerance: false,
+          optionalFilters: ['category:Laptops'],
         },
       },
     ]);
@@ -117,26 +106,17 @@ describe('getRecommendations', () => {
       },
     };
 
-    await getRecommendations([props]);
+    await getRecommendations(props);
 
     expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1);
     expect(recommendClient.getRecommendations).toHaveBeenCalledWith([
       {
+        model: 'bought-together',
         indexName: 'indexName',
-        params: {
-          analytics: false,
-          analyticsTags: ['alg-recommend_bought-together'],
-          clickAnalytics: false,
-          enableABTest: false,
-          facetFilters: [
-            ['objectID:1', 'objectID:2', 'objectID:3'],
-            ['brand:Apple'],
-          ],
-          filters: 'NOT objectID:objectID',
-          hitsPerPage: 3,
+        objectID: 'objectID',
+        queryParameters: {
+          facetFilters: [['brand:Apple']],
           optionalFilters: ['category:Laptops'],
-          ruleContexts: ['alg-recommend_bought-together_objectID'],
-          typoTolerance: false,
         },
       },
     ]);
@@ -151,11 +131,10 @@ describe('getRecommendations', () => {
       objectIDs: ['objectID'],
     };
 
-    const { recommendations } = await getRecommendations([props]);
+    const { recommendations } = await getRecommendations(props);
 
     expect(recommendations).toEqual([
       {
-        _score: null,
         category: 'Women - Jumpsuits-Overalls',
         hierarchical_categories: {
           lvl0: 'women',
