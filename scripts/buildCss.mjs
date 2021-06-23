@@ -36,12 +36,12 @@ async function buildCss() {
 
   // Regular build
   // @TODO: remove cssnano from regular build (which fails without right now)
-  const result = await postcss([...plugins, cssnano]).process(plugins, {
-    ...cssConfig,
-    from: input,
-    to: output,
-  });
-  await writeFile(output, [banner, result.css].join('\n'), () => true);
+  // const result = await postcss(plugins).process(plugins, {
+  //   ...cssConfig,
+  //   from: input,
+  //   to: output,
+  // });
+  // await writeFile(output, [banner, result.css].join('\n'), () => true);
 
   // Minified build
   const minifiedResult = await postcss([...plugins, cssnano]).process(css, {
