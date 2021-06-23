@@ -33,7 +33,7 @@
     "@algolia/recommend-vdom": "1.0.0-experimental.4"
   },
   "peerDependencies": {
-    "algoliasearch": "^4.9.1",
+    "@algolia/recommend": "^4.10.2",
     "react": ">= 16.8.0 < 18",
     "react-dom": ">= 16.8.0 < 18"
   }

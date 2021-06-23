@@ -1,5 +1,6 @@
 /** @jsx h */
 import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
+import algoliarecommend from '@algolia/recommend';
 import {
   frequentlyBoughtTogether,
   relatedProducts,
@@ -19,6 +20,7 @@ const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = algoliarecommend(appId, apiKey);
 
 insights('init', { appId, apiKey });
 insights('setUserToken', 'user-token-1');
@@ -144,7 +146,7 @@ function ReferenceItem({ item }) {
 function renderRecommendations(selectedProduct) {
   frequentlyBoughtTogether({
     container: '#frequentlyBoughtTogether',
-    searchClient,
+    recommendClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
     itemComponent({ item }) {
@@ -157,13 +159,13 @@ function renderRecommendations(selectedProduct) {
       );
     },
     maxRecommendations: 3,
-    searchParameters: {
+    queryParameters: {
       analytics: true,
       clickAnalytics: true,
     },
     fallbackComponent() {
       return relatedProducts({
-        searchClient,
+        recommendClient,
         indexName,
         objectIDs: [selectedProduct.objectID],
         itemComponent({ item }) {
@@ -180,10 +182,12 @@ function renderRecommendations(selectedProduct) {
         translations: {
           title: 'Related products (fallback)',
         },
-        fallbackFilters: [
-          `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-        ],
-        searchParameters: {
+        fallbackParameters: {
+          facetFilters: [
+            `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+          ],
+        },
+        queryParameters: {
           analytics: true,
           clickAnalytics: true,
           facetFilters: [
@@ -196,7 +200,7 @@ function renderRecommendations(selectedProduct) {
 
   relatedProducts({
     container: '#relatedProducts',
-    searchClient,
+    recommendClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
     itemComponent({ item }) {
@@ -213,10 +217,12 @@ function renderRecommendations(selectedProduct) {
     translations: {
       title: 'Related products',
     },
-    fallbackFilters: [
-      `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-    ],
-    searchParameters: {
+    fallbackParameters: {
+      facetFilters: [
+        `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+      ],
+    },
+    queryParameters: {
       analytics: true,
       clickAnalytics: true,
       facetFilters: [

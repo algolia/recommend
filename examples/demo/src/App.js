@@ -1,3 +1,4 @@
+import algoliarecommend from '@algolia/recommend';
 import {
   FrequentlyBoughtTogether,
   RelatedProducts,
@@ -22,6 +23,7 @@ const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = algoliarecommend(appId, apiKey);
 
 insights('init', { appId, apiKey });
 
@@ -147,12 +149,12 @@ function App() {
           </div>
 
           <FrequentlyBoughtTogether
-            searchClient={searchClient}
+            recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={BundleItem}
             maxRecommendations={2}
-            searchParameters={{
+            queryParameters={{
               analytics: true,
               clickAnalytics: true,
             }}
@@ -161,7 +163,7 @@ function App() {
             )}
             fallbackComponent={() => (
               <RelatedProducts
-                searchClient={searchClient}
+                recommendClient={recommendClient}
                 indexName={indexName}
                 objectIDs={[selectedProduct.objectID]}
                 itemComponent={RecommendedItem}
@@ -170,10 +172,12 @@ function App() {
                 translations={{
                   title: 'Related products (fallback)',
                 }}
-                fallbackFilters={[
-                  `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-                ]}
-                searchParameters={{
+                fallbackParameters={{
+                  facetFilters: [
+                    `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+                  ],
+                }}
+                queryParameters={{
                   analytics: true,
                   clickAnalytics: true,
                   facetFilters: [
@@ -185,7 +189,7 @@ function App() {
           />
 
           <RelatedProducts
-            searchClient={searchClient}
+            recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={RecommendedItem}
@@ -194,10 +198,12 @@ function App() {
             translations={{
               title: 'Related products',
             }}
-            fallbackFilters={[
-              `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-            ]}
-            searchParameters={{
+            fallbackParameters={{
+              facetFilters: [
+                `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+              ],
+            }}
+            queryParameters={{
               analytics: true,
               clickAnalytics: true,
               facetFilters: [

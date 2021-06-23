@@ -32,18 +32,18 @@ Then, inject results into it by calling the `relatedProducts` function and provi
 /** @jsx h */
 import { h } from 'preact';
 import { relatedProducts } from '@algolia/recommend-js';
-import algoliasearch from 'algoliasearch';
+import algoliarecommend from '@algolia/recommend';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
-const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = algoliarecommend(appId, apiKey);
 const currentObjectID = 'YOUR_OBJECT_ID';
 
 relatedProducts({
   container: '#relatedProducts',
-  searchClient,
+  recommendClient,
   indexName,
   objectIDs: [currentObjectID],
   itemComponent({ item }) {
@@ -65,7 +65,7 @@ Example with the [`HorizontalSlider`](/packages/horizontal-slider-js) UI compone
 import { h } from 'preact';
 import { relatedProducts } from '@algolia/recommend-js';
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
-import algoliasearch from 'algoliasearch';
+import algoliarecommend from '@algolia/recommend';
 
 import '@algolia/ui-components-horizontal-slider-theme';
 
@@ -73,12 +73,12 @@ const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
-const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = algoliarecommend(appId, apiKey);
 const currentObjectID = 'YOUR_OBJECT_ID';
 
 relatedProducts({
   container: '#relatedProducts',
-  searchClient,
+  recommendClient,
   indexName,
   objectIDs: [currentObjectID],
   itemComponent({ item }) {
@@ -205,18 +205,18 @@ Then, inject results into it by calling the `frequentlyBoughtTogether` function 
 /** @jsx h */
 import { h } from 'preact';
 import { frequentlyBoughtTogether } from '@algolia/recommend-js';
-import algoliasearch from 'algoliasearch';
+import algoliarecommend from '@algolia/recommend';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
 const indexName = 'gstar_demo_test';
 
-const searchClient = algoliasearch(appId, apiKey);
+const recommendClient = algoliarecommend(appId, apiKey);
 const currentObjectID = 'YOUR_OBJECT_ID';
 
 frequentlyBoughtTogether({
   container: '#frequentlyBoughtTogether',
-  searchClient,
+  recommendClient,
   indexName,
   objectIDs: [currentObjectID],
   itemComponent({ item }) {
@@ -327,9 +327,9 @@ function defaultRender(props) {
 
 ## Shared props
 
-### `searchClient`
+### `recommendClient`
 
-> `SearchClient` | **required**
+> `recommendClient` | **required**
 
 The initialized Algolia search client.
 
@@ -351,13 +351,13 @@ An array of `objectID`s of the products to get recommendations from.
 
 The number of recommendations to retrieve.
 
-### `fallbackFilters`
+### `fallbackParameters`
 
-> list of strings
+> `Omit<SearchOptions, 'page' | 'hitsPerPage' | 'offset' | 'length'>`
 
 Additional filters to use as fallback should there not be enough recommendations.
 
-### `searchParameters`
+### `queryParameters`
 
 > [`SearchParameters`](https://www.algolia.com/doc/api-reference/search-api-parameters/) | defaults to `{ analytics: false, enableABTest: false }`
 

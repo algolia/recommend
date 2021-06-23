@@ -1,21 +1,37 @@
-import {
-  getRecommendations,
-  GetRecommendationsProps,
-} from './getRecommendations';
+import { FrequentlyBoughtTogetherQuery } from '@algolia/recommend';
 
-export type GetFrequentlyBoughtTogetherProps<TObject> = Omit<
-  GetRecommendationsProps<TObject>,
-  'model' | 'fallbackFilters'
->;
+import { RecommendationsProps } from './getRecommendations';
+import { mapToRecommendations } from './utils';
+import { version } from './version';
+
+export type GetFrequentlyBoughtTogetherProps<
+  TObject
+> = RecommendationsProps<TObject> &
+  Omit<FrequentlyBoughtTogetherQuery, 'objectID'>;
 
 export function getFrequentlyBoughtTogether<TObject>(
   userProps: GetFrequentlyBoughtTogetherProps<TObject>
 ) {
-  const props: GetRecommendationsProps<TObject> = {
-    ...userProps,
-    fallbackFilters: [],
-    model: 'bought-together',
-  };
+  const {
+    objectIDs,
+    recommendClient,
+    transformItems = (x) => x,
+    ...props
+  } = userProps;
+  const queries = objectIDs.map((objectID) => ({
+    ...props,
+    objectID,
+  }));
 
-  return getRecommendations<TObject>(props);
+  recommendClient.addAlgoliaAgent('recommend-core', version);
+
+  return recommendClient
+    .getFrequentlyBoughtTogether<TObject>(queries)
+    .then((response) =>
+      mapToRecommendations({
+        response,
+        maxRecommendations: props.maxRecommendations,
+      })
+    )
+    .then((hits) => ({ recommendations: transformItems(hits) }));
 }

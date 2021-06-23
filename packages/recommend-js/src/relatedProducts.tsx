@@ -25,7 +25,7 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
     recommendations: [],
   });
 
-  useAlgoliaAgent({ searchClient: props.searchClient });
+  useAlgoliaAgent({ recommendClient: props.recommendClient });
 
   useEffect(() => {
     getRelatedProducts(props).then((response) => {

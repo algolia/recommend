@@ -1,20 +1,35 @@
-import {
-  getRecommendations,
-  GetRecommendationsProps,
-} from './getRecommendations';
+import { RelatedProductsQuery } from '@algolia/recommend';
 
-export type GetRelatedProductsProps<TObject> = Omit<
-  GetRecommendationsProps<TObject>,
-  'model'
->;
+import { RecommendationsProps } from './getRecommendations';
+import { mapToRecommendations } from './utils';
+import { version } from './version';
+
+export type GetRelatedProductsProps<TObject> = RecommendationsProps<TObject> &
+  Omit<RelatedProductsQuery, 'objectID'>;
 
 export function getRelatedProducts<TObject>(
   userProps: GetRelatedProductsProps<TObject>
 ) {
-  const props: GetRecommendationsProps<TObject> = {
-    ...userProps,
-    model: 'related-products',
-  };
+  const {
+    objectIDs,
+    recommendClient,
+    transformItems = (x) => x,
+    ...props
+  } = userProps;
+  const queries = objectIDs.map((objectID) => ({
+    ...props,
+    objectID,
+  }));
 
-  return getRecommendations<TObject>(props);
+  recommendClient.addAlgoliaAgent('recommend-core', version);
+
+  return recommendClient
+    .getRelatedProducts<TObject>(queries)
+    .then((response) =>
+      mapToRecommendations({
+        response,
+        maxRecommendations: props.maxRecommendations,
+      })
+    )
+    .then((hits) => ({ recommendations: transformItems(hits) }));
 }
