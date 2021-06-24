@@ -17,14 +17,20 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
 type FrequentlyBoughtTogetherProps<
   TObject
 > = GetFrequentlyBoughtTogetherProps<TObject> &
-  Omit<FrequentlyBoughtTogetherVDOMProps<TObject>, 'items'>;
+  Omit<FrequentlyBoughtTogetherVDOMProps<TObject>, 'items' | 'status'>;
 
 export function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>
 ) {
-  const { recommendations } = useFrequentlyBoughtTogether<TObject>(props);
+  const { recommendations, status } = useFrequentlyBoughtTogether<TObject>(
+    props
+  );
 
   return (
-    <UncontrolledFrequentlyBoughtTogether {...props} items={recommendations} />
+    <UncontrolledFrequentlyBoughtTogether
+      {...props}
+      items={recommendations}
+      status={status}
+    />
   );
 }

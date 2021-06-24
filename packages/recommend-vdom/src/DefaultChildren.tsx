@@ -5,7 +5,7 @@ import { cx } from './utils';
 
 export function createDefaultChildrenComponent({ createElement }: Renderer) {
   return function DefaultChildren<TObject>(props: ChildrenProps<TObject>) {
-    if (props.recommendations.length === 0) {
+    if (props.recommendations.length === 0 && props.status === 'idle') {
       return <props.Fallback />;
     }
 

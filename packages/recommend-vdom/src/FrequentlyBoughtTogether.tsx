@@ -52,6 +52,7 @@ export function createFrequentlyBoughtTogetherComponent({
       Fallback,
       Header,
       recommendations: props.items,
+      status: props.status,
       translations,
       View,
     });
