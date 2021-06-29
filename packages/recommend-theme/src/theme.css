@@ -9,7 +9,7 @@
 }
 
 .auc-FBT .auc-Recommend-list {
-  @apply grid grid-cols-2 md:auto-cols-auto;
+  @apply grid grid-cols-2 md:grid-cols-3;
 }
 
 .auc-Related .auc-Recommend-list {

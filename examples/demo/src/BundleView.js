@@ -131,3 +131,49 @@ export function BundleView(props) {
     </div>
   );
 }
+
+// Usage example
+
+{/* <FrequentlyBoughtTogether
+  recommendClient={recommendClient}
+  indexName={indexName}
+  objectIDs={[selectedProduct.objectID]}
+  itemComponent={BundleItem}
+  maxRecommendations={1}
+  queryParameters={{
+    analytics: true,
+    clickAnalytics: true,
+  }}
+  view={(props) => <BundleView {...props} currentItem={selectedProduct} />}
+  classNames={{
+    root: 'demo-bundle-wrapper',
+  }}
+  fallbackComponent={() => (
+    <RelatedProducts
+      recommendClient={recommendClient}
+      indexName={indexName}
+      objectIDs={[selectedProduct.objectID]}
+      itemComponent={RecommendedItem}
+      view={HorizontalSlider}
+      maxRecommendations={10}
+      classNames={{
+        root: 'auc-Related',
+      }}
+      translations={{
+        title: 'Related products (fallback)',
+      }}
+      fallbackParameters={{
+        facetFilters: [
+          `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+        ],
+      }}
+      queryParameters={{
+        analytics: true,
+        clickAnalytics: true,
+        facetFilters: [
+          `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+        ],
+      }}
+    />
+  )}
+/>; */}

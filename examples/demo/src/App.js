@@ -4,20 +4,18 @@ import {
   RelatedProducts,
 } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
+
 import algoliasearch from 'algoliasearch';
 import React, { Fragment, useState } from 'react';
 import insights from 'search-insights';
 
-import '@algolia/autocomplete-theme-classic';
-
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
-import { BundleView } from './BundleView';
 import { Hit } from './Hit';
 
-import '@algolia/recommend-theme/dist/theme.css';
-import '@algolia/recommend-theme/dist/HorizontalSlider.css';
-
 import './preflight.css';
+import '@algolia/autocomplete-theme-classic';
+import '@algolia/recommend-theme';
+import '@algolia/recommend-theme/dist/HorizontalSlider.css';
 import './App.css';
 import './Hit.css';
 
@@ -148,52 +146,6 @@ function App() {
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={BundleItem}
-            maxRecommendations={1}
-            queryParameters={{
-              analytics: true,
-              clickAnalytics: true,
-            }}
-            view={(props) => (
-              <BundleView {...props} currentItem={selectedProduct} />
-            )}
-            classNames={{
-              root: 'demo-bundle-wrapper',
-            }}
-            fallbackComponent={() => (
-              <RelatedProducts
-                recommendClient={recommendClient}
-                indexName={indexName}
-                objectIDs={[selectedProduct.objectID]}
-                itemComponent={RecommendedItem}
-                view={HorizontalSlider}
-                maxRecommendations={10}
-                classNames={{
-                  root: 'auc-Related',
-                }}
-                translations={{
-                  title: 'Related products (fallback)',
-                }}
-                fallbackParameters={{
-                  facetFilters: [
-                    `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-                  ],
-                }}
-                queryParameters={{
-                  analytics: true,
-                  clickAnalytics: true,
-                  facetFilters: [
-                    `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-                  ],
-                }}
-              />
-            )}
-          />
-
-          <FrequentlyBoughtTogether
-            recommendClient={recommendClient}
-            indexName={indexName}
-            objectIDs={[selectedProduct.objectID]}
             itemComponent={RecommendedItem}
             maxRecommendations={3}
             classNames={{
@@ -235,6 +187,9 @@ function App() {
             objectIDs={[selectedProduct.objectID]}
             itemComponent={RecommendedItem}
             maxRecommendations={10}
+            classNames={{
+              root: 'auc-Related',
+            }}
             translations={{
               title: 'Related products',
             }}
