@@ -1,3 +1,17 @@
+# [1.0.0-experimental.6](https://github.com/algolia/recommend/compare/v1.0.0-experimental.5...v1.0.0-experimental.6) (2021-06-29)
+
+
+### Bug Fixes
+
+* **recommend:** only sort items with scores ([#42](https://github.com/algolia/recommend/issues/42)) ([ea94549](https://github.com/algolia/recommend/commit/ea9454920104a515069c8e49dc6c09658202e637))
+
+
+### Features
+
+* **recommend:** add status state (loading, stalled, idle) ([#43](https://github.com/algolia/recommend/issues/43)) ([9f6ef30](https://github.com/algolia/recommend/commit/9f6ef30e63bd4444116f30afa014dace6e9344b8))
+
+
+
 # [1.0.0-experimental.5](https://github.com/algolia/recommend/compare/v1.0.0-experimental.4...v1.0.0-experimental.5) (2021-06-23)
 
 
