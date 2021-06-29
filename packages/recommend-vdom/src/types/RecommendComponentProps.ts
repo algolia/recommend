@@ -1,6 +1,7 @@
 import { RecordWithObjectID } from '@algolia/recommend-core';
 
 import { RecommendClassNames } from './RecommendClassNames';
+import { RecommendStatus } from './RecommendStatus';
 import { RecommendTranslations } from './RecommendTranslations';
 import { ViewProps } from './ViewProps';
 
@@ -13,6 +14,7 @@ export type ComponentProps<TObject> = {
 export type ChildrenProps<TObject> = ComponentProps<TObject> & {
   Fallback(): JSX.Element | null;
   Header(props: ComponentProps<TObject>): JSX.Element | null;
+  status: RecommendStatus;
   View(props: unknown): JSX.Element;
 };
 
@@ -23,6 +25,7 @@ export type RecommendComponentProps<TObject> = {
   children?(props: ChildrenProps<TObject>): JSX.Element;
   fallbackComponent?(): JSX.Element;
   headerComponent?(props: ComponentProps<TObject>): JSX.Element;
+  status: RecommendStatus;
   translations?: Required<RecommendTranslations>;
   view?(
     props: ViewProps<

@@ -1,6 +1,7 @@
+import { GetRelatedProductsProps } from '@algolia/recommend-core';
 import {
   createRelatedProductsComponent,
-  RelatedProductsProps,
+  RelatedProductsProps as RelatedProductsVDOMProps,
 } from '@algolia/recommend-vdom';
 import React, { createElement, Fragment } from 'react';
 
@@ -11,8 +12,17 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
   Fragment,
 });
 
-export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
-  const { recommendations } = useRelatedProducts<TObject>(props);
+type RelatedProductsProps<TObject> = GetRelatedProductsProps<TObject> &
+  Omit<RelatedProductsVDOMProps<TObject>, 'items' | 'status'>;
 
-  return <UncontrolledRelatedProducts {...props} items={recommendations} />;
+export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
+  const { recommendations, status } = useRelatedProducts<TObject>(props);
+
+  return (
+    <UncontrolledRelatedProducts
+      {...props}
+      items={recommendations}
+      status={status}
+    />
+  );
 }

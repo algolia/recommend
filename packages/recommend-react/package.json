@@ -1,7 +1,7 @@
 {
   "name": "@algolia/recommend-react",
   "description": "Horizontal slider UI component.",
-  "version": "1.0.0-experimental.4",
+  "version": "1.0.0-experimental.6",
   "license": "MIT",
   "homepage": "https://github.com/algolia/ui-components",
   "repository": "algolia/ui-components",
@@ -29,11 +29,11 @@
     "prepare": "yarn build:esm && yarn build:types"
   },
   "dependencies": {
-    "@algolia/recommend-core": "1.0.0-experimental.4",
-    "@algolia/recommend-vdom": "1.0.0-experimental.4"
+    "@algolia/recommend-core": "1.0.0-experimental.6",
+    "@algolia/recommend-vdom": "1.0.0-experimental.6"
   },
   "peerDependencies": {
-    "algoliasearch": "^4.9.1",
+    "@algolia/recommend": "^4.10.2",
     "react": ">= 16.8.0 < 18",
     "react-dom": ">= 16.8.0 < 18"
   }

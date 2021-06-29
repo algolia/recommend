@@ -6,7 +6,7 @@ import {
 } from '@algolia/recommend-core';
 import {
   createFrequentlyBoughtTogetherComponent,
-  FrequentlyBoughtTogetherProps,
+  FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherVDOMProps,
 } from '@algolia/recommend-vdom';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -14,6 +14,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { getHTMLElement } from './getHTMLElement';
 import { EnvironmentProps } from './types';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
+import { useStatus } from './useStatus';
 
 const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherComponent(
   {
@@ -28,25 +29,42 @@ function useFrequentlyBoughtTogether<TObject>(
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
+  const { status, setStatus } = useStatus('loading');
 
-  useAlgoliaAgent({ searchClient: props.searchClient });
+  useAlgoliaAgent({ recommendClient: props.recommendClient });
 
   useEffect(() => {
+    setStatus('loading');
     getFrequentlyBoughtTogether(props).then((response) => {
       setResult(response);
+      setStatus('idle');
     });
-  }, [props]);
+  }, [props, setStatus]);
 
-  return result;
+  return {
+    ...result,
+    status,
+  };
 }
+
+type FrequentlyBoughtTogetherProps<
+  TObject
+> = GetFrequentlyBoughtTogetherProps<TObject> &
+  Omit<FrequentlyBoughtTogetherVDOMProps<TObject>, 'items' | 'status'>;
 
 function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>
 ) {
-  const { recommendations } = useFrequentlyBoughtTogether<TObject>(props);
+  const { recommendations, status } = useFrequentlyBoughtTogether<TObject>(
+    props
+  );
 
   return (
-    <UncontrolledFrequentlyBoughtTogether {...props} items={recommendations} />
+    <UncontrolledFrequentlyBoughtTogether
+      {...props}
+      items={recommendations}
+      status={status}
+    />
   );
 }
 

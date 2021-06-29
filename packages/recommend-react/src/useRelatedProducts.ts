@@ -6,6 +6,7 @@ import {
 import { useEffect, useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
+import { useStatus } from './useStatus';
 
 export function useRelatedProducts<TObject>(
   props: GetRelatedProductsProps<TObject>
@@ -13,14 +14,20 @@ export function useRelatedProducts<TObject>(
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
+  const { status, setStatus } = useStatus('loading');
 
-  useAlgoliaAgent({ searchClient: props.searchClient });
+  useAlgoliaAgent({ recommendClient: props.recommendClient });
 
   useEffect(() => {
+    setStatus('loading');
     getRelatedProducts(props).then((response) => {
       setResult(response);
+      setStatus('idle');
     });
-  }, [props]);
+  }, [props, setStatus]);
 
-  return result;
+  return {
+    ...result,
+    status,
+  };
 }

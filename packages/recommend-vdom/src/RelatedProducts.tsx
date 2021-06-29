@@ -1,6 +1,4 @@
 /** @jsx createElement */
-import { GetRelatedProductsProps } from '@algolia/recommend-core';
-
 import { createDefaultChildrenComponent } from './DefaultChildren';
 import { createDefaultFallbackComponent } from './DefaultFallback';
 import { createDefaultHeaderComponent } from './DefaultHeader';
@@ -11,8 +9,7 @@ import {
   Renderer,
 } from './types';
 
-export type RelatedProductsProps<TObject> = GetRelatedProductsProps<TObject> &
-  RecommendComponentProps<TObject>;
+export type RelatedProductsProps<TObject> = RecommendComponentProps<TObject>;
 
 export function createRelatedProductsComponent({
   createElement,
@@ -53,6 +50,7 @@ export function createRelatedProductsComponent({
       Fallback,
       Header,
       recommendations: props.items,
+      status: props.status,
       translations,
       View,
     });

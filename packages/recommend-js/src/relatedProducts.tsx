@@ -6,7 +6,7 @@ import {
 } from '@algolia/recommend-core';
 import {
   createRelatedProductsComponent,
-  RelatedProductsProps,
+  RelatedProductsProps as RelatedProductsVDOMProps,
 } from '@algolia/recommend-vdom';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -14,6 +14,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { getHTMLElement } from './getHTMLElement';
 import { EnvironmentProps } from './types';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
+import { useStatus } from './useStatus';
 
 const UncontrolledRelatedProducts = createRelatedProductsComponent({
   createElement,
@@ -24,22 +25,37 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
+  const { status, setStatus } = useStatus('loading');
 
-  useAlgoliaAgent({ searchClient: props.searchClient });
+  useAlgoliaAgent({ recommendClient: props.recommendClient });
 
   useEffect(() => {
+    setStatus('loading');
     getRelatedProducts(props).then((response) => {
       setResult(response);
+      setStatus('idle');
     });
-  }, [props]);
+  }, [props, setStatus]);
 
-  return result;
+  return {
+    ...result,
+    status,
+  };
 }
 
-function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
-  const { recommendations } = useRelatedProducts<TObject>(props);
+type RelatedProductsProps<TObject> = GetRelatedProductsProps<TObject> &
+  Omit<RelatedProductsVDOMProps<TObject>, 'items' | 'status'>;
 
-  return <UncontrolledRelatedProducts {...props} items={recommendations} />;
+function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
+  const { recommendations, status } = useRelatedProducts<TObject>(props);
+
+  return (
+    <UncontrolledRelatedProducts
+      {...props}
+      items={recommendations}
+      status={status}
+    />
+  );
 }
 
 export function relatedProducts<TObject>({
