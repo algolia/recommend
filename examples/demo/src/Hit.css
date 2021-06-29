@@ -1,0 +1,61 @@
+.Hit {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+  gap: 0.5rem;
+}
+
+.Hit-Score {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  margin: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  color: rgb(107, 114, 128);
+}
+
+.Hit-Image img {
+  width: 100%;
+}
+
+.Hit-Content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.5rem;
+}
+
+.Hit-Name {
+  flex-grow: 1;
+  line-height: 1.25;
+}
+
+.Hit-Price {
+  font-weight: 500;
+}
+
+.Hit-Button {
+  border-color: rgb(67, 56, 202);
+  border-radius: 0.25rem;
+  border-width: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  font-weight: 500;
+  height: 2rem;
+  color: rgb(49, 46, 129);
+}

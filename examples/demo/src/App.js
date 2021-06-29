@@ -17,6 +17,7 @@ import { Hit } from './Hit';
 import '@algolia/ui-components-horizontal-slider-theme';
 import './preflight.css';
 import './App.css';
+import './Hit.css';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';

@@ -26,12 +26,9 @@ export function RelatedItem({ item, insights, onSelect }) {
       <div className="relative">
         <img src={item.image_link} alt={item.name} className="max-w-full" />
 
-        <div className="RelatedItem-info">
+        <div>
           {item._score && (
-            <div
-              className="flex items-center absolute right-0 top-0 text-gray-500 font-semibold text-xs rounded-lg m-2 py-1 px-2"
-              style={{ background: 'rgb(255 255 255 / 92%)' }}
-            >
+            <div className="flex items-center absolute right-0 top-0 text-gray-500 font-semibold text-xs rounded-lg m-2 py-1 px-2 bg-white bg-opacity-80">
               <svg className="inline-block mr-1" width="18" viewBox="0 0 24 24">
                 <path
                   fill="currentColor"
@@ -41,10 +38,7 @@ export function RelatedItem({ item, insights, onSelect }) {
               {item._score}
             </div>
           )}
-          <div
-            className="flex items-center absolute right-0 bottom-0 text-gray-500 font-semibold text-xs rounded-lg m-2 py-1 px-2"
-            style={{ background: 'rgb(255 255 255 / 92%)' }}
-          >
+          <div className="flex items-center absolute right-0 bottom-0 text-gray-500 font-semibold text-xs rounded-lg m-2 py-1 px-2 bg-white bg-opacity-80">
             {item.objectID}
           </div>
         </div>

@@ -1,10 +1,3 @@
-/* @TODO: these variables will end up in the global theme */
-:root {
-  --aui-primary-color: #9698c3;
-  --aui-muted-color: #c4c4c4;
-  --aui-dark-color: #0f0f0f;
-}
-
 /* Shared */
 .auc-Recommend-title {
   @apply pt-8 pb-4 text-xl font-medium;
@@ -47,7 +40,6 @@
   @apply grid gap-2 list-none pb-2 grid-flow-col overflow-x-auto ring-offset-indigo-700 ring-offset-8;
   scroll-behavior: smooth;
   scroll-snap-type: mandatory;
-  grid-auto-columns: 42%;
   scroll-snap-type: x proximity;
   scrollbar-color: var(--tw-text-gray-300) var(--tw-text-gray-700);
   scrollbar-width: thin;
@@ -161,33 +153,4 @@
   .auc-Recommend-list {
     @apply grid grid-cols-5;
   }
-}
-
-/* Hit */
-.Hit {
-  @apply flex flex-col h-full gap-2 no-underline relative;
-}
-
-.Hit-Score {
-  @apply flex items-center absolute right-0 top-0 text-gray-500 font-semibold text-xs rounded-lg m-2 py-1 px-2 bg-white bg-opacity-80;
-}
-
-.Hit-Image img {
-  @apply w-full;
-}
-
-.Hit-Content {
-  @apply flex flex-col flex-grow gap-2;
-}
-
-.Hit-Name {
-  @apply leading-tight flex-grow;
-}
-
-.Hit-Price {
-  @apply font-medium;
-}
-
-.Hit-Button {
-  @apply flex flex-grow-0 h-8 items-center border border-indigo-700 rounded cursor-pointer text-indigo-900 justify-center font-medium;
 }
