@@ -1,18 +1,6 @@
 {
   "files": [
     {
-      "path": "packages/horizontal-slider-js/dist/umd/index.js",
-      "maxSize": "6 kB"
-    },
-    {
-      "path": "packages/horizontal-slider-react/dist/umd/index.js",
-      "maxSize": "2 kB"
-    },
-    {
-      "path": "packages/horizontal-slider-vdom/dist/umd/index.js",
-      "maxSize": "1.75 kB"
-    },
-    {
       "path": "packages/recommend-core/dist/umd/index.js",
       "maxSize": "2.25 kB"
     },

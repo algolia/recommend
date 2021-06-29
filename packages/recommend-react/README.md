@@ -5,9 +5,9 @@ React package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia
 ## Installation
 
 ```sh
-yarn add @algolia/recommend-react@experimental
+yarn add @algolia/recommend-react
 # or
-npm install @algolia/recommend-react@experimental
+npm install @algolia/recommend-react
 ```
 
 ## `<RelatedProducts />`
@@ -52,7 +52,7 @@ function App({ currentObjectID }) {
 
 #### Horizontal slider view
 
-Example with the [`HorizontalSlider`](/packages/horizontal-slider-react) UI component:
+Example with the [`HorizontalSlider`](https://github.com/algolia/ui-components/tree/main/packages/horizontal-slider-react) UI component:
 
 ```js
 import { RelatedProducts } from '@algolia/recommend-react';
@@ -160,7 +160,7 @@ type ViewProps<TItem extends RecordWithObjectID> = {
 </details>
 </blockquote>
 
-The view component to render your items into. You can use the [`HorizontalSlider`](/packages/horizontal-slider-react) UI component.
+The view component to render your items into. You can use the [`HorizontalSlider`](https://github.com/algolia/ui-components/tree/main/packages/horizontal-slider-react) UI component.
 
 The default implementation is:
 
@@ -315,7 +315,7 @@ function App({ currentObjectID }) {
 
 #### Horizontal slider view
 
-Example with the [`HorizontalSlider`](/packages/horizontal-slider-react) UI component:
+Example with the [`HorizontalSlider`](https://github.com/algolia/ui-components/tree/main/packages/horizontal-slider-react) UI component:
 
 ```js
 import { FrequentlyBoughtTogether } from '@algolia/recommend-react';
@@ -421,7 +421,7 @@ type ViewProps<TItem extends RecordWithObjectID> = {
 </details>
 </blockquote>
 
-The view component to render your items into. You can use the [`HorizontalSlider`](/packages/horizontal-slider-react) UI component.
+The view component to render your items into. You can use the [`HorizontalSlider`](https://github.com/algolia/ui-components/tree/main/packages/horizontal-slider-react) UI component.
 
 The default implementation is:
 

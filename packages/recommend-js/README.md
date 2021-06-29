@@ -5,9 +5,9 @@ JavaScript package for [Algolia Recommend](https://www.algolia.com/doc/guides/al
 ## Installation
 
 ```sh
-yarn add @algolia/recommend-js@experimental
+yarn add @algolia/recommend-js
 # or
-npm install @algolia/recommend-js@experimental
+npm install @algolia/recommend-js
 ```
 
 ## API
@@ -58,7 +58,7 @@ relatedProducts({
 
 ### Horizontal slider view
 
-Example with the [`HorizontalSlider`](/packages/horizontal-slider-js) UI component:
+Example with the [`HorizontalSlider`](https://github.com/algolia/ui-components/tree/main/packages/horizontal-slider-js) UI component:
 
 ```js
 /** @jsx h */

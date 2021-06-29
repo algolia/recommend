@@ -5,7 +5,7 @@ VDOM package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-
 ## Installation
 
 ```sh
-yarn add @algolia/recommend-vdom@experimental
+yarn add @algolia/recommend-vdom
 # or
-npm install @algolia/recommend-vdom@experimental
+npm install @algolia/recommend-vdom
 ```
