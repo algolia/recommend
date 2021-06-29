@@ -34,8 +34,10 @@ module.exports = {
     updatePackagesVersionFile({
       version,
       files: [
-        path.resolve(dir, 'packages', 'recommend-react', 'src', 'version.ts'),
+        path.resolve(dir, 'packages', 'recommend-core', 'src', 'version.ts'),
         path.resolve(dir, 'packages', 'recommend-js', 'src', 'version.ts'),
+        path.resolve(dir, 'packages', 'recommend-react', 'src', 'version.ts'),
+        path.resolve(dir, 'packages', 'recommend-vdom', 'src', 'version.ts'),
       ],
     });
   },
