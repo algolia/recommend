@@ -1,0 +1,32 @@
+{
+  "name": "@algolia/recommend-theme",
+  "version": "1.0.0-experimental.6",
+  "license": "MIT",
+  "homepage": "https://github.com/algolia/ui-components",
+  "repository": "algolia/ui-components",
+  "author": {
+    "name": "Algolia, Inc.",
+    "url": "https://www.algolia.com"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist/*.css"
+  ],
+  "main": "dist/theme.css",
+  "unpkg": "dist/*.css",
+  "jsdelivr": "dist/*.css",
+  "dependencies": {
+    "@algolia/ui-components-horizontal-slider-theme": "1.0.0-experimental.6"
+  },
+  "scripts": {
+    "build:clean": "rm -rf ./dist",
+    "build:css": "node ../../scripts/buildCss.mjs ./src/theme.css ./dist/theme.css ./dist/theme.min.css",
+    "buildHorizontalSlider:css": "node ../../scripts/buildCss.mjs ./src/HorizontalSlider.css ./dist/HorizontalSlider.css ./dist/HorizontalSlider.min.css",
+    "build": "yarn build:clean && yarn build:css && yarn buildHorizontalSlider:css",
+    "on:change": "yarn build:css && yarn buildHorizontalSlider:css",
+    "prepare": "yarn build:css && yarn buildHorizontalSlider:css",
+    "watch": "watch \"yarn on:change\" --ignoreDirectoryPattern \"/dist/\""
+  }
+}

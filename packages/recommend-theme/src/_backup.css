@@ -65,3 +65,71 @@
 .uic-HorizontalSlider-item * {
   @apply ring-offset-indigo-700 ring-offset-4;
 }
+
+/* Bundle */
+.uic-BundleView-container {
+  @apply rounded grid grid-flow-row md:grid-flow-col md:auto-cols-auto gap-4;
+}
+
+.uic-BundleView-list {
+  @apply flex;
+}
+
+.uic-BundleView-item {
+  @apply rounded w-6/12 relative h-full;
+}
+
+.uic-BundleView-itemContainer {
+}
+
+.uic-BundleView-itemContainer-hit {
+  @apply opacity-40;
+}
+
+.uic-BundleView-item--selected .uic-BundleView-itemContainer-hit {
+  @apply opacity-100;
+}
+
+.uic-BundleView-plus {
+  @apply text-indigo-500 pl-2 p-2 top-1/4 relative;
+}
+
+.uic-BundleView-plus > svg {
+  @apply h-6 w-6;
+}
+
+.uic-BundleView-item * {
+  @apply ring-offset-indigo-700 ring-offset-4;
+}
+
+.uic-BundleView-label {
+  @apply pt-2;
+}
+
+.uic-BundleView-checkbox {
+}
+
+.uic-BundleView-label-currentArticle {
+  @apply pl-2;
+}
+
+.uic-BundleView-label-name {
+  @apply pl-2;
+}
+
+.uic-BundleView-label:hover {
+  @apply text-indigo-700;
+}
+
+.uic-BundleView-label-currentArticle,
+.uic-BundleView-label-price {
+  @apply font-medium pt-4;
+}
+
+.uic-BundleView-cart {
+  @apply flex items-start flex-col gap-2 justify-center;
+}
+
+.uic-BundleView-addToCart {
+  @apply relative flex items-center bg-white border border-indigo-700 rounded text-indigo-900 cursor-pointer font-medium p-1.5 content-center;
+}

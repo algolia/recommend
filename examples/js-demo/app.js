@@ -6,12 +6,13 @@ import {
   relatedProducts,
 } from '@algolia/recommend-js';
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
+import '@algolia/recommend-theme';
+import '@algolia/recommend-theme/dist/HorizontalSlider.css';
 import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
 import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
-import '@algolia/ui-components-horizontal-slider-theme';
 
 import { RelatedItem } from './RelatedItem';
 
@@ -145,6 +146,9 @@ function renderRecommendations(selectedProduct) {
     recommendClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
+    classNames: {
+      root: 'auc-FBT',
+    },
     itemComponent({ item }) {
       return (
         <RelatedItem

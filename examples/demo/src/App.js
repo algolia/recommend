@@ -14,7 +14,9 @@ import { Autocomplete, getAlgoliaResults } from './Autocomplete';
 import { BundleView } from './BundleView';
 import { Hit } from './Hit';
 
-import '@algolia/ui-components-horizontal-slider-theme';
+import '@algolia/recommend-theme/dist/theme.css';
+import '@algolia/recommend-theme/dist/HorizontalSlider.css';
+
 import './preflight.css';
 import './App.css';
 import './Hit.css';
@@ -35,7 +37,7 @@ function RecommendedItem({ item }) {
 function BundleItem({ item }) {
   return (
     <a
-      className="Hit Hit-link"
+      className="Hit"
       href={item.url}
       onClick={(event) => {
         event.preventDefault();
@@ -166,6 +168,9 @@ function App() {
                 itemComponent={RecommendedItem}
                 view={HorizontalSlider}
                 maxRecommendations={10}
+                classNames={{
+                  root: 'auc-Related',
+                }}
                 translations={{
                   title: 'Related products (fallback)',
                 }}
@@ -191,6 +196,9 @@ function App() {
             objectIDs={[selectedProduct.objectID]}
             itemComponent={RecommendedItem}
             maxRecommendations={3}
+            classNames={{
+              root: 'auc-FBT',
+            }}
             queryParameters={{
               analytics: true,
               clickAnalytics: true,

@@ -1,0 +1,17 @@
+/* Default title */
+.auc-Recommend-title {
+  @apply pt-8 pb-4 text-xl font-medium;
+}
+
+/* Lists */
+.auc-Recommend-list {
+  @apply grid gap-x-2 gap-y-4 list-none ring-offset-indigo-700 ring-offset-8;
+}
+
+.auc-FBT .auc-Recommend-list {
+  @apply grid grid-cols-2 md:auto-cols-auto;
+}
+
+.auc-Related .auc-Recommend-list {
+  @apply grid grid-cols-2 md:grid-cols-5;
+}
