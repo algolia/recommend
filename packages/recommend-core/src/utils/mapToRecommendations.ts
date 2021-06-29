@@ -21,7 +21,7 @@ export function mapToRecommendations<TObject>({
       const scoreA = a._score || 0;
       const scoreB = b._score || 0;
 
-      return scoreA < scoreB ? 1 : -1;
+      return scoreA > scoreB ? -1 : 1;
     },
     // Multiple identical recommended `objectID`s can be returned b
     // the engine, so we need to remove duplicates.
