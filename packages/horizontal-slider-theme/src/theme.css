@@ -165,11 +165,11 @@
 
 /* Hit */
 .Hit {
-  @apply flex flex-col h-full gap-2;
+  @apply flex flex-col h-full gap-2 no-underline relative;
 }
 
-.Hit-link {
-  @apply no-underline;
+.Hit-Score {
+  @apply flex items-center absolute right-0 top-0 text-gray-500 font-semibold text-xs rounded-lg m-2 py-1 px-2 bg-white bg-opacity-80;
 }
 
 .Hit-Image img {

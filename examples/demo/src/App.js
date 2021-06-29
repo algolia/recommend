@@ -185,12 +185,12 @@ function App() {
           />
 
           <FrequentlyBoughtTogether
-            searchClient={searchClient}
+            recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={RecommendedItem}
             maxRecommendations={3}
-            searchParameters={{
+            queryParameters={{
               analytics: true,
               clickAnalytics: true,
             }}
@@ -221,7 +221,7 @@ function App() {
           />
 
           <RelatedProducts
-            searchClient={searchClient}
+            recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={RecommendedItem}
@@ -232,7 +232,7 @@ function App() {
             fallbackFilters={[
               `hierarchical_categories.lvl3:${selectedProduct.hierarchical_categories.lvl3}`,
             ]}
-            searchParameters={{
+            queryParameters={{
               analytics: true,
               clickAnalytics: true,
               facetFilters: [
