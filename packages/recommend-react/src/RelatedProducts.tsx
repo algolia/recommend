@@ -13,10 +13,16 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
 });
 
 type RelatedProductsProps<TObject> = GetRelatedProductsProps<TObject> &
-  Omit<RelatedProductsVDOMProps<TObject>, 'items'>;
+  Omit<RelatedProductsVDOMProps<TObject>, 'items' | 'status'>;
 
 export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
-  const { recommendations } = useRelatedProducts<TObject>(props);
+  const { recommendations, status } = useRelatedProducts<TObject>(props);
 
-  return <UncontrolledRelatedProducts {...props} items={recommendations} />;
+  return (
+    <UncontrolledRelatedProducts
+      {...props}
+      items={recommendations}
+      status={status}
+    />
+  );
 }

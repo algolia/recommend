@@ -50,6 +50,7 @@ export function createRelatedProductsComponent({
       Fallback,
       Header,
       recommendations: props.items,
+      status: props.status,
       translations,
       View,
     });
