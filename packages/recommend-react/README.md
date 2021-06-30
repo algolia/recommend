@@ -5,9 +5,9 @@ React package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia
 ## Installation
 
 ```sh
-yarn add @algolia/recommend-react@experimental
+yarn add @algolia/recommend-react
 # or
-npm install @algolia/recommend-react@experimental
+npm install @algolia/recommend-react
 ```
 
 ## `<RelatedProducts />`

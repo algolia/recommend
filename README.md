@@ -11,17 +11,17 @@ All Recommend packages are available on the [npm](https://www.npmjs.com/) regist
 ### For [JavaScript](/packages/recommend-js)
 
 ```bash
-yarn add @algolia/recommend-js@experimental
+yarn add @algolia/recommend-js
 # or
-npm install @algolia/recommend-js@experimental
+npm install @algolia/recommend-js
 ```
 
 ### For [React](/packages/recommend-react)
 
 ```bash
-yarn add @algolia/recommend-react@experimental
+yarn add @algolia/recommend-react
 # or
-npm install @algolia/recommend-react@experimental
+npm install @algolia/recommend-react
 ```
 
 ## Usage

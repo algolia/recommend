@@ -1,3 +1,12 @@
+# [1.0.0](https://github.com/algolia/recommend/compare/v1.0.0-experimental.6...v1.0.0) (2021-06-30)
+
+
+### Bug Fixes
+
+* **release:** bump packages' versions on release ([#46](https://github.com/algolia/recommend/issues/46)) ([cca414f](https://github.com/algolia/recommend/commit/cca414fe5841e1afc2ea16774a2952094ff6aeae))
+
+
+
 # [1.0.0-experimental.6](https://github.com/algolia/recommend/compare/v1.0.0-experimental.5...v1.0.0-experimental.6) (2021-06-29)
 
 
