@@ -1,49 +1,37 @@
 # [1.0.0](https://github.com/algolia/recommend/compare/v1.0.0-experimental.6...v1.0.0) (2021-06-30)
 
+This is the first stable release of the Recommend UI library. Check out the [**upgrade guide**](https://algolia.com/doc/ui-libraries/recommend/introduction/upgrade-guide/#upgrading-from-beta-to-stable) to migrate.
 
 ### Bug Fixes
 
-* **release:** bump packages' versions on release ([#46](https://github.com/algolia/recommend/issues/46)) ([cca414f](https://github.com/algolia/recommend/commit/cca414fe5841e1afc2ea16774a2952094ff6aeae))
-
-
+- **release:** bump packages' versions on release ([#46](https://github.com/algolia/recommend/issues/46)) ([cca414f](https://github.com/algolia/recommend/commit/cca414fe5841e1afc2ea16774a2952094ff6aeae))
 
 # [1.0.0-experimental.6](https://github.com/algolia/recommend/compare/v1.0.0-experimental.5...v1.0.0-experimental.6) (2021-06-29)
 
-
 ### Bug Fixes
 
-* **recommend:** only sort items with scores ([#42](https://github.com/algolia/recommend/issues/42)) ([ea94549](https://github.com/algolia/recommend/commit/ea9454920104a515069c8e49dc6c09658202e637))
-
+- **recommend:** only sort items with scores ([#42](https://github.com/algolia/recommend/issues/42)) ([ea94549](https://github.com/algolia/recommend/commit/ea9454920104a515069c8e49dc6c09658202e637))
 
 ### Features
 
-* **recommend:** add status state (loading, stalled, idle) ([#43](https://github.com/algolia/recommend/issues/43)) ([9f6ef30](https://github.com/algolia/recommend/commit/9f6ef30e63bd4444116f30afa014dace6e9344b8))
-
-
+- **recommend:** add status state (loading, stalled, idle) ([#43](https://github.com/algolia/recommend/issues/43)) ([9f6ef30](https://github.com/algolia/recommend/commit/9f6ef30e63bd4444116f30afa014dace6e9344b8))
 
 # [1.0.0-experimental.5](https://github.com/algolia/recommend/compare/v1.0.0-experimental.4...v1.0.0-experimental.5) (2021-06-23)
 
-
 ### Bug Fixes
 
-* **recommend:** ignore `items` type in components ([#37](https://github.com/algolia/recommend/issues/37)) ([63121fa](https://github.com/algolia/recommend/commit/63121fa432d96b548ac4ea7632d89afec7f60eea))
-
+- **recommend:** ignore `items` type in components ([#37](https://github.com/algolia/recommend/issues/37)) ([63121fa](https://github.com/algolia/recommend/commit/63121fa432d96b548ac4ea7632d89afec7f60eea))
 
 ### Features
 
-* **recommend:** leverage the new Recommend API client ([#40](https://github.com/algolia/recommend/issues/40)) ([618ee07](https://github.com/algolia/recommend/commit/618ee0759702d46174126832192d314db351242f))
-
-
+- **recommend:** leverage the new Recommend API client ([#40](https://github.com/algolia/recommend/issues/40)) ([618ee07](https://github.com/algolia/recommend/commit/618ee0759702d46174126832192d314db351242f))
 
 # [1.0.0-experimental.4](https://github.com/algolia/ui-components/compare/v1.0.0-experimental.3...v1.0.0-experimental.4) (2021-06-16)
 
-
 ### Bug Fixes
 
-* **horizontal-slider:** add `z-index` to navigation arrows ([8803d29](https://github.com/algolia/ui-components/commit/8803d294ee2e64542de17abbe5bbaafb19392368))
-* **react:** use FBT hook in `FrequentlyBoughtTogether` component ([#35](https://github.com/algolia/ui-components/issues/35)) ([8193798](https://github.com/algolia/ui-components/commit/8193798f12ece31662f7dac6ebc85dae1ed48580))
-
-
+- **horizontal-slider:** add `z-index` to navigation arrows ([8803d29](https://github.com/algolia/ui-components/commit/8803d294ee2e64542de17abbe5bbaafb19392368))
+- **react:** use FBT hook in `FrequentlyBoughtTogether` component ([#35](https://github.com/algolia/ui-components/issues/35)) ([8193798](https://github.com/algolia/ui-components/commit/8193798f12ece31662f7dac6ebc85dae1ed48580))
 
 # [1.0.0-experimental.3](https://github.com/algolia/ui-components/compare/v1.0.0-experimental.2...v1.0.0-experimental.3) (2021-06-14)
 
