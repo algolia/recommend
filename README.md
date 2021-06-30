@@ -148,10 +148,10 @@ You can find more on the [documentation](https://www.algolia.com/doc/doc/ui-libr
 
 ## Packages
 
-- [`@algolia/recommend-core`](/packages/recommend-react): Core package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
+- [`@algolia/recommend-core`](/packages/recommend-core): Core package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
 - [`@algolia/recommend-js`](/packages/recommend-js): JavaScript package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
 - [`@algolia/recommend-react`](/packages/recommend-react): React package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
-- [`@algolia/recommend-vdom`](/packages/recommend-react): VDOM package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
+- [`@algolia/recommend-vdom`](/packages/recommend-vdom): VDOM package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
 
 ## License
 
