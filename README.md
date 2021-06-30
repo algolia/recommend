@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/@algolia/recommend-js.svg?style=flat-square)](https://www.npmjs.com/package/@algolia/recommend-js) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
-Recommend is the repository packaging the UI components for Algolia Recommend, available for React and Vanilla JavaScript.
+Recommend is the repository packaging the UI components for Algolia Recommend, available for Vanilla JavaScript and React.
 
 ## Installation
 
