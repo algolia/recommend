@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/@algolia/recommend-js.svg?style=flat-square)](https://www.npmjs.com/package/@algolia/recommend-js) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
-Recommend is the repository packaging the UI components for Algolia Recommend, available for React and Vanilla JavaScript.
+Recommend is the repository packaging the UI components for Algolia Recommend, available for Vanilla JavaScript and React.
 
 ## Installation
 
@@ -11,17 +11,17 @@ All Recommend packages are available on the [npm](https://www.npmjs.com/) regist
 ### For [JavaScript](/packages/recommend-js)
 
 ```bash
-yarn add @algolia/recommend-js@experimental
+yarn add @algolia/recommend-js
 # or
-npm install @algolia/recommend-js@experimental
+npm install @algolia/recommend-js
 ```
 
 ### For [React](/packages/recommend-react)
 
 ```bash
-yarn add @algolia/recommend-react@experimental
+yarn add @algolia/recommend-react
 # or
-npm install @algolia/recommend-react@experimental
+npm install @algolia/recommend-react
 ```
 
 ## Usage
@@ -148,10 +148,10 @@ You can find more on the [documentation](https://www.algolia.com/doc/doc/ui-libr
 
 ## Packages
 
-- [`@algolia/recommend-core`](/packages/recommend-react): Core package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
+- [`@algolia/recommend-core`](/packages/recommend-core): Core package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
 - [`@algolia/recommend-js`](/packages/recommend-js): JavaScript package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
 - [`@algolia/recommend-react`](/packages/recommend-react): React package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
-- [`@algolia/recommend-vdom`](/packages/recommend-react): VDOM package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
+- [`@algolia/recommend-vdom`](/packages/recommend-vdom): VDOM package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
 
 ## License
 

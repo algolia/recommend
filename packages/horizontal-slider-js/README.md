@@ -5,9 +5,9 @@ Horizontal slider UI component for JavaScript.
 ## Installation
 
 ```sh
-yarn add @algolia/ui-components-horizontal-slider-js@experimental
+yarn add @algolia/ui-components-horizontal-slider-js
 # or
-npm install @algolia/ui-components-horizontal-slider-js@experimental
+npm install @algolia/ui-components-horizontal-slider-js
 ```
 
 ## Usage

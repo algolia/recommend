@@ -5,9 +5,9 @@ Horizontal slider UI component for React.
 ## Installation
 
 ```sh
-yarn add @algolia/ui-components-horizontal-slider-react@experimental
+yarn add @algolia/ui-components-horizontal-slider-react
 # or
-npm install @algolia/ui-components-horizontal-slider-react@experimental
+npm install @algolia/ui-components-horizontal-slider-react
 ```
 
 ## Usage
