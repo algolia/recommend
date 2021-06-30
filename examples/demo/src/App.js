@@ -32,29 +32,6 @@ function RecommendedItem({ item }) {
   return <Hit hit={item} insights={insights} />;
 }
 
-function BundleItem({ item }) {
-  return (
-    <a
-      className="Hit"
-      href={item.url}
-      onClick={(event) => {
-        event.preventDefault();
-        insights('clickedObjectIDs', {
-          objectIDs: [item.objectID],
-          positions: [item.__position],
-          eventName: 'Product Clicked',
-          queryID: item.__queryID,
-          index: item.__indexName,
-        });
-      }}
-    >
-      <div className="Hit-Image">
-        <img src={item.image_link} alt={item.name} />
-      </div>
-    </a>
-  );
-}
-
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 

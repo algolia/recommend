@@ -134,7 +134,34 @@ export function BundleView(props) {
 
 // Usage example
 
-{/* <FrequentlyBoughtTogether
+{
+  /* function BundleItem({ item }) {
+  return (
+    <a
+      className="Hit"
+      href={item.url}
+      onClick={(event) => {
+        event.preventDefault();
+        insights('clickedObjectIDs', {
+          objectIDs: [item.objectID],
+          positions: [item.__position],
+          eventName: 'Product Clicked',
+          queryID: item.__queryID,
+          index: item.__indexName,
+        });
+      }}
+    >
+      <div className="Hit-Image">
+        <img src={item.image_link} alt={item.name} />
+      </div>
+    </a>
+  );
+}
+*/
+}
+
+{
+  /* <FrequentlyBoughtTogether
   recommendClient={recommendClient}
   indexName={indexName}
   objectIDs={[selectedProduct.objectID]}
@@ -176,4 +203,5 @@ export function BundleView(props) {
       }}
     />
   )}
-/>; */}
+/>; */
+}

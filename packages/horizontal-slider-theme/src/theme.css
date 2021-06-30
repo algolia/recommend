@@ -40,6 +40,12 @@
   scrollbar-width: thin;
 }
 
+@media (min-width: 999px) {
+  .uic-HorizontalSlider-list {
+    grid-auto-columns: 20%;
+  }
+}
+
 .uic-HorizontalSlider-list::-webkit-scrollbar {
   @apply h-1 mt-4;
 }
@@ -52,11 +58,7 @@
   @apply bg-gray-700;
 }
 
-@media (min-width: 999px) {
-  .uic-HorizontalSlider-list {
-    grid-auto-columns: 20%;
-  }
-}
+
 
 .uic-HorizontalSlider-item {
   scroll-snap-align: start;

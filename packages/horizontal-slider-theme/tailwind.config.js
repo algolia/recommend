@@ -1,14 +1,9 @@
 module.exports = {
-  purge: {
-    enabled: true,
-    content: ['./packages/horizontal-slider-theme/src/theme.css'],
-  },
+  purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
   },
-  variants: {
-    extend: {},
-  },
+  variants: {},
   plugins: [],
 };
