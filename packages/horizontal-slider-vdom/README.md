@@ -1,6 +1,6 @@
 # `@algolia/horizontal-slider-vdom`
 
-VDOM package for [horizontal-slider-vdom](https://github.com/algolia/ui-components).
+VDOM package for [horizontal-slider-vdom](https://github.com/algolia/ui-components/tree/next/packages/horizontal-slider-vdom).
 
 ## Installation
 

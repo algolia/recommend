@@ -1,5 +1,5 @@
 {
-  "name": "@algolia/ui-components-monorepo",
+  "name": "@algolia/recommend-monorepo",
   "private": true,
   "license": "MIT",
   "workspaces": [
