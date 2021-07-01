@@ -1,14 +1,8 @@
 # Recommend
 
-<div align="center">
-
 [![Version](https://img.shields.io/npm/v/@algolia/recommend-js.svg?style=flat-square)](https://www.npmjs.com/package/@algolia/recommend-js) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
-</div>
-
-Recommend is the repository packaging the UI components for Algolia Recommend, available for React and Vanilla JavaScript.
-
-> ⚠️ **If you've been using the npm `beta` tag, make sure to [read our upgrade guide](https://www.algolia.com/doc/ui-libraries/recommend/introduction/upgrade-guide/)**.
+Recommend is the repository packaging the UI components for Algolia Recommend, available for Vanilla JavaScript and React.
 
 ## Installation
 
@@ -154,10 +148,10 @@ You can find more on the [documentation](https://www.algolia.com/doc/doc/ui-libr
 
 ## Packages
 
-- [`@algolia/recommend-core`](/packages/recommend-react): Core package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
+- [`@algolia/recommend-core`](/packages/recommend-core): Core package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
 - [`@algolia/recommend-js`](/packages/recommend-js): JavaScript package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
 - [`@algolia/recommend-react`](/packages/recommend-react): React package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
-- [`@algolia/recommend-vdom`](/packages/recommend-react): VDOM package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
+- [`@algolia/recommend-vdom`](/packages/recommend-vdom): VDOM package for [Algolia Recommend](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
 
 ## License
 

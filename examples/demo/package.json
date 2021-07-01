@@ -1,7 +1,7 @@
 {
   "name": "@algolia/recommend-react-example",
   "description": "Recommend React example",
-  "version": "1.0.0-experimental.6",
+  "version": "1.0.0",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -12,9 +12,9 @@
     "@algolia/autocomplete-js": "1.1.0",
     "@algolia/autocomplete-theme-classic": "1.1.0",
     "@algolia/recommend": "4.10.2",
-    "@algolia/recommend-react": "1.0.0-experimental.6",
-    "@algolia/ui-components-horizontal-slider-react": "1.0.0-experimental.6",
-    "@algolia/ui-components-horizontal-slider-theme": "1.0.0-experimental.6",
+    "@algolia/recommend-react": "1.0.0",
+    "@algolia/ui-components-horizontal-slider-react": "1.0.0",
+    "@algolia/ui-components-horizontal-slider-theme": "1.0.0",
     "algoliasearch": "4.10.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",

@@ -198,30 +198,30 @@
     "@algolia/logger-common" "4.9.1"
     "@algolia/requester-common" "4.9.1"
 
-"@algolia/ui-components-horizontal-slider-js@1.0.0-experimental.6":
-  version "1.0.0-experimental.6"
-  resolved "https://registry.yarnpkg.com/@algolia/ui-components-horizontal-slider-js/-/ui-components-horizontal-slider-js-1.0.0-experimental.6.tgz#d67c6d375109533ab43db2d33dbbd7fb7a46e532"
-  integrity sha512-uAZhwBVvO/CPapPjFaNdVkPZJaQid6aYd4tZStQyZF4cJbWOkcTpj8TrMGCwihs1k6iwt8jPZS/w1MhCiFx4Aw==
+"@algolia/ui-components-horizontal-slider-js@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@algolia/ui-components-horizontal-slider-js/-/ui-components-horizontal-slider-js-1.0.0.tgz#d72ffb74facf65d7273ccbc3b738a6f2f79ac98f"
+  integrity sha512-gV04hiVhOTy6VWX0shA9UBPuQdZWTIn9l5uzpIQxQ+hssU+K/q/4XkB5QPb5rQ4LUIbI4iwzWwU+LMOYe7Hp/Q==
   dependencies:
-    "@algolia/ui-components-horizontal-slider-vdom" "1.0.0-experimental.6"
+    "@algolia/ui-components-horizontal-slider-vdom" "1.0.0"
     preact "^10.0.0"
 
-"@algolia/ui-components-horizontal-slider-react@1.0.0-experimental.6":
-  version "1.0.0-experimental.6"
-  resolved "https://registry.yarnpkg.com/@algolia/ui-components-horizontal-slider-react/-/ui-components-horizontal-slider-react-1.0.0-experimental.6.tgz#622764f7d00e0587fe58649a20a8b5484de69940"
-  integrity sha512-Nl/+Zo6Ew7ai2kJozt/Hx9JWXbu5/WHlzrTSPtHHdMM3RrP4DAOcpPcK9nU/g+Pae0t+5UUNgDmSTNaxw1Y8gQ==
+"@algolia/ui-components-horizontal-slider-react@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@algolia/ui-components-horizontal-slider-react/-/ui-components-horizontal-slider-react-1.0.0.tgz#99699324b9901befd0a67865e6c2f3a60486a4cc"
+  integrity sha512-lGQBolYvM8nCQTw9MUosjhwXcQ0B2Vq6RU0HisiVG3tbGLupdGqFbAeFpI6ohLKkEfVM+5SQuAL6C0lLt4sE7w==
   dependencies:
-    "@algolia/ui-components-horizontal-slider-vdom" "1.0.0-experimental.6"
+    "@algolia/ui-components-horizontal-slider-vdom" "1.0.0"
 
-"@algolia/ui-components-horizontal-slider-theme@1.0.0-experimental.6":
-  version "1.0.0-experimental.6"
-  resolved "https://registry.yarnpkg.com/@algolia/ui-components-horizontal-slider-theme/-/ui-components-horizontal-slider-theme-1.0.0-experimental.6.tgz#0373cacb2c8c16227d8723a914130608ec5b664d"
-  integrity sha512-WdQ5VLzY2IG2konNuM/r3XFuys8lMLoVO3A2wPLVXkdkNnn2IhVTNQlPHJOrbvMrKdQhaF4Uf9V6o8rxpzZ5JA==
+"@algolia/ui-components-horizontal-slider-theme@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@algolia/ui-components-horizontal-slider-theme/-/ui-components-horizontal-slider-theme-1.0.0.tgz#4ba914f560a27cd7f787402948e1ab13ace0e620"
+  integrity sha512-FlrJjQpfJpNJpv4px79GPJ7DoUZFLbMYDdaNbhMAhXKnVuhWh31Bwv0hvpkmfBRWuS5UCS1+TbphIiy9n5J4cQ==
 
-"@algolia/ui-components-horizontal-slider-vdom@1.0.0-experimental.6":
-  version "1.0.0-experimental.6"
-  resolved "https://registry.yarnpkg.com/@algolia/ui-components-horizontal-slider-vdom/-/ui-components-horizontal-slider-vdom-1.0.0-experimental.6.tgz#ed5e4e60e70ead2a5511fff9d5e1fa9fbecfe6bf"
-  integrity sha512-80FE4/bf0xMxQowmdy1dyHQG4id/L0eJLlV4X48sOk5lqQ2WFUbPw9kGY7hNoG/AgxsjPNH2eiITWgF3RkpLBg==
+"@algolia/ui-components-horizontal-slider-vdom@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@algolia/ui-components-horizontal-slider-vdom/-/ui-components-horizontal-slider-vdom-1.0.0.tgz#ec30565c157b3909121cd7818037aec10f10a1c2"
+  integrity sha512-XS1ljNMdxWwTwrnSGnysqZo51fdYYr0kV1s7jsiP3IIwJzpAXLLWACDzufPlYzjE5INwb5XduuoUIeGedGjXPg==
 
 "@babel/cli@7.13.0":
   version "7.13.0"
