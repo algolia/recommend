@@ -1,10 +1,7 @@
 /** @jsx h */
 import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
 import algoliarecommend from '@algolia/recommend';
-import {
-  frequentlyBoughtTogether,
-  relatedProducts,
-} from '@algolia/recommend-js';
+import { relatedProducts } from '@algolia/recommend-js';
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
@@ -140,48 +137,6 @@ function ReferenceItem({ item }) {
 }
 
 function renderRecommendations(selectedProduct) {
-  frequentlyBoughtTogether({
-    container: '#frequentlyBoughtTogether',
-    recommendClient,
-    indexName,
-    objectIDs: [selectedProduct.objectID],
-    itemComponent({ item }) {
-      return <RelatedItem item={item} onSelect={updateReferenceItem} />;
-    },
-    maxRecommendations: 3,
-    queryParameters: {
-      analytics: true,
-      clickAnalytics: true,
-    },
-    fallbackComponent() {
-      return relatedProducts({
-        recommendClient,
-        indexName,
-        objectIDs: [selectedProduct.objectID],
-        itemComponent({ item }) {
-          return <RelatedItem item={item} onSelect={updateReferenceItem} />;
-        },
-        view: horizontalSlider,
-        maxRecommendations: 10,
-        translations: {
-          title: 'Related products (fallback)',
-        },
-        fallbackParameters: {
-          facetFilters: [
-            `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-          ],
-        },
-        queryParameters: {
-          analytics: true,
-          clickAnalytics: true,
-          facetFilters: [
-            `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-          ],
-        },
-      });
-    },
-  });
-
   relatedProducts({
     container: '#relatedProducts',
     recommendClient,

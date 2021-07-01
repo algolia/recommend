@@ -2,14 +2,14 @@ import React from 'react';
 
 import './Hit.css';
 
-export function Hit({ hit, setSelectedProduct }) {
+export function Hit({ hit, onSelect }) {
   return (
     <a
       className="Hit Hit-link"
       href={hit.url}
       onClick={(event) => {
         event.preventDefault();
-        setSelectedProduct(hit);
+        onSelect(hit);
       }}
     >
       <div className="Hit-Image">

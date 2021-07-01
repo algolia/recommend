@@ -1,8 +1,5 @@
 import algoliarecommend from '@algolia/recommend';
-import {
-  FrequentlyBoughtTogether,
-  RelatedProducts,
-} from '@algolia/recommend-react';
+import { RelatedProducts } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 import React, { Fragment, useState } from 'react';
@@ -10,7 +7,6 @@ import React, { Fragment, useState } from 'react';
 import '@algolia/autocomplete-theme-classic';
 
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
-import { BundleView } from './BundleView';
 import { Hit } from './Hit';
 
 import '@algolia/ui-components-horizontal-slider-theme';
@@ -24,25 +20,8 @@ const indexName = 'gstar_demo_test';
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
 
-function RecommendedItem({ item, setSelectedProduct }) {
-  return <Hit hit={item} setSelectedProduct={setSelectedProduct} />;
-}
-
-function BundleItem({ item, setSelectedProduct }) {
-  return (
-    <a
-      className="Hit Hit-link"
-      href={item.url}
-      onClick={(event) => {
-        event.preventDefault();
-        setSelectedProduct(item);
-      }}
-    >
-      <div className="Hit-Image">
-        <img src={item.image_link} alt={item.name} />
-      </div>
-    </a>
-  );
+function RecommendedItem({ item, onSelect }) {
+  return <Hit hit={item} onSelect={onSelect} />;
 }
 
 function App() {
@@ -138,62 +117,12 @@ function App() {
             </div>
           </div>
 
-          <FrequentlyBoughtTogether
-            recommendClient={recommendClient}
-            indexName={indexName}
-            objectIDs={[selectedProduct.objectID]}
-            itemComponent={(props) => (
-              <BundleItem {...props} setSelectedProduct={setSelectedProduct} />
-            )}
-            maxRecommendations={2}
-            queryParameters={{
-              analytics: true,
-              clickAnalytics: true,
-            }}
-            view={(props) => (
-              <BundleView {...props} currentItem={selectedProduct} />
-            )}
-            fallbackComponent={() => (
-              <RelatedProducts
-                recommendClient={recommendClient}
-                indexName={indexName}
-                objectIDs={[selectedProduct.objectID]}
-                itemComponent={(props) => (
-                  <RecommendedItem
-                    {...props}
-                    setSelectedProduct={setSelectedProduct}
-                  />
-                )}
-                view={HorizontalSlider}
-                maxRecommendations={10}
-                translations={{
-                  title: 'Related products (fallback)',
-                }}
-                fallbackParameters={{
-                  facetFilters: [
-                    `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-                  ],
-                }}
-                queryParameters={{
-                  analytics: true,
-                  clickAnalytics: true,
-                  facetFilters: [
-                    `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-                  ],
-                }}
-              />
-            )}
-          />
-
           <RelatedProducts
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={(props) => (
-              <RecommendedItem
-                {...props}
-                setSelectedProduct={setSelectedProduct}
-              />
+              <RecommendedItem {...props} onSelect={setSelectedProduct} />
             )}
             maxRecommendations={10}
             view={HorizontalSlider}
