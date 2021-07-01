@@ -26,12 +26,13 @@ const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
 
 insights('init', { appId, apiKey });
+insights('setUserToken', 'user-token-1');
 
-function RecommendedItem({ item }) {
-  return <Hit hit={item} insights={insights} />;
+function RecommendedItem({ item, onSelect }) {
+  return <Hit hit={item} insights={insights} onSelect={onSelect} />;
 }
 
-function BundleItem({ item }) {
+function BundleItem({ item, onSelect }) {
   return (
     <a
       className="Hit Hit-link"
@@ -39,6 +40,7 @@ function BundleItem({ item }) {
       onClick={(event) => {
         event.preventDefault();
 
+        onSelect(item);
         insights('clickedObjectIDs', {
           objectIDs: [item.objectID],
           positions: [item.__position],
@@ -152,7 +154,9 @@ function App() {
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={BundleItem}
+            itemComponent={({ item }) => (
+              <BundleItem item={item} onSelect={setSelectedProduct} />
+            )}
             maxRecommendations={2}
             queryParameters={{
               analytics: true,
@@ -166,7 +170,9 @@ function App() {
                 recommendClient={recommendClient}
                 indexName={indexName}
                 objectIDs={[selectedProduct.objectID]}
-                itemComponent={RecommendedItem}
+                itemComponent={({ item }) => (
+                  <RecommendedItem item={item} onSelect={setSelectedProduct} />
+                )}
                 view={HorizontalSlider}
                 maxRecommendations={10}
                 translations={{
@@ -192,7 +198,9 @@ function App() {
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={RecommendedItem}
+            itemComponent={({ item }) => (
+              <RecommendedItem item={item} onSelect={setSelectedProduct} />
+            )}
             maxRecommendations={10}
             view={HorizontalSlider}
             translations={{

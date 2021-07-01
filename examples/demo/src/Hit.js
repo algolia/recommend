@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Hit.css';
 
-export function Hit({ hit, insights }) {
+export function Hit({ hit, insights, onSelect }) {
   return (
     <a
       className="Hit Hit-link"
@@ -10,6 +10,7 @@ export function Hit({ hit, insights }) {
       onClick={(event) => {
         event.preventDefault();
 
+        onSelect(hit);
         insights('clickedObjectIDs', {
           objectIDs: [hit.objectID],
           positions: [hit.__position],
