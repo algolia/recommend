@@ -11,7 +11,7 @@ about: Help us improve ui-components.
 
 <!-- Fork the sandbox, reproduce the bug and paste the URL. -->
 
-[**Preview →**](https://codesandbox.io/s/github/algolia/ui-components/tree/next/examples/demo?file=/src/App.js)
+[**Preview →**](https://codesandbox.io/s/github/algolia/ui-components/tree/next/examples/js-demo?file=/app.js)
 
 **Steps**
 

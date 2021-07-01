@@ -1,4 +1,4 @@
-# Recommend
+# ui-components
 
 [![Version](https://img.shields.io/npm/v/@algolia/ui-components-horizontal-slider-js.svg?style=flat-square)](https://www.npmjs.com/package/@algolia/ui-components-horizontal-slider-js) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
