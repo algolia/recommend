@@ -5,10 +5,14 @@ import { RecommendStatus } from './RecommendStatus';
 import { RecommendTranslations } from './RecommendTranslations';
 import { ViewProps } from './ViewProps';
 
+export type ItemComponentProps<TObject> = {
+  item: TObject;
+};
+
 export type ComponentProps<TObject> = {
   classNames: RecommendClassNames;
   recommendations: TObject[];
-  translations: Required<RecommendTranslations>;
+  translations: RecommendTranslations;
 };
 
 export type ChildrenProps<TObject> = ComponentProps<TObject> & {
@@ -19,14 +23,14 @@ export type ChildrenProps<TObject> = ComponentProps<TObject> & {
 };
 
 export type RecommendComponentProps<TObject> = {
-  itemComponent({ item: TObject }): JSX.Element;
+  itemComponent(props: ItemComponentProps<TObject>): JSX.Element;
   items: Array<RecordWithObjectID<TObject>>;
   classNames?: RecommendClassNames;
   children?(props: ChildrenProps<TObject>): JSX.Element;
   fallbackComponent?(): JSX.Element;
   headerComponent?(props: ComponentProps<TObject>): JSX.Element;
   status: RecommendStatus;
-  translations?: Required<RecommendTranslations>;
+  translations?: RecommendTranslations;
   view?(
     props: ViewProps<
       RecordWithObjectID<TObject>,

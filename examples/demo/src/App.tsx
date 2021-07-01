@@ -13,10 +13,10 @@ import '@algolia/autocomplete-theme-classic';
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
 import { BundleView } from './BundleView';
 import { Hit } from './Hit';
-
 import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
 import './Recommend.css';
+import { ProductHit, BundleItemProps } from './types';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
@@ -28,11 +28,7 @@ const recommendClient = algoliarecommend(appId, apiKey);
 insights('init', { appId, apiKey });
 insights('setUserToken', 'user-token-1');
 
-function RecommendedItem({ item, onSelect }) {
-  return <Hit hit={item} insights={insights} onSelect={onSelect} />;
-}
-
-function BundleItem({ item, onSelect }) {
+function BundleItem({ item, onSelect }: BundleItemProps) {
   return (
     <a
       className="Hit Hit-link"
@@ -58,7 +54,7 @@ function BundleItem({ item, onSelect }) {
 }
 
 function App() {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState<ProductHit>(null);
 
   return (
     <div className="container">
@@ -150,7 +146,7 @@ function App() {
             </div>
           </div>
 
-          <FrequentlyBoughtTogether
+          <FrequentlyBoughtTogether<ProductHit>
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
@@ -162,16 +158,24 @@ function App() {
               analytics: true,
               clickAnalytics: true,
             }}
-            view={(props) => (
-              <BundleView {...props} currentItem={selectedProduct} />
+            view={({ itemComponent, items }) => (
+              <BundleView
+                currentItem={selectedProduct}
+                itemComponent={itemComponent}
+                items={items}
+              />
             )}
             fallbackComponent={() => (
-              <RelatedProducts
+              <RelatedProducts<ProductHit>
                 recommendClient={recommendClient}
                 indexName={indexName}
                 objectIDs={[selectedProduct.objectID]}
                 itemComponent={({ item }) => (
-                  <RecommendedItem item={item} onSelect={setSelectedProduct} />
+                  <Hit
+                    hit={item}
+                    insights={insights}
+                    onSelect={setSelectedProduct}
+                  />
                 )}
                 view={HorizontalSlider}
                 maxRecommendations={10}
@@ -194,12 +198,16 @@ function App() {
             )}
           />
 
-          <RelatedProducts
+          <RelatedProducts<ProductHit>
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={({ item }) => (
-              <RecommendedItem item={item} onSelect={setSelectedProduct} />
+              <Hit
+                hit={item}
+                insights={insights}
+                onSelect={setSelectedProduct}
+              />
             )}
             maxRecommendations={10}
             view={HorizontalSlider}

@@ -1,8 +1,20 @@
-import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
-import React, { createElement, Fragment, useEffect, useRef } from 'react';
+import {
+  autocomplete,
+  AutocompleteOptions,
+  getAlgoliaResults,
+} from '@algolia/autocomplete-js';
+import React, {
+  createElement,
+  Fragment,
+  ReactElement,
+  useEffect,
+  useRef,
+} from 'react';
 import { render } from 'react-dom';
 
-export function Autocomplete(props) {
+import { ProductHit } from './types';
+
+export function Autocomplete(props: Partial<AutocompleteOptions<ProductHit>>) {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -14,7 +26,7 @@ export function Autocomplete(props) {
       container: containerRef.current,
       renderer: { createElement, Fragment },
       render({ children }, root) {
-        render(children, root);
+        render(children as ReactElement, root);
       },
       ...props,
     });
