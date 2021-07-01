@@ -139,32 +139,32 @@
   dependencies:
     "@algolia/logger-common" "4.10.2"
 
-"@algolia/recommend-core@1.0.0-experimental.6":
-  version "1.0.0-experimental.6"
-  resolved "https://registry.yarnpkg.com/@algolia/recommend-core/-/recommend-core-1.0.0-experimental.6.tgz#d8f3a52b18d68bcd60ddbb8b95d69f2a70cfa499"
-  integrity sha512-qpVBRaM1Ves0DhAl2MQwh+dGGNHmo3zPGLB16etpaJpyE1CtqvZiECQn4NZTkC7bJKzB82N1dgTRgZELPaN7eA==
+"@algolia/recommend-core@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@algolia/recommend-core/-/recommend-core-1.0.0.tgz#2eb0497597ab69ea1391ca53ce4b0e93788c68d4"
+  integrity sha512-VtS9GQqd/MgYMlksejWhDH3zc82XKEw6H6J/XUygfCJTGAw5Z4nERWj3YIqRaO5wXp3VOT2XU60kvHAuk/HDmw==
 
-"@algolia/recommend-js@1.0.0-experimental.6":
-  version "1.0.0-experimental.6"
-  resolved "https://registry.yarnpkg.com/@algolia/recommend-js/-/recommend-js-1.0.0-experimental.6.tgz#1379489a8aca8cc6ab148712c1fe6b27d127f768"
-  integrity sha512-FiOWja4I3Vv2bJdRCxmOjY32eIImPQ88XRaABUND1RIbw51IRnA50/u7id9eH6+BTR0iSxvp98QXS2H704jkLw==
+"@algolia/recommend-js@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@algolia/recommend-js/-/recommend-js-1.0.0.tgz#77f48098f28f4c77c79b8ed3ed2b722f8728a381"
+  integrity sha512-lZF2D4L7rRH1oyn81cGoinbySti0HcJx+lGOMyCYh249kJCpC5QR6sYz6zg3etUoJg6vYLIvgDLA7IrjUw7F/w==
   dependencies:
-    "@algolia/recommend-core" "1.0.0-experimental.6"
-    "@algolia/recommend-vdom" "1.0.0-experimental.6"
+    "@algolia/recommend-core" "1.0.0"
+    "@algolia/recommend-vdom" "1.0.0"
     preact "^10.0.0"
 
-"@algolia/recommend-react@1.0.0-experimental.6":
-  version "1.0.0-experimental.6"
-  resolved "https://registry.yarnpkg.com/@algolia/recommend-react/-/recommend-react-1.0.0-experimental.6.tgz#9158d11edfdba204f84283497fb97ffbf2fdef88"
-  integrity sha512-LzCKrsLA15zG1z+flXMRv9l+LqMZXF4tcYCVOCxKg0rCHzp7SAuYC/qNvINMV6BiW1seL0mNi1xdwfWhl1pLzg==
+"@algolia/recommend-react@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@algolia/recommend-react/-/recommend-react-1.0.0.tgz#a875f62698f334dac335d19215adf1d4181bf688"
+  integrity sha512-GgNYCt+1ChBLHL2HJUjf0CWMVVR+l6b3MkJtRWOsE1PTehyjzEUozrT7Y8kppCa5v6uKGLSd0cASH04tNaUXqg==
   dependencies:
-    "@algolia/recommend-core" "1.0.0-experimental.6"
-    "@algolia/recommend-vdom" "1.0.0-experimental.6"
+    "@algolia/recommend-core" "1.0.0"
+    "@algolia/recommend-vdom" "1.0.0"
 
-"@algolia/recommend-vdom@1.0.0-experimental.6":
-  version "1.0.0-experimental.6"
-  resolved "https://registry.yarnpkg.com/@algolia/recommend-vdom/-/recommend-vdom-1.0.0-experimental.6.tgz#087e6566ba94c269ccd4aa9a4bee23ee8cf7ad3d"
-  integrity sha512-Zi6BWwm5rhlvoaGLnWMxf6+UL3VI47puO3c/xib0pBLJ5YETr42e0U5Q0d4dh0HnTEas/niFrg5yNLroXAD2EA==
+"@algolia/recommend-vdom@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@algolia/recommend-vdom/-/recommend-vdom-1.0.0.tgz#856d129caee5bf080faa712cbc8534d9c300336c"
+  integrity sha512-pboe++QyfoNjOO4Ni8mwFYsC1+5qYgvPlvxKgjiaT51RxfCBTWSRZGjWQ2rcRI4Zipg049jDdMCa/kBje3FDHA==
 
 "@algolia/recommend@4.10.2":
   version "4.10.2"
@@ -2378,10 +2378,10 @@
     "@octokit/types" "^6.0.3"
     universal-user-agent "^6.0.0"
 
-"@octokit/openapi-types@^8.1.3":
-  version "8.1.3"
-  resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-8.1.3.tgz#45fbb4b0e5a5d61b21aeef7f33d345e05766236b"
-  integrity sha512-iK7SfjjkGdIiopuKEMAzPxSagZtIzWjwfYFBFxLKIS4Q4S8rSLQk7EnlTok2/bNAz1BvxnGKPKe+auSiCIU5QQ==
+"@octokit/openapi-types@^8.1.4":
+  version "8.1.4"
+  resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-8.1.4.tgz#20684667b50176b5d24cdb89799a8a12d38c3775"
+  integrity sha512-NnGr4NNDqO5wjSDJo5nxrGtzZUwoT23YasqK2H4Pav/6vSgeVTxuqCL9Aeh+cWfTxDomj1M4Os5BrXFsvl7qiQ==
 
 "@octokit/plugin-enterprise-rest@^6.0.1":
   version "6.0.1"
@@ -2408,12 +2408,12 @@
     "@octokit/types" "^4.1.6"
     deprecation "^2.3.1"
 
-"@octokit/plugin-rest-endpoint-methods@5.3.5":
-  version "5.3.5"
-  resolved "https://registry.yarnpkg.com/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-5.3.5.tgz#2ad8dd6e0ee0e9db2a807879bf4ab7775834f27c"
-  integrity sha512-QL3vIDYbANwxfrWOFlgn0rkp1ojlZKccsTb0+9x9keG8XGIq4ZJhxgpyJASYIui1QqCV8JIfDiEqX2dzr7x8KA==
+"@octokit/plugin-rest-endpoint-methods@5.3.7":
+  version "5.3.7"
+  resolved "https://registry.yarnpkg.com/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-5.3.7.tgz#a55f9ad0a0f43256813dcb5c4a3c70dad582696a"
+  integrity sha512-LAgTLOsJ86ig2wYSpcSx+UWt7aQYYsEZ/Tf/pksAVQWKNcGuTVCDl9OUiPhQ7DZelNozYVWTO9Iyjd/soe4tug==
   dependencies:
-    "@octokit/types" "^6.17.1"
+    "@octokit/types" "^6.17.4"
     deprecation "^2.3.1"
 
 "@octokit/request-error@^2.0.5", "@octokit/request-error@^2.1.0":
@@ -2448,14 +2448,14 @@
     "@octokit/plugin-rest-endpoint-methods" "3.17.0"
 
 "@octokit/rest@^18.1.0":
-  version "18.6.4"
-  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-18.6.4.tgz#450339a66122febd3af9f67911ba34eb469e0ef6"
-  integrity sha512-1q1H1rJIjOjGd9/qIWaQgLaxtWcQ5H0tdh1D7JHqdsxopGciIUfU15GOZQf5lhW1YeQnlILHFynhKaZpXDiwuA==
+  version "18.6.6"
+  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-18.6.6.tgz#5a20078a32d36752cef7cc1f5e40160c3a5055b2"
+  integrity sha512-kCLvz8MSh+KToXySdqUp80caBom1ZQmsX3gbT3osfbJy6fD86QObUjzAOD3D3Awz3X7ng24+lB+imvSr5EnM7g==
   dependencies:
     "@octokit/core" "^3.5.0"
     "@octokit/plugin-paginate-rest" "^2.6.2"
     "@octokit/plugin-request-log" "^1.0.2"
-    "@octokit/plugin-rest-endpoint-methods" "5.3.5"
+    "@octokit/plugin-rest-endpoint-methods" "5.3.7"
 
 "@octokit/types@^4.1.6":
   version "4.1.10"
@@ -2471,12 +2471,12 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@octokit/types@^6.0.3", "@octokit/types@^6.16.1", "@octokit/types@^6.17.1", "@octokit/types@^6.17.3":
-  version "6.17.3"
-  resolved "https://registry.yarnpkg.com/@octokit/types/-/types-6.17.3.tgz#af5aaae50bd9230ac502d288a937c0d8e9f2181a"
-  integrity sha512-l3JiWbtK95CTsHTuF8WpE0Raq9efWUUU88CiWiCxRgTsauUkIRmVYZoDZTwAHn1xAnPz0aezQynIo6igS9EqQA==
+"@octokit/types@^6.0.3", "@octokit/types@^6.16.1", "@octokit/types@^6.17.3", "@octokit/types@^6.17.4":
+  version "6.17.4"
+  resolved "https://registry.yarnpkg.com/@octokit/types/-/types-6.17.4.tgz#5ec011bfe3d08b7605c7d92a15796c470ee541b6"
+  integrity sha512-Ghk/JC4zC/1al1GwH6p8jVX6pLdypSWmbnx6h79C/yo3DeaDd6MsNsBFlHu22KbkFh+CdcAzFqdP7UdPaPPmmA==
   dependencies:
-    "@octokit/openapi-types" "^8.1.3"
+    "@octokit/openapi-types" "^8.1.4"
 
 "@parcel/babel-ast-utils@2.0.0-beta.2":
   version "2.0.0-beta.2"
@@ -5800,9 +5800,9 @@ ejs@^3.0.0:
     jake "^10.6.1"
 
 electron-to-chromium@^1.3.723:
-  version "1.3.762"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.762.tgz#3fa4e3bcbda539b50e3aa23041627063a5cffe61"
-  integrity sha512-LehWjRpfPcK8F1Lf/NZoAwWLWnjJVo0SZeQ9j/tvnBWYcT99qDqgo4raAfS2oTKZjPrR/jxruh85DGgDUmywEA==
+  version "1.3.763"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.763.tgz#93f6f02506d099941f557b9db9ba50b30215bf15"
+  integrity sha512-UyvEPae0wvzsyNJhVfGeFSOlUkHEze8xSIiExO5tZQ8QTr7obFiJWGk3U4e7afFOJMQJDszqU/3Pk5jtKiaSEg==
 
 elliptic@^6.5.3:
   version "6.5.4"

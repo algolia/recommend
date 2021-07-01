@@ -5,7 +5,7 @@ VDOM package for [horizontal-slider-vdom](https://github.com/algolia/ui-componen
 ## Installation
 
 ```sh
-yarn add @algolia/horizontal-slider-vdom@experimental
+yarn add @algolia/horizontal-slider-vdom
 # or
-npm install @algolia/horizontal-slider-vdom@experimental
+npm install @algolia/horizontal-slider-vdom
 ```
