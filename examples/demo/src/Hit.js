@@ -2,21 +2,14 @@ import React from 'react';
 
 import './Hit.css';
 
-export function Hit({ hit, insights }) {
+export function Hit({ hit, setSelectedProduct }) {
   return (
     <a
       className="Hit Hit-link"
       href={hit.url}
       onClick={(event) => {
         event.preventDefault();
-
-        insights('clickedObjectIDs', {
-          objectIDs: [hit.objectID],
-          positions: [hit.__position],
-          eventName: 'Product Clicked',
-          queryID: hit.__queryID,
-          index: hit.__indexName,
-        });
+        setSelectedProduct(hit);
       }}
     >
       <div className="Hit-Image">
@@ -29,19 +22,7 @@ export function Hit({ hit, insights }) {
 
         <div className="Hit-Price">${hit.price}</div>
 
-        <button
-          className="Hit-Button"
-          onClick={(event) => {
-            event.preventDefault();
-
-            insights('convertedObjectIDsAfterSearch', {
-              objectIDs: [hit.objectID],
-              eventName: 'Product Added To Cart',
-              queryID: hit.__queryID,
-              index: hit.__indexName,
-            });
-          }}
-        >
+        <button className="Hit-Button">
           <span className="Hit-ButtonIcon">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path

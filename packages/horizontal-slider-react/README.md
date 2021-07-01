@@ -19,10 +19,15 @@ import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react
 
 import '@algolia/ui-components-horizontal-slider-theme';
 
+const items = [
+  { objectID: '1', name: 'Item 1' },
+  { objectID: '2', name: 'Item 2' },
+];
+
 function Item({ item }) {
   return (
     <pre>
-      <code>{JSON.stringify(item)}</code>
+      <code>{item.name}</code>
     </pre>
   );
 }
@@ -34,9 +39,9 @@ function App() {
 }
 ```
 
-### With recommendations
+### With Algolia Recommend
 
-See usage for [Recommend](/packages/recommend-react#horizontal-slider-view).
+See usage for [Recommend](https://github.com/algolia/recommend/tree/next/packages/recommend-react#horizontal-slider-view).
 
 ## Props
 

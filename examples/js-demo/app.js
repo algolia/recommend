@@ -8,7 +8,6 @@ import {
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
-import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
@@ -17,13 +16,10 @@ import { RelatedItem } from './RelatedItem';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
-const indexName = 'gstar_demo_test';
+const indexName = 'gstar_demo_test_for_docs';
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
-
-insights('init', { appId, apiKey });
-insights('setUserToken', 'user-token-1');
 
 function updateReferenceItem(item) {
   render(
@@ -150,13 +146,7 @@ function renderRecommendations(selectedProduct) {
     indexName,
     objectIDs: [selectedProduct.objectID],
     itemComponent({ item }) {
-      return (
-        <RelatedItem
-          item={item}
-          insights={insights}
-          onSelect={updateReferenceItem}
-        />
-      );
+      return <RelatedItem item={item} onSelect={updateReferenceItem} />;
     },
     maxRecommendations: 3,
     queryParameters: {
@@ -169,13 +159,7 @@ function renderRecommendations(selectedProduct) {
         indexName,
         objectIDs: [selectedProduct.objectID],
         itemComponent({ item }) {
-          return (
-            <RelatedItem
-              item={item}
-              insights={insights}
-              onSelect={updateReferenceItem}
-            />
-          );
+          return <RelatedItem item={item} onSelect={updateReferenceItem} />;
         },
         view: horizontalSlider,
         maxRecommendations: 10,
@@ -204,13 +188,7 @@ function renderRecommendations(selectedProduct) {
     indexName,
     objectIDs: [selectedProduct.objectID],
     itemComponent({ item }) {
-      return (
-        <RelatedItem
-          item={item}
-          insights={insights}
-          onSelect={updateReferenceItem}
-        />
-      );
+      return <RelatedItem item={item} onSelect={updateReferenceItem} />;
     },
     view: horizontalSlider,
     maxRecommendations: 10,

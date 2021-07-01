@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from 'preact';
 
-export function RelatedItem({ item, insights, onSelect }) {
+export function RelatedItem({ item, onSelect }) {
   return (
     <a
       className="RelatedItem grid gap-2 color-inherit no-underline"
@@ -9,18 +9,7 @@ export function RelatedItem({ item, insights, onSelect }) {
       onClick={(event) => {
         event.preventDefault();
 
-        // eslint-disable-next-line no-console
-        console.log(item.objectID);
-
         onSelect(item);
-
-        insights('clickedObjectIDs', {
-          objectIDs: [item.objectID],
-          positions: [item.__position],
-          eventName: 'Product Clicked',
-          queryID: item.__queryID,
-          index: item.__indexName,
-        });
       }}
     >
       <div className="relative">
@@ -77,19 +66,7 @@ export function RelatedItem({ item, insights, onSelect }) {
 
         <div className="my-2 font-semibold text-gray-800">${item.price}</div>
 
-        <button
-          className="flex items-center justify-center w-full bg-white border-nebula-500 border-solid border rounded text-nebula-900 cursor-pointer py-1 px-2 font-semibold"
-          onClick={(event) => {
-            event.preventDefault();
-
-            insights('convertedObjectIDsAfterSearch', {
-              objectIDs: [item.objectID],
-              eventName: 'Product Added To Cart',
-              queryID: item.__queryID,
-              index: item.__indexName,
-            });
-          }}
-        >
+        <button className="flex items-center justify-center w-full bg-white border-nebula-500 border-solid border rounded text-nebula-900 cursor-pointer py-1 px-2 font-semibold">
           Add to cart
         </button>
       </div>

@@ -18,7 +18,9 @@ To get started, you need a container for your slider to go in. If you don’t ha
 <div id="horizontal-slider"></div>
 ```
 
-Then, insert your slider into it by calling the `horizontalSlider` function and providing the [`container`](#container). It can be a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
+Then, you can call the `horizontalSlider` function and provide the container. It can be a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
+
+### Standalone
 
 ```js
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
@@ -39,13 +41,19 @@ horizontalSlider({
 });
 ```
 
-## Params
+### With Algolia Recommend
+
+See usage for [Recommend](https://github.com/algolia/recommend/tree/next/packages/recommend-js#horizontal-slider-view).
+
+## Props
 
 ### `container`
 
 > `string | HTMLElement`
 
-The container for the horizontal slider. You can either pass a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
+The container for the component. You can either pass a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) or an [Element](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement). If there are several containers matching the selector, it picks up the first one.
+
+When `undefined`, the function returns a JSX element for you to inject wherever you want.
 
 ### `items`
 

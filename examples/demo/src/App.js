@@ -6,7 +6,6 @@ import {
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 import React, { Fragment, useState } from 'react';
-import insights from 'search-insights';
 
 import '@algolia/autocomplete-theme-classic';
 
@@ -25,27 +24,18 @@ const indexName = 'gstar_demo_test';
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
 
-insights('init', { appId, apiKey });
-
-function RecommendedItem({ item }) {
-  return <Hit hit={item} insights={insights} />;
+function RecommendedItem({ item, setSelectedProduct }) {
+  return <Hit hit={item} setSelectedProduct={setSelectedProduct} />;
 }
 
-function BundleItem({ item }) {
+function BundleItem({ item, setSelectedProduct }) {
   return (
     <a
       className="Hit Hit-link"
       href={item.url}
       onClick={(event) => {
         event.preventDefault();
-
-        insights('clickedObjectIDs', {
-          objectIDs: [item.objectID],
-          positions: [item.__position],
-          eventName: 'Product Clicked',
-          queryID: item.__queryID,
-          index: item.__indexName,
-        });
+        setSelectedProduct(item);
       }}
     >
       <div className="Hit-Image">
@@ -60,7 +50,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Algolia Recommend</h1>
+      <h1>Algolia UI Components for React</h1>
 
       <Autocomplete
         placeholder="Search for a product"
@@ -152,7 +142,9 @@ function App() {
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={BundleItem}
+            itemComponent={(props) => (
+              <BundleItem {...props} setSelectedProduct={setSelectedProduct} />
+            )}
             maxRecommendations={2}
             queryParameters={{
               analytics: true,
@@ -166,7 +158,12 @@ function App() {
                 recommendClient={recommendClient}
                 indexName={indexName}
                 objectIDs={[selectedProduct.objectID]}
-                itemComponent={RecommendedItem}
+                itemComponent={(props) => (
+                  <RecommendedItem
+                    {...props}
+                    setSelectedProduct={setSelectedProduct}
+                  />
+                )}
                 view={HorizontalSlider}
                 maxRecommendations={10}
                 translations={{
@@ -192,7 +189,12 @@ function App() {
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={RecommendedItem}
+            itemComponent={(props) => (
+              <RecommendedItem
+                {...props}
+                setSelectedProduct={setSelectedProduct}
+              />
+            )}
             maxRecommendations={10}
             view={HorizontalSlider}
             translations={{
