@@ -8,15 +8,15 @@ import algoliasearch from 'algoliasearch';
 import React, { Fragment, useState } from 'react';
 import insights from 'search-insights';
 
-import '@algolia/autocomplete-theme-classic';
-
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
 import { BundleView } from './BundleView';
 import { Hit } from './Hit';
+import { ProductHit, BundleItemProps } from './types';
+
+import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
 import './Recommend.css';
-import { ProductHit, BundleItemProps } from './types';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
