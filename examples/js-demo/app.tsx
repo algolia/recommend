@@ -10,11 +10,11 @@ import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
 import insights from 'search-insights';
 
-import '@algolia/autocomplete-theme-classic';
-import '@algolia/ui-components-horizontal-slider-theme';
-
 import { RelatedItem } from './RelatedItem';
 import { ProductHit, ReferenceItemProps } from './types';
+
+import '@algolia/autocomplete-theme-classic';
+import '@algolia/ui-components-horizontal-slider-theme';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
