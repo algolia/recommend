@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/@algolia/ui-components-horizontal-slider-js.svg?style=flat-square)](https://www.npmjs.com/package/@algolia/ui-components-horizontal-slider-js) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
-This repository is packaging the UI components for Algolia, available for Vanilla JavaScript and React.
+This repository is packaging the Algolia UI components, available for Vanilla JavaScript and React.
 
 ## Packages
 

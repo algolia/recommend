@@ -1,8 +1,9 @@
 import React from 'react';
 
 import './Hit.css';
+import { HitProps } from './types';
 
-export function Hit({ hit, onSelect }) {
+export function Hit({ hit, onSelect }: HitProps) {
   return (
     <a
       className="Hit Hit-link"

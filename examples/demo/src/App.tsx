@@ -8,6 +8,7 @@ import '@algolia/autocomplete-theme-classic';
 
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
 import { Hit } from './Hit';
+import { ProductHit } from './types';
 
 import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
@@ -19,10 +20,6 @@ const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
-
-function RecommendedItem({ item, onSelect }) {
-  return <Hit hit={item} onSelect={onSelect} />;
-}
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -117,12 +114,12 @@ function App() {
             </div>
           </div>
 
-          <RelatedProducts
+          <RelatedProducts<ProductHit>
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={(props) => (
-              <RecommendedItem {...props} onSelect={setSelectedProduct} />
+            itemComponent={({ item }) => (
+              <Hit hit={item} onSelect={setSelectedProduct} />
             )}
             maxRecommendations={10}
             view={HorizontalSlider}

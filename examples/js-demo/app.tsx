@@ -10,15 +10,16 @@ import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
 
 import { RelatedItem } from './RelatedItem';
+import { ProductHit, ReferenceItemProps } from './types';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
-const indexName = 'gstar_demo_test_for_docs';
+const indexName = 'gstar_demo_test';
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
 
-function updateReferenceItem(item) {
+function updateReferenceItem(item: ProductHit) {
   render(
     <ReferenceItem item={item} />,
     document.querySelector('#referenceHit')
@@ -26,7 +27,7 @@ function updateReferenceItem(item) {
   renderRecommendations(item);
 }
 
-autocomplete({
+autocomplete<ProductHit>({
   container: '#autocomplete',
   placeholder: 'Search for a product',
   openOnFocus: true,
@@ -87,7 +88,7 @@ autocomplete({
   },
 });
 
-function ReferenceItem({ item }) {
+function ReferenceItem({ item }: ReferenceItemProps) {
   return (
     <div className="my-2">
       <div
@@ -136,8 +137,8 @@ function ReferenceItem({ item }) {
   );
 }
 
-function renderRecommendations(selectedProduct) {
-  relatedProducts({
+function renderRecommendations(selectedProduct: ProductHit) {
+  relatedProducts<ProductHit>({
     container: '#relatedProducts',
     recommendClient,
     indexName,
