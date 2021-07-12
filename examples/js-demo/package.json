@@ -9,8 +9,8 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "@algolia/autocomplete-js": "1.1.0",
-    "@algolia/autocomplete-theme-classic": "1.1.0",
+    "@algolia/autocomplete-js": "1.2.1",
+    "@algolia/autocomplete-theme-classic": "1.2.1",
     "@algolia/client-search": "4.10.2",
     "@algolia/recommend": "4.10.2",
     "@algolia/recommend-js": "1.0.0",
