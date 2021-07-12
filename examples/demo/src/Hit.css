@@ -31,24 +31,3 @@
 .Hit-Price {
   font-weight: bold;
 }
-
-.Hit-Button {
-  align-items: center;
-  background: #fff;
-  border: 1px solid #5468ff;
-  border-radius: 4px;
-  color: #141d61;
-  cursor: pointer;
-  display: flex;
-  padding: 0;
-  justify-content: center;
-  padding: 6px;
-  font-weight: 600;
-  position: relative;
-}
-
-.Hit-ButtonIcon {
-  position: absolute;
-  left: 6px;
-  top: 5px;
-}
