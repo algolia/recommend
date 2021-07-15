@@ -28,7 +28,7 @@ const recommendClient = algoliarecommend(appId, apiKey);
 insights('init', { appId, apiKey });
 insights('setUserToken', 'user-token-1');
 
-function BundleItem({ item, onSelect }: BundleItemProps) {
+function BundleItem({ item, onSelect }: BundleItemProps<ProductHit>) {
   return (
     <a
       className="Hit Hit-link"
@@ -54,7 +54,9 @@ function BundleItem({ item, onSelect }: BundleItemProps) {
 }
 
 function App() {
-  const [selectedProduct, setSelectedProduct] = useState<ProductHit>(null);
+  const [selectedProduct, setSelectedProduct] = useState<ProductHit | null>(
+    null
+  );
 
   return (
     <div className="container">

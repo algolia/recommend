@@ -1,4 +1,8 @@
-import { ProductHit } from './ProductHit';
+export type BaseObject = {
+  objectID: string;
+  name: string;
+  price: number;
+};
 
 export type BundleViewTranslations = Partial<{
   totalPrice: string;
@@ -6,11 +10,11 @@ export type BundleViewTranslations = Partial<{
   addToCart(count: number): string;
 }>;
 
-export type BundleViewProps = {
-  currentItem: ProductHit;
+export type BundleViewProps<TObject> = {
+  currentItem: TObject;
   formatPrice?: (price: number) => string;
-  getAmount?(items: ProductHit[]): number;
-  itemComponent({ item: ProductHit }): JSX.Element;
-  items: ProductHit[];
+  getAmount?(items: TObject[]): number;
+  itemComponent({ item: TObject }): JSX.Element;
+  items: TObject[];
   translations?: BundleViewTranslations;
 };

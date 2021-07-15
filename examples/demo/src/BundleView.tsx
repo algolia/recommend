@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { ProductHit, BundleViewProps } from './types';
+import { BaseObject, BundleViewProps } from './types';
 
 import './BundleView.css';
 
-function getAmountDefault(items: ProductHit[]) {
+function getAmountDefault<TObject extends BaseObject>(items: TObject[]) {
   return items.reduce((sum, current) => sum + current.price, 0);
 }
 
@@ -12,7 +12,9 @@ function formatPriceDefault(price: number) {
   return `$${price}`;
 }
 
-export function BundleView(props: BundleViewProps): JSX.Element {
+export function BundleView<TObject extends BaseObject>(
+  props: BundleViewProps<TObject>
+): JSX.Element {
   const items = [props.currentItem, ...props.items];
   const formatPrice = props.formatPrice ?? formatPriceDefault;
   const getAmount = props.getAmount ?? getAmountDefault;

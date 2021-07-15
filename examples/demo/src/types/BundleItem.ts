@@ -1,6 +1,4 @@
-import { ProductHit } from './ProductHit';
-
-export type BundleItemProps = {
-  item: ProductHit;
-  onSelect(item: ProductHit): void;
+export type BundleItemProps<TObject> = {
+  item: TObject;
+  onSelect(item: TObject): void;
 };

@@ -15,7 +15,7 @@ import { render } from 'react-dom';
 import { ProductHit } from './types';
 
 export function Autocomplete(props: Partial<AutocompleteOptions<ProductHit>>) {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) {
