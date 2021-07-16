@@ -2,8 +2,8 @@
   "name": "@algolia/recommend-vdom",
   "version": "1.0.0",
   "license": "MIT",
-  "homepage": "https://github.com/algolia/ui-components",
-  "repository": "algolia/ui-components",
+  "homepage": "https://github.com/algolia/recommend",
+  "repository": "algolia/recommend",
   "author": {
     "name": "Algolia, Inc.",
     "url": "https://www.algolia.com"

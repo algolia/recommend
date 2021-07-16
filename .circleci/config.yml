@@ -34,7 +34,7 @@ aliases:
       cp -R /tmp/workspace/packages/recommend-vdom/dist packages/recommend-vdom/
 
 defaults: &defaults
-  working_directory: ~/ui-components
+  working_directory: ~/recommend
   docker:
     - image: circleci/node:14.15.0
 
