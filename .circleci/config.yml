@@ -23,19 +23,11 @@ aliases:
     command: |
       set -exu
 
-      mkdir -p packages/horizontal-slider-js/dist
-      mkdir -p packages/horizontal-slider-react/dist
-      mkdir -p packages/horizontal-slider-vdom/dist
-      mkdir -p packages/horizontal-slider-theme/dist
       mkdir -p packages/recommend-core/dist
       mkdir -p packages/recommend-js/dist
       mkdir -p packages/recommend-react/dist
       mkdir -p packages/recommend-vdom/dist
 
-      cp -R /tmp/workspace/packages/horizontal-slider-js/dist packages/horizontal-slider-js/
-      cp -R /tmp/workspace/packages/horizontal-slider-react/dist packages/horizontal-slider-react/
-      cp -R /tmp/workspace/packages/horizontal-slider-vdom/dist packages/horizontal-slider-vdom/
-      cp -R /tmp/workspace/packages/horizontal-slider-theme/dist packages/horizontal-slider-theme/
       cp -R /tmp/workspace/packages/recommend-core/dist packages/recommend-core/
       cp -R /tmp/workspace/packages/recommend-js/dist packages/recommend-js/
       cp -R /tmp/workspace/packages/recommend-react/dist packages/recommend-react/
@@ -69,19 +61,11 @@ jobs:
           command: |
             set -exu
 
-            mkdir -p /tmp/workspace/packages/horizontal-slider-js/dist
-            mkdir -p /tmp/workspace/packages/horizontal-slider-react/dist
-            mkdir -p /tmp/workspace/packages/horizontal-slider-vdom/dist
-            mkdir -p /tmp/workspace/packages/horizontal-slider-theme/dist
             mkdir -p /tmp/workspace/packages/recommend-core/dist
             mkdir -p /tmp/workspace/packages/recommend-js/dist
             mkdir -p /tmp/workspace/packages/recommend-react/dist
             mkdir -p /tmp/workspace/packages/recommend-vdom/dist
 
-            cp -R packages/horizontal-slider-js/dist /tmp/workspace/packages/horizontal-slider-js
-            cp -R packages/horizontal-slider-react/dist /tmp/workspace/packages/horizontal-slider-react
-            cp -R packages/horizontal-slider-vdom/dist /tmp/workspace/packages/horizontal-slider-vdom
-            cp -R packages/horizontal-slider-theme/dist /tmp/workspace/packages/horizontal-slider-theme
             cp -R packages/recommend-core/dist /tmp/workspace/packages/recommend-core
             cp -R packages/recommend-js/dist /tmp/workspace/packages/recommend-js
             cp -R packages/recommend-react/dist /tmp/workspace/packages/recommend-react

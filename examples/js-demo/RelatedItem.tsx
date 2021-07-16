@@ -1,7 +1,9 @@
 /** @jsx h */
 import { h } from 'preact';
 
-export function RelatedItem({ item, insights, onSelect }) {
+import { RelatedItemProps } from './types';
+
+export function RelatedItem({ item, insights, onSelect }: RelatedItemProps) {
   return (
     <a
       className="RelatedItem grid gap-2 color-inherit no-underline"

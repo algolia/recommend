@@ -10,10 +10,11 @@ import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
 import insights from 'search-insights';
 
+import { RelatedItem } from './RelatedItem';
+import { ProductHit, ReferenceItemProps } from './types';
+
 import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
-
-import { RelatedItem } from './RelatedItem';
 
 const appId = 'HYDY1KWTWB';
 const apiKey = '28cf6d38411215e2eef188e635216508';
@@ -25,7 +26,7 @@ const recommendClient = algoliarecommend(appId, apiKey);
 insights('init', { appId, apiKey });
 insights('setUserToken', 'user-token-1');
 
-function updateReferenceItem(item) {
+function updateReferenceItem(item: ProductHit) {
   render(
     <ReferenceItem item={item} />,
     document.querySelector('#referenceHit')
@@ -33,7 +34,7 @@ function updateReferenceItem(item) {
   renderRecommendations(item);
 }
 
-autocomplete({
+autocomplete<ProductHit>({
   container: '#autocomplete',
   placeholder: 'Search for a product',
   openOnFocus: true,
@@ -94,7 +95,7 @@ autocomplete({
   },
 });
 
-function ReferenceItem({ item }) {
+function ReferenceItem({ item }: ReferenceItemProps) {
   return (
     <div className="my-2">
       <div
@@ -143,8 +144,8 @@ function ReferenceItem({ item }) {
   );
 }
 
-function renderRecommendations(selectedProduct) {
-  frequentlyBoughtTogether({
+function renderRecommendations(selectedProduct: ProductHit) {
+  frequentlyBoughtTogether<ProductHit>({
     container: '#frequentlyBoughtTogether',
     recommendClient,
     indexName,
@@ -164,7 +165,7 @@ function renderRecommendations(selectedProduct) {
       clickAnalytics: true,
     },
     fallbackComponent() {
-      return relatedProducts({
+      return relatedProducts<ProductHit>({
         recommendClient,
         indexName,
         objectIDs: [selectedProduct.objectID],
@@ -198,7 +199,7 @@ function renderRecommendations(selectedProduct) {
     },
   });
 
-  relatedProducts({
+  relatedProducts<ProductHit>({
     container: '#relatedProducts',
     recommendClient,
     indexName,

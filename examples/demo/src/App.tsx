@@ -8,12 +8,12 @@ import algoliasearch from 'algoliasearch';
 import React, { Fragment, useState } from 'react';
 import insights from 'search-insights';
 
-import '@algolia/autocomplete-theme-classic';
-
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
 import { BundleView } from './BundleView';
 import { Hit } from './Hit';
+import { ProductHit, BundleItemProps } from './types';
 
+import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
 import './Recommend.css';
@@ -26,12 +26,9 @@ const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
 
 insights('init', { appId, apiKey });
+insights('setUserToken', 'user-token-1');
 
-function RecommendedItem({ item }) {
-  return <Hit hit={item} insights={insights} />;
-}
-
-function BundleItem({ item }) {
+function BundleItem({ item, onSelect }: BundleItemProps<ProductHit>) {
   return (
     <a
       className="Hit Hit-link"
@@ -39,6 +36,7 @@ function BundleItem({ item }) {
       onClick={(event) => {
         event.preventDefault();
 
+        onSelect(item);
         insights('clickedObjectIDs', {
           objectIDs: [item.objectID],
           positions: [item.__position],
@@ -56,7 +54,9 @@ function BundleItem({ item }) {
 }
 
 function App() {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState<ProductHit | null>(
+    null
+  );
 
   return (
     <div className="container">
@@ -148,25 +148,37 @@ function App() {
             </div>
           </div>
 
-          <FrequentlyBoughtTogether
+          <FrequentlyBoughtTogether<ProductHit>
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={BundleItem}
+            itemComponent={({ item }) => (
+              <BundleItem item={item} onSelect={setSelectedProduct} />
+            )}
             maxRecommendations={2}
             queryParameters={{
               analytics: true,
               clickAnalytics: true,
             }}
-            view={(props) => (
-              <BundleView {...props} currentItem={selectedProduct} />
+            view={({ itemComponent, items }) => (
+              <BundleView
+                currentItem={selectedProduct}
+                itemComponent={itemComponent}
+                items={items}
+              />
             )}
             fallbackComponent={() => (
-              <RelatedProducts
+              <RelatedProducts<ProductHit>
                 recommendClient={recommendClient}
                 indexName={indexName}
                 objectIDs={[selectedProduct.objectID]}
-                itemComponent={RecommendedItem}
+                itemComponent={({ item }) => (
+                  <Hit
+                    hit={item}
+                    insights={insights}
+                    onSelect={setSelectedProduct}
+                  />
+                )}
                 view={HorizontalSlider}
                 maxRecommendations={10}
                 translations={{
@@ -188,11 +200,17 @@ function App() {
             )}
           />
 
-          <RelatedProducts
+          <RelatedProducts<ProductHit>
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={RecommendedItem}
+            itemComponent={({ item }) => (
+              <Hit
+                hit={item}
+                insights={insights}
+                onSelect={setSelectedProduct}
+              />
+            )}
             maxRecommendations={10}
             view={HorizontalSlider}
             translations={{

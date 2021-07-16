@@ -1,16 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
+import { BaseObject, BundleViewProps } from './types';
+
 import './BundleView.css';
 
-function getAmountDefault(items) {
+function getAmountDefault<TObject extends BaseObject>(items: TObject[]) {
   return items.reduce((sum, current) => sum + current.price, 0);
 }
 
-function formatPriceDefault(price) {
+function formatPriceDefault(price: number) {
   return `$${price}`;
 }
 
-export function BundleView(props) {
+export function BundleView<TObject extends BaseObject>(
+  props: BundleViewProps<TObject>
+): JSX.Element {
   const items = [props.currentItem, ...props.items];
   const formatPrice = props.formatPrice ?? formatPriceDefault;
   const getAmount = props.getAmount ?? getAmountDefault;
@@ -21,7 +25,7 @@ export function BundleView(props) {
     () => ({
       totalPrice: 'Total price',
       thisArticle: 'This article',
-      addToCart: (count) => {
+      addToCart: (count: number) => {
         if (count === 1) {
           return `Add ${count} product to cart`;
         }
@@ -46,7 +50,7 @@ export function BundleView(props) {
               selectedItems.find((x) => x.objectID === item.objectID)
             );
 
-            function onChange(event) {
+            function onChange(event: React.ChangeEvent<HTMLInputElement>) {
               setSelectedItems((items) =>
                 event.target.checked
                   ? [...items, item]
