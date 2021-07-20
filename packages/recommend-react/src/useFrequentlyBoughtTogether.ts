@@ -3,28 +3,63 @@ import {
   GetFrequentlyBoughtTogetherProps,
   GetRecommendationsResult,
 } from '@algolia/recommend-core';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
 
-export function useFrequentlyBoughtTogether<TObject>(
-  props: GetFrequentlyBoughtTogetherProps<TObject>
-) {
+export function useFrequentlyBoughtTogether<TObject>({
+  indexName,
+  objectIDs,
+  recommendClient,
+  maxRecommendations,
+  queryParameters,
+  threshold,
+  transformItems,
+}: GetFrequentlyBoughtTogetherProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
+  const propsRef = useRef({
+    recommendClient,
+    queryParameters,
+    transformItems,
+  });
+  const stringifiedObjectIDs = JSON.stringify(objectIDs);
 
-  useAlgoliaAgent({ recommendClient: props.recommendClient });
+  useAlgoliaAgent({ recommendClient: propsRef.current.recommendClient });
 
   useEffect(() => {
+    propsRef.current = {
+      recommendClient,
+      queryParameters,
+      transformItems,
+    };
+  });
+
+  useEffect(() => {
+    console.log('effect', threshold, objectIDs);
+
     setStatus('loading');
-    getFrequentlyBoughtTogether(props).then((response) => {
+    getFrequentlyBoughtTogether({
+      ...propsRef.current,
+      indexName,
+      maxRecommendations,
+      threshold,
+      objectIDs,
+    }).then((response) => {
       setResult(response);
       setStatus('idle');
     });
-  }, [props, setStatus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    stringifiedObjectIDs,
+    indexName,
+    maxRecommendations,
+    threshold,
+    setStatus,
+  ]);
 
   return {
     ...result,

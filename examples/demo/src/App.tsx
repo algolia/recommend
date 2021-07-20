@@ -2,6 +2,8 @@ import algoliarecommend from '@algolia/recommend';
 import {
   FrequentlyBoughtTogether,
   RelatedProducts,
+  useFrequentlyBoughtTogether,
+  useRecommendations,
 } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
@@ -53,16 +55,41 @@ function BundleItem({ item, onSelect }: BundleItemProps<ProductHit>) {
   );
 }
 
+let count = 0;
+
 function App() {
   const [selectedProduct, setSelectedProduct] = useState<ProductHit | null>(
     null
   );
 
+  const [t, setT] = useState(0);
+  const [o, setO] = useState(['D04570-8667-8048']);
+
+  const { recommendations } = useFrequentlyBoughtTogether({
+    indexName,
+    recommendClient,
+    threshold: t,
+    objectIDs: o,
+    transformItems(items) {
+      console.log(count);
+      count++;
+
+      return items;
+    },
+  });
+
+  console.log(recommendations);
+
   return (
     <div className="container">
       <h1>Algolia Recommend</h1>
+      <button onClick={() => setT(t + 1)}>ChangeThreshold</button>
+      <button onClick={() => setO([...o, ...o])}>ChangeObjects</button>
+      <h1>Algolia Recommend</h1>
 
-      <Autocomplete
+      {JSON.stringify(recommendations)}
+
+      {/* <Autocomplete
         placeholder="Search for a product"
         openOnFocus={true}
         defaultActiveItemId={0}
@@ -230,7 +257,7 @@ function App() {
             }}
           />
         </Fragment>
-      )}
+      )}*/}
     </div>
   );
 }
