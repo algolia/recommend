@@ -3,9 +3,10 @@ import {
   GetRelatedProductsProps,
   GetRecommendationsResult,
 } from '@algolia/recommend-core';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
+import { useSafeEffect } from './useSafeEffect';
 import { useStatus } from './useStatus';
 
 export function useRelatedProducts<TObject>(
@@ -18,13 +19,19 @@ export function useRelatedProducts<TObject>(
 
   useAlgoliaAgent({ recommendClient: props.recommendClient });
 
-  useEffect(() => {
-    setStatus('loading');
-    getRelatedProducts(props).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
-  }, [props, setStatus]);
+  useSafeEffect(
+    (updatedProps) => {
+      setStatus('loading');
+      getRelatedProducts(updatedProps).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
+    },
+    props,
+    {
+      objectIDs: props.objectIDs.join(''),
+    }
+  );
 
   return {
     ...result,

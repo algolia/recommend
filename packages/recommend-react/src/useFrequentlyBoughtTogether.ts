@@ -3,9 +3,10 @@ import {
   GetFrequentlyBoughtTogetherProps,
   GetRecommendationsResult,
 } from '@algolia/recommend-core';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
+import { useSafeEffect } from './useSafeEffect';
 import { useStatus } from './useStatus';
 
 export function useFrequentlyBoughtTogether<TObject>(
@@ -18,13 +19,19 @@ export function useFrequentlyBoughtTogether<TObject>(
 
   useAlgoliaAgent({ recommendClient: props.recommendClient });
 
-  useEffect(() => {
-    setStatus('loading');
-    getFrequentlyBoughtTogether(props).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
-  }, [props, setStatus]);
+  useSafeEffect(
+    (updatedProps) => {
+      setStatus('loading');
+      getFrequentlyBoughtTogether(updatedProps).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
+    },
+    props,
+    {
+      objectIDs: props.objectIDs.join(''),
+    }
+  );
 
   return {
     ...result,
