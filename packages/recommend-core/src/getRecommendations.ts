@@ -19,18 +19,27 @@ export type GetRecommendationsResult<TObject> = {
   recommendations: Array<RecordWithObjectID<TObject>>;
 };
 
-export function getRecommendations<TObject>(
-  userProps: GetRecommendationsProps<TObject>
-): Promise<GetRecommendationsResult<TObject>> {
-  const {
-    objectIDs,
-    recommendClient,
-    transformItems = (x) => x,
-    ...props
-  } = userProps;
+export function getRecommendations<TObject>({
+  objectIDs,
+  recommendClient,
+  transformItems = (x) => x,
+  fallbackParameters,
+  indexName,
+  maxRecommendations,
+  model,
+  queryParameters,
+  threshold,
+}: GetRecommendationsProps<TObject>): Promise<
+  GetRecommendationsResult<TObject>
+> {
   const queries = objectIDs.map((objectID) => ({
-    ...props,
+    fallbackParameters,
+    indexName,
+    maxRecommendations,
+    model,
     objectID,
+    queryParameters,
+    threshold,
   }));
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
@@ -39,8 +48,8 @@ export function getRecommendations<TObject>(
     .getRecommendations<TObject>(queries)
     .then((response) =>
       mapToRecommendations({
+        maxRecommendations,
         response,
-        maxRecommendations: props.maxRecommendations,
       })
     )
     .then((hits) => ({ recommendations: transformItems(hits) }));

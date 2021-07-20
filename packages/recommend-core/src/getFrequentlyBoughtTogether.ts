@@ -9,18 +9,21 @@ export type GetFrequentlyBoughtTogetherProps<
 > = RecommendationsProps<TObject> &
   Omit<FrequentlyBoughtTogetherQuery, 'objectID'>;
 
-export function getFrequentlyBoughtTogether<TObject>(
-  userProps: GetFrequentlyBoughtTogetherProps<TObject>
-) {
-  const {
-    objectIDs,
-    recommendClient,
-    transformItems = (x) => x,
-    ...props
-  } = userProps;
+export function getFrequentlyBoughtTogether<TObject>({
+  objectIDs,
+  recommendClient,
+  transformItems = (x) => x,
+  indexName,
+  maxRecommendations,
+  queryParameters,
+  threshold,
+}: GetFrequentlyBoughtTogetherProps<TObject>) {
   const queries = objectIDs.map((objectID) => ({
-    ...props,
+    indexName,
+    maxRecommendations,
     objectID,
+    queryParameters,
+    threshold,
   }));
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
@@ -29,8 +32,8 @@ export function getFrequentlyBoughtTogether<TObject>(
     .getFrequentlyBoughtTogether<TObject>(queries)
     .then((response) =>
       mapToRecommendations({
+        maxRecommendations,
         response,
-        maxRecommendations: props.maxRecommendations,
       })
     )
     .then((hits) => ({ recommendations: transformItems(hits) }));
