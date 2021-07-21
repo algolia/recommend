@@ -1,10 +1,22 @@
-import { createRecommendationsClient } from '../../../../test/utils';
+import {
+  createMultiSearchResponse,
+  createRecommendClient,
+  hit,
+} from '../../../../test/utils';
 import { getRecommendations } from '../getRecommendations';
 import { RecommendModel } from '../types';
 
 describe('getRecommendations', () => {
   test('does not forward unwanted props', async () => {
-    const { recommendClient } = createRecommendationsClient();
+    const recommendClient = createRecommendClient({
+      getRecommendations: jest.fn(() =>
+        Promise.resolve(
+          createMultiSearchResponse({
+            hits: [hit],
+          })
+        )
+      ),
+    });
 
     await getRecommendations({
       model: 'related-products' as RecommendModel,
@@ -26,7 +38,15 @@ describe('getRecommendations', () => {
   });
 
   test('calls the correct index for "related-products"', async () => {
-    const { recommendClient } = createRecommendationsClient();
+    const recommendClient = createRecommendClient({
+      getRecommendations: jest.fn(() =>
+        Promise.resolve(
+          createMultiSearchResponse({
+            hits: [hit],
+          })
+        )
+      ),
+    });
 
     await getRecommendations({
       model: 'related-products' as RecommendModel,
@@ -54,7 +74,15 @@ describe('getRecommendations', () => {
   });
 
   test('calls the correct index for "bought-together"', async () => {
-    const { recommendClient } = createRecommendationsClient();
+    const recommendClient = createRecommendClient({
+      getRecommendations: jest.fn(() =>
+        Promise.resolve(
+          createMultiSearchResponse({
+            hits: [hit],
+          })
+        )
+      ),
+    });
 
     await getRecommendations({
       model: 'bought-together' as RecommendModel,
@@ -82,7 +110,16 @@ describe('getRecommendations', () => {
   });
 
   test('returns recommended hits', async () => {
-    const { recommendClient } = createRecommendationsClient();
+    const recommendClient = createRecommendClient({
+      getRecommendations: jest.fn(() =>
+        Promise.resolve(
+          createMultiSearchResponse({
+            hits: [hit],
+          })
+        )
+      ),
+    });
+
     const { recommendations } = await getRecommendations({
       model: 'related-products' as RecommendModel,
       recommendClient,
