@@ -4,14 +4,14 @@ import { getFrequentlyBoughtTogether } from '../getFrequentlyBoughtTogether';
 describe('getFrequentlyBoughtTogether', () => {
   test('does not forward unwanted props', async () => {
     const { recommendClient } = createRecommendationsClient();
-    const props = {
+
+    await getFrequentlyBoughtTogether({
       recommendClient,
       indexName: 'indexName',
       objectIDs: ['objectID'],
+      // @ts-expect-error unwanted props
       a: 'b',
-    };
-
-    await getFrequentlyBoughtTogether(props);
+    });
 
     expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(
       1

@@ -5,15 +5,15 @@ import { RecommendModel } from '../types';
 describe('getRecommendations', () => {
   test('does not forward unwanted props', async () => {
     const { recommendClient } = createRecommendationsClient();
-    const props = {
+
+    await getRecommendations({
       model: 'related-products' as RecommendModel,
       recommendClient,
       indexName: 'indexName',
       objectIDs: ['objectID'],
+      // @ts-expect-error unwanted props
       a: 'b',
-    };
-
-    await getRecommendations(props);
+    });
 
     expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1);
     expect(recommendClient.getRecommendations).toHaveBeenCalledWith([
@@ -27,7 +27,8 @@ describe('getRecommendations', () => {
 
   test('calls the correct index for "related-products"', async () => {
     const { recommendClient } = createRecommendationsClient();
-    const props = {
+
+    await getRecommendations({
       model: 'related-products' as RecommendModel,
       recommendClient,
       indexName: 'indexName',
@@ -36,9 +37,7 @@ describe('getRecommendations', () => {
         facetFilters: [['brand:Apple']],
         optionalFilters: ['category:Laptops'],
       },
-    };
-
-    await getRecommendations(props);
+    });
 
     expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1);
     expect(recommendClient.getRecommendations).toHaveBeenCalledWith([
@@ -56,7 +55,8 @@ describe('getRecommendations', () => {
 
   test('calls the correct index for "bought-together"', async () => {
     const { recommendClient } = createRecommendationsClient();
-    const props = {
+
+    await getRecommendations({
       model: 'bought-together' as RecommendModel,
       recommendClient,
       indexName: 'indexName',
@@ -65,9 +65,7 @@ describe('getRecommendations', () => {
         facetFilters: [['brand:Apple']],
         optionalFilters: ['category:Laptops'],
       },
-    };
-
-    await getRecommendations(props);
+    });
 
     expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1);
     expect(recommendClient.getRecommendations).toHaveBeenCalledWith([
@@ -85,14 +83,12 @@ describe('getRecommendations', () => {
 
   test('returns recommended hits', async () => {
     const { recommendClient } = createRecommendationsClient();
-    const props = {
+    const { recommendations } = await getRecommendations({
       model: 'related-products' as RecommendModel,
       recommendClient,
       indexName: 'indexName',
       objectIDs: ['objectID'],
-    };
-
-    const { recommendations } = await getRecommendations(props);
+    });
 
     expect(recommendations).toEqual([
       {
