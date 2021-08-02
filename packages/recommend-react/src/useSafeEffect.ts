@@ -8,28 +8,23 @@ function isPrimitive(obj: any) {
 }
 
 function separatePrimitives<TProps>(props: TProps) {
-  const primitives = Object.entries(props).reduce<TProps>((prev, [k, v]) => {
-    if (isPrimitive(v)) {
-      return {
-        ...prev,
-        [k]: v,
-      };
+  return Object.entries(props).reduce<{
+    primitives: TProps;
+    nonPrimitives: TProps;
+  }>(
+    (prev, [k, v]) => {
+      if (isPrimitive(v)) {
+        prev.primitives[k] = v;
+      } else {
+        prev.nonPrimitives[k] = v;
+      }
+      return prev;
+    },
+    {
+      primitives: ({} as const) as TProps,
+      nonPrimitives: ({} as const) as TProps,
     }
-
-    return prev;
-  }, {} as TProps);
-  const nonPrimitives = Object.entries(props).reduce<TProps>((prev, [k, v]) => {
-    if (!isPrimitive(v)) {
-      return {
-        ...prev,
-        [k]: v,
-      };
-    }
-
-    return prev;
-  }, {} as TProps);
-
-  return { primitives, nonPrimitives };
+  );
 }
 
 export function useSafeEffect<TProps = Props>(
