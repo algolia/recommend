@@ -5,11 +5,11 @@ import {
   createRecommendClient,
   hit,
 } from '../../../../test/utils/createRecommendClient';
-import { useRecommendations } from '../useRecommendations';
+import { useRelatedProducts } from '../useRelatedProducts';
 
 function createRecommendationsClient() {
   const recommendClient = createRecommendClient({
-    getRecommendations: jest.fn(() =>
+    getRelatedProducts: jest.fn(() =>
       Promise.resolve(
         createMultiSearchResponse({
           hits: [hit],
@@ -23,14 +23,13 @@ function createRecommendationsClient() {
   };
 }
 
-describe('useRecommendations', () => {
-  test('gets recommendations', () => {
+describe('useRelatedProducts', () => {
+  test('gets Related Products', () => {
     const cb = jest.fn();
     const { recommendClient } = createRecommendationsClient();
 
     renderHook(() => {
-      const { recommendations } = useRecommendations({
-        model: 'bought-together',
+      const { recommendations } = useRelatedProducts({
         indexName: 'test',
         recommendClient,
         threshold: 0,

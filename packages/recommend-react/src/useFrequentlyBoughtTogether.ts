@@ -3,35 +3,59 @@ import {
   GetFrequentlyBoughtTogetherProps,
   GetRecommendationsResult,
 } from '@algolia/recommend-core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
-import { useSafeEffect } from './useSafeEffect';
+import { useDeepComparedValue } from './useDeepComparedValue';
 import { useStatus } from './useStatus';
 
-export function useFrequentlyBoughtTogether<TObject>(
-  props: GetFrequentlyBoughtTogetherProps<TObject>
-) {
+export function useFrequentlyBoughtTogether<TObject>({
+  objectIDs: userObjectIDs,
+  queryParameters: userQueryParameters,
+  transformItems: userTransformItems,
+
+  indexName,
+  maxRecommendations,
+  recommendClient,
+  threshold,
+}: GetFrequentlyBoughtTogetherProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
 
-  useAlgoliaAgent({ recommendClient: props.recommendClient });
+  const objectIDs = useDeepComparedValue(userObjectIDs);
+  const transformItems = useDeepComparedValue(userTransformItems);
+  const queryParameters = useDeepComparedValue(userQueryParameters);
 
-  useSafeEffect(
-    (updatedProps) => {
-      setStatus('loading');
-      getFrequentlyBoughtTogether(updatedProps).then((response) => {
-        setResult(response);
-        setStatus('idle');
-      });
-    },
-    props,
-    {
-      objectIDs: props.objectIDs.join(''),
-    }
-  );
+  useAlgoliaAgent({ recommendClient });
+
+  useEffect(() => {
+    setStatus('loading');
+    getFrequentlyBoughtTogether({
+      objectIDs,
+      queryParameters,
+      recommendClient,
+      transformItems,
+
+      indexName,
+      maxRecommendations,
+      threshold,
+    }).then((response) => {
+      setResult(response);
+      setStatus('idle');
+    });
+  }, [
+    objectIDs,
+    queryParameters,
+    recommendClient,
+    transformItems,
+
+    indexName,
+    maxRecommendations,
+    setStatus,
+    threshold,
+  ]);
 
   return {
     ...result,

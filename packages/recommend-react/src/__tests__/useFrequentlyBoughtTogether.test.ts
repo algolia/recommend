@@ -5,11 +5,11 @@ import {
   createRecommendClient,
   hit,
 } from '../../../../test/utils/createRecommendClient';
-import { useRecommendations } from '../useRecommendations';
+import { useFrequentlyBoughtTogether } from '../useFrequentlyBoughtTogether';
 
 function createRecommendationsClient() {
   const recommendClient = createRecommendClient({
-    getRecommendations: jest.fn(() =>
+    getFrequentlyBoughtTogether: jest.fn(() =>
       Promise.resolve(
         createMultiSearchResponse({
           hits: [hit],
@@ -23,23 +23,19 @@ function createRecommendationsClient() {
   };
 }
 
-describe('useRecommendations', () => {
-  test('gets recommendations', () => {
+describe('useFrequentlyBoughtTogether', () => {
+  test('gets Frequently Bought Together products', () => {
     const cb = jest.fn();
     const { recommendClient } = createRecommendationsClient();
 
     renderHook(() => {
-      const { recommendations } = useRecommendations({
-        model: 'bought-together',
+      const { recommendations } = useFrequentlyBoughtTogether({
         indexName: 'test',
         recommendClient,
         threshold: 0,
         objectIDs: ['testing'],
         queryParameters: {
           facetFilters: ['test'],
-        },
-        fallbackParameters: {
-          facetFilters: ['test2'],
         },
         transformItems: (items) => {
           cb();
