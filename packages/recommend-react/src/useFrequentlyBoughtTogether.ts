@@ -6,7 +6,7 @@ import {
 import { useEffect, useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
-import { useDeepComparedValue } from './useDeepComparedValue';
+import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
 export function useFrequentlyBoughtTogether<TObject>({
@@ -24,9 +24,9 @@ export function useFrequentlyBoughtTogether<TObject>({
   });
   const { status, setStatus } = useStatus('loading');
 
-  const objectIDs = useDeepComparedValue(userObjectIDs);
-  const transformItems = useDeepComparedValue(userTransformItems);
-  const queryParameters = useDeepComparedValue(userQueryParameters);
+  const objectIDs = useStableValue(userObjectIDs);
+  const transformItems = useStableValue(userTransformItems);
+  const queryParameters = useStableValue(userQueryParameters);
 
   useAlgoliaAgent({ recommendClient });
 

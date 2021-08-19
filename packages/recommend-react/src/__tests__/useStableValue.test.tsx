@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
 
-import { useDeepComparedValue } from '../useDeepComparedValue';
+import { useStableValue } from '../useStableValue';
 
 type ComponentProps = {
   query: string;
@@ -11,7 +11,7 @@ type ComponentProps = {
 };
 
 const Component = ({ props }: { props: ComponentProps }) => {
-  const lastProps = useDeepComparedValue(props);
+  const lastProps = useStableValue(props);
 
   return (
     <div>
@@ -22,7 +22,7 @@ const Component = ({ props }: { props: ComponentProps }) => {
   );
 };
 
-describe('useDeepComparedValue', () => {
+describe('useStableValue', () => {
   test('rerender when the props changes', () => {
     const firstRender = render(
       <Component
