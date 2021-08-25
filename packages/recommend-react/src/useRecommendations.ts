@@ -11,21 +11,19 @@ import { useStatus } from './useStatus';
 
 export function useRecommendations<TObject>({
   fallbackParameters: userFallbackParameters,
-  objectIDs: userObjectIDs,
-  queryParameters: userQueryParameters,
-  transformItems: userTransformItems,
-
   indexName,
   maxRecommendations,
   model,
+  objectIDs: userObjectIDs,
+  queryParameters: userQueryParameters,
   recommendClient,
   threshold,
+  transformItems: userTransformItems,
 }: GetRecommendationsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
-
   const objectIDs = useStableValue(userObjectIDs);
   const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
@@ -37,31 +35,29 @@ export function useRecommendations<TObject>({
     setStatus('loading');
     getRecommendations({
       fallbackParameters,
-      objectIDs,
-      queryParameters,
-      recommendClient,
-      transformItems,
-
       indexName,
       maxRecommendations,
       model,
+      objectIDs,
+      queryParameters,
+      recommendClient,
       threshold,
+      transformItems,
     }).then((response) => {
       setResult(response);
       setStatus('idle');
     });
   }, [
     fallbackParameters,
-    objectIDs,
-    queryParameters,
-    recommendClient,
-    transformItems,
-
     indexName,
     maxRecommendations,
     model,
+    objectIDs,
+    queryParameters,
+    recommendClient,
     setStatus,
     threshold,
+    transformItems,
   ]);
 
   return {

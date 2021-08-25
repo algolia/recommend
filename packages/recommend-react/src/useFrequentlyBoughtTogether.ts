@@ -10,20 +10,18 @@ import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
 export function useFrequentlyBoughtTogether<TObject>({
-  objectIDs: userObjectIDs,
-  queryParameters: userQueryParameters,
-  transformItems: userTransformItems,
-
   indexName,
   maxRecommendations,
+  objectIDs: userObjectIDs,
+  queryParameters: userQueryParameters,
   recommendClient,
   threshold,
+  transformItems: userTransformItems,
 }: GetFrequentlyBoughtTogetherProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
-
   const objectIDs = useStableValue(userObjectIDs);
   const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
@@ -33,28 +31,26 @@ export function useFrequentlyBoughtTogether<TObject>({
   useEffect(() => {
     setStatus('loading');
     getFrequentlyBoughtTogether({
+      indexName,
+      maxRecommendations,
       objectIDs,
       queryParameters,
       recommendClient,
-      transformItems,
-
-      indexName,
-      maxRecommendations,
       threshold,
+      transformItems,
     }).then((response) => {
       setResult(response);
       setStatus('idle');
     });
   }, [
+    indexName,
+    maxRecommendations,
     objectIDs,
     queryParameters,
     recommendClient,
-    transformItems,
-
-    indexName,
-    maxRecommendations,
     setStatus,
     threshold,
+    transformItems,
   ]);
 
   return {
