@@ -7,7 +7,7 @@ import {
 } from '../../../../test/utils/createRecommendClient';
 import { useFrequentlyBoughtTogether } from '../useFrequentlyBoughtTogether';
 
-function createRecommendationsClient() {
+function createMockedRecommendClient() {
   const recommendClient = createRecommendClient({
     getFrequentlyBoughtTogether: jest.fn(() =>
       Promise.resolve(
@@ -25,8 +25,7 @@ function createRecommendationsClient() {
 
 describe('useFrequentlyBoughtTogether', () => {
   test('gets Frequently Bought Together products', () => {
-    const cb = jest.fn();
-    const { recommendClient } = createRecommendationsClient();
+    const { recommendClient } = createMockedRecommendClient();
 
     renderHook(() => {
       const { recommendations } = useFrequentlyBoughtTogether({
@@ -37,14 +36,10 @@ describe('useFrequentlyBoughtTogether', () => {
         queryParameters: {
           facetFilters: ['test'],
         },
-        transformItems: (items) => {
-          cb();
-          return items;
-        },
+        transformItems: (items) => items,
       });
 
-      expect(recommendations[0]).toEqual(hit);
-      expect(cb).toHaveBeenCalledTimes(1);
+      expect(recommendations).toEqual([hit]);
     });
   });
 });

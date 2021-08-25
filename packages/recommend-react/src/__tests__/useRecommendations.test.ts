@@ -7,7 +7,7 @@ import {
 } from '../../../../test/utils/createRecommendClient';
 import { useRecommendations } from '../useRecommendations';
 
-function createRecommendationsClient() {
+function createMockedRecommendClient() {
   const recommendClient = createRecommendClient({
     getRecommendations: jest.fn(() =>
       Promise.resolve(
@@ -25,8 +25,7 @@ function createRecommendationsClient() {
 
 describe('useRecommendations', () => {
   test('gets recommendations', () => {
-    const cb = jest.fn();
-    const { recommendClient } = createRecommendationsClient();
+    const { recommendClient } = createMockedRecommendClient();
 
     renderHook(() => {
       const { recommendations } = useRecommendations({
@@ -41,14 +40,10 @@ describe('useRecommendations', () => {
         fallbackParameters: {
           facetFilters: ['test2'],
         },
-        transformItems: (items) => {
-          cb();
-          return items;
-        },
+        transformItems: (items) => items,
       });
 
-      expect(recommendations[0]).toEqual(hit);
-      expect(cb).toHaveBeenCalledTimes(1);
+      expect(recommendations).toEqual([hit]);
     });
   });
 });
