@@ -6,25 +6,56 @@ import {
 import { useEffect, useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
+import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
-export function useRelatedProducts<TObject>(
-  props: GetRelatedProductsProps<TObject>
-) {
+export function useRelatedProducts<TObject>({
+  fallbackParameters: userFallbackParameters,
+  indexName,
+  maxRecommendations,
+  objectIDs: userObjectIDs,
+  queryParameters: userQueryParameters,
+  recommendClient,
+  threshold,
+  transformItems: userTransformItems,
+}: GetRelatedProductsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
+  const objectIDs = useStableValue(userObjectIDs);
+  const transformItems = useStableValue(userTransformItems);
+  const queryParameters = useStableValue(userQueryParameters);
+  const fallbackParameters = useStableValue(userFallbackParameters);
 
-  useAlgoliaAgent({ recommendClient: props.recommendClient });
+  useAlgoliaAgent({ recommendClient });
 
   useEffect(() => {
     setStatus('loading');
-    getRelatedProducts(props).then((response) => {
+    getRelatedProducts({
+      fallbackParameters,
+      indexName,
+      maxRecommendations,
+      objectIDs,
+      queryParameters,
+      recommendClient,
+      threshold,
+      transformItems,
+    }).then((response) => {
       setResult(response);
       setStatus('idle');
     });
-  }, [props, setStatus]);
+  }, [
+    fallbackParameters,
+    indexName,
+    maxRecommendations,
+    objectIDs,
+    queryParameters,
+    recommendClient,
+    setStatus,
+    threshold,
+    transformItems,
+  ]);
 
   return {
     ...result,

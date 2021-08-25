@@ -30,7 +30,8 @@
   },
   "dependencies": {
     "@algolia/recommend-core": "1.0.0",
-    "@algolia/recommend-vdom": "1.0.0"
+    "@algolia/recommend-vdom": "1.0.0",
+    "dequal": "^2.0.0"
   },
   "peerDependencies": {
     "@algolia/recommend": "^4.10.2",
