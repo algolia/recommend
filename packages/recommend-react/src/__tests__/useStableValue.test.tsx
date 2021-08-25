@@ -35,7 +35,7 @@ describe('useStableValue', () => {
     );
 
     expect(firstRender.getByText('first query')).toBeInTheDocument();
-    expect(firstRender.getByText(`${42}`)).toBeInTheDocument();
+    expect(firstRender.getByText('42')).toBeInTheDocument();
     expect(firstRender.getByText('1, 2, 3')).toBeInTheDocument();
 
     firstRender.rerender(
@@ -49,7 +49,7 @@ describe('useStableValue', () => {
     );
 
     expect(firstRender.getByText('second query')).toBeInTheDocument();
-    expect(firstRender.getByText(`${43}`)).toBeInTheDocument();
+    expect(firstRender.getByText('43')).toBeInTheDocument();
     expect(firstRender.getByText('1, 2, 3, 4')).toBeInTheDocument();
   });
 });
