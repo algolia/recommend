@@ -8,6 +8,8 @@ export function useStableValue<TValue>(value: TValue) {
     if (dequal(stableValue, value) === false) {
       setStableValue(value);
     }
+
+    // We only want to trigger the effect when `value` changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
