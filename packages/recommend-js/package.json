@@ -28,7 +28,7 @@
     "prepare": "yarn build:esm && yarn build:types"
   },
   "peerDependencies": {
-    "@algolia/recommend": "^4.10.2"
+    "@algolia/recommend": "^4.10.5"
   },
   "dependencies": {
     "@algolia/recommend-core": "1.0.0",
