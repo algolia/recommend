@@ -1,3 +1,18 @@
+# [1.1.0](https://github.com/algolia/recommend/compare/v1.0.0...v1.1.0) (2021-08-26)
+
+
+### Bug Fixes
+
+* **core:** avoid sending UI props to `recommend` client ([#51](https://github.com/algolia/recommend/issues/51)) ([eb6a0d0](https://github.com/algolia/recommend/commit/eb6a0d056ccfa03315b6c2029caf53dac4d2aea4))
+* **react:** prevent infinite loops in exposed hooks ([#52](https://github.com/algolia/recommend/issues/52)) ([6692c1a](https://github.com/algolia/recommend/commit/6692c1ac4058ce11c8378082f4bbf26d87c95f4b))
+
+
+### Features
+
+* **recommend:** split recommend and ui-components repositories ([#48](https://github.com/algolia/recommend/issues/48)) ([3f490fa](https://github.com/algolia/recommend/commit/3f490fa951072e173b8b18c71e154adeffe82e76))
+
+
+
 # [1.0.0](https://github.com/algolia/recommend/compare/v1.0.0-experimental.6...v1.0.0) (2021-06-30)
 
 This is the first stable release of the Recommend UI library. Check out the [**upgrade guide**](https://algolia.com/doc/ui-libraries/recommend/introduction/upgrade-guide/#upgrading-from-beta-to-stable) to migrate.
