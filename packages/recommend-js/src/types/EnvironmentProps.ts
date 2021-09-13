@@ -13,6 +13,7 @@ export type EnvironmentProps = {
    * This is useful if you're using Recommend in a different context than `window`.
    *
    * @default window
+   * @link https://www.algolia.com/doc/ui-libraries/recommend/api-reference/recommend-js/frequentlyBoughtTogether/#param-environment
    */
   environment?: typeof window;
 };
