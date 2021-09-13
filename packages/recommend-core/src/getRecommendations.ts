@@ -5,8 +5,19 @@ import { mapToRecommendations } from './utils';
 import { version } from './version';
 
 export type RecommendationsProps<TObject> = {
+  /**
+   * The `objectID`s of the items to get recommendations for.
+   */
   objectIDs: string[];
+  /**
+   * The initialized Algolia recommend client.
+   */
   recommendClient: RecommendClient;
+  /**
+   * A function to transform the retrieved items before passing them to the component.
+   *
+   * It’s useful to add or remove items, change them, or reorder them.
+   */
   transformItems?: (
     items: Array<ProductRecord<TObject>>
   ) => Array<ProductRecord<TObject>>;
