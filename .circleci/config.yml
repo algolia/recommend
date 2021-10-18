@@ -36,7 +36,7 @@ aliases:
 defaults: &defaults
   working_directory: ~/recommend
   docker:
-    - image: circleci/node:14.15.0
+    - image: cimg/node:14.15.0
 
 references:
   workspace_root: &workspace_root /tmp/workspace
