@@ -16,9 +16,9 @@ import { ProductHit, ReferenceItemProps } from './types';
 import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
 
-const appId = 'HYDY1KWTWB';
-const apiKey = '28cf6d38411215e2eef188e635216508';
-const indexName = 'gstar_demo_test';
+const appId = '';
+const apiKey = '';
+const indexName = '';
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
