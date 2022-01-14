@@ -26,7 +26,7 @@ export function RelatedItem({ item, insights, onSelect }: RelatedItemProps) {
       }}
     >
       <div className="relative">
-        <img src={item.image_link} alt={item.name} className="max-w-full" />
+        <img src={item.image_urls[0]} alt={item.name} className="max-w-full" />
 
         <div className="RelatedItem-info">
           {item._score && (

@@ -18,9 +18,9 @@ import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
 import './Recommend.css';
 
-const appId = '';
-const apiKey = '';
-const indexName = '';
+const appId = "XX85YRZZMV";
+const apiKey = "098f71f9e2267178bdfc08cc986d2999";
+const indexName = "test_FLAGSHIP_ECOM_recommend";
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
@@ -47,7 +47,7 @@ function BundleItem({ item, onSelect }: BundleItemProps<ProductHit>) {
       }}
     >
       <div className="Hit-Image">
-        <img src={item.image_link} alt={item.name} />
+        <img src={item.image_urls[0]} alt={item.name} />
       </div>
     </a>
   );
@@ -97,7 +97,7 @@ function App() {
                       <div className="aa-ItemContent">
                         <div className="aa-ItemIcon aa-ItemIcon--picture aa-ItemIcon--alignTop">
                           <img
-                            src={item.image_link}
+                            src={item.image_urls[0]}
                             alt={item.name}
                             width="40"
                             height="40"
@@ -131,7 +131,7 @@ function App() {
             >
               <div className="Hit-Image" style={{ maxWidth: 150 }}>
                 <img
-                  src={selectedProduct.image_link}
+                  src={selectedProduct.image_urls[0]}
                   alt={selectedProduct.name}
                 />
               </div>

@@ -22,7 +22,7 @@ export function Hit({ hit, insights, onSelect }: HitProps) {
       }}
     >
       <div className="Hit-Image">
-        <img src={hit.image_link} alt={hit.name} />
+        <img src={hit.image_urls[0]} alt={hit.name} />
       </div>
 
       <div className="Hit-Content">

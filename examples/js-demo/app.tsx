@@ -16,9 +16,9 @@ import { ProductHit, ReferenceItemProps } from './types';
 import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
 
-const appId = '';
-const apiKey = '';
-const indexName = '';
+const appId = "XX85YRZZMV";
+const apiKey = "098f71f9e2267178bdfc08cc986d2999";
+const indexName = "test_FLAGSHIP_ECOM_recommend";
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
@@ -105,7 +105,7 @@ function ReferenceItem({ item }: ReferenceItemProps) {
         }}
       >
         <div>
-          <img src={item.image_link} alt={item.name} className="max-w-full" />
+          <img src={item.image_urls[0]} alt={item.name} className="max-w-full" />
         </div>
 
         <div>
