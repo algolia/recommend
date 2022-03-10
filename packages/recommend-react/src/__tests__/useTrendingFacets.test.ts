@@ -5,7 +5,7 @@ import {
   createRecommendClient,
   hit,
 } from '../../../../test/utils/createRecommendClient';
-import { useTrendingItems } from '../useTrendingItems';
+import { useTrendingFacets } from '../useTrendingFacets';
 
 function createMockedRecommendClient() {
   const recommendClient = createRecommendClient({
@@ -28,7 +28,7 @@ describe('useRelatedProducts', () => {
     const { recommendClient } = createMockedRecommendClient();
 
     renderHook(() => {
-      const { recommendations } = useTrendingItems({
+      const { recommendations } = useTrendingFacets({
         indexName: 'test',
         recommendClient,
         threshold: 0,
@@ -38,8 +38,7 @@ describe('useRelatedProducts', () => {
         fallbackParameters: {
           facetFilters: ['test2'],
         },
-        facetName: 'test4',
-        facetValue: 'test3',
+        facetName: 'test3',
         transformItems: (items) => items,
       });
 

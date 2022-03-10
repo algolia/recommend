@@ -1,4 +1,4 @@
-import { TrendingFacetsQuery } from '@algolia/recommend';
+import { RecommendationsQuery, TrendingFacetsQuery } from '@algolia/recommend';
 
 import { RecommendationsProps } from './getRecommendations';
 import { mapToRecommendations } from './utils';
@@ -8,7 +8,8 @@ export type GetTrendingFacetsProps<TObject> = Omit<
   RecommendationsProps<TObject>,
   'objectIDs'
 > &
-  TrendingFacetsQuery;
+  TrendingFacetsQuery &
+  Partial<Pick<RecommendationsQuery, 'facetName' | 'facetValue'>>;
 
 export function getTrendingFacets<TObject>({
   recommendClient,
