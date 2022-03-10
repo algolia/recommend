@@ -27,7 +27,7 @@ describe('getTrendingFacets', () => {
     expect(recommendClient.getTrendingFacets).toHaveBeenCalledTimes(1);
     expect(recommendClient.getTrendingFacets).toHaveBeenCalledWith([
       {
-        indexName: 'indexName'
+        indexName: 'indexName',
       },
     ]);
   });
