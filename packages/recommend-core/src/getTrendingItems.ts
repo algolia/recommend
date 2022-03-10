@@ -4,8 +4,11 @@ import { RecommendationsProps } from './getRecommendations';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
 
-export type GetTrendingItemsProps<TObject> = RecommendationsProps<TObject> &
-  Omit<TrendingItemsQuery, 'objectID'>;
+export type GetTrendingItemsProps<TObject> = Omit<
+  RecommendationsProps<TObject>,
+  'objectIDs'
+> &
+  TrendingItemsQuery;
 
 export function getTrendingItems<TObject>({
   recommendClient,
@@ -15,6 +18,8 @@ export function getTrendingItems<TObject>({
   maxRecommendations,
   queryParameters,
   threshold,
+  facetName,
+  facetValue,
 }: GetTrendingItemsProps<TObject>) {
   const query = {
     fallbackParameters,
@@ -22,6 +27,8 @@ export function getTrendingItems<TObject>({
     maxRecommendations,
     queryParameters,
     threshold,
+    facetName,
+    facetValue,
   };
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
