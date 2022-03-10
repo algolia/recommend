@@ -18,7 +18,6 @@ export function useTrendingFacets<TObject>({
   threshold,
   transformItems: userTransformItems,
   facetName,
-  facetValue,
 }: GetTrendingFacetsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
@@ -41,7 +40,6 @@ export function useTrendingFacets<TObject>({
       queryParameters,
       threshold,
       facetName,
-      facetValue,
     }).then((response) => {
       setResult(response);
       setStatus('idle');
@@ -56,7 +54,6 @@ export function useTrendingFacets<TObject>({
     threshold,
     transformItems,
     facetName,
-    facetValue,
   ]);
 
   return {
