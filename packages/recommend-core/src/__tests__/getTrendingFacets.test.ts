@@ -3,12 +3,12 @@ import {
   createRecommendClient,
   hit,
 } from '../../../../test/utils';
-import { getTrendingItems } from '../getTrendingItems';
+import { getTrendingFacets } from '../getTrendingFacets';
 
-describe('getTrendingItems', () => {
+describe('getTrendingFacets', () => {
   test('does not forward unwanted props', async () => {
     const recommendClient = createRecommendClient({
-      getTrendingItems: jest.fn(() =>
+      getTrendingFacets: jest.fn(() =>
         Promise.resolve(
           createMultiSearchResponse({
             hits: [hit],
@@ -17,19 +17,17 @@ describe('getTrendingItems', () => {
       ),
     });
 
-    await getTrendingItems({
+    await getTrendingFacets({
       recommendClient,
       indexName: 'indexName',
-      facetName: 'facetName',
       // @ts-expect-error unwanted props
       a: 'b',
     });
 
-    expect(recommendClient.getTrendingItems).toHaveBeenCalledTimes(1);
-    expect(recommendClient.getTrendingItems).toHaveBeenCalledWith([
+    expect(recommendClient.getTrendingFacets).toHaveBeenCalledTimes(1);
+    expect(recommendClient.getTrendingFacets).toHaveBeenCalledWith([
       {
-        indexName: 'indexName',
-        facetName: 'facetName',
+        indexName: 'indexName'
       },
     ]);
   });

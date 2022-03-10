@@ -9,7 +9,7 @@ import { useTrendingItems } from '../useTrendingItems';
 
 function createMockedRecommendClient() {
   const recommendClient = createRecommendClient({
-    getRelatedProducts: jest.fn(() =>
+    getTrendingItems: jest.fn(() =>
       Promise.resolve(
         createMultiSearchResponse({
           hits: [hit],
