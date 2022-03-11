@@ -1,13 +1,29 @@
-import { TrendingItemsQuery } from '@algolia/recommend';
+import { RecommendClient, TrendingItemsQuery } from '@algolia/recommend';
 
-import { RecommendationsProps } from './getRecommendations';
+import { TrendingItemsRecord } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
 
-export type GetTrendingItemsProps<TObject> = Omit<
-  RecommendationsProps<TObject>,
-  'objectIDs'
-> &
+export type TrendingItemsProps<TObject> = {
+  /**
+   * The initialized Algolia recommend client.
+   */
+  recommendClient: RecommendClient;
+  /**
+   * A function to transform the retrieved items before passing them to the component.
+   *
+   * It’s useful to add or remove items, change them, or reorder them.
+   */
+  transformItems?: (
+    items: Array<TrendingItemsRecord<TObject>>
+  ) => Array<TrendingItemsRecord<TObject>>;
+};
+
+export type GetTrendingItemsResult<TObject> = {
+  recommendations: Array<TrendingItemsRecord<TObject>>;
+};
+
+export type GetTrendingItemsProps<TObject> = TrendingItemsProps<TObject> &
   TrendingItemsQuery;
 
 export function getTrendingItems<TObject>({

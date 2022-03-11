@@ -1,8 +1,8 @@
-import { GetRecommendationsResult } from '@algolia/recommend-core';
 import {
   getTrendingFacets,
   GetTrendingFacetsProps,
-} from '@algolia/recommend-core/src/getTrendingFacets';
+  GetTrendingFacetsResult,
+} from '@algolia/recommend-core';
 import { useEffect, useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
@@ -18,9 +18,8 @@ export function useTrendingFacets<TObject>({
   threshold,
   transformItems: userTransformItems,
   facetName,
-  facetValue,
 }: GetTrendingFacetsProps<TObject>) {
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
+  const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
@@ -41,7 +40,6 @@ export function useTrendingFacets<TObject>({
       queryParameters,
       threshold,
       facetName,
-      facetValue,
     }).then((response) => {
       setResult(response);
       setStatus('idle');
@@ -56,7 +54,6 @@ export function useTrendingFacets<TObject>({
     threshold,
     transformItems,
     facetName,
-    facetValue,
   ]);
 
   return {

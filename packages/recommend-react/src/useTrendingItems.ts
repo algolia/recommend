@@ -1,7 +1,7 @@
 import {
   getTrendingItems,
   GetTrendingItemsProps,
-  GetRecommendationsResult,
+  GetTrendingItemsResult,
 } from '@algolia/recommend-core';
 import { useEffect, useState } from 'react';
 
@@ -20,7 +20,7 @@ export function useTrendingItems<TObject>({
   facetName,
   facetValue,
 }: GetTrendingItemsProps<TObject>) {
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
+  const [result, setResult] = useState<GetTrendingItemsResult<TObject>>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
