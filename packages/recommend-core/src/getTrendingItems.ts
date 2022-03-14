@@ -1,6 +1,6 @@
 import { RecommendClient, TrendingItemsQuery } from '@algolia/recommend';
 
-import { TrendingItemsRecord } from './types';
+import { ProductRecord } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
 
@@ -15,12 +15,12 @@ export type TrendingItemsProps<TObject> = {
    * It’s useful to add or remove items, change them, or reorder them.
    */
   transformItems?: (
-    items: Array<TrendingItemsRecord<TObject>>
-  ) => Array<TrendingItemsRecord<TObject>>;
+    items: Array<ProductRecord<TObject>>
+  ) => Array<ProductRecord<TObject>>;
 };
 
 export type GetTrendingItemsResult<TObject> = {
-  recommendations: Array<TrendingItemsRecord<TObject>>;
+  recommendations: Array<ProductRecord<TObject>>;
 };
 
 export type GetTrendingItemsProps<TObject> = TrendingItemsProps<TObject> &
