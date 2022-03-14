@@ -5,6 +5,6 @@ export type TrendingItemsRecord<TObject> = TObject & {
 
 export type TrendingFacetsRecord<TObject> = TObject & {
   _score?: number;
-  facetName: string;
-  facetValue: string;
+  facetName?: string;
+  facetValue?: string;
 };

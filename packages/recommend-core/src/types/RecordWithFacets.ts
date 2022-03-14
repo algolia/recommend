@@ -1,4 +1,4 @@
 export type RecordWithFacets<TObject = {}> = TObject & {
-  facetName: string;
-  facetValue: string;
+  facetName?: string;
+  facetValue?: string;
 };
