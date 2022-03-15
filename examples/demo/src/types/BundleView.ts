@@ -1,7 +1,7 @@
 export type BaseObject = {
   objectID: string;
   name: string;
-  price: number;
+  price: { value: number };
 };
 
 export type BundleViewTranslations = Partial<{

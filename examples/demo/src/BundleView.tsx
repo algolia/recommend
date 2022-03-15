@@ -5,7 +5,7 @@ import { BaseObject, BundleViewProps } from './types';
 import './BundleView.css';
 
 function getAmountDefault<TObject extends BaseObject>(items: TObject[]) {
-  return items.reduce((sum, current) => sum + current.price, 0);
+  return items.reduce((sum, current) => sum + current.price.value, 0);
 }
 
 function formatPriceDefault(price: number) {
@@ -118,7 +118,7 @@ export function BundleView<TObject extends BaseObject>(
                   )}
                   <span className="uic-BundleView-label-name">{item.name}</span>
                   <span className="uic-BundleView-label-price">
-                    {formatPrice(item.price)}
+                    {formatPrice(item.price.value)}
                   </span>
                 </label>
               </li>

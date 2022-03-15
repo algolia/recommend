@@ -22,14 +22,14 @@ export function Hit({ hit, insights, onSelect }: HitProps) {
       }}
     >
       <div className="Hit-Image">
-        <img src={hit.image_link} alt={hit.name} />
+        <img src={hit.image_urls[0]} alt={hit.name} />
       </div>
 
       <div className="Hit-Content">
         <div className="Hit-Name">{hit.name}</div>
         <div className="Hit-Description">{hit.objectID}</div>
 
-        <div className="Hit-Price">${hit.price}</div>
+        <div className="Hit-Price">${hit.price.value}</div>
 
         <button
           className="Hit-Button"
