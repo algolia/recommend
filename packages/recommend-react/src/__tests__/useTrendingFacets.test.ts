@@ -23,7 +23,7 @@ function createMockedRecommendClient() {
   };
 }
 
-describe('useRelatedProducts', () => {
+describe('useTrendingFacets', () => {
   test('gets Related Products', () => {
     const { recommendClient } = createMockedRecommendClient();
 
