@@ -1,7 +1,7 @@
 import { RecommendClient, TrendingFacetsQuery } from '@algolia/recommend';
 
 import { TrendingFacet } from './types';
-import { mapToTrendingFacets } from './utils';
+import { mapToRecommendations } from './utils';
 import { version } from './version';
 
 export type TrendingFacetsProps<TObject> = {
@@ -50,9 +50,11 @@ export function getTrendingFacets<TObject>({
   return recommendClient
     .getTrendingFacets<TObject>([query])
     .then((response) =>
-      mapToTrendingFacets({
+      // Multiple identical recommended `objectID`s can be returned b
+      // the engine, so we need to remove duplicates.
+      mapToRecommendations<TrendingFacet<TObject>>({
         maxRecommendations,
-        response,
+        hits: response.results.map((result) => result.hits).flat(),
       })
     )
     .then((hits) => ({ recommendations: transformItems(hits) }));

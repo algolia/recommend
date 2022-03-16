@@ -1,4 +1,5 @@
 import { mapToRecommendations } from '../mapToRecommendations';
+import { uniqBy } from '../uniqBy';
 
 const response = {
   results: [
@@ -73,7 +74,12 @@ const response = {
 
 describe('mapToRecommendations', () => {
   test('sorts the items based on their scores', () => {
-    const result = mapToRecommendations({ response: response as any });
+    const result = mapToRecommendations({
+      hits: uniqBy<any>(
+        'objectID',
+        response.results.map((result) => result.hits).flat()
+      ),
+    });
 
     expect(result).toMatchInlineSnapshot(`
       Array [
