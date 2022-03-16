@@ -24,7 +24,7 @@ function createMockedRecommendClient() {
 }
 
 describe('useTrendingItems', () => {
-  test('gets Related Products', () => {
+  test('gets trending items', () => {
     const { recommendClient } = createMockedRecommendClient();
 
     renderHook(() => {
