@@ -1,6 +1,6 @@
 import { RecommendClient, TrendingFacetsQuery } from '@algolia/recommend';
 
-import { TrendingFacetsRecord } from './types';
+import { TrendingFacet } from './types';
 import { mapToTrendingFacets } from './utils';
 import { version } from './version';
 
@@ -15,12 +15,12 @@ export type TrendingFacetsProps<TObject> = {
    * It’s useful to add or remove items, change them, or reorder them.
    */
   transformItems?: (
-    items: Array<TrendingFacetsRecord<TObject>>
-  ) => Array<TrendingFacetsRecord<TObject>>;
+    items: Array<TrendingFacet<TObject>>
+  ) => Array<TrendingFacet<TObject>>;
 };
 
 export type GetTrendingFacetsResult<TObject> = {
-  recommendations: Array<TrendingFacetsRecord<TObject>>;
+  recommendations: Array<TrendingFacet<TObject>>;
 };
 
 export type GetTrendingFacetsProps<TObject> = TrendingFacetsProps<TObject> &

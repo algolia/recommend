@@ -1,4 +1,4 @@
-export type TrendingFacetsRecord<TObject> = TObject & {
+export type TrendingFacet<TObject> = TObject & {
   _score?: number;
   facetName?: string;
   facetValue?: string;

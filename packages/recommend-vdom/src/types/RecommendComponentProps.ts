@@ -1,4 +1,4 @@
-import { RecordWithFacets, RecordWithObjectID } from '@algolia/recommend-core';
+import { FacetEntry, RecordWithObjectID } from '@algolia/recommend-core';
 
 import { FacetsViewProps } from './FacetsViewProps';
 import { RecommendClassNames } from './RecommendClassNames';
@@ -43,7 +43,7 @@ export type RecommendComponentProps<TObject> = {
 
 export type TrendingComponentProps<TObject> = {
   itemComponent(props: ItemComponentProps<TObject>): JSX.Element;
-  items: Array<RecordWithFacets<TObject>>;
+  items: Array<FacetEntry<TObject>>;
   classNames?: RecommendClassNames;
   children?(props: ChildrenProps<TObject>): JSX.Element;
   fallbackComponent?(): JSX.Element;
@@ -52,7 +52,7 @@ export type TrendingComponentProps<TObject> = {
   translations?: RecommendTranslations;
   view?(
     props: FacetsViewProps<
-      RecordWithFacets<TObject>,
+      FacetEntry<TObject>,
       Required<RecommendTranslations>,
       Record<string, string>
     >

@@ -1,6 +1,6 @@
 import { MultipleQueriesResponse } from '@algolia/client-search';
 
-import { TrendingFacetsRecord } from '../types';
+import { TrendingFacet } from '../types';
 
 import { sortBy } from './sortBy';
 
@@ -15,7 +15,7 @@ export function mapToTrendingFacets<TObject>({
 }: MapToRecommendations<TObject>) {
   // Since recommendations from multiple indices are returned, we
   // need to sort them descending based on their score.
-  return sortBy<TrendingFacetsRecord<TObject>>((a, b) => {
+  return sortBy<TrendingFacet<TObject>>((a, b) => {
     const scoreA = a._score || 0;
     const scoreB = b._score || 0;
 
