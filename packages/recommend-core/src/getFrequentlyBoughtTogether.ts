@@ -32,7 +32,7 @@ export function getFrequentlyBoughtTogether<TObject>({
   return recommendClient
     .getFrequentlyBoughtTogether<TObject>(queries)
     .then((response) =>
-      // Multiple identical recommended `objectID`s can be returned b
+      // Multiple identical recommended `objectID`s can be returned by
       // the engine, so we need to remove duplicates.
       mapToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
