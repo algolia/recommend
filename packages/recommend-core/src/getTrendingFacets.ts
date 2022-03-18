@@ -50,8 +50,6 @@ export function getTrendingFacets<TObject>({
   return recommendClient
     .getTrendingFacets<TObject>([query])
     .then((response) =>
-      // Multiple identical recommended `objectID`s can be returned b
-      // the engine, so we need to remove duplicates.
       mapToRecommendations<TrendingFacet<TObject>>({
         maxRecommendations,
         hits: response.results.map((result) => result.hits).flat(),

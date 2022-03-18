@@ -52,10 +52,10 @@ export function getTrendingItems<TObject>({
   return recommendClient
     .getTrendingItems<TObject>([query])
     .then((response) =>
-      // Multiple identical recommended `objectID`s can be returned b
-      // the engine, so we need to remove duplicates.
       mapToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
+        // Multiple identical recommended `objectID`s can be returned b
+        // the engine, so we need to remove duplicates.
         hits: uniqBy<ProductRecord<TObject>>(
           'objectID',
           response.results.map((result) => result.hits).flat()
