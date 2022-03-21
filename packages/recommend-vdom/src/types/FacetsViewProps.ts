@@ -1,7 +1,7 @@
-import { RecordWithFacets } from '@algolia/recommend-core/src';
+import { FacetEntry } from '@algolia/recommend-core/src';
 
 export type FacetsViewProps<
-  TItem extends RecordWithFacets,
+  TItem extends FacetEntry,
   TTranslations extends Record<string, string>,
   TClassNames extends Record<string, string>
 > = {

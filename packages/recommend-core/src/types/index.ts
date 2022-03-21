@@ -1,5 +1,5 @@
 export * from './ProductRecord';
 export * from './RecommendModel';
-export * from './RecordWithFacets';
+export * from './FacetEntry';
 export * from './RecordWithObjectID';
-export * from './TrendingRecord';
+export * from './TrendingFacet';
