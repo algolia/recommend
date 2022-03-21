@@ -21,9 +21,9 @@ import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
 import './Recommend.css';
 
-const appId = '';
-const apiKey = '';
-const indexName = '';
+const appId = 'XX85YRZZMV';
+const apiKey = '098f71f9e2267178bdfc08cc986d2999';
+const indexName = 'test_FLAGSHIP_ECOM_recommend';
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
@@ -68,7 +68,6 @@ function App() {
   return (
     <div className="container">
       <h1>Algolia Recommend</h1>
-
       <Autocomplete
         placeholder="Search for a product"
         openOnFocus={true}
@@ -128,7 +127,6 @@ function App() {
           ];
         }}
       />
-
       {selectedProduct && (
         <Fragment>
           <div style={{ padding: '1rem 0' }}>
@@ -240,42 +238,49 @@ function App() {
               ],
             }}
           />
-
-          <TrendingFacets<FacetHit>
-            recommendClient={recommendClient}
-            indexName={indexName}
-            facetName="brand"
-            itemComponent={({ item }) => (
-              <Facet
-                hit={item}
-                insights={insights}
-                onSelect={setSelectedFacetValue}
-                indexName={indexName}
-              />
-            )}
-            maxRecommendations={5}
-            translations={{
-              title: 'Trending in brand',
-            }}
-          />
-          <TrendingItems<ProductHit>
-            recommendClient={recommendClient}
-            indexName={indexName}
-            itemComponent={({ item }) => (
-              <Hit
-                hit={item}
-                insights={insights}
-                onSelect={setSelectedProduct}
-              />
-            )}
-            maxRecommendations={10}
-            view={HorizontalSlider}
-            translations={{
-              title: 'Trending products',
-            }}
-          />
         </Fragment>
       )}
+      <TrendingFacets<FacetHit>
+        recommendClient={recommendClient}
+        indexName={indexName}
+        facetName="brand"
+        itemComponent={({ item }) => (
+          <Facet
+            hit={item}
+            insights={insights}
+            onSelect={(facetHits) => {
+              setSelectedFacetValue(
+                facetHits.facetValue === selectedFacetValue?.facetValue
+                  ? undefined
+                  : facetHits
+              );
+            }}
+            indexName={indexName}
+          />
+        )}
+        maxRecommendations={5}
+        translations={{
+          title: 'Trending in brand',
+        }}
+      />
+      <TrendingItems<ProductHit>
+        recommendClient={recommendClient}
+        indexName={indexName}
+        facetName={selectedFacetValue ? 'brand' : undefined}
+        facetValue={
+          selectedFacetValue ? selectedFacetValue.facetValue : undefined
+        }
+        itemComponent={({ item }) => (
+          <Hit hit={item} insights={insights} onSelect={setSelectedProduct} />
+        )}
+        maxRecommendations={10}
+        view={HorizontalSlider}
+        translations={{
+          title: `Trending products ${
+            selectedFacetValue ? `in ${selectedFacetValue.facetValue}` : ''
+          }`,
+        }}
+      />
     </div>
   );
 }

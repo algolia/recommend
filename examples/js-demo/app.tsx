@@ -16,9 +16,9 @@ import { ProductHit, ReferenceItemProps } from './types';
 import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
 
-const appId = '';
-const apiKey = '';
-const indexName = '';
+const appId = 'XX85YRZZMV';
+const apiKey = '098f71f9e2267178bdfc08cc986d2999';
+const indexName = 'test_FLAGSHIP_ECOM_recommend';
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
@@ -70,7 +70,7 @@ autocomplete<ProductHit>({
                 <div className="aa-ItemContent">
                   <div className="aa-ItemIcon aa-ItemIcon--picture aa-ItemIcon--alignTop">
                     <img
-                      src={item.image_link}
+                      src={item.image_urls[0]}
                       alt={item.name}
                       width="40"
                       height="40"
@@ -82,7 +82,7 @@ autocomplete<ProductHit>({
                       <components.Highlight hit={item} attribute="name" />
                     </div>
                     <div className="aa-ItemContentDescription">
-                      In <strong>{item.category}</strong>
+                      In <strong>{item.brand}</strong>
                     </div>
                   </div>
                 </div>
@@ -105,11 +105,15 @@ function ReferenceItem({ item }: ReferenceItemProps) {
         }}
       >
         <div>
-          <img src={item.image_link} alt={item.name} className="max-w-full" />
+          <img
+            src={item.image_urls[0]}
+            alt={item.name}
+            className="max-w-full"
+          />
         </div>
 
         <div>
-          <div className="text-sm text-gray-500">{item.category}</div>
+          <div className="text-sm text-gray-500">{item.brand}</div>
 
           <div className="text-gray-900 font-semibold mb-1 whitespace-normal">
             {item.name}

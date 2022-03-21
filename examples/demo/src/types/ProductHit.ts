@@ -1,7 +1,6 @@
 import { Hit } from '@algolia/client-search';
 
 export type ProductRecord = {
-  category: string;
   brand: string;
   image_urls: string[];
   hierarchical_categories: {

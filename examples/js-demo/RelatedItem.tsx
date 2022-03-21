@@ -26,7 +26,7 @@ export function RelatedItem({ item, insights, onSelect }: RelatedItemProps) {
       }}
     >
       <div className="relative">
-        <img src={item.image_link} alt={item.name} className="max-w-full" />
+        <img src={item.image_urls[0]} alt={item.name} className="max-w-full" />
 
         <div className="RelatedItem-info">
           {item._score && (
@@ -53,7 +53,7 @@ export function RelatedItem({ item, insights, onSelect }: RelatedItemProps) {
       </div>
 
       <div>
-        <div className="text-sm text-gray-500">{item.category}</div>
+        <div className="text-sm text-gray-500">{item.brand}</div>
 
         <div className="text-gray-900 font-semibold mb-1 whitespace-normal">
           {item.name}
