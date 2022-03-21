@@ -62,6 +62,20 @@ export function createRecommendClient(
         )
       )
     ),
+    getTrendingFacets: jest.fn((requests) =>
+      Promise.resolve(
+        createMultiSearchResponse(
+          ...requests.map(() => createSingleSearchResponse())
+        )
+      )
+    ),
+    getTrendingItems: jest.fn((requests) =>
+      Promise.resolve(
+        createMultiSearchResponse(
+          ...requests.map(() => createSingleSearchResponse())
+        )
+      )
+    ),
     transporter: {
       userAgent: {
         value: '',
