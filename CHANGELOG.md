@@ -1,16 +1,10 @@
 # [1.2.0](https://github.com/algolia/recommend/compare/v1.1.0...v1.2.0) (2022-03-23)
 
 
-### Bug Fixes
-
-* **ci:** update docker image ([#60](https://github.com/algolia/recommend/issues/60)) ([b7770d7](https://github.com/algolia/recommend/commit/b7770d7e344b012085793953e184c3fc9e0cbe22))
-* **examples:** remove demo credentials ([5f8cb91](https://github.com/algolia/recommend/commit/5f8cb91c9476d71652dc2bc30cd0cbc07afd3fd4))
-
-
 ### Features
 
-* **recommend:** Add hooks, methods and react components for recommend-react ([#65](https://github.com/algolia/recommend/issues/65)) ([c112371](https://github.com/algolia/recommend/commit/c112371abe12f6d22573322dd1c92978c9bcd62d))
-* **recommend:** Add trending for recommend-js ([#71](https://github.com/algolia/recommend/issues/71)) ([50c0475](https://github.com/algolia/recommend/commit/50c0475e4ca18eca1d4fc900fb829f119c2c51f3))
+* **trending:** add Hooks and components for `recommend-react` ([#65](https://github.com/algolia/recommend/issues/65)) ([c112371](https://github.com/algolia/recommend/commit/c112371abe12f6d22573322dd1c92978c9bcd62d))
+* **trending:** add UI functions for `recommend-js` ([#71](https://github.com/algolia/recommend/issues/71)) ([50c0475](https://github.com/algolia/recommend/commit/50c0475e4ca18eca1d4fc900fb829f119c2c51f3))
 
 
 
