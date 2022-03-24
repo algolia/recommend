@@ -2,6 +2,8 @@ import algoliarecommend from '@algolia/recommend';
 import {
   FrequentlyBoughtTogether,
   RelatedProducts,
+  TrendingItems,
+  TrendingFacets,
 } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
@@ -10,17 +12,18 @@ import insights from 'search-insights';
 
 import { Autocomplete, getAlgoliaResults } from './Autocomplete';
 import { BundleView } from './BundleView';
+import { Facet } from './Facet';
 import { Hit } from './Hit';
-import { ProductHit, BundleItemProps } from './types';
+import { ProductHit, BundleItemProps, FacetHit } from './types';
 
 import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
 import './Recommend.css';
 
-const appId = '';
-const apiKey = '';
-const indexName = '';
+const appId = 'XX85YRZZMV';
+const apiKey = '098f71f9e2267178bdfc08cc986d2999';
+const indexName = 'test_FLAGSHIP_ECOM_recommend';
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
@@ -47,7 +50,7 @@ function BundleItem({ item, onSelect }: BundleItemProps<ProductHit>) {
       }}
     >
       <div className="Hit-Image">
-        <img src={item.image_link} alt={item.name} />
+        <img src={item.image_urls[0]} alt={item.name} />
       </div>
     </a>
   );
@@ -58,10 +61,13 @@ function App() {
     null
   );
 
+  const [selectedFacetValue, setSelectedFacetValue] = useState<FacetHit | null>(
+    null
+  );
+
   return (
     <div className="container">
       <h1>Algolia Recommend</h1>
-
       <Autocomplete
         placeholder="Search for a product"
         openOnFocus={true}
@@ -97,7 +103,7 @@ function App() {
                       <div className="aa-ItemContent">
                         <div className="aa-ItemIcon aa-ItemIcon--picture aa-ItemIcon--alignTop">
                           <img
-                            src={item.image_link}
+                            src={item.image_urls[0]}
                             alt={item.name}
                             width="40"
                             height="40"
@@ -109,7 +115,7 @@ function App() {
                             <components.Highlight hit={item} attribute="name" />
                           </div>
                           <div className="aa-ItemContentDescription">
-                            In <strong>{item.category}</strong>
+                            In <strong>{item.brand}</strong>
                           </div>
                         </div>
                       </div>
@@ -121,7 +127,6 @@ function App() {
           ];
         }}
       />
-
       {selectedProduct && (
         <Fragment>
           <div style={{ padding: '1rem 0' }}>
@@ -131,7 +136,7 @@ function App() {
             >
               <div className="Hit-Image" style={{ maxWidth: 150 }}>
                 <img
-                  src={selectedProduct.image_link}
+                  src={selectedProduct.image_urls[0]}
                   alt={selectedProduct.name}
                 />
               </div>
@@ -142,12 +147,13 @@ function App() {
                   {selectedProduct.objectID}
                 </div>
                 <footer className="Hit-Footer">
-                  <span className="Hit-Price">${selectedProduct.price}</span>
+                  <span className="Hit-Price">
+                    ${selectedProduct.price.value}
+                  </span>
                 </footer>
               </div>
             </div>
           </div>
-
           <FrequentlyBoughtTogether<ProductHit>
             recommendClient={recommendClient}
             indexName={indexName}
@@ -159,6 +165,9 @@ function App() {
             queryParameters={{
               analytics: true,
               clickAnalytics: true,
+              facetFilters: selectedFacetValue
+                ? [`brand:${selectedFacetValue}`]
+                : null,
             }}
             view={({ itemComponent, items }) => (
               <BundleView
@@ -199,7 +208,6 @@ function App() {
               />
             )}
           />
-
           <RelatedProducts<ProductHit>
             recommendClient={recommendClient}
             indexName={indexName}
@@ -226,11 +234,53 @@ function App() {
               clickAnalytics: true,
               facetFilters: [
                 `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+                selectedFacetValue ? `brand:${selectedFacetValue}` : null,
               ],
             }}
           />
         </Fragment>
       )}
+      <TrendingFacets<FacetHit>
+        recommendClient={recommendClient}
+        indexName={indexName}
+        facetName="brand"
+        itemComponent={({ item }) => (
+          <Facet
+            hit={item}
+            insights={insights}
+            onSelect={(facetHits) => {
+              setSelectedFacetValue(
+                facetHits.facetValue === selectedFacetValue?.facetValue
+                  ? undefined
+                  : facetHits
+              );
+            }}
+            indexName={indexName}
+          />
+        )}
+        maxRecommendations={5}
+        translations={{
+          title: 'Trending in brand',
+        }}
+      />
+      <TrendingItems<ProductHit>
+        recommendClient={recommendClient}
+        indexName={indexName}
+        facetName={selectedFacetValue ? 'brand' : undefined}
+        facetValue={
+          selectedFacetValue ? selectedFacetValue.facetValue : undefined
+        }
+        itemComponent={({ item }) => (
+          <Hit hit={item} insights={insights} onSelect={setSelectedProduct} />
+        )}
+        maxRecommendations={10}
+        view={HorizontalSlider}
+        translations={{
+          title: `Trending products ${
+            selectedFacetValue ? `in ${selectedFacetValue.facetValue}` : ''
+          }`,
+        }}
+      />
     </div>
   );
 }

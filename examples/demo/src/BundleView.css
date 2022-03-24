@@ -49,6 +49,10 @@
   outline-offset: 3px;
 }
 
+.uic-BundleView-item {
+  width: 200x;
+}
+
 .uic-BundleView-label {
   display: grid;
   gap: 0.25rem;

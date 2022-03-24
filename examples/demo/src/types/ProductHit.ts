@@ -1,8 +1,8 @@
 import { Hit } from '@algolia/client-search';
 
 export type ProductRecord = {
-  category: string;
-  image_link: string;
+  brand: string;
+  image_urls: string[];
   hierarchical_categories: {
     lvl0: string;
     lvl1?: string;
@@ -12,7 +12,7 @@ export type ProductRecord = {
     lvl5?: string;
   };
   name: string;
-  price: number;
+  price: { value: number };
   url: string;
 };
 
