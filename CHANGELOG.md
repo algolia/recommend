@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/algolia/recommend/compare/v1.2.0...v1.3.0) (2022-03-24)
+
+
+### Features
+
+* **recommend:** Update demo and add credentials back ([#66](https://github.com/algolia/recommend/issues/66)) ([a8a91c2](https://github.com/algolia/recommend/commit/a8a91c2381a6156a2a751bac9abcdbaf0c59842c))
+
+
+
 # [1.2.0](https://github.com/algolia/recommend/compare/v1.1.0...v1.2.0) (2022-03-23)
 
 
