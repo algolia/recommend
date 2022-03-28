@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/algolia/recommend/compare/v1.2.0...v1.3.0) (2022-03-28)
+
+
+### Bug Fixes
+
+* **trending:** export components for js libraries ([#74](https://github.com/algolia/recommend/issues/74)) ([9c532b1](https://github.com/algolia/recommend/commit/9c532b140f9caa947cc2551f187f5160d3df8747))
+
+
+
 # [1.2.0](https://github.com/algolia/recommend/compare/v1.1.0...v1.2.0) (2022-03-23)
 
 
