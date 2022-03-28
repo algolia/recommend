@@ -6,11 +6,6 @@
 * **trending:** export components for js libraries ([#74](https://github.com/algolia/recommend/issues/74)) ([9c532b1](https://github.com/algolia/recommend/commit/9c532b140f9caa947cc2551f187f5160d3df8747))
 
 
-### Features
-
-* **recommend:** Update demo and add credentials back ([#66](https://github.com/algolia/recommend/issues/66)) ([a8a91c2](https://github.com/algolia/recommend/commit/a8a91c2381a6156a2a751bac9abcdbaf0c59842c))
-
-
 
 # [1.2.0](https://github.com/algolia/recommend/compare/v1.1.0...v1.2.0) (2022-03-23)
 
