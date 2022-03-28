@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* **recommend:** export components for js libraries ([#74](https://github.com/algolia/recommend/issues/74)) ([9c532b1](https://github.com/algolia/recommend/commit/9c532b140f9caa947cc2551f187f5160d3df8747))
+* **trending:** export components for js libraries ([#74](https://github.com/algolia/recommend/issues/74)) ([9c532b1](https://github.com/algolia/recommend/commit/9c532b140f9caa947cc2551f187f5160d3df8747))
 
 
 ### Features
