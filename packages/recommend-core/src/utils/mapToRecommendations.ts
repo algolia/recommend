@@ -1,5 +1,3 @@
-import { sortBy } from './sortBy';
-
 type MapToRecommendations<TObject> = {
   hits: Array<TObject & { _score?: number }>;
   maxRecommendations?: number;
