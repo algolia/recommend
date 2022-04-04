@@ -1,7 +1,7 @@
 import { RecommendClient, TrendingFacetsQuery } from '@algolia/recommend';
 
 import { TrendingFacet } from './types';
-import { mapToRecommendations } from './utils';
+import { getHitsFromResponse, mapToRecommendations } from './utils';
 import { version } from './version';
 
 export type TrendingFacetsProps<TObject> = {
@@ -52,7 +52,7 @@ export function getTrendingFacets<TObject>({
     .then((response) =>
       mapToRecommendations<TrendingFacet<TObject>>({
         maxRecommendations,
-        hits: response.results.map((result) => result.hits).flat(),
+        hits: getHitsFromResponse(response),
       })
     )
     .then((hits) => ({ recommendations: transformItems(hits) }));

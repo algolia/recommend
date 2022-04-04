@@ -1,7 +1,7 @@
 import { RecommendClient, TrendingItemsQuery } from '@algolia/recommend';
 
 import { ProductRecord } from './types';
-import { mapToRecommendations, uniqBy } from './utils';
+import { getHitsFromResponse, mapToRecommendations } from './utils';
 import { version } from './version';
 
 export type TrendingItemsProps<TObject> = {
@@ -54,12 +54,7 @@ export function getTrendingItems<TObject>({
     .then((response) =>
       mapToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
-        // Multiple identical recommended `objectID`s can be returned b
-        // the engine, so we need to remove duplicates.
-        hits: uniqBy<ProductRecord<TObject>>(
-          'objectID',
-          response.results.map((result) => result.hits).flat()
-        ),
+        hits: getHitsFromResponse(response),
       })
     )
     .then((hits) => ({ recommendations: transformItems(hits) }));
