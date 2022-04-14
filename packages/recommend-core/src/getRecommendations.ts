@@ -1,7 +1,7 @@
 import type { RecommendClient, RecommendationsQuery } from '@algolia/recommend';
 
 import { ProductRecord, RecordWithObjectID } from './types';
-import { mapToRecommendations, uniqBy } from './utils';
+import { mapToRecommendations } from './utils';
 import { version } from './version';
 
 export type RecommendationsProps<TObject> = {

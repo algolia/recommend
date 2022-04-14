@@ -2,7 +2,7 @@ import { FrequentlyBoughtTogetherQuery } from '@algolia/recommend';
 
 import { RecommendationsProps } from './getRecommendations';
 import { ProductRecord } from './types';
-import { mapToRecommendations, uniqBy } from './utils';
+import { mapToRecommendations } from './utils';
 import { version } from './version';
 
 export type GetFrequentlyBoughtTogetherProps<
