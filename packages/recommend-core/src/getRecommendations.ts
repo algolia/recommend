@@ -62,10 +62,8 @@ export function getRecommendations<TObject>({
         maxRecommendations,
         // Multiple identical recommended `objectID`s can be returned b
         // the engine, so we need to remove duplicates.
-        hits: uniqBy<ProductRecord<TObject>>(
-          'objectID',
-          response.results.map((result) => result.hits).flat()
-        ),
+        hits: response.results.map((result) => result.hits),
+        nrOfObjs: objectIDs.length,
       })
     )
     .then((hits) => ({ recommendations: transformItems(hits) }));
