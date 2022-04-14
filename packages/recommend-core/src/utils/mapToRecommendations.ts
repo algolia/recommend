@@ -50,17 +50,19 @@ export function mapToRecommendations<TObject>({
 
   avgIndexes.sort((a, b) => (a.avgOfIndexes > b.avgOfIndexes ? 1 : -1));
 
-  const ordered = avgIndexes.reduce<Array<ProductRecord<TObject>>>(
-    (p: Array<ProductRecord<TObject>>, c: AvgIndex) => {
+  const finalOrder = avgIndexes.reduce<Array<ProductRecord<TObject>>>(
+    (orderedHits: Array<ProductRecord<TObject>>, avgIndexRef: AvgIndex) => {
       const result = hits
         .flat()
-        .find((f: ProductRecord<TObject>) => f.objectID === c.objectID);
-      return result ? p.concat(result) : p;
+        .find(
+          (hit: ProductRecord<TObject>) => hit.objectID === avgIndexRef.objectID
+        );
+      return result ? orderedHits.concat(result) : orderedHits;
     },
     []
   );
 
-  return ordered.slice(
+  return finalOrder.slice(
     0,
     // We cap the number of recommendations because the previously
     // computed `hitsPerPage` was an approximation due to `Math.ceil`.
