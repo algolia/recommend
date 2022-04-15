@@ -1,18 +1,13 @@
 import { ProductRecord } from '../types';
+import { AverageIndexes } from '../types/AverageIndexes';
+import { IndexTracker } from '../types/IndexTracker';
+
+import { getAverageIndexes } from './computeAverageIndexes';
 
 type MapToRecommendations<TObject> = {
   hits: Array<Array<ProductRecord<TObject>>>;
   maxRecommendations?: number;
   nrOfObjs: number;
-};
-
-type AvgIndex = {
-  objectID: string;
-  avgOfIndexes: number;
-};
-
-type IndexTracker = {
-  [key: string]: { indexSum: number; nr: number };
 };
 
 export function mapToRecommendations<TObject>({
@@ -21,7 +16,6 @@ export function mapToRecommendations<TObject>({
   nrOfObjs,
 }: MapToRecommendations<TObject>) {
   const indexTracker: IndexTracker = {};
-  const avgIndexes: AvgIndex[] = [];
 
   // eslint-disable-next-line array-callback-return
   hits.map((arr) => {
@@ -38,20 +32,13 @@ export function mapToRecommendations<TObject>({
     });
   });
 
-  for (const key of Object.keys(indexTracker)) {
-    if (indexTracker[key].nr < 2) {
-      indexTracker[key].indexSum += 100;
-    }
-    avgIndexes.push({
-      objectID: key,
-      avgOfIndexes: indexTracker[key].indexSum / nrOfObjs,
-    });
-  }
+  const sortedAverageIndexes = getAverageIndexes(indexTracker, nrOfObjs);
 
-  avgIndexes.sort((a, b) => (a.avgOfIndexes > b.avgOfIndexes ? 1 : -1));
-
-  const finalOrder = avgIndexes.reduce<Array<ProductRecord<TObject>>>(
-    (orderedHits: Array<ProductRecord<TObject>>, avgIndexRef: AvgIndex) => {
+  const finalOrder = sortedAverageIndexes.reduce<Array<ProductRecord<TObject>>>(
+    (
+      orderedHits: Array<ProductRecord<TObject>>,
+      avgIndexRef: AverageIndexes
+    ) => {
       const result = hits
         .flat()
         .find(
