@@ -1,4 +1,5 @@
 import { mapToRecommendations } from '../mapToRecommendations';
+import { uniqBy } from '../uniqBy';
 
 const response = {
   results: [
@@ -6,29 +7,27 @@ const response = {
       exhaustiveNbHits: true,
       hits: [
         {
-          objectID: 'A',
-          name: 'Product A',
+          objectID: '1-1',
+          name: 'Product 1-1',
           _score: 100,
         },
         {
-          objectID: 'B',
-          name: 'Product B',
-          _score: 0,
+          objectID: '1-2',
+          name: 'Product 1-2',
+          _score: 90,
         },
         {
-          objectID: 'C',
-          name: 'Product C',
-          _score: 0,
+          objectID: '1-3',
+          name: 'Product 1-3',
+          _score: 70,
         },
         {
-          objectID: 'D',
-          name: 'Product D',
-          _score: 89,
+          objectID: '1-4',
+          name: 'Product 1-4',
         },
         {
-          objectID: 'E',
-          name: 'Product E',
-          _score: 76,
+          objectID: '1-5',
+          name: 'Product 1-5',
         },
       ],
       hitsPerPage: 10,
@@ -41,29 +40,27 @@ const response = {
       exhaustiveNbHits: true,
       hits: [
         {
-          objectID: 'F',
-          name: 'Product F',
+          objectID: '2-1',
+          name: 'Product 2-1',
           _score: 100,
         },
         {
-          objectID: 'B',
-          name: 'Product B',
-          _score: 0,
+          objectID: '2-2',
+          name: 'Product 2-2',
+          _score: 90,
         },
         {
-          objectID: 'E',
-          name: 'Product E',
-          _score: 0,
+          objectID: '2-3',
+          name: 'Product 2-3',
+          _score: 70,
         },
         {
-          objectID: 'G',
-          name: 'Product G',
-          _score: 96,
+          objectID: '2-4',
+          name: 'Product 2-4',
         },
         {
-          objectID: 'C',
-          name: 'Product C',
-          _score: 0,
+          objectID: '2-5',
+          name: 'Product 2-5',
         },
       ],
       hitsPerPage: 10,
@@ -76,48 +73,61 @@ const response = {
 };
 
 describe('mapToRecommendations', () => {
-  test('sorts the items based on their average index thus preserving applied rules', () => {
+  test('sorts the items based on their scores', () => {
     const result = mapToRecommendations({
-      hits: response.results.map((result) => result.hits),
-      nrOfObjs: 2,
+      hits: uniqBy<any>(
+        'objectID',
+        response.results.map((result) => result.hits).flat()
+      ),
     });
 
     expect(result).toMatchInlineSnapshot(`
       Array [
         Object {
-          "_score": 0,
-          "name": "Product B",
-          "objectID": "B",
-        },
-        Object {
-          "_score": 76,
-          "name": "Product E",
-          "objectID": "E",
-        },
-        Object {
-          "_score": 0,
-          "name": "Product C",
-          "objectID": "C",
+          "_score": 100,
+          "name": "Product 1-1",
+          "objectID": "1-1",
         },
         Object {
           "_score": 100,
-          "name": "Product F",
-          "objectID": "F",
+          "name": "Product 2-1",
+          "objectID": "2-1",
         },
         Object {
-          "_score": 100,
-          "name": "Product A",
-          "objectID": "A",
+          "_score": 90,
+          "name": "Product 1-2",
+          "objectID": "1-2",
         },
         Object {
-          "_score": 96,
-          "name": "Product G",
-          "objectID": "G",
+          "_score": 90,
+          "name": "Product 2-2",
+          "objectID": "2-2",
         },
         Object {
-          "_score": 89,
-          "name": "Product D",
-          "objectID": "D",
+          "_score": 70,
+          "name": "Product 1-3",
+          "objectID": "1-3",
+        },
+        Object {
+          "_score": 70,
+          "name": "Product 2-3",
+          "objectID": "2-3",
+        },
+        Object {
+          "name": "Product 1-4",
+          "objectID": "1-4",
+        },
+        Object {
+          "name": "Product 1-5",
+          "objectID": "1-5",
+        },
+        Object {
+          "name": "Product 2-4",
+          "objectID": "2-4",
+        },
+        Object {
+          "name": "Product 2-5",
+          "objectID": "2-5",
         },
       ]
     `);

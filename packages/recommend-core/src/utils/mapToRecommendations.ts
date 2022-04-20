@@ -1,55 +1,22 @@
-import { ProductRecord } from '../types';
-import { AverageIndexes } from '../types/AverageIndexes';
-import { IndexTracker } from '../types/IndexTracker';
-
-import { getAverageIndexes } from './computeAverageIndexes';
+import { sortBy } from './sortBy';
 
 type MapToRecommendations<TObject> = {
-  hits: Array<Array<ProductRecord<TObject>>>;
+  hits: Array<TObject & { _score?: number }>;
   maxRecommendations?: number;
-  nrOfObjs: number;
 };
 
 export function mapToRecommendations<TObject>({
   hits,
   maxRecommendations,
-  // total number of products for which we are retrieving recommendations
-  // e.g. objectsIDs.length
-  nrOfObjs,
 }: MapToRecommendations<TObject>) {
-  const indexTracker: IndexTracker = {};
+  // Since recommendations from multiple indices are returned, we
+  // need to sort them descending based on their score.
+  return sortBy<TObject & { _score?: number }>((a, b) => {
+    const scoreA = a._score || 0;
+    const scoreB = b._score || 0;
 
-  hits.forEach((hitsArray) => {
-    hitsArray.forEach((hit, index) => {
-      if (!indexTracker[hit.objectID]) {
-        indexTracker[hit.objectID] = { indexSum: index, nr: 1 };
-      } else {
-        indexTracker[hit.objectID] = {
-          indexSum: indexTracker[hit.objectID].indexSum + index,
-          nr: indexTracker[hit.objectID].nr + 1,
-        };
-      }
-    });
-  });
-
-  const sortedAverageIndexes = getAverageIndexes(indexTracker, nrOfObjs);
-
-  const finalOrder = sortedAverageIndexes.reduce<Array<ProductRecord<TObject>>>(
-    (
-      orderedHits: Array<ProductRecord<TObject>>,
-      avgIndexRef: AverageIndexes
-    ) => {
-      const result = hits
-        .flat()
-        .find(
-          (hit: ProductRecord<TObject>) => hit.objectID === avgIndexRef.objectID
-        );
-      return result ? orderedHits.concat(result) : orderedHits;
-    },
-    []
-  );
-
-  return finalOrder.slice(
+    return scoreA > scoreB ? -1 : 1;
+  }, hits).slice(
     0,
     // We cap the number of recommendations because the previously
     // computed `hitsPerPage` was an approximation due to `Math.ceil`.

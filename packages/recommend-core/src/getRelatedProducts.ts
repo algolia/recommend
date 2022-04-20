@@ -2,7 +2,7 @@ import { RelatedProductsQuery } from '@algolia/recommend';
 
 import { RecommendationsProps } from './getRecommendations';
 import { ProductRecord } from './types';
-import { mapToRecommendations } from './utils';
+import { mapToRecommendations, uniqBy } from './utils';
 import { version } from './version';
 
 export type GetRelatedProductsProps<TObject> = RecommendationsProps<TObject> &
@@ -34,8 +34,12 @@ export function getRelatedProducts<TObject>({
     .then((response) =>
       mapToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
-        hits: response.results.map((result) => result.hits),
-        nrOfObjs: objectIDs.length,
+        // Multiple identical recommended `objectID`s can be returned b
+        // the engine, so we need to remove duplicates.
+        hits: uniqBy<ProductRecord<TObject>>(
+          'objectID',
+          response.results.map((result) => result.hits).flat()
+        ),
       })
     )
     .then((hits) => ({ recommendations: transformItems(hits) }));
