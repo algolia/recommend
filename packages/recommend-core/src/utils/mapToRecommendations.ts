@@ -1,8 +1,16 @@
 import { ProductRecord } from '../types';
-import { AverageIndexes } from '../types/AverageIndexes';
+import { AverageIndices } from '../types/AverageIndices';
 import { IndexTracker } from '../types/IndexTracker';
 
-import { getAverageIndexes } from './computeAverageIndexes';
+import { getAverageIndices } from './computeAverageIndices';
+
+/**
+ * Returns the reordered list of recommendations based on average indices.
+ *
+ * @param hits - recommendations
+ * @param maxRecommendations - max number of recommendations
+ * @param nrOfObjs - total number of products for which we are retrieving recommendations (objectsIDs.length)
+ */
 
 type MapToRecommendations<TObject> = {
   hits: Array<Array<ProductRecord<TObject>>>;
@@ -13,8 +21,6 @@ type MapToRecommendations<TObject> = {
 export function mapToRecommendations<TObject>({
   hits,
   maxRecommendations,
-  // total number of products for which we are retrieving recommendations
-  // e.g. objectsIDs.length
   nrOfObjs,
 }: MapToRecommendations<TObject>) {
   const indexTracker: IndexTracker = {};
@@ -32,12 +38,12 @@ export function mapToRecommendations<TObject>({
     });
   });
 
-  const sortedAverageIndexes = getAverageIndexes(indexTracker, nrOfObjs);
+  const sortedAverageIndices = getAverageIndices(indexTracker, nrOfObjs);
 
-  const finalOrder = sortedAverageIndexes.reduce<Array<ProductRecord<TObject>>>(
+  const finalOrder = sortedAverageIndices.reduce<Array<ProductRecord<TObject>>>(
     (
       orderedHits: Array<ProductRecord<TObject>>,
-      avgIndexRef: AverageIndexes
+      avgIndexRef: AverageIndices
     ) => {
       const result = hits
         .flat()
