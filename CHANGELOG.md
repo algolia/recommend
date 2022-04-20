@@ -1,3 +1,12 @@
+## [1.3.1](https://github.com/algolia/recommend/compare/v1.3.0...v1.3.1) (2022-04-20)
+
+
+### Bug Fixes
+
+* **core:** cleanup prev fix for rules ([#79](https://github.com/algolia/recommend/issues/79)) ([7d9bb18](https://github.com/algolia/recommend/commit/7d9bb18046f715e8bcf61bf84ae0dbf298ba095a))
+
+
+
 # [1.3.0](https://github.com/algolia/recommend/compare/v1.2.0...v1.3.0) (2022-03-28)
 
 
