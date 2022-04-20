@@ -1,4 +1,4 @@
-import { getAverageIndexes } from '../computeAverageIndexes';
+import { getAverageIndices } from '../computeAverageIndices';
 
 const indexTracker = {
   A: {
@@ -27,34 +27,34 @@ const indexTracker = {
   },
 };
 
-describe('getAverageIndexes', () => {
+describe('getAverageIndices', () => {
   test('sorts the items based on their average index thus preserving applied rules', () => {
-    const result = getAverageIndexes(indexTracker, 2);
+    const result = getAverageIndices(indexTracker, 2);
 
     expect(result).toMatchInlineSnapshot(`
       Array [
         Object {
-          "avgOfIndexes": 1.5,
+          "avgOfIndices": 1.5,
           "objectID": "B",
         },
         Object {
-          "avgOfIndexes": 2,
+          "avgOfIndices": 2,
           "objectID": "E",
         },
         Object {
-          "avgOfIndexes": 3,
+          "avgOfIndices": 3,
           "objectID": "A",
         },
         Object {
-          "avgOfIndexes": 50,
+          "avgOfIndices": 50,
           "objectID": "F",
         },
         Object {
-          "avgOfIndexes": 50.5,
+          "avgOfIndices": 50.5,
           "objectID": "C",
         },
         Object {
-          "avgOfIndexes": 51,
+          "avgOfIndices": 51,
           "objectID": "D",
         },
       ]
