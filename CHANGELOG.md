@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* **core:** cleanup prev fix for rules ([#79](https://github.com/algolia/recommend/issues/79)) ([7d9bb18](https://github.com/algolia/recommend/commit/7d9bb18046f715e8bcf61bf84ae0dbf298ba095a))
+* **core:** enable rules with recommend ([#79](https://github.com/algolia/recommend/issues/79)) ([7d9bb18](https://github.com/algolia/recommend/commit/7d9bb18046f715e8bcf61bf84ae0dbf298ba095a))
 
 
 
