@@ -13,7 +13,8 @@ type MapToRecommendations<TObject> = {
 export function mapToRecommendations<TObject>({
   hits,
   maxRecommendations,
-  // total number of products for which we are retrieving recommendations e.g. objectsIDs.length
+  // total number of products for which we are retrieving recommendations
+  // e.g. objectsIDs.length
   nrOfObjs,
 }: MapToRecommendations<TObject>) {
   const indexTracker: IndexTracker = {};
