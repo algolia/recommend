@@ -4,6 +4,14 @@ import { IndexTracker } from '../types/IndexTracker';
 
 import { getAverageIndices } from './computeAverageIndices';
 
+/**
+ * Returns the reordered list of recommendations based on average indices.
+ *
+ * @param hits - recommendations
+ * @param maxRecommendations - max number of recommendations
+ * @param nrOfObjs - total number of products for which we are retrieving recommendations (objectsIDs.length)
+ */
+
 type MapToRecommendations<TObject> = {
   hits: Array<Array<ProductRecord<TObject>>>;
   maxRecommendations?: number;
@@ -15,14 +23,6 @@ export function mapToRecommendations<TObject>({
   maxRecommendations,
   nrOfObjs,
 }: MapToRecommendations<TObject>) {
-  /**
-   * Returns the reordered list of recommendations based on average indices.
-   *
-   * @param hits - recommendations
-   * @param maxRecommendations - max number of recommendations
-   * @param nrOfObjs - total number of products for which we are retrieving recommendations (objectsIDs.length)
-   */
-
   const indexTracker: IndexTracker = {};
 
   hits.forEach((hitsArray) => {
