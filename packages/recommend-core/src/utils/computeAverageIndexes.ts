@@ -3,6 +3,7 @@ import { IndexTracker } from '../types/IndexTracker';
 
 export const getAverageIndexes = (
   indexTracker: IndexTracker,
+  // total number of products for which we are retrieving recommendations e.g. objectsIDs.length
   nrOfObjs: number
 ) => {
   const avgIndexes: AverageIndexes[] = [];

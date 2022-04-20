@@ -1,4 +1,4 @@
-import { mapWithSortToRecommendations } from '../mapWithSortToRecommendations';
+import { mapByScoreToRecommendations } from '../mapByScoreToRecommendations';
 import { uniqBy } from '../uniqBy';
 
 const response = {
@@ -72,9 +72,9 @@ const response = {
   ],
 };
 
-describe('mapWithSortToRecommendations', () => {
+describe('mapByScoreToRecommendations', () => {
   test('sorts the items based on their scores', () => {
-    const result = mapWithSortToRecommendations({
+    const result = mapByScoreToRecommendations({
       hits: uniqBy<any>(
         'objectID',
         response.results.map((result) => result.hits).flat()

@@ -5,7 +5,7 @@ type MapToRecommendations<TObject> = {
   maxRecommendations?: number;
 };
 
-export function mapWithSortToRecommendations<TObject>({
+export function mapByScoreToRecommendations<TObject>({
   hits,
   maxRecommendations,
 }: MapToRecommendations<TObject>) {

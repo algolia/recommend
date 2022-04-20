@@ -13,20 +13,19 @@ type MapToRecommendations<TObject> = {
 export function mapToRecommendations<TObject>({
   hits,
   maxRecommendations,
+  // total number of products for which we are retrieving recommendations e.g. objectsIDs.length
   nrOfObjs,
 }: MapToRecommendations<TObject>) {
   const indexTracker: IndexTracker = {};
 
-  // eslint-disable-next-line array-callback-return
-  hits.map((arr) => {
-    // eslint-disable-next-line array-callback-return
-    arr.map((el, i) => {
-      if (!indexTracker[el.objectID]) {
-        indexTracker[el.objectID] = { indexSum: i, nr: 1 };
+  hits.forEach((hitsArray) => {
+    hitsArray.forEach((hit, index) => {
+      if (!indexTracker[hit.objectID]) {
+        indexTracker[hit.objectID] = { indexSum: index, nr: 1 };
       } else {
-        indexTracker[el.objectID] = {
-          indexSum: indexTracker[el.objectID].indexSum + i,
-          nr: indexTracker[el.objectID].nr + 1,
+        indexTracker[hit.objectID] = {
+          indexSum: indexTracker[hit.objectID].indexSum + index,
+          nr: indexTracker[hit.objectID].nr + 1,
         };
       }
     });
