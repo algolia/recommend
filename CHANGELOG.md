@@ -1,36 +1,32 @@
-# [1.3.0](https://github.com/algolia/recommend/compare/v1.2.0...v1.3.0) (2022-03-28)
-
+## [1.3.1](https://github.com/algolia/recommend/compare/v1.3.0...v1.3.1) (2022-05-23)
 
 ### Bug Fixes
 
-* **trending:** export components for js libraries ([#74](https://github.com/algolia/recommend/issues/74)) ([9c532b1](https://github.com/algolia/recommend/commit/9c532b140f9caa947cc2551f187f5160d3df8747))
+- **core:** enable recommend with rules ([#79](https://github.com/algolia/recommend/issues/79)) ([7d9bb18](https://github.com/algolia/recommend/commit/7d9bb18046f715e8bcf61bf84ae0dbf298ba095a))
 
+# [1.3.0](https://github.com/algolia/recommend/compare/v1.2.0...v1.3.0) (2022-03-28)
 
+### Bug Fixes
+
+- **trending:** export components for js libraries ([#74](https://github.com/algolia/recommend/issues/74)) ([9c532b1](https://github.com/algolia/recommend/commit/9c532b140f9caa947cc2551f187f5160d3df8747))
 
 # [1.2.0](https://github.com/algolia/recommend/compare/v1.1.0...v1.2.0) (2022-03-23)
 
-
 ### Features
 
-* **trending:** add Hooks and components for `recommend-react` ([#65](https://github.com/algolia/recommend/issues/65)) ([c112371](https://github.com/algolia/recommend/commit/c112371abe12f6d22573322dd1c92978c9bcd62d))
-* **trending:** add UI functions for `recommend-js` ([#71](https://github.com/algolia/recommend/issues/71)) ([50c0475](https://github.com/algolia/recommend/commit/50c0475e4ca18eca1d4fc900fb829f119c2c51f3))
-
-
+- **trending:** add Hooks and components for `recommend-react` ([#65](https://github.com/algolia/recommend/issues/65)) ([c112371](https://github.com/algolia/recommend/commit/c112371abe12f6d22573322dd1c92978c9bcd62d))
+- **trending:** add UI functions for `recommend-js` ([#71](https://github.com/algolia/recommend/issues/71)) ([50c0475](https://github.com/algolia/recommend/commit/50c0475e4ca18eca1d4fc900fb829f119c2c51f3))
 
 # [1.1.0](https://github.com/algolia/recommend/compare/v1.0.0...v1.1.0) (2021-08-26)
 
-
 ### Bug Fixes
 
-* **core:** avoid sending UI props to `recommend` client ([#51](https://github.com/algolia/recommend/issues/51)) ([eb6a0d0](https://github.com/algolia/recommend/commit/eb6a0d056ccfa03315b6c2029caf53dac4d2aea4))
-* **react:** prevent infinite loops in exposed hooks ([#52](https://github.com/algolia/recommend/issues/52)) ([6692c1a](https://github.com/algolia/recommend/commit/6692c1ac4058ce11c8378082f4bbf26d87c95f4b))
-
+- **core:** avoid sending UI props to `recommend` client ([#51](https://github.com/algolia/recommend/issues/51)) ([eb6a0d0](https://github.com/algolia/recommend/commit/eb6a0d056ccfa03315b6c2029caf53dac4d2aea4))
+- **react:** prevent infinite loops in exposed hooks ([#52](https://github.com/algolia/recommend/issues/52)) ([6692c1a](https://github.com/algolia/recommend/commit/6692c1ac4058ce11c8378082f4bbf26d87c95f4b))
 
 ### Features
 
-* **recommend:** split recommend and ui-components repositories ([#48](https://github.com/algolia/recommend/issues/48)) ([3f490fa](https://github.com/algolia/recommend/commit/3f490fa951072e173b8b18c71e154adeffe82e76))
-
-
+- **recommend:** split recommend and ui-components repositories ([#48](https://github.com/algolia/recommend/issues/48)) ([3f490fa](https://github.com/algolia/recommend/commit/3f490fa951072e173b8b18c71e154adeffe82e76))
 
 # [1.0.0](https://github.com/algolia/recommend/compare/v1.0.0-experimental.6...v1.0.0) (2021-06-30)
 
