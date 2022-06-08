@@ -37,7 +37,7 @@ export type RecommendComponentProps<TObject> = {
   items: Array<RecordWithObjectID<TObject>>;
   classNames?: RecommendClassNames;
   children?(props: ChildrenProps<TObject>): JSX.Element;
-  fallbackComponent?(): JSX.Element;
+  fallbackComponent?(props: RenderProps): JSX.Element;
   headerComponent?(props: HeaderComponentProps<TObject>): JSX.Element;
   status: RecommendStatus;
   translations?: RecommendTranslations;
@@ -55,7 +55,7 @@ export type TrendingComponentProps<TObject> = {
   items: Array<FacetEntry<TObject>>;
   classNames?: RecommendClassNames;
   children?(props: ChildrenProps<TObject>): JSX.Element;
-  fallbackComponent?(): JSX.Element;
+  fallbackComponent?(props: RenderProps): JSX.Element;
   headerComponent?(props: HeaderComponentProps<TObject>): JSX.Element;
   status: RecommendStatus;
   translations?: RecommendTranslations;

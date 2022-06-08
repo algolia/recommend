@@ -28,8 +28,11 @@ export function createRelatedProductsComponent({
     const children =
       props.children ??
       createDefaultChildrenComponent({ createElement, Fragment });
-    const Fallback =
+    const FallbackComponent =
       props.fallbackComponent ?? createDefaultFallbackComponent();
+    const Fallback = () => (
+      <FallbackComponent Fragment={Fragment} createElement={createElement} />
+    );
     const Header =
       props.headerComponent ??
       createDefaultHeaderComponent({ createElement, Fragment });
