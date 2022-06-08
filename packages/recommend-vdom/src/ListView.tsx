@@ -9,7 +9,7 @@ import {
 } from './types';
 import { cx } from './utils';
 
-export function createListViewComponent({ createElement }: Renderer) {
+export function createListViewComponent({ createElement, Fragment }: Renderer) {
   return function ListView<TItem extends RecordWithObjectID>(
     props: ViewProps<TItem, RecommendTranslations, RecommendClassNames>
   ) {
@@ -23,7 +23,11 @@ export function createListViewComponent({ createElement }: Renderer) {
               key={item.objectID}
               className={cx('auc-Recommend-item', props.classNames.item)}
             >
-              <props.itemComponent item={item} />
+              <props.itemComponent
+                createElement={createElement}
+                Fragment={Fragment}
+                item={item}
+              />
             </li>
           ))}
         </ol>
