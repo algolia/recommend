@@ -27,7 +27,9 @@ export type ChildrenProps<TObject> = ComponentProps<TObject> & {
 };
 
 export type RecommendComponentProps<TObject> = {
-  itemComponent(props: ItemComponentProps<TObject>): JSX.Element;
+  itemComponent(
+    props: ItemComponentProps<RecordWithObjectID<TObject>>
+  ): JSX.Element;
   items: Array<RecordWithObjectID<TObject>>;
   classNames?: RecommendClassNames;
   children?(props: ChildrenProps<TObject>): JSX.Element;
@@ -45,7 +47,7 @@ export type RecommendComponentProps<TObject> = {
 };
 
 export type TrendingComponentProps<TObject> = {
-  itemComponent(props: ItemComponentProps<TObject>): JSX.Element;
+  itemComponent(props: ItemComponentProps<FacetEntry<TObject>>): JSX.Element;
   items: Array<FacetEntry<TObject>>;
   classNames?: RecommendClassNames;
   children?(props: ChildrenProps<TObject>): JSX.Element;
