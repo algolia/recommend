@@ -1,4 +1,5 @@
 import { RecordWithObjectID } from '@algolia/recommend-core';
+import { Renderer } from './Renderer';
 
 export type ViewProps<
   TItem extends RecordWithObjectID,
