@@ -6,11 +6,7 @@ export type ViewProps<
   TClassNames extends Record<string, string>
 > = {
   classNames: TClassNames;
-  itemComponent({
-    item: TItem,
-    createElement: Pragma,
-    Fragment: PragmaFrag,
-  }): JSX.Element;
+  itemComponent(props: { item: TItem } & Renderer): JSX.Element;
   items: TItem[];
   translations: TTranslations;
 };
