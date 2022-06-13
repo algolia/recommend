@@ -1,4 +1,5 @@
 import { FacetEntry } from '@algolia/recommend-core/src';
+
 import { Renderer } from './Renderer';
 
 export type FacetsViewProps<
