@@ -4,20 +4,14 @@ import { FacetsViewProps } from './FacetsViewProps';
 import { RecommendClassNames } from './RecommendClassNames';
 import { RecommendStatus } from './RecommendStatus';
 import { RecommendTranslations } from './RecommendTranslations';
-import { Pragma, PragmaFrag } from './Renderer';
+import { Renderer } from './Renderer';
 import { ViewProps } from './ViewProps';
 
 export type ItemComponentProps<TObject> = {
   item: TObject;
-} & RenderProps;
+} & Renderer;
 
-export type RenderProps = {
-  createElement: Pragma;
-  Fragment: PragmaFrag;
-};
-
-export type HeaderComponentProps<TObject> = RenderProps &
-  ComponentProps<TObject>;
+export type HeaderComponentProps<TObject> = Renderer & ComponentProps<TObject>;
 
 export type ComponentProps<TObject> = {
   classNames: RecommendClassNames;
@@ -37,7 +31,7 @@ export type RecommendComponentProps<TObject> = {
   items: Array<RecordWithObjectID<TObject>>;
   classNames?: RecommendClassNames;
   children?(props: ChildrenProps<TObject>): JSX.Element;
-  fallbackComponent?(props: RenderProps): JSX.Element;
+  fallbackComponent?(props: Renderer): JSX.Element;
   headerComponent?(props: HeaderComponentProps<TObject>): JSX.Element;
   status: RecommendStatus;
   translations?: RecommendTranslations;
@@ -55,7 +49,7 @@ export type TrendingComponentProps<TObject> = {
   items: Array<FacetEntry<TObject>>;
   classNames?: RecommendClassNames;
   children?(props: ChildrenProps<TObject>): JSX.Element;
-  fallbackComponent?(props: RenderProps): JSX.Element;
+  fallbackComponent?(props: Renderer): JSX.Element;
   headerComponent?(props: HeaderComponentProps<TObject>): JSX.Element;
   status: RecommendStatus;
   translations?: RecommendTranslations;

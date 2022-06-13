@@ -27,9 +27,6 @@
     "build": "yarn build:clean && yarn build:esm && yarn build:umd && yarn build:types",
     "prepare": "yarn build:esm && yarn build:types"
   },
-  "dependencies": {
-    "preact": "^10.0.0"
-  },
   "devDependencies": {
     "@algolia/recommend-core": "1.3.1"
   }
