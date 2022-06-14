@@ -1,4 +1,4 @@
-import { FacetEntry } from '@algolia/recommend-core/src';
+import { FacetEntry } from '@algolia/recommend-core';
 
 import { Renderer } from './Renderer';
 
