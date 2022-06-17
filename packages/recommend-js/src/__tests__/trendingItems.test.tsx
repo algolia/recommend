@@ -33,17 +33,16 @@ describe('trending items', () => {
 
   describe('Rendering for header and item', () => {
     test('renders JSX templates', async () => {
-      const panelContainer = document.createElement('div');
-      panelContainer.setAttribute('id', 'trendingItems');
+      const container = document.createElement('div');
 
       const { recommendClient } = createMockedRecommendClient(
         hit.recommendations
       );
 
-      document.body.appendChild(panelContainer);
+      document.body.appendChild(container);
 
       trendingItems<ObjectWithObjectID>({
-        container: '#trendingItems',
+        container,
         recommendClient,
         indexName: 'products',
         headerComponent: () => <h1>Trending items</h1>,
@@ -51,11 +50,9 @@ describe('trending items', () => {
       });
 
       await waitFor(() => {
-        expect(within(panelContainer).getAllByRole('listitem')).not.toBeNull();
-        expect(panelContainer).toMatchInlineSnapshot(`
-          <div
-            id="trendingItems"
-          >
+        expect(within(container).getAllByRole('listitem')).not.toBeNull();
+        expect(container).toMatchInlineSnapshot(`
+          <div>
             <section
               class="auc-Recommend"
             >
@@ -98,17 +95,16 @@ describe('trending items', () => {
     });
 
     test('renders templates using createElement and Fragment', async () => {
-      const panelContainer = document.createElement('div');
-      panelContainer.setAttribute('id', 'trendingItems');
+      const container = document.createElement('div');
 
       const { recommendClient } = createMockedRecommendClient(
         hit.recommendations
       );
 
-      document.body.appendChild(panelContainer);
+      document.body.appendChild(container);
 
       trendingItems<ObjectWithObjectID>({
-        container: '#trendingItems',
+        container,
         recommendClient,
         indexName: 'products',
         headerComponent: ({ createElement }) =>
@@ -118,11 +114,9 @@ describe('trending items', () => {
       });
 
       await waitFor(() => {
-        expect(within(panelContainer).getAllByRole('listitem')).not.toBeNull();
-        expect(panelContainer).toMatchInlineSnapshot(`
-          <div
-            id="trendingItems"
-          >
+        expect(within(container).getAllByRole('listitem')).not.toBeNull();
+        expect(container).toMatchInlineSnapshot(`
+          <div>
             <section
               class="auc-Recommend"
             >
@@ -161,15 +155,14 @@ describe('trending items', () => {
 
   describe('Rendering fallbackComponent', () => {
     test('renders JSX templates', async () => {
-      const panelContainer = document.createElement('div');
-      panelContainer.setAttribute('id', 'trendingItems');
+      const container = document.createElement('div');
 
       const { recommendClient } = createMockedRecommendClient([]);
 
-      document.body.appendChild(panelContainer);
+      document.body.appendChild(container);
 
       trendingItems<ObjectWithObjectID>({
-        container: '#trendingItems',
+        container,
         recommendClient,
         indexName: 'products',
         itemComponent: ({ item }) => <div>{item.objectID}</div>,
@@ -177,7 +170,7 @@ describe('trending items', () => {
       });
 
       await waitFor(() => {
-        expect(within(panelContainer).getByText('Fallback component'))
+        expect(within(container).getByText('Fallback component'))
           .toMatchInlineSnapshot(`
           <div>
             Fallback component
@@ -187,15 +180,14 @@ describe('trending items', () => {
     });
 
     test('renders templates using createElement and Fragment', async () => {
-      const panelContainer = document.createElement('div');
-      panelContainer.setAttribute('id', 'trendingItems');
+      const container = document.createElement('div');
 
       const { recommendClient } = createMockedRecommendClient([]);
 
-      document.body.appendChild(panelContainer);
+      document.body.appendChild(container);
 
       trendingItems<ObjectWithObjectID>({
-        container: '#trendingItems',
+        container,
         recommendClient,
         indexName: 'products',
         itemComponent: ({ item, createElement }) =>
@@ -205,11 +197,9 @@ describe('trending items', () => {
       });
 
       await waitFor(() => {
-        expect(within(panelContainer).getByText('Fallback component'))
+        expect(within(container).getByText('Fallback component'))
           .toMatchInlineSnapshot(`
-          <div
-            id="trendingItems"
-          >
+          <div>
             Fallback component
           </div>
           `);

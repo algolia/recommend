@@ -33,17 +33,16 @@ describe('frequently bought together', () => {
 
   describe('Rendering for header and item', () => {
     test('renders JSX templates', async () => {
-      const panelContainer = document.createElement('div');
-      panelContainer.setAttribute('id', 'frequentlyBoughtTogether');
+      const container = document.createElement('div');
 
       const { recommendClient } = createMockedRecommendClient(
         hit.recommendations
       );
 
-      document.body.appendChild(panelContainer);
+      document.body.appendChild(container);
 
       frequentlyBoughtTogether<ObjectWithObjectID>({
-        container: '#frequentlyBoughtTogether',
+        container,
         recommendClient,
         indexName: 'products',
         objectIDs: ['D06270-9132-995'],
@@ -52,11 +51,9 @@ describe('frequently bought together', () => {
       });
 
       await waitFor(() => {
-        expect(within(panelContainer).getAllByRole('listitem')).not.toBeNull();
-        expect(panelContainer).toMatchInlineSnapshot(`
-          <div
-            id="frequentlyBoughtTogether"
-          >
+        expect(within(container).getAllByRole('listitem')).not.toBeNull();
+        expect(container).toMatchInlineSnapshot(`
+          <div>
             <section
               class="auc-Recommend"
             >
@@ -99,17 +96,16 @@ describe('frequently bought together', () => {
     });
 
     test('renders templates using createElement and Fragment', async () => {
-      const panelContainer = document.createElement('div');
-      panelContainer.setAttribute('id', 'frequentlyBoughtTogether');
+      const container = document.createElement('div');
 
       const { recommendClient } = createMockedRecommendClient(
         hit.recommendations
       );
 
-      document.body.appendChild(panelContainer);
+      document.body.appendChild(container);
 
       frequentlyBoughtTogether<ObjectWithObjectID>({
-        container: '#frequentlyBoughtTogether',
+        container,
         recommendClient,
         indexName: 'products',
         objectIDs: ['D06270-9132-995'],
@@ -120,11 +116,9 @@ describe('frequently bought together', () => {
       });
 
       await waitFor(() => {
-        expect(within(panelContainer).getAllByRole('listitem')).not.toBeNull();
-        expect(panelContainer).toMatchInlineSnapshot(`
-          <div
-            id="frequentlyBoughtTogether"
-          >
+        expect(within(container).getAllByRole('listitem')).not.toBeNull();
+        expect(container).toMatchInlineSnapshot(`
+          <div>
             <section
               class="auc-Recommend"
             >
@@ -163,15 +157,14 @@ describe('frequently bought together', () => {
 
   describe('Rendering fallbackComponent', () => {
     test('renders JSX templates', async () => {
-      const panelContainer = document.createElement('div');
-      panelContainer.setAttribute('id', 'frequentlyBoughtTogether');
+      const container = document.createElement('div');
 
       const { recommendClient } = createMockedRecommendClient([]);
 
-      document.body.appendChild(panelContainer);
+      document.body.appendChild(container);
 
       frequentlyBoughtTogether<ObjectWithObjectID>({
-        container: '#frequentlyBoughtTogether',
+        container,
         recommendClient,
         indexName: 'products',
         objectIDs: ['D06270-9132-995'],
@@ -180,7 +173,7 @@ describe('frequently bought together', () => {
       });
 
       await waitFor(() => {
-        expect(within(panelContainer).getByText('Fallback component'))
+        expect(within(container).getByText('Fallback component'))
           .toMatchInlineSnapshot(`
           <div>
             Fallback component
@@ -190,15 +183,14 @@ describe('frequently bought together', () => {
     });
 
     test('renders templates using createElement and Fragment', async () => {
-      const panelContainer = document.createElement('div');
-      panelContainer.setAttribute('id', 'frequentlyBoughtTogether');
+      const container = document.createElement('div');
 
       const { recommendClient } = createMockedRecommendClient([]);
 
-      document.body.appendChild(panelContainer);
+      document.body.appendChild(container);
 
       frequentlyBoughtTogether<ObjectWithObjectID>({
-        container: '#frequentlyBoughtTogether',
+        container,
         recommendClient,
         indexName: 'products',
         objectIDs: ['D06270-9132-995'],
@@ -209,11 +201,9 @@ describe('frequently bought together', () => {
       });
 
       await waitFor(() => {
-        expect(within(panelContainer).getByText('Fallback component'))
+        expect(within(container).getByText('Fallback component'))
           .toMatchInlineSnapshot(`
-          <div
-            id="frequentlyBoughtTogether"
-          >
+          <div>
             Fallback component
           </div>
           `);
