@@ -5,3 +5,4 @@ export * from './TrendingItems';
 export * from './useFrequentlyBoughtTogether';
 export * from './useRecommendations';
 export * from './useRelatedProducts';
+export * from './useTrendingFacets';
