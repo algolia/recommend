@@ -21,9 +21,7 @@ function createMockedRecommendClient(recommendations: ObjectWithObjectID[]) {
     ),
   });
 
-  return {
-    recommendClient,
-  };
+  return recommendClient;
 }
 
 describe('trendingItems', () => {
@@ -35,9 +33,7 @@ describe('trendingItems', () => {
     test('renders JSX templates', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient(
-        hit.recommendations
-      );
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
 
       document.body.appendChild(container);
 
@@ -97,9 +93,7 @@ describe('trendingItems', () => {
     test('renders using `createElement` and `Fragment`', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient(
-        hit.recommendations
-      );
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
 
       document.body.appendChild(container);
 
@@ -157,7 +151,7 @@ describe('trendingItems', () => {
     test('renders JSX templates', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient([]);
+      const recommendClient = createMockedRecommendClient([]);
 
       document.body.appendChild(container);
 
@@ -182,7 +176,7 @@ describe('trendingItems', () => {
     test('renders using `createElement` and `Fragment`', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient([]);
+      const recommendClient = createMockedRecommendClient([]);
 
       document.body.appendChild(container);
 

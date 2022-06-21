@@ -21,9 +21,7 @@ function createMockedRecommendClient(recommendations: ObjectWithObjectID[]) {
     ),
   });
 
-  return {
-    recommendClient,
-  };
+  return recommendClient;
 }
 
 describe('frequentlyBoughtTogether', () => {
@@ -35,9 +33,7 @@ describe('frequentlyBoughtTogether', () => {
     test('renders JSX templates', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient(
-        hit.recommendations
-      );
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
 
       document.body.appendChild(container);
 
@@ -98,9 +94,7 @@ describe('frequentlyBoughtTogether', () => {
     test('renders using `createElement` and `Fragment`', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient(
-        hit.recommendations
-      );
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
 
       document.body.appendChild(container);
 
@@ -159,7 +153,7 @@ describe('frequentlyBoughtTogether', () => {
     test('renders JSX templates', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient([]);
+      const recommendClient = createMockedRecommendClient([]);
 
       document.body.appendChild(container);
 
@@ -185,7 +179,7 @@ describe('frequentlyBoughtTogether', () => {
     test('renders using `createElement` and `Fragment`', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient([]);
+      const recommendClient = createMockedRecommendClient([]);
 
       document.body.appendChild(container);
 

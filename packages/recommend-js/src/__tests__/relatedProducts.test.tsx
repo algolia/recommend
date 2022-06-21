@@ -21,9 +21,7 @@ function createMockedRecommendClient(recommendations: ObjectWithObjectID[]) {
     ),
   });
 
-  return {
-    recommendClient,
-  };
+  return recommendClient;
 }
 
 describe('relatedProducts', () => {
@@ -31,13 +29,11 @@ describe('relatedProducts', () => {
     document.body.innerHTML = '';
   });
 
-  describe('rendering the header and items', () => {
+  describe('renders using `createElement` and `Fragment`', () => {
     test('renders JSX templates', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient(
-        hit.recommendations
-      );
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
 
       document.body.appendChild(container);
 
@@ -95,12 +91,10 @@ describe('relatedProducts', () => {
       });
     });
 
-    test('renders templates using createElement and Fragment', async () => {
+    test('renders using `createElement` and `Fragment`', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient(
-        hit.recommendations
-      );
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
 
       document.body.appendChild(container);
 
@@ -154,11 +148,11 @@ describe('relatedProducts', () => {
     });
   });
 
-  describe('Rendering fallbackComponent', () => {
+  describe('rendering `fallbackComponent`', () => {
     test('renders JSX templates', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient([]);
+      const recommendClient = createMockedRecommendClient([]);
 
       document.body.appendChild(container);
 
@@ -181,10 +175,10 @@ describe('relatedProducts', () => {
       });
     });
 
-    test('renders templates using createElement and Fragment', async () => {
+    test('renders using `createElement` and `Fragment`', async () => {
       const container = document.createElement('div');
 
-      const { recommendClient } = createMockedRecommendClient([]);
+      const recommendClient = createMockedRecommendClient([]);
 
       document.body.appendChild(container);
 
