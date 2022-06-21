@@ -31,7 +31,7 @@ describe('relatedProducts', () => {
     document.body.innerHTML = '';
   });
 
-  describe('Rendering for header and item', () => {
+  describe('rendering the header and items', () => {
     test('renders JSX templates', async () => {
       const container = document.createElement('div');
 
