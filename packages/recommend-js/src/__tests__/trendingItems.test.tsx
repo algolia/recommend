@@ -26,7 +26,7 @@ function createMockedRecommendClient(recommendations: ObjectWithObjectID[]) {
   };
 }
 
-describe('trending items', () => {
+describe('trendingItems', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
   });
