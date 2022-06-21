@@ -2,7 +2,7 @@
 
 ### Features
 
-- **core:** expose createElement ([#85](https://github.com/algolia/recommend/issues/85)) ([ea6e668](https://github.com/algolia/recommend/commit/ea6e66805604072ed4553adf0c4b817dc853e7f0))
+- **core:** expose `createElement` and `Fragment` to all component props ([#85](https://github.com/algolia/recommend/issues/85)) ([ea6e668](https://github.com/algolia/recommend/commit/ea6e66805604072ed4553adf0c4b817dc853e7f0))
 
 ## [1.3.1](https://github.com/algolia/recommend/compare/v1.3.0...v1.3.1) (2022-05-23)
 
