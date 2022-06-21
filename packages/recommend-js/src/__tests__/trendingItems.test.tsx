@@ -179,7 +179,7 @@ describe('trendingItems', () => {
       });
     });
 
-    test('renders templates using createElement and Fragment', async () => {
+    test('renders using `createElement` and `Fragment`', async () => {
       const container = document.createElement('div');
 
       const { recommendClient } = createMockedRecommendClient([]);
