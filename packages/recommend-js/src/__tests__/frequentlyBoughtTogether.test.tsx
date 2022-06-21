@@ -155,7 +155,7 @@ describe('frequentlyBoughtTogether', () => {
     });
   });
 
-  describe('Rendering fallbackComponent', () => {
+  describe('rendering `fallbackComponent`', () => {
     test('renders JSX templates', async () => {
       const container = document.createElement('div');
 
