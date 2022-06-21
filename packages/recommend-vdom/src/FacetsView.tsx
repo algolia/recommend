@@ -9,7 +9,7 @@ import {
 } from './types';
 import { cx } from './utils';
 
-export function createFacetsView({ createElement }: Renderer) {
+export function createFacetsView({ createElement, Fragment }: Renderer) {
   return function FacetsView<TItem extends FacetEntry>(
     props: FacetsViewProps<TItem, RecommendTranslations, RecommendClassNames>
   ) {
@@ -23,7 +23,11 @@ export function createFacetsView({ createElement }: Renderer) {
               key={item.facetValue}
               className={cx('auc-Recommend-item', props.classNames.item)}
             >
-              <props.itemComponent item={item} />
+              <props.itemComponent
+                createElement={createElement}
+                Fragment={Fragment}
+                item={item}
+              />
             </li>
           ))}
         </ol>

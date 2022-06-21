@@ -1,4 +1,6 @@
-import { FacetEntry } from '@algolia/recommend-core/src';
+import { FacetEntry } from '@algolia/recommend-core';
+
+import { Renderer } from './Renderer';
 
 export type FacetsViewProps<
   TItem extends FacetEntry,
@@ -6,7 +8,7 @@ export type FacetsViewProps<
   TClassNames extends Record<string, string>
 > = {
   classNames: TClassNames;
-  itemComponent({ item: TItem }): JSX.Element;
+  itemComponent(props: { item: TItem } & Renderer): JSX.Element;
   items: TItem[];
   translations: TTranslations;
 };
