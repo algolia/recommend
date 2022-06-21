@@ -26,7 +26,7 @@ function createMockedRecommendClient(recommendations: ObjectWithObjectID[]) {
   };
 }
 
-describe('frequently bought together', () => {
+describe('frequentlyBoughtTogether', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
   });
