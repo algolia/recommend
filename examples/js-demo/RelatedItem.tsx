@@ -77,7 +77,7 @@ export function RelatedItem({ item, insights, onSelect }: RelatedItemProps) {
           </div>
         )}
 
-        <div className="my-2 font-semibold text-gray-800">${item.price}</div>
+        <div className="my-2 font-semibold text-gray-800">{item.price.value} {item.price.currency}</div>
 
         <button
           className="flex items-center justify-center w-full bg-white border-nebula-500 border-solid border rounded text-nebula-900 cursor-pointer py-1 px-2 font-semibold"
