@@ -54,6 +54,7 @@ export function createTrendingFacetsComponent({
       status: props.status,
       translations,
       View,
+      removeHeaderComponent: props.removeHeaderComponent,
     });
   };
 }

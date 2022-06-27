@@ -56,6 +56,7 @@ export function createRelatedProductsComponent({
       status: props.status,
       translations,
       View,
+      removeHeaderComponent: props.removeHeaderComponent,
     });
   };
 }

@@ -65,4 +65,5 @@ export type TrendingComponentProps<TObject> = {
       Record<string, string>
     >
   ): JSX.Element;
+  removeHeaderComponent?: boolean;
 };
