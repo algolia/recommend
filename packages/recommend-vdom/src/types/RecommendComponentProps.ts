@@ -17,6 +17,7 @@ export type ComponentProps<TObject> = {
   classNames: RecommendClassNames;
   recommendations: TObject[];
   translations: RecommendTranslations;
+  removeHeaderComponent?: boolean;
 };
 
 export type ChildrenProps<TObject> = ComponentProps<TObject> & {
@@ -24,6 +25,7 @@ export type ChildrenProps<TObject> = ComponentProps<TObject> & {
   Header(props: HeaderComponentProps<TObject>): JSX.Element | null;
   status: RecommendStatus;
   View(props: unknown): JSX.Element;
+  removeHeaderComponent?: boolean;
 };
 
 export type RecommendComponentProps<TObject> = {
@@ -44,6 +46,7 @@ export type RecommendComponentProps<TObject> = {
       Record<string, string>
     >
   ): JSX.Element;
+  removeHeaderComponent?: boolean;
 };
 
 export type TrendingComponentProps<TObject> = {

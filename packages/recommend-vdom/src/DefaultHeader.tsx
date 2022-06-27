@@ -5,6 +5,13 @@ import { cx } from './utils';
 
 export function createDefaultHeaderComponent({ createElement }: Renderer) {
   return function DefaultHeader<TObject>(props: ComponentProps<TObject>) {
+    if (
+      (!props.recommendations || props.recommendations.length < 1) &&
+      props.removeHeaderComponent
+    ) {
+      return null;
+    }
+
     if (!props.translations.title) {
       return null;
     }

@@ -266,6 +266,7 @@ function App() {
       <TrendingItems<ProductHit>
         recommendClient={recommendClient}
         indexName={indexName}
+        removeHeaderComponent={true}
         facetName={selectedFacetValue ? 'brand' : undefined}
         facetValue={
           selectedFacetValue ? selectedFacetValue.facetValue : undefined
