@@ -157,7 +157,6 @@ function App() {
           <FrequentlyBoughtTogether<ProductHit>
             recommendClient={recommendClient}
             indexName={indexName}
-            removeHeaderComponent={true}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={({ item }) => (
               <BundleItem item={item} onSelect={setSelectedProduct} />
@@ -181,7 +180,6 @@ function App() {
               <RelatedProducts<ProductHit>
                 recommendClient={recommendClient}
                 indexName={indexName}
-                removeHeaderComponent={true}
                 objectIDs={[selectedProduct.objectID]}
                 itemComponent={({ item }) => (
                   <Hit
@@ -213,7 +211,6 @@ function App() {
           <RelatedProducts<ProductHit>
             recommendClient={recommendClient}
             indexName={indexName}
-            removeHeaderComponent={true}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={({ item }) => (
               <Hit
@@ -247,7 +244,6 @@ function App() {
         recommendClient={recommendClient}
         indexName={indexName}
         facetName="brand"
-        removeHeaderComponent={true}
         itemComponent={({ item }) => (
           <Facet
             hit={item}

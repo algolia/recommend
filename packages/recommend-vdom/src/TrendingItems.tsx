@@ -54,7 +54,6 @@ export function createTrendingItemsComponent({
       status: props.status,
       translations,
       View,
-      removeHeaderComponent: props.removeHeaderComponent,
     });
   };
 }

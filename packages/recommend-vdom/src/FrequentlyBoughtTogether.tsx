@@ -58,7 +58,6 @@ export function createFrequentlyBoughtTogetherComponent({
       status: props.status,
       translations,
       View,
-      removeHeaderComponent: props.removeHeaderComponent,
     });
   };
 }

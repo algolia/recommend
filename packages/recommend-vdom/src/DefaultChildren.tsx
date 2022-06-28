@@ -20,7 +20,6 @@ export function createDefaultChildrenComponent({
           translations={props.translations}
           createElement={createElement}
           Fragment={Fragment}
-          removeHeaderComponent={props.removeHeaderComponent}
         />
 
         <props.View />
