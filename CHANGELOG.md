@@ -1,3 +1,17 @@
+# [1.5.0](https://github.com/algolia/recommend/compare/v1.4.0...v1.5.0) (2022-06-28)
+
+
+### Bug Fixes
+
+* **js-demo:** fix rendering bug ([#88](https://github.com/algolia/recommend/issues/88)) ([dbc7077](https://github.com/algolia/recommend/commit/dbc7077dfc5ed41f16b036a642473e2ce53b0c2e))
+
+
+### Features
+
+* **rendering:** add option to remove header when no recos are returned ([#91](https://github.com/algolia/recommend/issues/91)) ([8d5d545](https://github.com/algolia/recommend/commit/8d5d5450f48ea7a91cf4f83b0ed16280d55f3daa))
+
+
+
 # [1.4.0](https://github.com/algolia/recommend/compare/v1.3.1...v1.4.0) (2022-06-21)
 
 ### Features
