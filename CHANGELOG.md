@@ -8,7 +8,7 @@
 
 ### Features
 
-* **rendering:** add option to remove header when no recos are returned ([#91](https://github.com/algolia/recommend/issues/91)) ([8d5d545](https://github.com/algolia/recommend/commit/8d5d5450f48ea7a91cf4f83b0ed16280d55f3daa))
+* **rendering:** remove headerComponent when no recommendations are returned ([#91](https://github.com/algolia/recommend/issues/91)) ([8d5d545](https://github.com/algolia/recommend/commit/8d5d5450f48ea7a91cf4f83b0ed16280d55f3daa))
 
 
 
