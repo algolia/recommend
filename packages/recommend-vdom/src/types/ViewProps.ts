@@ -8,7 +8,9 @@ export type ViewProps<
   TClassNames extends Record<string, string>
 > = {
   classNames: TClassNames;
-  itemComponent(props: { item: TItem } & Renderer): JSX.Element;
+  itemComponent<TProps extends Record<string, unknown> = {}>(
+    props: { item: TItem } & Renderer & TProps
+  ): JSX.Element;
   items: TItem[];
   translations: TTranslations;
 };

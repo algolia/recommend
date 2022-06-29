@@ -158,9 +158,9 @@ function App() {
             recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
-            itemComponent={({ item }) => (
-              <BundleItem item={item} onSelect={setSelectedProduct} />
-            )}
+            itemComponent={({ item }) => {
+              return <BundleItem item={item} onSelect={setSelectedProduct} />;
+            }}
             maxRecommendations={2}
             queryParameters={{
               analytics: true,
