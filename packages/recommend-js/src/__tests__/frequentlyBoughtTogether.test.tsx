@@ -204,4 +204,66 @@ describe('frequentlyBoughtTogether', () => {
       });
     });
   });
+
+  describe('rendering the view component', () => {
+    test('renders using JSX template', async () => {
+      const container = document.createElement('div');
+
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
+
+      document.body.appendChild(container);
+
+      frequentlyBoughtTogether<ObjectWithObjectID>({
+        container,
+        recommendClient,
+        indexName: 'products',
+        objectIDs: ['D06270-9132-995'],
+        view: (props) => (
+          <div data-testid="container">
+            {props.items.map((item) => {
+              return <props.itemComponent key="rr" item={item} {...props} />;
+            })}
+          </div>
+        ),
+        itemComponent: ({ item }) => <div>{item.objectID}</div>,
+      });
+
+      await waitFor(() => {
+        expect(within(container).getByTestId('container')).toBeTruthy();
+      });
+    });
+
+    test('renders using `createElement` and `Fragment`', async () => {
+      const container = document.createElement('div');
+
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
+
+      document.body.appendChild(container);
+
+      frequentlyBoughtTogether<ObjectWithObjectID>({
+        container,
+        recommendClient,
+        indexName: 'products',
+        objectIDs: ['D06270-9132-995'],
+        view: ({ createElement, Fragment, items, itemComponent }) =>
+          createElement(
+            'div',
+            { 'data-testid': 'container' },
+            createElement(
+              Fragment,
+              null,
+              items.map((item) =>
+                itemComponent({ item, createElement, Fragment })
+              )
+            )
+          ),
+        itemComponent: ({ item, createElement, Fragment }) =>
+          createElement(Fragment, null, item.objectID),
+      });
+
+      await waitFor(() => {
+        expect(within(container).getByTestId('container')).toBeTruthy();
+      });
+    });
+  });
 });
