@@ -219,7 +219,7 @@ describe('frequentlyBoughtTogether', () => {
         indexName: 'products',
         objectIDs: ['D06270-9132-995'],
         view: (props) => (
-          <div data-testid="container">
+          <div className="view">
             {props.items.map((item) => {
               return <props.itemComponent key={item.objectID} {...props} />;
             })}
@@ -229,7 +229,17 @@ describe('frequentlyBoughtTogether', () => {
       });
 
       await waitFor(() => {
-        expect(within(container).getByTestId('container')).toBeTruthy();
+        expect(container).toMatchInlineSnapshot(`
+          <div>
+            <section
+              class="auc-Recommend"
+            >
+              <div
+                class="view"
+              />
+            </section>
+          </div>
+        `);
       });
     });
 
@@ -248,7 +258,7 @@ describe('frequentlyBoughtTogether', () => {
         view: ({ createElement, Fragment, items, itemComponent }) =>
           createElement(
             'div',
-            { 'data-testid': 'container' },
+            { className: 'view' },
             createElement(
               Fragment,
               null,
@@ -262,7 +272,17 @@ describe('frequentlyBoughtTogether', () => {
       });
 
       await waitFor(() => {
-        expect(within(container).getByTestId('container')).toBeTruthy();
+        expect(container).toMatchInlineSnapshot(`
+          <div>
+            <section
+              class="auc-Recommend"
+            >
+              <div
+                class="view"
+              />
+            </section>
+          </div>
+        `);
       });
     });
   });

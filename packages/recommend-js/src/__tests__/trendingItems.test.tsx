@@ -213,7 +213,7 @@ describe('trendingItems', () => {
         recommendClient,
         indexName: 'products',
         view: (props) => (
-          <div data-testid="container">
+          <div className="view">
             {props.items.map((item) => {
               return <props.itemComponent key="rr" item={item} {...props} />;
             })}
@@ -223,7 +223,17 @@ describe('trendingItems', () => {
       });
 
       await waitFor(() => {
-        expect(within(container).getByTestId('container')).toBeTruthy();
+        expect(container).toMatchInlineSnapshot(`
+          <div>
+            <section
+              class="auc-Recommend"
+            >
+              <div
+                class="view"
+              />
+            </section>
+          </div>
+        `);
       });
     });
 
@@ -241,7 +251,7 @@ describe('trendingItems', () => {
         view: ({ createElement, Fragment, items, itemComponent }) => {
           return createElement(
             'div',
-            { 'data-testid': 'container' },
+            { className: 'view' },
             createElement(
               Fragment,
               null,
@@ -256,7 +266,17 @@ describe('trendingItems', () => {
       });
 
       await waitFor(() => {
-        expect(within(container).getByTestId('container')).toBeTruthy();
+        expect(container).toMatchInlineSnapshot(`
+          <div>
+            <section
+              class="auc-Recommend"
+            >
+              <div
+                class="view"
+              />
+            </section>
+          </div>
+        `);
       });
     });
   });
