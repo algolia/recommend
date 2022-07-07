@@ -1,6 +1,6 @@
 import { Pragma } from '@algolia/recommend-vdom';
 
-import { ProductHit } from './types/ProductHit';
+import { ProductHit } from '../../js-demo/types';
 
 export function relatedItem(item: ProductHit, createElement: Pragma) {
   return createElement('div', { className: 'relative' }, [

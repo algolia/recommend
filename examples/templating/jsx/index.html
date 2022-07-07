@@ -2,29 +2,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../favicon.png" type="image/x-icon" />
 
-    <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
     <link
       href="https://unpkg.com/tailwindcss@2/dist/tailwind.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="app.css" />
-    <link rel="stylesheet" href="Recommend.css" />
-
+    <link rel="stylesheet" href="../app.css" />
+    <link rel="stylesheet" href="../Recommend.css" /> 
     <title>Algolia JavaScript Recommend</title>
   </head>
 
   <body>
     <div class="container">
       <h1>Algolia Recommend</h1>
-
-      <div id="autocomplete"></div>
+      <li class="w-fit hover:underline">
+        <a href="../createElement/index.html">createElement</a>
+      </li>
+      <li class="w-fit hover:underline text-blue-600">
+        <a href="./index.html">JSX</a>
+      </li>
 
       <div id="referenceHit"></div>
+
       <div id="frequentlyBoughtTogether"></div>
       <div id="relatedProducts"></div>
+      <div id="trendingItems"></div>
+      <div id="trendingFacets"></div>
     </div>
 
-    <script src="app.tsx"></script>
+    <script src="index.tsx"></script>
   </body>
 </html>
