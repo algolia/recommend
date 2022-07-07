@@ -205,7 +205,7 @@ describe('frequentlyBoughtTogether', () => {
     });
   });
 
-  describe('rendering the view component', () => {
+  describe('rendering the `view` component', () => {
     test('renders using JSX template', async () => {
       const container = document.createElement('div');
 
@@ -221,7 +221,7 @@ describe('frequentlyBoughtTogether', () => {
         view: (props) => (
           <div data-testid="container">
             {props.items.map((item) => {
-              return <props.itemComponent key="rr" item={item} {...props} />;
+              return <props.itemComponent key={item.objectID} {...props} />;
             })}
           </div>
         ),
