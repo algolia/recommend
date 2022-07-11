@@ -13,11 +13,12 @@ import { ProductHit } from '../types/ProductHit';
 
 import { RelatedItem } from './RelatedItem';
 
-const appId = 'XX85YRZZMV';
-const apiKey = '098f71f9e2267178bdfc08cc986d2999';
 const indexName = 'test_FLAGSHIP_ECOM_recommend';
 
-const recommendClient = algoliarecommend(appId, apiKey);
+const recommendClient = algoliarecommend(
+  'XX85YRZZMV',
+  '098f71f9e2267178bdfc08cc986d2999'
+);
 
 frequentlyBoughtTogether<ProductHit>({
   container: '#frequentlyBoughtTogether',
