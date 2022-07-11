@@ -221,7 +221,13 @@ describe('frequentlyBoughtTogether', () => {
         view: (props) => (
           <div className="view">
             {props.items.map((item) => {
-              return <props.itemComponent key={item.objectID} {...props} />;
+              return (
+                <props.itemComponent
+                  key={item.objectID}
+                  item={item}
+                  {...props}
+                />
+              );
             })}
           </div>
         ),
