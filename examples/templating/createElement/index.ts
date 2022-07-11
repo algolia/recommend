@@ -27,7 +27,7 @@ frequentlyBoughtTogether<ProductHit>({
   headerComponent: ({ createElement }) =>
     createElement('h3', null, 'Frequently bought together'),
   itemComponent({ item, createElement }) {
-    return relatedItem(item, createElement);
+    return relatedItem({ item, createElement });
   },
 });
 
@@ -39,7 +39,7 @@ relatedProducts<ProductHit>({
   headerComponent: ({ createElement }) =>
     createElement('h3', null, 'Related products'),
   itemComponent({ item, createElement }) {
-    return relatedItem(item, createElement);
+    return relatedItem({ item, createElement });
   },
   view({ items, createElement, Fragment, itemComponent }) {
     return horizontalSlider({
@@ -59,7 +59,7 @@ trendingItems<ProductHit>({
   headerComponent: ({ createElement }) =>
     createElement('h3', null, 'Trending items'),
   itemComponent({ item, createElement }) {
-    return relatedItem(item, createElement);
+    return relatedItem({ item, createElement });
   },
   view({ items, itemComponent, Fragment, createElement }) {
     return horizontalSlider({

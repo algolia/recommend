@@ -2,7 +2,12 @@ import { Pragma } from '@algolia/recommend-vdom';
 
 import { ProductHit } from '../types/ProductHit';
 
-export function relatedItem(item: ProductHit, createElement: Pragma) {
+interface RelatedItemProps {
+  item: ProductHit;
+  createElement: Pragma;
+}
+
+export function relatedItem({ item, createElement }: RelatedItemProps) {
   return createElement('div', { className: 'relative' }, [
     createElement('img', {
       className: 'max-w-full',
