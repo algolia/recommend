@@ -47,7 +47,7 @@ export function RelatedItem({ item }: RelatedItemProps) {
         {Boolean(item.reviewScore) && (
           <div className="items-center flex flex-grow text-sm text-gray-700">
             <svg
-              className="mr-1 text-orange-500"
+              className="mr-1 text-orange-400"
               width="16"
               height="16"
               viewBox="0 0 24 24"
