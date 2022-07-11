@@ -203,7 +203,7 @@ describe('relatedProducts', () => {
       });
     });
   });
-  describe('rendering the view component', () => {
+  describe('rendering the `view` component', () => {
     test('renders using JSX template', async () => {
       const container = document.createElement('div');
 
@@ -219,7 +219,13 @@ describe('relatedProducts', () => {
         view: (props) => (
           <div className="view">
             {props.items.map((item) => {
-              return <props.itemComponent key="rr" item={item} {...props} />;
+              return (
+                <props.itemComponent
+                  key={item.objectID}
+                  item={item}
+                  {...props}
+                />
+              );
             })}
           </div>
         ),
