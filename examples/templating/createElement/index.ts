@@ -7,7 +7,7 @@ import {
 } from '@algolia/recommend-js';
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 
-import { ProductHit } from '../../js-demo/types';
+import { ProductHit } from '../types/ProductHit';
 
 import { relatedItem } from './relatedItem';
 

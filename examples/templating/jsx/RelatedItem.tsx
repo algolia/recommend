@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from 'preact';
 
-import { ProductHit } from '../../js-demo/types';
+import { ProductHit } from '../types/ProductHit';
 
 export type RelatedItemProps = {
   item: ProductHit;

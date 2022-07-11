@@ -9,7 +9,7 @@ import {
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 import { h } from 'preact';
 
-import { ProductHit } from '../../js-demo/types';
+import { ProductHit } from '../types/ProductHit';
 
 import { RelatedItem } from './RelatedItem';
 
