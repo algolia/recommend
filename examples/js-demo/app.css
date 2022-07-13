@@ -29,12 +29,3 @@ h3 {
 .RelatedItem:hover .RelatedItem-info {
   display: block;
 }
-
-.text-nebula-900 {
-  color: #5468ff;
-}
-
-.border-nebula-500 {
-  border-color: #5468ff;
-}
-

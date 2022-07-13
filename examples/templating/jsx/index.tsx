@@ -11,7 +11,7 @@ import { h } from 'preact';
 
 import { ProductHit } from '../types/ProductHit';
 
-import { RelatedItem } from './RelatedItem';
+import { ProductItem } from './ProductItem';
 
 const indexName = 'test_FLAGSHIP_ECOM_recommend';
 
@@ -26,7 +26,7 @@ frequentlyBoughtTogether<ProductHit>({
   indexName,
   objectIDs: ['M0E20000000EAAK'],
   itemComponent({ item }) {
-    return <RelatedItem item={item} />;
+    return <ProductItem item={item} />;
   },
 });
 
@@ -37,7 +37,7 @@ relatedProducts<ProductHit>({
   view: horizontalSlider,
   objectIDs: ['M0E20000000EAAK'],
   itemComponent({ item }) {
-    return <RelatedItem item={item} />;
+    return <ProductItem item={item} />;
   },
 });
 
@@ -47,7 +47,7 @@ trendingItems<ProductHit>({
   indexName,
   view: horizontalSlider,
   itemComponent({ item }) {
-    return <RelatedItem item={item} />;
+    return <ProductItem item={item} />;
   },
 });
 

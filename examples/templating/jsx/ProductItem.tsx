@@ -3,17 +3,17 @@ import { h } from 'preact';
 
 import { ProductHit } from '../types/ProductHit';
 
-export type RelatedItemProps = {
+export type ProductItemProps = {
   item: ProductHit;
 };
 
-export function RelatedItem({ item }: RelatedItemProps) {
+export function ProductItem({ item }: ProductItemProps) {
   return (
-    <div className="RelatedItem grid gap-2">
+    <div className="ProductItem grid gap-2">
       <div className="relative">
         <img src={item.image_urls[0]} alt={item.name} className="max-w-full" />
 
-        <div className="RelatedItem-info">
+        <div className="ProductItem-info">
           {item._score && (
             <div
               className="flex items-center absolute right-0 top-0 text-gray-500 font-semibold text-xs rounded-lg m-2 py-1 px-2"

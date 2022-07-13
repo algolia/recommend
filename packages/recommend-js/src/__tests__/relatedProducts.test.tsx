@@ -217,7 +217,7 @@ describe('relatedProducts', () => {
         indexName: 'products',
         objectIDs: ['D06270-9132-995'],
         view: (props) => (
-          <div className="view">
+          <ol>
             {props.items.map((item) => {
               return (
                 <props.itemComponent
@@ -227,20 +227,34 @@ describe('relatedProducts', () => {
                 />
               );
             })}
-          </div>
+          </ol>
         ),
-        itemComponent: ({ item }) => <div>{item.objectID}</div>,
+        itemComponent: ({ item }) => <li>{item.objectID}</li>,
       });
 
       await waitFor(() => {
+        expect(within(container).getAllByRole('listitem')).not.toBeNull();
         expect(container).toMatchInlineSnapshot(`
           <div>
             <section
               class="auc-Recommend"
             >
-              <div
-                class="view"
-              />
+              <h3
+                class="auc-Recommend-title"
+              >
+                Related products
+              </h3>
+              <ol>
+                <li>
+                  1
+                </li>
+                <li>
+                  2
+                </li>
+                <li>
+                  3
+                </li>
+              </ol>
             </section>
           </div>
         `);
@@ -259,34 +273,43 @@ describe('relatedProducts', () => {
         recommendClient,
         indexName: 'products',
         objectIDs: ['D06270-9132-995'],
-        view: ({ createElement, Fragment, items, itemComponent }) => {
-          return createElement(
-            'div',
-            { className: 'view' },
-            createElement(
-              Fragment,
-              null,
-              items.map((item) =>
-                itemComponent({ item, createElement, Fragment })
-              )
+        view: ({ createElement, Fragment, items, itemComponent }) =>
+          createElement(
+            'ol',
+            null,
+            items.map((item) =>
+              itemComponent({ item, createElement, Fragment })
             )
-          );
-        },
-        itemComponent: ({ item, createElement, Fragment }) =>
-          createElement(Fragment, null, item.objectID),
+          ),
+        itemComponent: ({ item, createElement }) =>
+          createElement('li', null, item.objectID),
       });
 
       await waitFor(() => {
+        expect(within(container).getAllByRole('listitem')).not.toBeNull();
         expect(container).toMatchInlineSnapshot(`
-          <div>
-            <section
-              class="auc-Recommend"
-            >
-              <div
-                class="view"
-              />
-            </section>
-          </div>
+            <div>
+              <section
+                class="auc-Recommend"
+              >
+                <h3
+                  class="auc-Recommend-title"
+                >
+                  Related products
+                </h3>
+                <ol>
+                  <li>
+                    1
+                  </li>
+                  <li>
+                    2
+                  </li>
+                  <li>
+                    3
+                  </li>
+                </ol>
+              </section>
+            </div>
         `);
       });
     });

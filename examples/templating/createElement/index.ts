@@ -9,7 +9,7 @@ import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 
 import { ProductHit } from '../types/ProductHit';
 
-import { relatedItem } from './relatedItem';
+import { productItem } from './productItem';
 
 import '@algolia/ui-components-horizontal-slider-theme';
 
@@ -27,9 +27,7 @@ frequentlyBoughtTogether<ProductHit>({
   objectIDs: ['M0E20000000EAAK'],
   headerComponent: ({ createElement }) =>
     createElement('h3', null, 'Frequently bought together'),
-  itemComponent({ item, createElement }) {
-    return relatedItem({ item, createElement });
-  },
+  itemComponent: productItem,
 });
 
 relatedProducts<ProductHit>({
@@ -39,14 +37,11 @@ relatedProducts<ProductHit>({
   objectIDs: ['M0E20000000EAAK'],
   headerComponent: ({ createElement }) =>
     createElement('h3', null, 'Related products'),
-  itemComponent({ item, createElement }) {
-    return relatedItem({ item, createElement });
-  },
+  itemComponent: productItem,
   view({ items, createElement, Fragment, itemComponent }) {
     return horizontalSlider({
-      container: '#relatedProducts-slider',
       items,
-      itemComponent: ({ item }) => {
+      itemComponent({ item }) {
         return itemComponent({ item, createElement, Fragment });
       },
     });
@@ -59,12 +54,9 @@ trendingItems<ProductHit>({
   indexName,
   headerComponent: ({ createElement }) =>
     createElement('h3', null, 'Trending items'),
-  itemComponent({ item, createElement }) {
-    return relatedItem({ item, createElement });
-  },
+  itemComponent: productItem,
   view({ items, itemComponent, Fragment, createElement }) {
     return horizontalSlider({
-      container: '#trendingItems-slider',
       items,
       itemComponent({ item }) {
         return itemComponent({ item, createElement, Fragment });
