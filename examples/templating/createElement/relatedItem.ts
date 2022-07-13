@@ -10,7 +10,7 @@ interface RelatedItemProps {
 export function relatedItem({ item, createElement }: RelatedItemProps) {
   return createElement('div', { className: 'relative' }, [
     createElement('img', {
-      className: 'max-w-full',
+      className: 'max-h-80',
       src: item.image_urls?.[0],
     }),
     createElement('div', { className: 'RelatedItem-info' }, [
@@ -28,7 +28,7 @@ export function relatedItem({ item, createElement }: RelatedItemProps) {
       createElement('div', { className: 'text-sm text-gray-500' }, item.brand),
       createElement(
         'div',
-        { className: 'text-gray-900 font-semibold mb-1 whitespace-normal' },
+        { className: 'text-gray-900 font-semibold mb-1 truncate' },
         item.name
       ),
     ]),

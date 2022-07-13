@@ -66,7 +66,7 @@ trendingItems<ProductHit>({
     return horizontalSlider({
       container: '#trendingItems-slider',
       items,
-      itemComponent: ({ item }) => {
+      itemComponent({ item }) {
         return itemComponent({ item, createElement, Fragment });
       },
     });
