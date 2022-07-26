@@ -1,34 +1,19 @@
 /** @jsx h */
 import { h } from 'preact';
 
-import { RelatedItemProps } from './types';
+import { ProductHit } from '../types/ProductHit';
 
-export function RelatedItem({ item, insights, onSelect }: RelatedItemProps) {
+export type ProductItemProps = {
+  item: ProductHit;
+};
+
+export function ProductItem({ item }: ProductItemProps) {
   return (
-    <a
-      className="RelatedItem grid gap-2 color-inherit no-underline"
-      href={item.url}
-      onClick={(event) => {
-        event.preventDefault();
-
-        // eslint-disable-next-line no-console
-        console.log(item.objectID);
-
-        onSelect(item);
-
-        insights('clickedObjectIDs', {
-          objectIDs: [item.objectID],
-          positions: [item.__position],
-          eventName: 'Product Clicked',
-          queryID: item.__queryID,
-          index: item.__indexName,
-        });
-      }}
-    >
+    <div className="ProductItem grid gap-2">
       <div className="relative">
         <img src={item.image_urls[0]} alt={item.name} className="max-w-full" />
 
-        <div className="RelatedItem-info">
+        <div className="ProductItem-info">
           {item._score && (
             <div
               className="flex items-center absolute right-0 top-0 text-gray-500 font-semibold text-xs rounded-lg m-2 py-1 px-2"
@@ -85,18 +70,11 @@ export function RelatedItem({ item, insights, onSelect }: RelatedItemProps) {
           className="flex items-center justify-center w-full bg-white border-nebula-500 border-solid border rounded text-nebula-900 cursor-pointer py-1 px-2 font-semibold"
           onClick={(event) => {
             event.preventDefault();
-
-            insights('convertedObjectIDsAfterSearch', {
-              objectIDs: [item.objectID],
-              eventName: 'Product Added To Cart',
-              queryID: item.__queryID,
-              index: item.__indexName,
-            });
           }}
         >
           Add to cart
         </button>
       </div>
-    </a>
+    </div>
   );
 }

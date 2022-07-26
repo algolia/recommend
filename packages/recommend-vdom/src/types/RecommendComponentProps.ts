@@ -42,7 +42,8 @@ export type RecommendComponentProps<TObject> = {
       RecordWithObjectID<TObject>,
       Required<RecommendTranslations>,
       Record<string, string>
-    >
+    > &
+      Renderer
   ): JSX.Element;
 };
 
@@ -60,6 +61,7 @@ export type TrendingComponentProps<TObject> = {
       FacetEntry<TObject>,
       Required<RecommendTranslations>,
       Record<string, string>
-    >
+    > &
+      Renderer
   ): JSX.Element;
 };

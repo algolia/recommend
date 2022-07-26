@@ -1,7 +1,7 @@
 /** @jsx h */
 import { ObjectWithObjectID } from '@algolia/client-search';
 import { waitFor, within } from '@testing-library/dom';
-import { h } from 'preact';
+import { Fragment, h } from 'preact';
 
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import {
@@ -197,6 +197,112 @@ describe('trendingItems', () => {
             Fallback component
           </div>
           `);
+      });
+    });
+  });
+
+  describe('rendering the `view` component', () => {
+    test('renders using JSX template', async () => {
+      const container = document.createElement('div');
+
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
+
+      document.body.appendChild(container);
+
+      trendingItems<ObjectWithObjectID>({
+        container,
+        recommendClient,
+        indexName: 'products',
+        view: (props) => (
+          <Fragment>
+            {props.items.map((item) => {
+              return (
+                <props.itemComponent
+                  key={item.objectID}
+                  item={item}
+                  {...props}
+                />
+              );
+            })}
+          </Fragment>
+        ),
+        itemComponent: ({ item }) => <li>{item.objectID}</li>,
+      });
+
+      await waitFor(() => {
+        expect(within(container).getAllByRole('listitem')).not.toBeNull();
+        expect(container).toMatchInlineSnapshot(`
+          <div>
+            <section
+              class="auc-Recommend"
+            >
+              <h3
+                class="auc-Recommend-title"
+              >
+                Trending items
+              </h3>
+              <li>
+                1
+              </li>
+              <li>
+                2
+              </li>
+              <li>
+                3
+              </li>
+            </section>
+          </div>
+        `);
+      });
+    });
+
+    test('renders using `createElement` and `Fragment`', async () => {
+      const container = document.createElement('div');
+
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
+
+      document.body.appendChild(container);
+
+      trendingItems<ObjectWithObjectID>({
+        container,
+        recommendClient,
+        indexName: 'products',
+        view: ({ createElement, Fragment, items, itemComponent }) =>
+          createElement(
+            Fragment,
+            null,
+            items.map((item) =>
+              itemComponent({ item, createElement, Fragment })
+            )
+          ),
+        itemComponent: ({ item, createElement }) =>
+          createElement('li', null, item.objectID),
+      });
+
+      await waitFor(() => {
+        expect(within(container).getAllByRole('listitem')).not.toBeNull();
+        expect(container).toMatchInlineSnapshot(`
+            <div>
+              <section
+                class="auc-Recommend"
+              >
+                <h3
+                  class="auc-Recommend-title"
+                >
+                  Trending items
+                </h3>
+                <li>
+                  1
+                </li>
+                <li>
+                  2
+                </li>
+                <li>
+                  3
+                </li>
+              </section>
+            </div>
+        `);
       });
     });
   });
