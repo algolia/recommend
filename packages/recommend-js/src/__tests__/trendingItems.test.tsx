@@ -1,7 +1,7 @@
 /** @jsx h */
 import { ObjectWithObjectID } from '@algolia/client-search';
 import { waitFor, within } from '@testing-library/dom';
-import { h } from 'preact';
+import { Fragment, h } from 'preact';
 
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import {
@@ -214,7 +214,7 @@ describe('trendingItems', () => {
         recommendClient,
         indexName: 'products',
         view: (props) => (
-          <ol>
+          <Fragment>
             {props.items.map((item) => {
               return (
                 <props.itemComponent
@@ -224,7 +224,7 @@ describe('trendingItems', () => {
                 />
               );
             })}
-          </ol>
+          </Fragment>
         ),
         itemComponent: ({ item }) => <li>{item.objectID}</li>,
       });
@@ -241,17 +241,15 @@ describe('trendingItems', () => {
               >
                 Trending items
               </h3>
-              <ol>
-                <li>
-                  1
-                </li>
-                <li>
-                  2
-                </li>
-                <li>
-                  3
-                </li>
-              </ol>
+              <li>
+                1
+              </li>
+              <li>
+                2
+              </li>
+              <li>
+                3
+              </li>
             </section>
           </div>
         `);
@@ -271,7 +269,7 @@ describe('trendingItems', () => {
         indexName: 'products',
         view: ({ createElement, Fragment, items, itemComponent }) =>
           createElement(
-            'ol',
+            Fragment,
             null,
             items.map((item) =>
               itemComponent({ item, createElement, Fragment })
@@ -293,17 +291,15 @@ describe('trendingItems', () => {
                 >
                   Trending items
                 </h3>
-                <ol>
-                  <li>
-                    1
-                  </li>
-                  <li>
-                    2
-                  </li>
-                  <li>
-                    3
-                  </li>
-                </ol>
+                <li>
+                  1
+                </li>
+                <li>
+                  2
+                </li>
+                <li>
+                  3
+                </li>
               </section>
             </div>
         `);
