@@ -1,6 +1,6 @@
 import { RecordWithObjectID } from '@algolia/recommend-core';
 
-import { Renderer } from './Renderer';
+import { Renderer, VNode } from './Renderer';
 
 export type ViewProps<
   TItem extends RecordWithObjectID,
@@ -8,9 +8,9 @@ export type ViewProps<
   TClassNames extends Record<string, string>
 > = {
   classNames: TClassNames;
-  itemComponent<TProps extends Record<string, unknown> = {}>(
-    props: { item: TItem } & Renderer & TProps
-  ): JSX.Element;
+  itemComponent<TComponentProps extends Record<string, unknown> = {}>(
+    props: { item: TItem } & Renderer & TComponentProps
+  ): VNode | VNode[];
   items: TItem[];
   translations: TTranslations;
 };

@@ -10,8 +10,9 @@ import {
 } from './types';
 
 export type FrequentlyBoughtTogetherProps<
-  TObject
-> = RecommendComponentProps<TObject>;
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = RecommendComponentProps<TObject, TComponentProps>;
 
 export function createFrequentlyBoughtTogetherComponent({
   createElement,

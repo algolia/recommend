@@ -7,14 +7,18 @@ import {
 import {
   createFrequentlyBoughtTogetherComponent,
   FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherVDOMProps,
+  VNode,
 } from '@algolia/recommend-vdom';
+import htm from 'htm';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps } from './types';
+import { EnvironmentProps, HTMLTemplate } from './types';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
+
+const html = htm.bind<VNode>(createElement); // Export common
 
 const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherComponent(
   {
@@ -47,14 +51,23 @@ function useFrequentlyBoughtTogether<TObject>(
   };
 }
 
-type FrequentlyBoughtTogetherProps<
-  TObject
-> = GetFrequentlyBoughtTogetherProps<TObject> &
-  Omit<FrequentlyBoughtTogetherVDOMProps<TObject>, 'items' | 'status'>;
+type Template = {
+  html: HTMLTemplate;
+};
 
-function FrequentlyBoughtTogether<TObject>(
-  props: FrequentlyBoughtTogetherProps<TObject>
-) {
+type FrequentlyBoughtTogetherProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = GetFrequentlyBoughtTogetherProps<TObject> &
+  Omit<
+    FrequentlyBoughtTogetherVDOMProps<TObject, TComponentProps>,
+    'items' | 'status'
+  >;
+
+function FrequentlyBoughtTogether<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+>(props: FrequentlyBoughtTogetherProps<TObject, TComponentProps>) {
   const { recommendations, status } = useFrequentlyBoughtTogether<TObject>(
     props
   );
@@ -71,9 +84,37 @@ function FrequentlyBoughtTogether<TObject>(
 export function frequentlyBoughtTogether<TObject>({
   container,
   environment = window,
+  itemComponent,
+  fallbackComponent,
+  headerComponent,
+  view,
   ...props
-}: FrequentlyBoughtTogetherProps<TObject> & EnvironmentProps) {
-  const children = <FrequentlyBoughtTogether {...props} />;
+}: FrequentlyBoughtTogetherProps<TObject, Template> & EnvironmentProps) {
+  const children = (
+    <FrequentlyBoughtTogether<TObject, Template>
+      {...props}
+      itemComponent={(itemComponentProps) =>
+        itemComponent({
+          ...itemComponentProps,
+          html,
+        })
+      }
+      view={(viewProps) => (view ? view({ ...viewProps, html }) : null)}
+      headerComponent={(headerComponentProps) =>
+        headerComponent
+          ? headerComponent({ ...headerComponentProps, html })
+          : null
+      }
+      fallbackComponent={(fallbackComponentProps) =>
+        fallbackComponent
+          ? fallbackComponent({
+              ...fallbackComponentProps,
+              html,
+            })
+          : null
+      }
+    />
+  );
 
   if (!container) {
     return children;
@@ -81,5 +122,5 @@ export function frequentlyBoughtTogether<TObject>({
 
   render(children, getHTMLElement(container, environment));
 
-  return undefined;
+  return null;
 }
