@@ -20,10 +20,10 @@ export type ComponentProps<TObject> = {
 };
 
 export type ChildrenProps<TObject> = ComponentProps<TObject> & {
-  Fallback(): VNode | null;
-  Header(props: HeaderComponentProps<TObject>): VNode | null;
+  Fallback(): VNode | VNode[] | null;
+  Header(props: HeaderComponentProps<TObject>): VNode | VNode[] | null;
   status: RecommendStatus;
-  View(props: unknown): VNode | null;
+  View(props: unknown): VNode | VNode[] | null;
 };
 
 export type RecommendComponentProps<
@@ -36,10 +36,10 @@ export type RecommendComponentProps<
   items: Array<RecordWithObjectID<TObject>>;
   classNames?: RecommendClassNames;
   children?(props: ChildrenProps<TObject>): VNode | null;
-  fallbackComponent?(props: Renderer & TComponentProps): VNode | null;
+  fallbackComponent?(props: Renderer & TComponentProps): VNode | VNode[] | null;
   headerComponent?(
     props: HeaderComponentProps<TObject> & TComponentProps
-  ): VNode | null;
+  ): VNode | VNode[] | null;
   status: RecommendStatus;
   translations?: RecommendTranslations;
   view?(
@@ -49,16 +49,23 @@ export type RecommendComponentProps<
       Record<string, string>
     > &
       TComponentProps
-  ): VNode | null;
+  ): VNode | VNode[] | null;
 };
 
-export type TrendingComponentProps<TObject> = {
-  itemComponent(props: ItemComponentProps<FacetEntry<TObject>>): VNode;
+export type TrendingComponentProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = {
+  itemComponent(
+    props: ItemComponentProps<FacetEntry<TObject>> & TComponentProps
+  ): VNode | VNode[];
   items: Array<FacetEntry<TObject>>;
   classNames?: RecommendClassNames;
   children?(props: ChildrenProps<TObject>): VNode;
-  fallbackComponent?(props: Renderer): VNode;
-  headerComponent?(props: HeaderComponentProps<TObject>): VNode;
+  fallbackComponent?(props: Renderer & TComponentProps): VNode | VNode[] | null;
+  headerComponent?(
+    props: HeaderComponentProps<TObject> & TComponentProps
+  ): VNode | VNode[] | null;
   status: RecommendStatus;
   translations?: RecommendTranslations;
   view?(
@@ -66,6 +73,7 @@ export type TrendingComponentProps<TObject> = {
       FacetEntry<TObject>,
       Required<RecommendTranslations>,
       Record<string, string>
-    >
-  ): VNode;
+    > &
+      TComponentProps
+  ): VNode | VNode[] | null;
 };

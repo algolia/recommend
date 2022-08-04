@@ -12,7 +12,7 @@ import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps } from './types';
+import { EnvironmentProps, Template, html } from './types';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
 
@@ -43,10 +43,16 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
   };
 }
 
-type RelatedProductsProps<TObject> = GetRelatedProductsProps<TObject> &
-  Omit<RelatedProductsVDOMProps<TObject>, 'items' | 'status'>;
+type RelatedProductsProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = GetRelatedProductsProps<TObject> &
+  Omit<RelatedProductsVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
 
-function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
+function RelatedProducts<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+>(props: RelatedProductsProps<TObject, TComponentProps>) {
   const { recommendations, status } = useRelatedProducts<TObject>(props);
 
   return (
@@ -61,9 +67,37 @@ function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
 export function relatedProducts<TObject>({
   container,
   environment = window,
+  itemComponent,
+  fallbackComponent,
+  headerComponent,
+  view,
   ...props
-}: RelatedProductsProps<TObject> & EnvironmentProps) {
-  const children = <RelatedProducts {...props} />;
+}: RelatedProductsProps<TObject, Template> & EnvironmentProps) {
+  const children = (
+    <RelatedProducts<TObject, Template>
+      {...props}
+      view={view ? (viewProps) => view({ ...viewProps, html }) : undefined}
+      itemComponent={(itemComponentProps) =>
+        itemComponent({
+          ...itemComponentProps,
+          html,
+        })
+      }
+      headerComponent={(headerComponentProps) =>
+        headerComponent
+          ? headerComponent({ ...headerComponentProps, html })
+          : null
+      }
+      fallbackComponent={(fallbackComponentProps) =>
+        fallbackComponent
+          ? fallbackComponent({
+              ...fallbackComponentProps,
+              html,
+            })
+          : null
+      }
+    />
+  );
 
   if (!container) {
     return children;

@@ -8,7 +8,9 @@ export type FacetsViewProps<
   TClassNames extends Record<string, string>
 > = {
   classNames: TClassNames;
-  itemComponent(props: { item: TItem } & Renderer): VNode;
+  itemComponent<TComponentProps extends Record<string, unknown> = {}>(
+    props: { item: TItem } & Renderer & TComponentProps
+  ): VNode | VNode[];
   items: TItem[];
   translations: TTranslations;
 };

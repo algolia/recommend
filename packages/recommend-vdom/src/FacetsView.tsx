@@ -23,11 +23,11 @@ export function createFacetsView({ createElement, Fragment }: Renderer) {
               key={item.facetValue}
               className={cx('auc-Recommend-item', props.classNames.item)}
             >
-              <props.itemComponent
-                createElement={createElement}
-                Fragment={Fragment}
-                item={item}
-              />
+              {props.itemComponent({
+                createElement,
+                Fragment,
+                item,
+              })}
             </li>
           ))}
         </ol>

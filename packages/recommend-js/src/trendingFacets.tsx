@@ -12,7 +12,7 @@ import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps } from './types';
+import { EnvironmentProps, html, Template } from './types';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
 
@@ -43,10 +43,16 @@ function useTrendingFacets<TObject>(props: GetTrendingFacetsProps<TObject>) {
   };
 }
 
-type TrendingFacetsProps<TObject> = GetTrendingFacetsProps<TObject> &
-  Omit<TrendingFacetsVDOMProps<TObject>, 'items' | 'status'>;
+type TrendingFacetsProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = GetTrendingFacetsProps<TObject> &
+  Omit<TrendingFacetsVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
 
-function TrendingFacets<TObject>(props: TrendingFacetsProps<TObject>) {
+function TrendingFacets<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+>(props: TrendingFacetsProps<TObject, TComponentProps>) {
   const { recommendations, status } = useTrendingFacets<TObject>(props);
 
   return (
@@ -57,14 +63,40 @@ function TrendingFacets<TObject>(props: TrendingFacetsProps<TObject>) {
     />
   );
 }
-
 export function trendingFacets<TObject>({
   container,
   environment = window,
+  itemComponent,
+  fallbackComponent,
+  headerComponent,
+  view,
   ...props
-}: TrendingFacetsProps<TObject> & EnvironmentProps) {
-  const children = <TrendingFacets {...props} />;
-
+}: TrendingFacetsProps<TObject, Template> & EnvironmentProps) {
+  const children = (
+    <TrendingFacets<TObject, Template>
+      {...props}
+      view={view ? (viewProps) => view({ ...viewProps, html }) : undefined}
+      itemComponent={(itemComponentProps) =>
+        itemComponent({
+          ...itemComponentProps,
+          html,
+        })
+      }
+      headerComponent={(headerComponentProps) =>
+        headerComponent
+          ? headerComponent({ ...headerComponentProps, html })
+          : null
+      }
+      fallbackComponent={(fallbackComponentProps) =>
+        fallbackComponent
+          ? fallbackComponent({
+              ...fallbackComponentProps,
+              html,
+            })
+          : null
+      }
+    />
+  );
   if (!container) {
     return children;
   }

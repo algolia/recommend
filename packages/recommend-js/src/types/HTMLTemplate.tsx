@@ -4,3 +4,7 @@ export type HTMLTemplate = (
   strings: TemplateStringsArray,
   ...values: any[]
 ) => VNode | VNode[];
+
+export type Template = {
+  html: HTMLTemplate;
+};

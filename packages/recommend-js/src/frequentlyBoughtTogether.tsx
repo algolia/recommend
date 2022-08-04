@@ -7,13 +7,12 @@ import {
 import {
   createFrequentlyBoughtTogetherComponent,
   FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherVDOMProps,
-  VNode,
 } from '@algolia/recommend-vdom';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps, HTMLTemplate, html } from './types';
+import { EnvironmentProps, html, Template } from './types';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
 
@@ -48,10 +47,6 @@ function useFrequentlyBoughtTogether<TObject>(
   };
 }
 
-type Template = {
-  html: HTMLTemplate;
-};
-
 type FrequentlyBoughtTogetherProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
@@ -64,10 +59,11 @@ type FrequentlyBoughtTogetherProps<
 function FrequentlyBoughtTogether<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
->(props: FrequentlyBoughtTogetherProps<TObject, TComponentProps>): VNode {
+>(props: FrequentlyBoughtTogetherProps<TObject, TComponentProps>) {
   const { recommendations, status } = useFrequentlyBoughtTogether<TObject>(
     props
   );
+
   return (
     <UncontrolledFrequentlyBoughtTogether
       {...props}
@@ -89,13 +85,13 @@ export function frequentlyBoughtTogether<TObject>({
   const children = (
     <FrequentlyBoughtTogether<TObject, Template>
       {...props}
+      view={view ? (viewProps) => view({ ...viewProps, html }) : undefined}
       itemComponent={(itemComponentProps) =>
         itemComponent({
           ...itemComponentProps,
           html,
         })
       }
-      view={(viewProps) => (view ? view({ ...viewProps, html }) : null)}
       headerComponent={(headerComponentProps) =>
         headerComponent
           ? headerComponent({ ...headerComponentProps, html })

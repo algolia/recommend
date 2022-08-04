@@ -9,7 +9,10 @@ import {
   Renderer,
 } from './types';
 
-export type RelatedProductsProps<TObject> = RecommendComponentProps<TObject>;
+export type RelatedProductsProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = RecommendComponentProps<TObject, TComponentProps>;
 
 export function createRelatedProductsComponent({
   createElement,
@@ -28,34 +31,35 @@ export function createRelatedProductsComponent({
     const children =
       props.children ??
       createDefaultChildrenComponent({ createElement, Fragment });
-    const FallbackComponent =
+    const fallbackComponent =
       props.fallbackComponent ?? createDefaultFallbackComponent();
-    const Fallback = () => (
-      <FallbackComponent Fragment={Fragment} createElement={createElement} />
-    );
+    const Fallback = () => fallbackComponent({ Fragment, createElement });
     const Header =
       props.headerComponent ??
       createDefaultHeaderComponent({ createElement, Fragment });
     const ViewComponent =
       props.view ?? createListViewComponent({ createElement, Fragment });
-    const View = (viewProps: unknown) => (
-      <ViewComponent
-        classNames={classNames}
-        itemComponent={props.itemComponent}
-        items={props.items}
-        translations={translations}
-        {...viewProps}
-      />
-    );
+    const View = (viewProps: unknown) =>
+      ViewComponent({
+        classNames,
+        itemComponent: props.itemComponent,
+        items: props.items,
+        translations, // @ts-ignore
+        ...viewProps,
+      });
 
-    return children({
-      classNames,
-      Fallback,
-      Header,
-      recommendations: props.items,
-      status: props.status,
-      translations,
-      View,
-    });
+    return (
+      <Fragment>
+        {children({
+          classNames,
+          Fallback,
+          Header,
+          recommendations: props.items,
+          status: props.status,
+          translations,
+          View,
+        })}
+      </Fragment>
+    );
   };
 }
