@@ -20,10 +20,10 @@ export type ComponentProps<TObject> = {
 };
 
 export type ChildrenProps<TObject> = ComponentProps<TObject> & {
-  Fallback(): VNode | VNode[] | null;
-  Header(props: HeaderComponentProps<TObject>): VNode | VNode[] | null;
+  Fallback(): VNode | null;
+  Header(props: HeaderComponentProps<TObject>): VNode | null;
   status: RecommendStatus;
-  View(props: unknown): VNode | VNode[] | null;
+  View(props: unknown): VNode | null;
 };
 
 export type RecommendComponentProps<
@@ -35,7 +35,7 @@ export type RecommendComponentProps<
   ): VNode | VNode[];
   items: Array<RecordWithObjectID<TObject>>;
   classNames?: RecommendClassNames;
-  children?(props: ChildrenProps<TObject>): VNode | null;
+  children?(props: ChildrenProps<TObject>): VNode | VNode[] | null;
   fallbackComponent?(props: Renderer & TComponentProps): VNode | VNode[] | null;
   headerComponent?(
     props: HeaderComponentProps<TObject> & TComponentProps

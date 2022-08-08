@@ -28,20 +28,36 @@ export function createTrendingFacetsComponent({
       createDefaultChildrenComponent({ createElement, Fragment });
     const fallbackComponent =
       props.fallbackComponent ?? createDefaultFallbackComponent();
-    const Fallback = () => fallbackComponent({ Fragment, createElement });
-    const Header =
+    const Fallback = () => (
+      <Fragment>{fallbackComponent({ createElement, Fragment })}</Fragment>
+    );
+    const headerComponent =
       props.headerComponent ??
       createDefaultHeaderComponent({ createElement, Fragment });
-    const ViewComponent =
+    const Header = () => (
+      <Fragment>
+        {headerComponent({
+          classNames,
+          recommendations: props.items,
+          translations,
+          createElement,
+          Fragment,
+        })}
+      </Fragment>
+    );
+    const viewComponent =
       props.view ?? createFacetsView({ createElement, Fragment });
-    const View = (viewProps: unknown) =>
-      ViewComponent({
-        classNames,
-        itemComponent: props.itemComponent,
-        items: props.items,
-        translations, // @ts-ignore
-        ...viewProps,
-      });
+    const View = (viewProps: unknown) => (
+      <Fragment>
+        {viewComponent({
+          classNames,
+          itemComponent: props.itemComponent,
+          items: props.items,
+          translations, // @ts-ignore
+          ...viewProps,
+        })}
+      </Fragment>
+    );
 
     return (
       <Fragment>
