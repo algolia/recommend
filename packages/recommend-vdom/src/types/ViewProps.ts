@@ -10,7 +10,7 @@ export type ViewProps<
   classNames: TClassNames;
   itemComponent<TComponentProps extends Record<string, unknown> = {}>(
     props: { item: TItem } & Renderer & TComponentProps
-  ): VNode | VNode[];
+  ): VNode;
   items: TItem[];
   translations: TTranslations;
 };

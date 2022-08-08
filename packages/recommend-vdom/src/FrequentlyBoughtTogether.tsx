@@ -57,7 +57,8 @@ export function createFrequentlyBoughtTogetherComponent({
           classNames,
           itemComponent: props.itemComponent,
           items: props.items,
-          translations, // @ts-ignore
+          translations,
+          // @ts-ignore
           ...viewProps,
         })}
       </Fragment>
