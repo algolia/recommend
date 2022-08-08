@@ -7,6 +7,7 @@ import {
 import {
   createRelatedProductsComponent,
   RelatedProductsProps as RelatedProductsVDOMProps,
+  VNode,
 } from '@algolia/recommend-vdom';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -72,7 +73,10 @@ export function relatedProducts<TObject>({
   headerComponent,
   view,
   ...props
-}: RelatedProductsProps<TObject, Template> & EnvironmentProps) {
+}: RelatedProductsProps<TObject, Template> & EnvironmentProps):
+  | VNode
+  | VNode[]
+  | undefined {
   const children = (
     <RelatedProducts<TObject, Template>
       {...props}

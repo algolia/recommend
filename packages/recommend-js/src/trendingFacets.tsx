@@ -7,6 +7,7 @@ import {
 import {
   createTrendingFacetsComponent,
   TrendingComponentProps as TrendingFacetsVDOMProps,
+  VNode,
 } from '@algolia/recommend-vdom';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -71,7 +72,10 @@ export function trendingFacets<TObject>({
   headerComponent,
   view,
   ...props
-}: TrendingFacetsProps<TObject, Template> & EnvironmentProps) {
+}: TrendingFacetsProps<TObject, Template> & EnvironmentProps):
+  | VNode
+  | VNode[]
+  | undefined {
   const children = (
     <TrendingFacets<TObject, Template>
       {...props}
