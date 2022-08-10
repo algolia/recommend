@@ -42,6 +42,8 @@ export function createTrendingItemsComponent({
         itemComponent={props.itemComponent}
         items={props.items}
         translations={translations}
+        Fragment={Fragment}
+        createElement={createElement}
         {...viewProps}
       />
     );
