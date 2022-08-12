@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/algolia/recommend/compare/v1.5.0...v1.6.0) (2022-08-12)
+
+
+### Features
+
+* **recommend-vdom:** Return createElement and Fragment from View ([#93](https://github.com/algolia/recommend/issues/93)) ([a657b91](https://github.com/algolia/recommend/commit/a657b91f38e47914efca9666dfeef7ecfa8e3360))
+
+
+
 # [1.5.0](https://github.com/algolia/recommend/compare/v1.4.0...v1.5.0) (2022-06-28)
 
 
