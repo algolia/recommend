@@ -7,7 +7,6 @@ import {
 import {
   createFrequentlyBoughtTogetherComponent,
   FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherVDOMProps,
-  VNode,
 } from '@algolia/recommend-vdom';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -82,10 +81,7 @@ export function frequentlyBoughtTogether<TObject>({
   headerComponent,
   view,
   ...props
-}: FrequentlyBoughtTogetherProps<TObject, Template> & EnvironmentProps):
-  | VNode
-  | VNode[]
-  | null {
+}: FrequentlyBoughtTogetherProps<TObject, Template> & EnvironmentProps) {
   const children = (
     <FrequentlyBoughtTogether<TObject, Template>
       {...props}

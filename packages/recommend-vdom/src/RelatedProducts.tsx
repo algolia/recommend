@@ -59,6 +59,8 @@ export function createRelatedProductsComponent({
           itemComponent: props.itemComponent,
           items: props.items,
           translations,
+          Fragment,
+          createElement,
           // @ts-ignore
           ...viewProps,
         })}

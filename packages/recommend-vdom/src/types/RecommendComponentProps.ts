@@ -48,6 +48,7 @@ export type RecommendComponentProps<
       Required<RecommendTranslations>,
       Record<string, string>
     > &
+      Renderer &
       TComponentProps
   ): VNode | VNode[] | null;
 };
@@ -74,6 +75,7 @@ export type TrendingComponentProps<
       Required<RecommendTranslations>,
       Record<string, string>
     > &
+      Renderer &
       TComponentProps
   ): VNode | VNode[] | null;
 };

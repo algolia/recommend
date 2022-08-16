@@ -57,6 +57,8 @@ export function createTrendingItemsComponent({
           itemComponent: props.itemComponent,
           items: props.items,
           translations,
+          Fragment,
+          createElement,
           // @ts-ignore
           ...viewProps,
         })}
