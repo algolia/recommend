@@ -92,18 +92,15 @@ export function frequentlyBoughtTogether<TObject>({
           html,
         })
       }
-      headerComponent={(headerComponentProps) =>
+      headerComponent={
         headerComponent
-          ? headerComponent({ ...headerComponentProps, html })
-          : null
+          ? (headerProps) => headerComponent({ ...headerProps, html })
+          : undefined
       }
-      fallbackComponent={(fallbackComponentProps) =>
+      fallbackComponent={
         fallbackComponent
-          ? fallbackComponent({
-              ...fallbackComponentProps,
-              html,
-            })
-          : null
+          ? (fallbackProps) => fallbackComponent({ ...fallbackProps, html })
+          : undefined
       }
     />
   );
