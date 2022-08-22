@@ -100,5 +100,5 @@ export function trendingFacets<TObject>({
 
   render(children, getHTMLElement(container, environment));
 
-  return undefined;
+  return null;
 }
