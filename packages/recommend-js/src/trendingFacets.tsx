@@ -70,9 +70,10 @@ export function trendingFacets<TObject>({
   fallbackComponent,
   headerComponent,
   view,
+  children,
   ...props
 }: TrendingFacetsProps<TObject, Template> & EnvironmentProps) {
-  const children = (
+  const component = (
     <TrendingFacets<TObject, Template>
       {...props}
       view={view ? (viewProps) => view({ ...viewProps, html }) : undefined}
@@ -92,13 +93,18 @@ export function trendingFacets<TObject>({
           ? (fallbackProps) => fallbackComponent({ ...fallbackProps, html })
           : undefined
       }
-    />
+    >
+      {children
+        ? (childrenProps) => children({ ...childrenProps, html })
+        : undefined}
+    </TrendingFacets>
   );
+
   if (!container) {
-    return children;
+    return component;
   }
 
-  render(children, getHTMLElement(container, environment));
+  render(component, getHTMLElement(container, environment));
 
   return null;
 }

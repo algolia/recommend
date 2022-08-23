@@ -80,9 +80,10 @@ export function frequentlyBoughtTogether<TObject>({
   fallbackComponent,
   headerComponent,
   view,
+  children,
   ...props
 }: FrequentlyBoughtTogetherProps<TObject, Template> & EnvironmentProps) {
-  const children = (
+  const component = (
     <FrequentlyBoughtTogether<TObject, Template>
       {...props}
       view={view ? (viewProps) => view({ ...viewProps, html }) : undefined}
@@ -102,14 +103,18 @@ export function frequentlyBoughtTogether<TObject>({
           ? (fallbackProps) => fallbackComponent({ ...fallbackProps, html })
           : undefined
       }
-    />
+    >
+      {children
+        ? (childrenProps) => children({ ...childrenProps, html })
+        : undefined}
+    </FrequentlyBoughtTogether>
   );
 
   if (!container) {
-    return children;
+    return component;
   }
 
-  render(children, getHTMLElement(container, environment));
+  render(component, getHTMLElement(container, environment));
 
   return null;
 }

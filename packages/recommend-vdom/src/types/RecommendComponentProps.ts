@@ -35,7 +35,9 @@ export type RecommendComponentProps<
   ): VNode | VNode[];
   items: Array<RecordWithObjectID<TObject>>;
   classNames?: RecommendClassNames;
-  children?(props: ChildrenProps<TObject>): VNode | VNode[] | null;
+  children?(
+    props: ChildrenProps<TObject> & TComponentProps
+  ): VNode | VNode[] | null;
   fallbackComponent?(props: Renderer & TComponentProps): VNode | VNode[] | null;
   headerComponent?(
     props: HeaderComponentProps<TObject> & TComponentProps
@@ -62,7 +64,7 @@ export type TrendingComponentProps<
   ): VNode | VNode[];
   items: Array<FacetEntry<TObject>>;
   classNames?: RecommendClassNames;
-  children?(props: ChildrenProps<TObject>): VNode;
+  children?(props: ChildrenProps<TObject> & TComponentProps): VNode;
   fallbackComponent?(props: Renderer & TComponentProps): VNode | VNode[] | null;
   headerComponent?(
     props: HeaderComponentProps<TObject> & TComponentProps

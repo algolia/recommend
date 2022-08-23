@@ -71,9 +71,10 @@ export function relatedProducts<TObject>({
   fallbackComponent,
   headerComponent,
   view,
+  children,
   ...props
 }: RelatedProductsProps<TObject, Template> & EnvironmentProps) {
-  const children = (
+  const component = (
     <RelatedProducts<TObject, Template>
       {...props}
       view={view ? (viewProps) => view({ ...viewProps, html }) : undefined}
@@ -93,14 +94,18 @@ export function relatedProducts<TObject>({
           ? (fallbackProps) => fallbackComponent({ ...fallbackProps, html })
           : undefined
       }
-    />
+    >
+      {children
+        ? (childrenProps) => children({ ...childrenProps, html })
+        : undefined}
+    </RelatedProducts>
   );
 
   if (!container) {
-    return children;
+    return component;
   }
 
-  render(children, getHTMLElement(container, environment));
+  render(component, getHTMLElement(container, environment));
 
   return null;
 }
