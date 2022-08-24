@@ -26,54 +26,36 @@ export function createTrendingFacetsComponent({
     const children =
       props.children ??
       createDefaultChildrenComponent({ createElement, Fragment });
-    const fallbackComponent =
+    const FallbackComponent =
       props.fallbackComponent ?? createDefaultFallbackComponent();
     const Fallback = () => (
-      <Fragment>{fallbackComponent({ createElement, Fragment })}</Fragment>
+      <FallbackComponent Fragment={Fragment} createElement={createElement} />
     );
-    const headerComponent =
+    const Header =
       props.headerComponent ??
       createDefaultHeaderComponent({ createElement, Fragment });
-    const Header = () => (
-      <Fragment>
-        {headerComponent({
-          classNames,
-          recommendations: props.items,
-          translations,
-          createElement,
-          Fragment,
-        })}
-      </Fragment>
-    );
-    const viewComponent =
+    const ViewComponent =
       props.view ?? createFacetsView({ createElement, Fragment });
     const View = (viewProps: unknown) => (
-      <Fragment>
-        {viewComponent({
-          classNames,
-          itemComponent: props.itemComponent,
-          items: props.items,
-          translations,
-          Fragment,
-          createElement,
-          // @ts-ignore
-          ...viewProps,
-        })}
-      </Fragment>
+      <ViewComponent
+        classNames={classNames}
+        itemComponent={props.itemComponent}
+        items={props.items}
+        translations={translations}
+        Fragment={Fragment}
+        createElement={createElement}
+        {...viewProps}
+      />
     );
 
-    return (
-      <Fragment>
-        {children({
-          classNames,
-          Fallback,
-          Header,
-          recommendations: props.items,
-          status: props.status,
-          translations,
-          View,
-        })}
-      </Fragment>
-    );
+    return children({
+      classNames,
+      Fallback,
+      Header,
+      recommendations: props.items,
+      status: props.status,
+      translations,
+      View,
+    });
   };
 }

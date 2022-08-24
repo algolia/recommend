@@ -4,7 +4,7 @@ import { FacetsViewProps } from './FacetsViewProps';
 import { RecommendClassNames } from './RecommendClassNames';
 import { RecommendStatus } from './RecommendStatus';
 import { RecommendTranslations } from './RecommendTranslations';
-import { Renderer, VNode } from './Renderer';
+import { Renderer } from './Renderer';
 import { ViewProps } from './ViewProps';
 
 export type ItemComponentProps<TObject> = {
@@ -20,10 +20,10 @@ export type ComponentProps<TObject> = {
 };
 
 export type ChildrenProps<TObject> = ComponentProps<TObject> & {
-  Fallback(): VNode | null;
-  Header(props: HeaderComponentProps<TObject>): VNode | null;
+  Fallback(): JSX.Element | null;
+  Header(props: HeaderComponentProps<TObject>): JSX.Element | null;
   status: RecommendStatus;
-  View(props: unknown): VNode | null;
+  View(props: unknown): JSX.Element;
 };
 
 export type RecommendComponentProps<
@@ -32,16 +32,14 @@ export type RecommendComponentProps<
 > = {
   itemComponent(
     props: ItemComponentProps<RecordWithObjectID<TObject>> & TComponentProps
-  ): VNode | VNode[];
+  ): JSX.Element;
   items: Array<RecordWithObjectID<TObject>>;
   classNames?: RecommendClassNames;
-  children?(
-    props: ChildrenProps<TObject> & TComponentProps
-  ): VNode | VNode[] | null;
-  fallbackComponent?(props: Renderer & TComponentProps): VNode | VNode[] | null;
+  children?(props: ChildrenProps<TObject> & TComponentProps): JSX.Element;
+  fallbackComponent?(props: Renderer & TComponentProps): JSX.Element;
   headerComponent?(
     props: HeaderComponentProps<TObject> & TComponentProps
-  ): VNode | VNode[] | null;
+  ): JSX.Element;
   status: RecommendStatus;
   translations?: RecommendTranslations;
   view?(
@@ -52,7 +50,7 @@ export type RecommendComponentProps<
     > &
       Renderer &
       TComponentProps
-  ): VNode | VNode[] | null;
+  ): JSX.Element;
 };
 
 export type TrendingComponentProps<
@@ -61,14 +59,14 @@ export type TrendingComponentProps<
 > = {
   itemComponent(
     props: ItemComponentProps<FacetEntry<TObject>> & TComponentProps
-  ): VNode | VNode[];
+  ): JSX.Element;
   items: Array<FacetEntry<TObject>>;
   classNames?: RecommendClassNames;
-  children?(props: ChildrenProps<TObject> & TComponentProps): VNode;
-  fallbackComponent?(props: Renderer & TComponentProps): VNode | VNode[] | null;
+  children?(props: ChildrenProps<TObject> & TComponentProps): JSX.Element;
+  fallbackComponent?(props: Renderer & TComponentProps): JSX.Element;
   headerComponent?(
     props: HeaderComponentProps<TObject> & TComponentProps
-  ): VNode | VNode[] | null;
+  ): JSX.Element;
   status: RecommendStatus;
   translations?: RecommendTranslations;
   view?(
@@ -79,5 +77,5 @@ export type TrendingComponentProps<
     > &
       Renderer &
       TComponentProps
-  ): VNode | VNode[] | null;
+  ): JSX.Element;
 };

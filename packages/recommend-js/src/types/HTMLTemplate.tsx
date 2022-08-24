@@ -1,10 +1,5 @@
-import { VNode } from '@algolia/recommend-vdom';
-
-export type HTMLTemplate = (
-  strings: TemplateStringsArray,
-  ...values: any[]
-) => VNode | VNode[];
+import { html } from 'htm/preact';
 
 export type Template = {
-  html: HTMLTemplate;
+  html: typeof html;
 };

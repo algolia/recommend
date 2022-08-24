@@ -8,11 +8,12 @@ import {
   createTrendingFacetsComponent,
   TrendingComponentProps as TrendingFacetsVDOMProps,
 } from '@algolia/recommend-vdom';
+import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps, html, Template } from './types';
+import { EnvironmentProps, Template } from './types';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
 
@@ -73,10 +74,10 @@ export function trendingFacets<TObject>({
   children,
   ...props
 }: TrendingFacetsProps<TObject, Template> & EnvironmentProps) {
-  const component = (
+  const vnode = (
     <TrendingFacets<TObject, Template>
       {...props}
-      view={view ? (viewProps) => view({ ...viewProps, html }) : undefined}
+      view={view && ((viewProps) => view({ ...viewProps, html }))}
       itemComponent={(itemComponentProps) =>
         itemComponent({
           ...itemComponentProps,
@@ -101,10 +102,10 @@ export function trendingFacets<TObject>({
   );
 
   if (!container) {
-    return component;
+    return vnode;
   }
 
-  render(component, getHTMLElement(container, environment));
+  render(vnode, getHTMLElement(container, environment));
 
   return null;
 }

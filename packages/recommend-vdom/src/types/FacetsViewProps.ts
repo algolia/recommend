@@ -1,6 +1,6 @@
 import { FacetEntry } from '@algolia/recommend-core';
 
-import { Renderer, VNode } from './Renderer';
+import { Renderer } from './Renderer';
 
 export type FacetsViewProps<
   TItem extends FacetEntry,
@@ -10,7 +10,7 @@ export type FacetsViewProps<
   classNames: TClassNames;
   itemComponent<TComponentProps extends Record<string, unknown> = {}>(
     props: { item: TItem } & Renderer & TComponentProps
-  ): VNode | VNode[];
+  ): JSX.Element;
   items: TItem[];
   translations: TTranslations;
 };
