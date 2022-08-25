@@ -1,5 +1,5 @@
 import { html } from 'htm/preact';
 
-export type Template = {
+export type HTMLTemplate = {
   html: typeof html;
 };
