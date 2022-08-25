@@ -8,11 +8,12 @@ import {
   createRelatedProductsComponent,
   RelatedProductsProps as RelatedProductsVDOMProps,
 } from '@algolia/recommend-vdom';
+import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps, Template, html } from './types';
+import { EnvironmentProps, Template } from './types';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
 
@@ -74,7 +75,7 @@ export function relatedProducts<TObject>({
   children,
   ...props
 }: RelatedProductsProps<TObject, Template> & EnvironmentProps) {
-  const component = (
+  const vnode = (
     <RelatedProducts<TObject, Template>
       {...props}
       view={view ? (viewProps) => view({ ...viewProps, html }) : undefined}
@@ -102,10 +103,10 @@ export function relatedProducts<TObject>({
   );
 
   if (!container) {
-    return component;
+    return vnode;
   }
 
-  render(component, getHTMLElement(container, environment));
+  render(vnode, getHTMLElement(container, environment));
 
   return null;
 }
