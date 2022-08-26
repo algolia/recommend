@@ -13,9 +13,10 @@ import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps, Template } from './types';
+import { EnvironmentProps, HTMLTemplate } from './types';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
+import { injectHtmlProp } from './utils';
 
 const UncontrolledTrendingFacets = createTrendingFacetsComponent({
   createElement,
@@ -73,27 +74,14 @@ export function trendingFacets<TObject>({
   view,
   children,
   ...props
-}: TrendingFacetsProps<TObject, Template> & EnvironmentProps) {
+}: TrendingFacetsProps<TObject, HTMLTemplate> & EnvironmentProps) {
   const vnode = (
-    <TrendingFacets<TObject, Template>
+    <TrendingFacets<TObject, HTMLTemplate>
       {...props}
-      view={view && ((viewProps) => view({ ...viewProps, html }))}
-      itemComponent={(itemComponentProps) =>
-        itemComponent({
-          ...itemComponentProps,
-          html,
-        })
-      }
-      headerComponent={
-        headerComponent
-          ? (headerProps) => headerComponent({ ...headerProps, html })
-          : undefined
-      }
-      fallbackComponent={
-        fallbackComponent
-          ? (fallbackProps) => fallbackComponent({ ...fallbackProps, html })
-          : undefined
-      }
+      view={view && injectHtmlProp(view)}
+      itemComponent={itemComponent && injectHtmlProp(itemComponent)}
+      headerComponent={headerComponent && injectHtmlProp(headerComponent)}
+      fallbackComponent={fallbackComponent && injectHtmlProp(fallbackComponent)}
     >
       {children
         ? (childrenProps) => children({ ...childrenProps, html })
