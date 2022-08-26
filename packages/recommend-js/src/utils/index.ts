@@ -1,1 +1,1 @@
-export * from './injectHtmlProp';
+export * from './withHtml';

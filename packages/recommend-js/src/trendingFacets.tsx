@@ -16,7 +16,7 @@ import { getHTMLElement } from './getHTMLElement';
 import { EnvironmentProps, HTMLTemplate } from './types';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
-import { injectHtmlProp } from './utils';
+import { withHtml } from './utils';
 
 const UncontrolledTrendingFacets = createTrendingFacetsComponent({
   createElement,
@@ -78,10 +78,10 @@ export function trendingFacets<TObject>({
   const vnode = (
     <TrendingFacets<TObject, HTMLTemplate>
       {...props}
-      view={view && injectHtmlProp(view)}
-      itemComponent={itemComponent && injectHtmlProp(itemComponent)}
-      headerComponent={headerComponent && injectHtmlProp(headerComponent)}
-      fallbackComponent={fallbackComponent && injectHtmlProp(fallbackComponent)}
+      view={view && withHtml(view)}
+      itemComponent={itemComponent && withHtml(itemComponent)}
+      headerComponent={headerComponent && withHtml(headerComponent)}
+      fallbackComponent={fallbackComponent && withHtml(fallbackComponent)}
     >
       {children
         ? (childrenProps) => children({ ...childrenProps, html })
