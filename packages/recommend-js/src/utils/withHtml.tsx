@@ -11,7 +11,9 @@ export function withHtml<TProps>(
     <Component {...props} html={html} />
   );
 
-  ComponentWithHtml.displayName = `withHtml(${Component.displayName})`;
+  if (__DEV__) {
+    ComponentWithHtml.displayName = `withHtml(${Component.displayName})`;
+  }
 
   return ComponentWithHtml;
 }
