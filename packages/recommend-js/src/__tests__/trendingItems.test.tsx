@@ -10,6 +10,70 @@ import {
 } from '../../../../test/utils/createRecommendClient';
 import { trendingItems } from '../trendingItems';
 
+const fallbackComponent = `
+<div>
+  Fallback component
+</div>
+`;
+
+const headerAndItemsComponent = `
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h1>
+      Trending items
+    </h1>
+    <div
+      class="auc-Recommend-container"
+    >
+      <ol
+        class="auc-Recommend-list"
+      >
+        <li
+          class="auc-Recommend-item"
+        >
+          1
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          2
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          3
+        </li>
+      </ol>
+    </div>
+  </section>
+</div>
+`;
+
+const viewComponent = `
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h3
+      class="auc-Recommend-title"
+    >
+      Trending items
+    </h3>
+    <li>
+      1
+    </li>
+    <li>
+      2
+    </li>
+    <li>
+      3
+    </li>
+  </section>
+</div>
+`;
+
 function createMockedRecommendClient(recommendations: ObjectWithObjectID[]) {
   const recommendClient = createRecommendClient({
     getTrendingItems: jest.fn(() =>
@@ -42,51 +106,12 @@ describe('trendingItems', () => {
         recommendClient,
         indexName: 'products',
         headerComponent: () => <h1>Trending items</h1>,
-        itemComponent: ({ item }) => <div>{item.objectID}</div>,
+        itemComponent: ({ item }) => <Fragment>{item.objectID}</Fragment>,
       });
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(`
-          <div>
-            <section
-              class="auc-Recommend"
-            >
-              <h1>
-                Trending items
-              </h1>
-              <div
-                class="auc-Recommend-container"
-              >
-                <ol
-                  class="auc-Recommend-list"
-                >
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    <div>
-                      1
-                    </div>
-                  </li>
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    <div>
-                      2
-                    </div>
-                  </li>
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    <div>
-                      3
-                    </div>
-                  </li>
-                </ol>
-              </div>
-            </section>
-          </div>
-        `);
+        expect(container).toMatchInlineSnapshot(headerAndItemsComponent);
       });
     });
 
@@ -109,40 +134,7 @@ describe('trendingItems', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(`
-          <div>
-            <section
-              class="auc-Recommend"
-            >
-              <h1>
-                Trending items
-              </h1>
-              <div
-                class="auc-Recommend-container"
-              >
-                <ol
-                  class="auc-Recommend-list"
-                >
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    1
-                  </li>
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    2
-                  </li>
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    3
-                  </li>
-                </ol>
-              </div>
-            </section>
-          </div>
-        `);
+        expect(container).toMatchInlineSnapshot(headerAndItemsComponent);
       });
     });
   });
@@ -164,12 +156,9 @@ describe('trendingItems', () => {
       });
 
       await waitFor(() => {
-        expect(within(container).getByText('Fallback component'))
-          .toMatchInlineSnapshot(`
-          <div>
-            Fallback component
-          </div>
-        `);
+        expect(
+          within(container).getByText('Fallback component')
+        ).toMatchInlineSnapshot(fallbackComponent);
       });
     });
 
@@ -191,12 +180,9 @@ describe('trendingItems', () => {
       });
 
       await waitFor(() => {
-        expect(within(container).getByText('Fallback component'))
-          .toMatchInlineSnapshot(`
-          <div>
-            Fallback component
-          </div>
-          `);
+        expect(
+          within(container).getByText('Fallback component')
+        ).toMatchInlineSnapshot(fallbackComponent);
       });
     });
   });
@@ -231,28 +217,7 @@ describe('trendingItems', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(`
-          <div>
-            <section
-              class="auc-Recommend"
-            >
-              <h3
-                class="auc-Recommend-title"
-              >
-                Trending items
-              </h3>
-              <li>
-                1
-              </li>
-              <li>
-                2
-              </li>
-              <li>
-                3
-              </li>
-            </section>
-          </div>
-        `);
+        expect(container).toMatchInlineSnapshot(viewComponent);
       });
     });
 
@@ -281,28 +246,7 @@ describe('trendingItems', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(`
-            <div>
-              <section
-                class="auc-Recommend"
-              >
-                <h3
-                  class="auc-Recommend-title"
-                >
-                  Trending items
-                </h3>
-                <li>
-                  1
-                </li>
-                <li>
-                  2
-                </li>
-                <li>
-                  3
-                </li>
-              </section>
-            </div>
-        `);
+        expect(container).toMatchInlineSnapshot(viewComponent);
       });
     });
   });
