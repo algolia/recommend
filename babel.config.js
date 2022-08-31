@@ -30,6 +30,15 @@ module.exports = (api) => {
           regenerator: true,
         },
       ],
+      [
+        'inline-replace-variables',
+        {
+          __DEV__: {
+            type: 'node',
+            replacement: "process.env.NODE_ENV !== 'production'",
+          },
+        },
+      ],
     ],
   };
 };
