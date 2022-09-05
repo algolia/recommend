@@ -36,11 +36,11 @@ relatedProducts<ProductHit>({
   objectIDs: ['M0E20000000EAAK'],
   headerComponent: ({ html }) => html`<h3>Related products</h3>`,
   itemComponent: productItem,
-  view({ items, itemComponent, html, createElement, Fragment }) {
+  view({ items, itemComponent, ...renderer }) {
     return horizontalSlider({
       items,
       itemComponent({ item }) {
-        return itemComponent({ item, html, createElement, Fragment });
+        return itemComponent({ item, ...renderer });
       },
     });
   },
@@ -52,7 +52,7 @@ trendingItems<ProductHit>({
   indexName,
   headerComponent: ({ html }) => html`<h3>Trending items</h3>`,
   itemComponent: productItem,
-  view({items, ...renderer}) {
+  view({ items, itemComponent, ...renderer }) {
     return horizontalSlider({
       items,
       itemComponent({ item }) {
