@@ -10,70 +10,6 @@ import {
 } from '../../../../test/utils/createRecommendClient';
 import { frequentlyBoughtTogether } from '../frequentlyBoughtTogether';
 
-const fallbackComponent = `
-<div>
-  Fallback component
-</div>
-`;
-
-const headerAndItemsComponent = `
-<div>
-  <section
-    class="auc-Recommend"
-  >
-    <h1>
-      FBT
-    </h1>
-    <div
-      class="auc-Recommend-container"
-    >
-      <ol
-        class="auc-Recommend-list"
-      >
-        <li
-          class="auc-Recommend-item"
-        >
-          1
-        </li>
-        <li
-          class="auc-Recommend-item"
-        >
-          2
-        </li>
-        <li
-          class="auc-Recommend-item"
-        >
-          3
-        </li>
-      </ol>
-    </div>
-  </section>
-</div>
-`;
-
-const viewComponent = `
-<div>
-  <section
-    class="auc-Recommend"
-  >
-    <h3
-      class="auc-Recommend-title"
-    >
-      Frequently bought together
-    </h3>
-    <li>
-      1
-    </li>
-    <li>
-      2
-    </li>
-    <li>
-      3
-    </li>
-  </section>
-</div>
-`;
-
 function createMockedRecommendClient(recommendations: ObjectWithObjectID[]) {
   const recommendClient = createRecommendClient({
     getFrequentlyBoughtTogether: jest.fn(() =>
@@ -112,7 +48,40 @@ describe('frequentlyBoughtTogether', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(headerAndItemsComponent);
+        expect(container).toMatchInlineSnapshot(`
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h1>
+      FBT
+    </h1>
+    <div
+      class="auc-Recommend-container"
+    >
+      <ol
+        class="auc-Recommend-list"
+      >
+        <li
+          class="auc-Recommend-item"
+        >
+          1
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          2
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          3
+        </li>
+      </ol>
+    </div>
+  </section>
+</div>
+`);
       });
     });
 
@@ -136,7 +105,40 @@ describe('frequentlyBoughtTogether', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(headerAndItemsComponent);
+        expect(container).toMatchInlineSnapshot(`
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h1>
+      FBT
+    </h1>
+    <div
+      class="auc-Recommend-container"
+    >
+      <ol
+        class="auc-Recommend-list"
+      >
+        <li
+          class="auc-Recommend-item"
+        >
+          1
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          2
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          3
+        </li>
+      </ol>
+    </div>
+  </section>
+</div>
+`);
       });
     });
 
@@ -162,7 +164,40 @@ describe('frequentlyBoughtTogether', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(headerAndItemsComponent);
+        expect(container).toMatchInlineSnapshot(`
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h1>
+      FBT
+    </h1>
+    <div
+      class="auc-Recommend-container"
+    >
+      <ol
+        class="auc-Recommend-list"
+      >
+        <li
+          class="auc-Recommend-item"
+        >
+          1
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          2
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          3
+        </li>
+      </ol>
+    </div>
+  </section>
+</div>
+`);
       });
     });
   });
@@ -185,9 +220,12 @@ describe('frequentlyBoughtTogether', () => {
       });
 
       await waitFor(() => {
-        expect(
-          within(container).getByText('Fallback component')
-        ).toMatchInlineSnapshot(fallbackComponent);
+        expect(within(container).getByText('Fallback component'))
+          .toMatchInlineSnapshot(`
+          <div>
+            Fallback component
+          </div>
+          `);
       });
     });
 
@@ -210,9 +248,12 @@ describe('frequentlyBoughtTogether', () => {
       });
 
       await waitFor(() => {
-        expect(
-          within(container).getByText('Fallback component')
-        ).toMatchInlineSnapshot(fallbackComponent);
+        expect(within(container).getByText('Fallback component'))
+          .toMatchInlineSnapshot(`
+          <div>
+            Fallback component
+          </div>
+          `);
       });
     });
 
@@ -233,9 +274,12 @@ describe('frequentlyBoughtTogether', () => {
       });
 
       await waitFor(() => {
-        expect(
-          within(container).getByText('Fallback component')
-        ).toMatchInlineSnapshot(fallbackComponent);
+        expect(within(container).getByText('Fallback component'))
+          .toMatchInlineSnapshot(`
+          <div>
+            Fallback component
+          </div>
+          `);
       });
     });
   });
@@ -271,7 +315,28 @@ describe('frequentlyBoughtTogether', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(viewComponent);
+        expect(container).toMatchInlineSnapshot(`
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h3
+      class="auc-Recommend-title"
+    >
+      Frequently bought together
+    </h3>
+    <li>
+      1
+    </li>
+    <li>
+      2
+    </li>
+    <li>
+      3
+    </li>
+  </section>
+</div>
+`);
       });
     });
 
@@ -301,7 +366,28 @@ describe('frequentlyBoughtTogether', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(viewComponent);
+        expect(container).toMatchInlineSnapshot(`
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h3
+      class="auc-Recommend-title"
+    >
+      Frequently bought together
+    </h3>
+    <li>
+      1
+    </li>
+    <li>
+      2
+    </li>
+    <li>
+      3
+    </li>
+  </section>
+</div>
+`);
       });
     });
 
@@ -328,7 +414,28 @@ describe('frequentlyBoughtTogether', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(viewComponent);
+        expect(container).toMatchInlineSnapshot(`
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h3
+      class="auc-Recommend-title"
+    >
+      Frequently bought together
+    </h3>
+    <li>
+      1
+    </li>
+    <li>
+      2
+    </li>
+    <li>
+      3
+    </li>
+  </section>
+</div>
+`);
       });
     });
   });

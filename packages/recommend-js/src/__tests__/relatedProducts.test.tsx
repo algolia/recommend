@@ -10,47 +10,6 @@ import {
 } from '../../../../test/utils/createRecommendClient';
 import { relatedProducts } from '../relatedProducts';
 
-const fallbackComponent = `
-<div>
-  Fallback component
-</div>
-`;
-
-const headerAndItemsComponent = `
-<div>
-  <section
-    class="auc-Recommend"
-  >
-    <h1>
-      RP
-    </h1>
-    <div
-      class="auc-Recommend-container"
-    >
-      <ol
-        class="auc-Recommend-list"
-      >
-        <li
-          class="auc-Recommend-item"
-        >
-          1
-        </li>
-        <li
-          class="auc-Recommend-item"
-        >
-          2
-        </li>
-        <li
-          class="auc-Recommend-item"
-        >
-          3
-        </li>
-      </ol>
-    </div>
-  </section>
-</div>
-`;
-
 function createMockedRecommendClient(recommendations: ObjectWithObjectID[]) {
   const recommendClient = createRecommendClient({
     getRelatedProducts: jest.fn(() =>
@@ -89,7 +48,40 @@ describe('relatedProducts', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(headerAndItemsComponent);
+        expect(container).toMatchInlineSnapshot(`
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h1>
+      RP
+    </h1>
+    <div
+      class="auc-Recommend-container"
+    >
+      <ol
+        class="auc-Recommend-list"
+      >
+        <li
+          class="auc-Recommend-item"
+        >
+          1
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          2
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          3
+        </li>
+      </ol>
+    </div>
+  </section>
+</div>
+`);
       });
     });
 
@@ -112,7 +104,40 @@ describe('relatedProducts', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(headerAndItemsComponent);
+        expect(container).toMatchInlineSnapshot(`
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h1>
+      RP
+    </h1>
+    <div
+      class="auc-Recommend-container"
+    >
+      <ol
+        class="auc-Recommend-list"
+      >
+        <li
+          class="auc-Recommend-item"
+        >
+          1
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          2
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          3
+        </li>
+      </ol>
+    </div>
+  </section>
+</div>
+`);
       });
     });
 
@@ -138,7 +163,40 @@ describe('relatedProducts', () => {
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
-        expect(container).toMatchInlineSnapshot(headerAndItemsComponent);
+        expect(container).toMatchInlineSnapshot(`
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h1>
+      RP
+    </h1>
+    <div
+      class="auc-Recommend-container"
+    >
+      <ol
+        class="auc-Recommend-list"
+      >
+        <li
+          class="auc-Recommend-item"
+        >
+          1
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          2
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          3
+        </li>
+      </ol>
+    </div>
+  </section>
+</div>
+`);
       });
     });
   });
@@ -161,9 +219,12 @@ describe('relatedProducts', () => {
       });
 
       await waitFor(() => {
-        expect(
-          within(container).getByText('Fallback component')
-        ).toMatchInlineSnapshot(fallbackComponent);
+        expect(within(container).getByText('Fallback component'))
+          .toMatchInlineSnapshot(`
+          <div>
+            Fallback component
+          </div>
+          `);
       });
     });
 
@@ -186,9 +247,12 @@ describe('relatedProducts', () => {
       });
 
       await waitFor(() => {
-        expect(
-          within(container).getByText('Fallback component')
-        ).toMatchInlineSnapshot(fallbackComponent);
+        expect(within(container).getByText('Fallback component'))
+          .toMatchInlineSnapshot(`
+          <div>
+            Fallback component
+          </div>
+          `);
       });
     });
 
@@ -209,9 +273,12 @@ describe('relatedProducts', () => {
       });
 
       await waitFor(() => {
-        expect(
-          within(container).getByText('Fallback component')
-        ).toMatchInlineSnapshot(fallbackComponent);
+        expect(within(container).getByText('Fallback component'))
+          .toMatchInlineSnapshot(`
+          <div>
+            Fallback component
+          </div>
+          `);
       });
     });
   });
