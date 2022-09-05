@@ -8,13 +8,15 @@ import {
   createRelatedProductsComponent,
   RelatedProductsProps as RelatedProductsVDOMProps,
 } from '@algolia/recommend-vdom';
+import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps } from './types';
+import { EnvironmentProps, HTMLTemplate } from './types';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
+import { withHtml } from './utils';
 
 const UncontrolledRelatedProducts = createRelatedProductsComponent({
   createElement,
@@ -43,10 +45,16 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
   };
 }
 
-type RelatedProductsProps<TObject> = GetRelatedProductsProps<TObject> &
-  Omit<RelatedProductsVDOMProps<TObject>, 'items' | 'status'>;
+type RelatedProductsProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = GetRelatedProductsProps<TObject> &
+  Omit<RelatedProductsVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
 
-function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
+function RelatedProducts<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+>(props: RelatedProductsProps<TObject, TComponentProps>) {
   const { recommendations, status } = useRelatedProducts<TObject>(props);
 
   return (
@@ -61,15 +69,32 @@ function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
 export function relatedProducts<TObject>({
   container,
   environment = window,
+  itemComponent,
+  fallbackComponent,
+  headerComponent,
+  view,
+  children,
   ...props
-}: RelatedProductsProps<TObject> & EnvironmentProps) {
-  const children = <RelatedProducts {...props} />;
+}: RelatedProductsProps<TObject, HTMLTemplate> & EnvironmentProps) {
+  const vnode = (
+    <RelatedProducts<TObject, HTMLTemplate>
+      {...props}
+      view={view && withHtml(view)}
+      itemComponent={itemComponent && withHtml(itemComponent)}
+      headerComponent={headerComponent && withHtml(headerComponent)}
+      fallbackComponent={fallbackComponent && withHtml(fallbackComponent)}
+    >
+      {children
+        ? (childrenProps) => children({ ...childrenProps, html })
+        : undefined}
+    </RelatedProducts>
+  );
 
   if (!container) {
-    return children;
+    return vnode;
   }
 
-  render(children, getHTMLElement(container, environment));
+  render(vnode, getHTMLElement(container, environment));
 
-  return undefined;
+  return null;
 }

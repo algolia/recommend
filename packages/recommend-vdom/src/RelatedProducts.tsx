@@ -9,7 +9,10 @@ import {
   Renderer,
 } from './types';
 
-export type RelatedProductsProps<TObject> = RecommendComponentProps<TObject>;
+export type RelatedProductsProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = RecommendComponentProps<TObject, TComponentProps>;
 
 export function createRelatedProductsComponent({
   createElement,

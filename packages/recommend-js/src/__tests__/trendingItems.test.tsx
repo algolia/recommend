@@ -42,51 +42,45 @@ describe('trendingItems', () => {
         recommendClient,
         indexName: 'products',
         headerComponent: () => <h1>Trending items</h1>,
-        itemComponent: ({ item }) => <div>{item.objectID}</div>,
+        itemComponent: ({ item }) => <Fragment>{item.objectID}</Fragment>,
       });
 
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
         expect(container).toMatchInlineSnapshot(`
-          <div>
-            <section
-              class="auc-Recommend"
-            >
-              <h1>
-                Trending items
-              </h1>
-              <div
-                class="auc-Recommend-container"
-              >
-                <ol
-                  class="auc-Recommend-list"
-                >
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    <div>
-                      1
-                    </div>
-                  </li>
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    <div>
-                      2
-                    </div>
-                  </li>
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    <div>
-                      3
-                    </div>
-                  </li>
-                </ol>
-              </div>
-            </section>
-          </div>
-        `);
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h1>
+      Trending items
+    </h1>
+    <div
+      class="auc-Recommend-container"
+    >
+      <ol
+        class="auc-Recommend-list"
+      >
+        <li
+          class="auc-Recommend-item"
+        >
+          1
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          2
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          3
+        </li>
+      </ol>
+    </div>
+  </section>
+</div>
+`);
       });
     });
 
@@ -110,39 +104,97 @@ describe('trendingItems', () => {
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
         expect(container).toMatchInlineSnapshot(`
-          <div>
-            <section
-              class="auc-Recommend"
-            >
-              <h1>
-                Trending items
-              </h1>
-              <div
-                class="auc-Recommend-container"
-              >
-                <ol
-                  class="auc-Recommend-list"
-                >
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    1
-                  </li>
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    2
-                  </li>
-                  <li
-                    class="auc-Recommend-item"
-                  >
-                    3
-                  </li>
-                </ol>
-              </div>
-            </section>
-          </div>
-        `);
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h1>
+      Trending items
+    </h1>
+    <div
+      class="auc-Recommend-container"
+    >
+      <ol
+        class="auc-Recommend-list"
+      >
+        <li
+          class="auc-Recommend-item"
+        >
+          1
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          2
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          3
+        </li>
+      </ol>
+    </div>
+  </section>
+</div>
+`);
+      });
+    });
+
+    test('using html templating', async () => {
+      const container = document.createElement('div');
+
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
+
+      document.body.appendChild(container);
+
+      trendingItems<ObjectWithObjectID>({
+        container,
+        recommendClient,
+        indexName: 'products',
+        headerComponent: ({ html }) => {
+          return html`<h1>Trending items</h1>`;
+        },
+        itemComponent: ({ item, Fragment, html }) => {
+          return html`<${Fragment}>${item.objectID}</${Fragment}>`;
+        },
+      });
+
+      await waitFor(() => {
+        expect(within(container).getAllByRole('listitem')).not.toBeNull();
+        expect(container).toMatchInlineSnapshot(`
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h1>
+      Trending items
+    </h1>
+    <div
+      class="auc-Recommend-container"
+    >
+      <ol
+        class="auc-Recommend-list"
+      >
+        <li
+          class="auc-Recommend-item"
+        >
+          1
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          2
+        </li>
+        <li
+          class="auc-Recommend-item"
+        >
+          3
+        </li>
+      </ol>
+    </div>
+  </section>
+</div>
+`);
       });
     });
   });
@@ -169,7 +221,7 @@ describe('trendingItems', () => {
           <div>
             Fallback component
           </div>
-        `);
+          `);
       });
     });
 
@@ -188,6 +240,31 @@ describe('trendingItems', () => {
           createElement('div', null, item.objectID),
         fallbackComponent: ({ createElement, Fragment }) =>
           createElement(Fragment, null, 'Fallback component'),
+      });
+
+      await waitFor(() => {
+        expect(within(container).getByText('Fallback component'))
+          .toMatchInlineSnapshot(`
+          <div>
+            Fallback component
+          </div>
+          `);
+      });
+    });
+
+    test('renders using html templating', async () => {
+      const container = document.createElement('div');
+
+      const recommendClient = createMockedRecommendClient([]);
+
+      document.body.appendChild(container);
+
+      trendingItems<ObjectWithObjectID>({
+        container,
+        recommendClient,
+        indexName: 'products',
+        itemComponent: ({ item, html }) => html`<div>${item.objectID}</div>`,
+        fallbackComponent: ({ html }) => html`<div>Fallback component</div>`,
       });
 
       await waitFor(() => {
@@ -232,27 +309,27 @@ describe('trendingItems', () => {
       await waitFor(() => {
         expect(within(container).getAllByRole('listitem')).not.toBeNull();
         expect(container).toMatchInlineSnapshot(`
-          <div>
-            <section
-              class="auc-Recommend"
-            >
-              <h3
-                class="auc-Recommend-title"
-              >
-                Trending items
-              </h3>
-              <li>
-                1
-              </li>
-              <li>
-                2
-              </li>
-              <li>
-                3
-              </li>
-            </section>
-          </div>
-        `);
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h3
+      class="auc-Recommend-title"
+    >
+      Trending items
+    </h3>
+    <li>
+      1
+    </li>
+    <li>
+      2
+    </li>
+    <li>
+      3
+    </li>
+  </section>
+</div>
+`);
       });
     });
 
@@ -277,6 +354,53 @@ describe('trendingItems', () => {
           ),
         itemComponent: ({ item, createElement }) =>
           createElement('li', null, item.objectID),
+      });
+
+      await waitFor(() => {
+        expect(within(container).getAllByRole('listitem')).not.toBeNull();
+        expect(container).toMatchInlineSnapshot(`
+<div>
+  <section
+    class="auc-Recommend"
+  >
+    <h3
+      class="auc-Recommend-title"
+    >
+      Trending items
+    </h3>
+    <li>
+      1
+    </li>
+    <li>
+      2
+    </li>
+    <li>
+      3
+    </li>
+  </section>
+</div>
+`);
+      });
+    });
+
+    test('renders using html templating', async () => {
+      const container = document.createElement('div');
+
+      const recommendClient = createMockedRecommendClient(hit.recommendations);
+
+      document.body.appendChild(container);
+
+      trendingItems<ObjectWithObjectID>({
+        container,
+        recommendClient,
+        indexName: 'products',
+        view: ({ html, items, itemComponent, createElement, Fragment }) =>
+          html`<${Fragment}>
+            ${items.map((item) =>
+              itemComponent({ item, createElement, Fragment })
+            )}
+          </${Fragment}>`,
+        itemComponent: ({ item, html }) => html`<li>${item.objectID}</li>`,
       });
 
       await waitFor(() => {

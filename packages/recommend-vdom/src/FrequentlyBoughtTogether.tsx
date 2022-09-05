@@ -10,8 +10,9 @@ import {
 } from './types';
 
 export type FrequentlyBoughtTogetherProps<
-  TObject
-> = RecommendComponentProps<TObject>;
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = RecommendComponentProps<TObject, TComponentProps>;
 
 export function createFrequentlyBoughtTogetherComponent({
   createElement,
@@ -26,7 +27,6 @@ export function createFrequentlyBoughtTogetherComponent({
       ...props.translations,
     };
     const classNames = props.classNames ?? {};
-
     const children =
       props.children ??
       createDefaultChildrenComponent({ createElement, Fragment });

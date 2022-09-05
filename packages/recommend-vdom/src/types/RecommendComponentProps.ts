@@ -26,15 +26,20 @@ export type ChildrenProps<TObject> = ComponentProps<TObject> & {
   View(props: unknown): JSX.Element;
 };
 
-export type RecommendComponentProps<TObject> = {
+export type RecommendComponentProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = {
   itemComponent(
-    props: ItemComponentProps<RecordWithObjectID<TObject>>
+    props: ItemComponentProps<RecordWithObjectID<TObject>> & TComponentProps
   ): JSX.Element;
   items: Array<RecordWithObjectID<TObject>>;
   classNames?: RecommendClassNames;
-  children?(props: ChildrenProps<TObject>): JSX.Element;
-  fallbackComponent?(props: Renderer): JSX.Element;
-  headerComponent?(props: HeaderComponentProps<TObject>): JSX.Element;
+  children?(props: ChildrenProps<TObject> & TComponentProps): JSX.Element;
+  fallbackComponent?(props: Renderer & TComponentProps): JSX.Element;
+  headerComponent?(
+    props: HeaderComponentProps<TObject> & TComponentProps
+  ): JSX.Element;
   status: RecommendStatus;
   translations?: RecommendTranslations;
   view?(
@@ -43,17 +48,25 @@ export type RecommendComponentProps<TObject> = {
       Required<RecommendTranslations>,
       Record<string, string>
     > &
-      Renderer
+      Renderer &
+      TComponentProps
   ): JSX.Element;
 };
 
-export type TrendingComponentProps<TObject> = {
-  itemComponent(props: ItemComponentProps<FacetEntry<TObject>>): JSX.Element;
+export type TrendingComponentProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = {
+  itemComponent(
+    props: ItemComponentProps<FacetEntry<TObject>> & TComponentProps
+  ): JSX.Element;
   items: Array<FacetEntry<TObject>>;
   classNames?: RecommendClassNames;
-  children?(props: ChildrenProps<TObject>): JSX.Element;
-  fallbackComponent?(props: Renderer): JSX.Element;
-  headerComponent?(props: HeaderComponentProps<TObject>): JSX.Element;
+  children?(props: ChildrenProps<TObject> & TComponentProps): JSX.Element;
+  fallbackComponent?(props: Renderer & TComponentProps): JSX.Element;
+  headerComponent?(
+    props: HeaderComponentProps<TObject> & TComponentProps
+  ): JSX.Element;
   status: RecommendStatus;
   translations?: RecommendTranslations;
   view?(
@@ -62,6 +75,7 @@ export type TrendingComponentProps<TObject> = {
       Required<RecommendTranslations>,
       Record<string, string>
     > &
-      Renderer
+      Renderer &
+      TComponentProps
   ): JSX.Element;
 };
