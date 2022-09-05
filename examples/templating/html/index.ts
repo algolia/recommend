@@ -52,11 +52,11 @@ trendingItems<ProductHit>({
   indexName,
   headerComponent: ({ html }) => html`<h3>Trending items</h3>`,
   itemComponent: productItem,
-  view({ items, itemComponent, html, createElement, Fragment }) {
+  view({items, ...renderer}) {
     return horizontalSlider({
       items,
       itemComponent({ item }) {
-        return itemComponent({ item, html, createElement, Fragment });
+        return itemComponent({ item, ...renderer });
       },
     });
   },
