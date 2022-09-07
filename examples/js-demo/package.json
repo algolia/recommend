@@ -1,7 +1,7 @@
 {
   "name": "@algolia/recommend-js-example",
   "description": "Recommend JavaScript example",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -13,7 +13,7 @@
     "@algolia/autocomplete-theme-classic": "1.7.0",
     "@algolia/client-search": "4.10.5",
     "@algolia/recommend": "4.13.0",
-    "@algolia/recommend-js": "1.6.0",
+    "@algolia/recommend-js": "1.7.0",
     "@algolia/ui-components-horizontal-slider-js": "1.0.0",
     "@algolia/ui-components-horizontal-slider-theme": "1.0.0",
     "@babel/runtime": "7.14.5",

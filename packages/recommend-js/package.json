@@ -1,6 +1,6 @@
 {
   "name": "@algolia/recommend-js",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "license": "MIT",
   "homepage": "https://github.com/algolia/recommend",
   "repository": "algolia/recommend",
@@ -31,9 +31,9 @@
     "@algolia/recommend": "^4.13.0"
   },
   "dependencies": {
-    "@algolia/recommend-core": "1.6.0",
-    "@algolia/recommend-vdom": "1.6.0",
-    "preact": "^10.0.0",
-    "htm": "^3.0.0"
+    "@algolia/recommend-core": "1.7.0",
+    "@algolia/recommend-vdom": "1.7.0",
+    "htm": "^3.0.0",
+    "preact": "^10.0.0"
   }
 }
