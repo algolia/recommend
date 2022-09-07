@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/algolia/recommend/compare/v1.6.0...v1.7.0) (2022-09-07)
+### Features
+
+* **recommend-js:** HTML Templating ([#104](https://github.com/algolia/recommend/issues/93)) ([30dc38e](https://github.com/algolia/recommend/commit/30dc38e413b33afc6ba74c8f1419ca598313c731))
+
+
+
 # [1.6.0](https://github.com/algolia/recommend/compare/v1.5.0...v1.6.0) (2022-08-12)
 
 
