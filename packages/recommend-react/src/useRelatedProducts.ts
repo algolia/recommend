@@ -18,10 +18,13 @@ export function useRelatedProducts<TObject>({
   recommendClient,
   threshold,
   transformItems: userTransformItems,
+  initialState,
 }: GetRelatedProductsProps<TObject>) {
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
-    recommendations: [],
-  });
+  const initialResults = initialState ?? { recommendations: [] };
+
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
+    initialResults
+  );
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);
   const transformItems = useStableValue(userTransformItems);

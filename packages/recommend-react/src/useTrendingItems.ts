@@ -19,10 +19,13 @@ export function useTrendingItems<TObject>({
   transformItems: userTransformItems,
   facetName,
   facetValue,
+  initialState,
 }: GetTrendingItemsProps<TObject>) {
-  const [result, setResult] = useState<GetTrendingItemsResult<TObject>>({
-    recommendations: [],
-  });
+  const initialResults = initialState ?? { recommendations: [] };
+
+  const [result, setResult] = useState<GetTrendingItemsResult<TObject>>(
+    initialResults
+  );
   const { status, setStatus } = useStatus('loading');
   const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
@@ -43,6 +46,7 @@ export function useTrendingItems<TObject>({
       facetName,
       facetValue,
     }).then((response) => {
+      console.log(response)
       setResult(response);
       setStatus('idle');
     });

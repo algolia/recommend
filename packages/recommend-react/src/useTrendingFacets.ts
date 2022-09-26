@@ -18,10 +18,13 @@ export function useTrendingFacets<TObject>({
   threshold,
   transformItems: userTransformItems,
   facetName,
+  initialState,
 }: GetTrendingFacetsProps<TObject>) {
-  const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
-    recommendations: [],
-  });
+  const initialResults = initialState ?? { recommendations: [] };
+
+  const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>(
+    initialResults
+  );
   const { status, setStatus } = useStatus('loading');
   const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);

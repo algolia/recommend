@@ -1,6 +1,7 @@
 import { RecommendClient, TrendingFacetsQuery } from '@algolia/recommend';
 
 import { TrendingFacet } from './types';
+import { InitialResults } from './types/InitialResults';
 import { mapByScoreToRecommendations } from './utils';
 import { version } from './version';
 
@@ -17,6 +18,12 @@ export type TrendingFacetsProps<TObject> = {
   transformItems?: (
     items: Array<TrendingFacet<TObject>>
   ) => Array<TrendingFacet<TObject>>;
+  /**
+   * A prop that allows the user to provide initial results from outside
+   *
+   * It's useful for building SSR on top of Recommend
+   */
+  initialState?: InitialResults<TObject>;
 };
 
 export type GetTrendingFacetsResult<TObject> = {
