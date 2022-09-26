@@ -35,7 +35,7 @@
   },
   "peerDependencies": {
     "@algolia/recommend": "^4.13.0",
-    "react": ">= 16.8.0 < 18",
-    "react-dom": ">= 16.8.0 < 18"
+    "react": ">= 16.8.0 < 19",
+    "react-dom": ">= 16.8.0 < 19"
   }
 }
