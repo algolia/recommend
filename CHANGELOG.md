@@ -1,3 +1,12 @@
+## [1.7.1](https://github.com/algolia/recommend/compare/v1.7.0...v1.7.1) (2022-09-26)
+
+
+### Bug Fixes
+
+* **react:** add support for react 18 ([#107](https://github.com/algolia/recommend/issues/107)) ([ab3f68c](https://github.com/algolia/recommend/commit/ab3f68c8bfc8dffe7b9645f347c85b7f8e00f89d))
+
+
+
 # [1.7.0](https://github.com/algolia/recommend/compare/v1.6.0...v1.7.0) (2022-09-07)
 ### Features
 
