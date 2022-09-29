@@ -46,7 +46,6 @@ export function useTrendingItems<TObject>({
       facetName,
       facetValue,
     }).then((response) => {
-      console.log(response)
       setResult(response);
       setStatus('idle');
     });

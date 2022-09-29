@@ -281,30 +281,6 @@ function App() {
           }`,
         }}
       />
-
-      <TrendingItems<ProductHit>
-        recommendClient={recommendClient}
-        indexName={indexName}
-        // facetName={selectedFacetValue ? 'brand' : undefined}
-        // facetValue={
-        //   selectedFacetValue ? selectedFacetValue.facetValue : undefined
-        // }
-        itemComponent={({ item }) => (
-          <Hit hit={item} insights={insights} onSelect={setSelectedProduct} />
-        )}
-        maxRecommendations={10}
-        view={HorizontalSlider}
-        initialState={{
-          recommendations: [
-            {
-              name: 'SSR !!!!!!! Hogan Rebel pink',
-            },
-          ],
-        }}
-        translations={{
-          title: `Trending but in ssr`,
-        }}
-      />
     </div>
   );
 }
