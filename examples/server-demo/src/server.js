@@ -3,24 +3,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import App from './App';
-
-const html = ({ body, initialState }) => `
-  <!DOCTYPE html>
-    <html>
-      <head>
-        <script>window.__APP_INITIAL_STATE__ = ${JSON.stringify(
-          initialState
-        )}</script>
-        <title>Recommend SSR</title>
-      </head>
-
-      <body>
-        <div id="root">${body}</div>
-      </body>
-
-      <script src="/bundle.js"></script>
-    </html>
-`;
+import html from './htmlTemplate';
 
 const PORT = process.env.PORT || 5657;
 const app = express();
