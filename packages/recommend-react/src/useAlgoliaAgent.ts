@@ -5,11 +5,15 @@ import { version } from './version';
 
 type UseAlgoliaAgentProps = Pick<
   GetRelatedProductsProps<any>,
-  'recommendClient'
+  'recommendClient' | 'initialState'
 >;
 
 export function useAlgoliaAgent(props: UseAlgoliaAgentProps) {
   useEffect(() => {
-    props.recommendClient.addAlgoliaAgent('recommend-react', version);
-  }, [props.recommendClient]);
+    if (props.initialState) {
+      props.recommendClient.addAlgoliaAgent('recommend-server', version);
+    } else {
+      props.recommendClient.addAlgoliaAgent('recommend-react', version);
+    }
+  }, [props.recommendClient, props.initialState]);
 }
