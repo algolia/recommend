@@ -37,6 +37,7 @@ app.get('/', (req, res) => {
           value: 278,
           currency: 'EUR',
         },
+        // eslint-disable-next-line @typescript-eslint/camelcase
         image_urls: [
           'https://res.cloudinary.com/hilnmyskv/image/upload/v1638372051/flagship_sunrise/M0E20000000DWIV_0.jpg',
         ],
@@ -48,6 +49,7 @@ app.get('/', (req, res) => {
           value: 343,
           currency: 'EUR',
         },
+        // eslint-disable-next-line @typescript-eslint/camelcase
         image_urls: [
           'https://res.cloudinary.com/hilnmyskv/image/upload/v1638372051/flagship_sunrise/M0E20000000DWIV_0.jpg',
         ],
@@ -59,6 +61,7 @@ app.get('/', (req, res) => {
           value: 268,
           currency: 'EUR',
         },
+        // eslint-disable-next-line @typescript-eslint/camelcase
         image_urls: [
           'https://res.cloudinary.com/hilnmyskv/image/upload/v1638372051/flagship_sunrise/M0E20000000DWIV_0.jpg',
         ],
@@ -77,5 +80,6 @@ app.get('/', (req, res) => {
 app.use(express.static('./dist'));
 
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`Server is listening on port ${PORT}`);
 });

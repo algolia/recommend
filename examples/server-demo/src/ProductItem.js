@@ -1,12 +1,14 @@
 import React from 'react';
 
 const ProductItem = ({ item }) => {
+  // eslint-disable-next-line @typescript-eslint/camelcase
   const { name, objectID, price, image_urls } = item;
 
   return (
     <div style={{ maxWidth: '18%' }}>
       <img
         style={{ width: '100%', height: 'auto' }}
+        // eslint-disable-next-line @typescript-eslint/camelcase
         src={image_urls[0]}
         alt={name}
       />
