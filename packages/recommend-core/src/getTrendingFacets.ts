@@ -1,7 +1,6 @@
 import { RecommendClient, TrendingFacetsQuery } from '@algolia/recommend';
 
 import { TrendingFacet } from './types';
-import { InitialResults } from './types/InitialResults';
 import { mapByScoreToRecommendations } from './utils';
 import { version } from './version';
 

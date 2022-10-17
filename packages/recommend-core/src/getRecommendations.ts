@@ -1,7 +1,6 @@
 import type { RecommendClient, RecommendationsQuery } from '@algolia/recommend';
 
 import { ProductRecord, RecordWithObjectID } from './types';
-import { InitialResults } from './types/InitialResults';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
 
