@@ -4,7 +4,7 @@ import {
   GetTrendingFacetsResult,
   InitialResults,
 } from '@algolia/recommend-core';
-import { useEffect, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
@@ -28,6 +28,8 @@ export function useTrendingFacets<TObject>({
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>(
     initialResults
   );
+  const renderRef = useRef(false);
+
   const { status, setStatus } = useStatus('loading');
   const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
@@ -37,7 +39,7 @@ export function useTrendingFacets<TObject>({
 
   useEffect(() => {
     setStatus('loading');
-    if (!initialState) {
+    if (!initialState || renderRef.current) {
       getTrendingFacets({
         recommendClient,
         transformItems,
@@ -51,6 +53,8 @@ export function useTrendingFacets<TObject>({
         setResult(response);
         setStatus('idle');
       });
+    } else {
+      renderRef.current = true;
     }
   }, [
     initialState,

@@ -4,7 +4,7 @@ import {
   GetRecommendationsResult,
   InitialResults,
 } from '@algolia/recommend-core';
-import { useEffect, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
@@ -28,6 +28,8 @@ export function useRecommendations<TObject>({
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
     initialResults
   );
+  const renderRef = useRef(false);
+
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);
   const transformItems = useStableValue(userTransformItems);
@@ -37,8 +39,8 @@ export function useRecommendations<TObject>({
   useAlgoliaAgent({ recommendClient, initialState });
 
   useEffect(() => {
-    setStatus('loading');
-    if (!initialState) {
+    if (!initialState || renderRef.current) {
+      setStatus('loading');
       getRecommendations({
         fallbackParameters,
         indexName,
@@ -53,6 +55,8 @@ export function useRecommendations<TObject>({
         setResult(response);
         setStatus('idle');
       });
+    } else {
+      renderRef.current = true;
     }
   }, [
     initialState,

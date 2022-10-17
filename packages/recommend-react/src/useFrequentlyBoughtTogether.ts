@@ -4,7 +4,7 @@ import {
   GetRecommendationsResult,
   InitialResults,
 } from '@algolia/recommend-core';
-import { useEffect, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
@@ -26,6 +26,8 @@ export function useFrequentlyBoughtTogether<TObject>({
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
     initialResults
   );
+  const renderRef = useRef(false);
+
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);
   const transformItems = useStableValue(userTransformItems);
@@ -34,8 +36,8 @@ export function useFrequentlyBoughtTogether<TObject>({
   useAlgoliaAgent({ recommendClient, initialState });
 
   useEffect(() => {
-    setStatus('loading');
-    if (!initialState) {
+    if (!initialState || renderRef.current) {
+      setStatus('loading');
       getFrequentlyBoughtTogether({
         indexName,
         maxRecommendations,
@@ -48,6 +50,8 @@ export function useFrequentlyBoughtTogether<TObject>({
         setResult(response);
         setStatus('idle');
       });
+    } else {
+      renderRef.current = true;
     }
   }, [
     initialState,
