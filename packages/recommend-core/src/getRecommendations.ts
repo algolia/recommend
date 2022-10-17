@@ -22,12 +22,6 @@ export type RecommendationsProps<TObject> = {
   transformItems?: (
     items: Array<ProductRecord<TObject>>
   ) => Array<ProductRecord<TObject>>;
-  /**
-   * A prop that allows the user to provide initial results from outside
-   *
-   * It's useful for building SSR on top of Recommend
-   */
-  initialState?: InitialResults<TObject>;
 };
 
 export type GetRecommendationsProps<TObject> = RecommendationsProps<TObject> &

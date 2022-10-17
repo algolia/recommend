@@ -1,7 +1,6 @@
 import { RecommendClient, TrendingItemsQuery } from '@algolia/recommend';
 
 import { ProductRecord } from './types';
-import { InitialResults } from './types/InitialResults';
 import { mapByScoreToRecommendations, uniqBy } from './utils';
 import { version } from './version';
 
@@ -18,12 +17,6 @@ export type TrendingItemsProps<TObject> = {
   transformItems?: (
     items: Array<ProductRecord<TObject>>
   ) => Array<ProductRecord<TObject>>;
-  /**
-   * A prop that allows the user to provide initial results from outside
-   *
-   * It's useful for building SSR on top of Recommend
-   */
-  initialState?: InitialResults<TObject>;
 };
 
 export type GetTrendingItemsResult<TObject> = {

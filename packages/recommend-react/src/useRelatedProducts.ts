@@ -2,6 +2,7 @@ import {
   getRelatedProducts,
   GetRelatedProductsProps,
   GetRecommendationsResult,
+  InitialResults,
 } from '@algolia/recommend-core';
 import { useEffect, useState } from 'react';
 
@@ -19,7 +20,9 @@ export function useRelatedProducts<TObject>({
   threshold,
   transformItems: userTransformItems,
   initialState,
-}: GetRelatedProductsProps<TObject>) {
+}: GetRelatedProductsProps<TObject> & {
+  initialState?: InitialResults<TObject>;
+}) {
   const initialResults = initialState ?? { recommendations: [] };
 
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
@@ -31,24 +34,27 @@ export function useRelatedProducts<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  useAlgoliaAgent({ recommendClient });
+  useAlgoliaAgent({ recommendClient, initialState });
 
   useEffect(() => {
     setStatus('loading');
-    getRelatedProducts({
-      fallbackParameters,
-      indexName,
-      maxRecommendations,
-      objectIDs,
-      queryParameters,
-      recommendClient,
-      threshold,
-      transformItems,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    if (!initialState) {
+      getRelatedProducts({
+        fallbackParameters,
+        indexName,
+        maxRecommendations,
+        objectIDs,
+        queryParameters,
+        recommendClient,
+        threshold,
+        transformItems,
+      }).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
+    }
   }, [
+    initialState,
     fallbackParameters,
     indexName,
     maxRecommendations,

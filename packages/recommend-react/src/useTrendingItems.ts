@@ -2,6 +2,7 @@ import {
   getTrendingItems,
   GetTrendingItemsProps,
   GetTrendingItemsResult,
+  InitialResults,
 } from '@algolia/recommend-core';
 import { useEffect, useState } from 'react';
 
@@ -20,7 +21,9 @@ export function useTrendingItems<TObject>({
   facetName,
   facetValue,
   initialState,
-}: GetTrendingItemsProps<TObject>) {
+}: GetTrendingItemsProps<TObject> & {
+  initialState?: InitialResults<TObject>;
+}) {
   const initialResults = initialState ?? { recommendations: [] };
 
   const [result, setResult] = useState<GetTrendingItemsResult<TObject>>(
@@ -31,25 +34,28 @@ export function useTrendingItems<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  useAlgoliaAgent({ recommendClient });
+  useAlgoliaAgent({ recommendClient, initialState });
 
   useEffect(() => {
     setStatus('loading');
-    getTrendingItems({
-      recommendClient,
-      transformItems,
-      fallbackParameters,
-      indexName,
-      maxRecommendations,
-      queryParameters,
-      threshold,
-      facetName,
-      facetValue,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    if (!initialState) {
+      getTrendingItems({
+        recommendClient,
+        transformItems,
+        fallbackParameters,
+        indexName,
+        maxRecommendations,
+        queryParameters,
+        threshold,
+        facetName,
+        facetValue,
+      }).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
+    }
   }, [
+    initialState,
     fallbackParameters,
     indexName,
     maxRecommendations,

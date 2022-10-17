@@ -2,6 +2,7 @@ import {
   getTrendingFacets,
   GetTrendingFacetsProps,
   GetTrendingFacetsResult,
+  InitialResults,
 } from '@algolia/recommend-core';
 import { useEffect, useState } from 'react';
 
@@ -19,7 +20,9 @@ export function useTrendingFacets<TObject>({
   transformItems: userTransformItems,
   facetName,
   initialState,
-}: GetTrendingFacetsProps<TObject>) {
+}: GetTrendingFacetsProps<TObject> & {
+  initialState?: InitialResults<TObject>;
+}) {
   const initialResults = initialState ?? { recommendations: [] };
 
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>(
@@ -30,24 +33,27 @@ export function useTrendingFacets<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  useAlgoliaAgent({ recommendClient });
+  useAlgoliaAgent({ recommendClient, initialState });
 
   useEffect(() => {
     setStatus('loading');
-    getTrendingFacets({
-      recommendClient,
-      transformItems,
-      fallbackParameters,
-      indexName,
-      maxRecommendations,
-      queryParameters,
-      threshold,
-      facetName,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    if (!initialState) {
+      getTrendingFacets({
+        recommendClient,
+        transformItems,
+        fallbackParameters,
+        indexName,
+        maxRecommendations,
+        queryParameters,
+        threshold,
+        facetName,
+      }).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
+    }
   }, [
+    initialState,
     fallbackParameters,
     indexName,
     maxRecommendations,
