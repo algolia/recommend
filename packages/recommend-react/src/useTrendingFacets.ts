@@ -4,7 +4,7 @@ import {
   GetTrendingFacetsResult,
   InitialResults,
 } from '@algolia/recommend-core';
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
