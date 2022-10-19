@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/dom';
 import { renderHook } from '@testing-library/react-hooks';
 
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
@@ -24,11 +25,11 @@ function createMockedRecommendClient() {
 }
 
 describe('useRelatedProducts', () => {
-  test('gets Related Products', () => {
+  test('gets Related Products', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
-    renderHook(() => {
-      const { recommendations } = useRelatedProducts({
+    const { result } = renderHook(() =>
+      useRelatedProducts({
         indexName: 'test',
         recommendClient,
         threshold: 0,
@@ -40,9 +41,11 @@ describe('useRelatedProducts', () => {
           facetFilters: ['test2'],
         },
         transformItems: (items) => items,
-      });
+      })
+    );
 
-      expect(recommendations).toEqual([hit]);
+    await waitFor(() => {
+      expect(result.current.recommendations).toEqual([hit]);
     });
   });
 });

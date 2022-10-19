@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/dom';
 import { renderHook } from '@testing-library/react-hooks';
 
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
@@ -9,7 +10,7 @@ import { useTrendingFacets } from '../useTrendingFacets';
 
 function createMockedRecommendClient() {
   const recommendClient = createRecommendClient({
-    getRelatedProducts: jest.fn(() =>
+    getTrendingFacets: jest.fn(() =>
       Promise.resolve(
         createMultiSearchResponse({
           hits: [hit],
@@ -24,11 +25,11 @@ function createMockedRecommendClient() {
 }
 
 describe('useTrendingFacets', () => {
-  test('gets trending facets', () => {
+  test('gets trending facets', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
-    renderHook(() => {
-      const { recommendations } = useTrendingFacets({
+    const { result } = renderHook(() =>
+      useTrendingFacets({
         indexName: 'test',
         recommendClient,
         threshold: 0,
@@ -38,11 +39,13 @@ describe('useTrendingFacets', () => {
         fallbackParameters: {
           facetFilters: ['test2'],
         },
-        facetName: 'test3',
+        facetName: 'test4',
         transformItems: (items) => items,
-      });
+      })
+    );
 
-      expect(recommendations).toEqual([hit]);
+    await waitFor(() => {
+      expect(result.current.recommendations).toEqual([hit]);
     });
   });
 });
