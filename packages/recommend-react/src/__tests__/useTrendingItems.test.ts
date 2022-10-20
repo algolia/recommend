@@ -1,5 +1,6 @@
 import { waitFor } from '@testing-library/dom';
 import { renderHook } from '@testing-library/react-hooks';
+import React from 'react';
 
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import {
@@ -23,6 +24,10 @@ function createMockedRecommendClient() {
     recommendClient,
   };
 }
+
+const initialState = {
+  recommendations: [hit],
+};
 
 describe('useTrendingItems', () => {
   test('gets trending items', async () => {
@@ -48,5 +53,65 @@ describe('useTrendingItems', () => {
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([hit]);
     });
+  });
+
+  test('gets trending items from initialState', async () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    const { result } = renderHook(
+      () =>
+        useTrendingItems({
+          indexName: 'test',
+          recommendClient,
+          threshold: 0,
+          queryParameters: {
+            facetFilters: ['test'],
+          },
+          fallbackParameters: {
+            facetFilters: ['test2'],
+          },
+          facetName: 'test4',
+          facetValue: 'test3',
+          transformItems: (items) => items,
+          initialState,
+        }),
+      {
+        wrapper: React.StrictMode,
+      }
+    );
+
+    await waitFor(() => {
+      expect(result.current.recommendations).toEqual(
+        initialState.recommendations
+      );
+    });
+  });
+
+  test('no network calls with initialState', () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    renderHook(
+      () =>
+        useTrendingItems({
+          indexName: 'test',
+          recommendClient,
+          threshold: 0,
+          queryParameters: {
+            facetFilters: ['test'],
+          },
+          fallbackParameters: {
+            facetFilters: ['test2'],
+          },
+          facetName: 'test4',
+          facetValue: 'test3',
+          transformItems: (items) => items,
+          initialState,
+        }),
+      {
+        wrapper: React.StrictMode,
+      }
+    );
+
+    expect(recommendClient.getTrendingItems).toHaveBeenCalledTimes(0);
   });
 });
