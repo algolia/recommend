@@ -2,7 +2,10 @@ import { waitFor } from '@testing-library/dom';
 import { renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 
-import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
+import {
+  createMultiSearchResponse,
+  forceDelay,
+} from '../../../../test/utils/createApiResponse';
 import {
   createRecommendClient,
   hit,
@@ -122,7 +125,7 @@ describe('useFrequentlyBoughtTogether', () => {
     );
     expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(0);
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await forceDelay(1000);
 
     rerender({ indexName: 'test1' });
 
