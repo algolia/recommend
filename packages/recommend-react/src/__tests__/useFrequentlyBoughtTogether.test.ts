@@ -99,7 +99,9 @@ describe('useFrequentlyBoughtTogether', () => {
       }
     );
 
-    expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(0);
+    expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(
+      0
+    );
   });
 
   test('trigger network call when props change', async () => {
@@ -123,12 +125,16 @@ describe('useFrequentlyBoughtTogether', () => {
         initialProps: { indexName: 'test' },
       }
     );
-    expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(0);
+    expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(
+      0
+    );
 
     await forceDelay(1000);
 
     rerender({ indexName: 'test1' });
 
-    expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(1);
+    expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(
+      1
+    );
   });
 });
