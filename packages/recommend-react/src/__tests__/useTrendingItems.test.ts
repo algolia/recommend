@@ -6,6 +6,7 @@ import { createMultiSearchResponse } from '../../../../test/utils/createApiRespo
 import {
   createRecommendClient,
   hit,
+  initialState,
 } from '../../../../test/utils/createRecommendClient';
 import { useTrendingItems } from '../useTrendingItems';
 
@@ -24,10 +25,6 @@ function createMockedRecommendClient() {
     recommendClient,
   };
 }
-
-const initialState = {
-  recommendations: [hit],
-};
 
 describe('useTrendingItems', () => {
   test('gets trending items', async () => {
@@ -113,5 +110,39 @@ describe('useTrendingItems', () => {
     );
 
     expect(recommendClient.getTrendingItems).toHaveBeenCalledTimes(0);
+  });
+
+  test('trigger network call when props change', async () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    const { rerender } = renderHook(
+      ({ indexName }) =>
+        useTrendingItems({
+          indexName,
+          recommendClient,
+          threshold: 0,
+          queryParameters: {
+            facetFilters: ['test'],
+          },
+          fallbackParameters: {
+            facetFilters: ['test2'],
+          },
+          facetName: 'test4',
+          facetValue: 'test3',
+          transformItems: (items) => items,
+          initialState,
+        }),
+      {
+        wrapper: React.StrictMode,
+        initialProps: { indexName: 'test' },
+      }
+    );
+    expect(recommendClient.getTrendingItems).toHaveBeenCalledTimes(0);
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    rerender({ indexName: 'test1' });
+
+    expect(recommendClient.getTrendingItems).toHaveBeenCalledTimes(1);
   });
 });

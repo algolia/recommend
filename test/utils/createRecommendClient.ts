@@ -33,6 +33,10 @@ export const hit = {
   ],
 };
 
+export const initialState = {
+  recommendations: [hit],
+};
+
 export function createRecommendClient(
   args: Partial<RecommendClient> = {}
 ): RecommendClient {
