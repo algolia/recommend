@@ -50,7 +50,8 @@ describe('useFrequentlyBoughtTogether', () => {
       expect(result.current.recommendations).toEqual([hit]);
     });
   });
-  test('gets fbt products from initialState', async () => {
+
+  test('returns FBT recommendations from initialState', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { result } = renderHook(
