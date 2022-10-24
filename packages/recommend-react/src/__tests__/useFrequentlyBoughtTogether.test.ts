@@ -79,7 +79,7 @@ describe('useFrequentlyBoughtTogether', () => {
     });
   });
 
-  test('no network calls with initialState', () => {
+  test("doesn't initially fetch the recommendations with initialState", () => {
     const { recommendClient } = createMockedRecommendClient();
 
     renderHook(
@@ -105,7 +105,7 @@ describe('useFrequentlyBoughtTogether', () => {
     );
   });
 
-  test('trigger network call when props change', async () => {
+  test('fetches recommendations when props change with initialState', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { rerender } = renderHook(
