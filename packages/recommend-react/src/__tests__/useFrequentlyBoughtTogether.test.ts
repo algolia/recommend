@@ -30,7 +30,7 @@ function createMockedRecommendClient() {
 }
 
 describe('useFrequentlyBoughtTogether', () => {
-  test('gets Frequently Bought Together products', async () => {
+  test('returns FBT recommendations', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { result } = renderHook(() =>
