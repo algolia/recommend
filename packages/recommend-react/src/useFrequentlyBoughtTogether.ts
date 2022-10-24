@@ -26,7 +26,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
     initialResults
   );
-  const renderRef = useRef(false);
+  const isFirstRenderRef = useRef(true);
 
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);
