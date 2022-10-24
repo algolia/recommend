@@ -36,7 +36,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   useAlgoliaAgent({ recommendClient, initialState });
 
   useEffect(() => {
-    if (!initialState || renderRef.current) {
+    if (!initialState || isFirstRenderRef.current) {
       setStatus('loading');
       getFrequentlyBoughtTogether({
         indexName,
@@ -51,7 +51,7 @@ export function useFrequentlyBoughtTogether<TObject>({
         setStatus('idle');
       });
     } else {
-      renderRef.current = true;
+      isFirstRenderRef.current = true;
     }
   }, [
     initialState,

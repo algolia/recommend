@@ -28,7 +28,7 @@ export function useTrendingFacets<TObject>({
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>(
     initialResults
   );
-  const renderRef = useRef(false);
+  const isFirstRenderRef = useRef(false);
 
   const { status, setStatus } = useStatus('loading');
   const transformItems = useStableValue(userTransformItems);
@@ -39,7 +39,7 @@ export function useTrendingFacets<TObject>({
 
   useEffect(() => {
     setStatus('loading');
-    if (!initialState || renderRef.current) {
+    if (!initialState || isFirstRenderRef.current) {
       getTrendingFacets({
         recommendClient,
         transformItems,
@@ -54,7 +54,7 @@ export function useTrendingFacets<TObject>({
         setStatus('idle');
       });
     } else {
-      renderRef.current = true;
+      isFirstRenderRef.current = true;
     }
   }, [
     initialState,

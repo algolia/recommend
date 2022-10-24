@@ -29,7 +29,7 @@ export function useTrendingItems<TObject>({
   const [result, setResult] = useState<GetTrendingItemsResult<TObject>>(
     initialResults
   );
-  const renderRef = useRef(false);
+  const isFirstRenderRef = useRef(false);
 
   const { status, setStatus } = useStatus('loading');
   const transformItems = useStableValue(userTransformItems);
@@ -39,7 +39,7 @@ export function useTrendingItems<TObject>({
   useAlgoliaAgent({ recommendClient, initialState });
 
   useEffect(() => {
-    if (!initialState || renderRef.current) {
+    if (!initialState || isFirstRenderRef.current) {
       setStatus('loading');
       getTrendingItems({
         recommendClient,
@@ -56,7 +56,7 @@ export function useTrendingItems<TObject>({
         setStatus('idle');
       });
     } else {
-      renderRef.current = true;
+      isFirstRenderRef.current = true;
     }
   }, [
     initialState,

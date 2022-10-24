@@ -28,7 +28,7 @@ export function useRelatedProducts<TObject>({
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
     initialResults
   );
-  const renderRef = useRef(false);
+  const isFirstRenderRef = useRef(false);
 
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);
@@ -39,7 +39,7 @@ export function useRelatedProducts<TObject>({
   useAlgoliaAgent({ recommendClient, initialState });
 
   useEffect(() => {
-    if (!initialState || renderRef.current) {
+    if (!initialState || isFirstRenderRef.current) {
       setStatus('loading');
       getRelatedProducts({
         fallbackParameters,
@@ -55,7 +55,7 @@ export function useRelatedProducts<TObject>({
         setStatus('idle');
       });
     } else {
-      renderRef.current = true;
+      isFirstRenderRef.current = true;
     }
   }, [
     initialState,
