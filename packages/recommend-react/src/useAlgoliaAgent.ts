@@ -1,7 +1,4 @@
-import {
-  GetRelatedProductsProps,
-  InitialResults,
-} from '@algolia/recommend-core';
+import { GetRelatedProductsProps } from '@algolia/recommend-core';
 import { useEffect } from 'react';
 
 import { version } from './version';
@@ -11,13 +8,8 @@ type UseAlgoliaAgentProps = Pick<
   'recommendClient'
 >;
 
-export function useAlgoliaAgent(
-  props: UseAlgoliaAgentProps & { initialState?: InitialResults<any> }
-) {
+export function useAlgoliaAgent(props: UseAlgoliaAgentProps) {
   useEffect(() => {
-    if (props.initialState) {
-      props.recommendClient.addAlgoliaAgent('recommend-server', version);
-    }
     props.recommendClient.addAlgoliaAgent('recommend-react', version);
-  }, [props.recommendClient, props.initialState]);
+  }, [props.recommendClient]);
 }
