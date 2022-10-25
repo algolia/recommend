@@ -2,15 +2,10 @@ import { waitFor } from '@testing-library/dom';
 import { renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 
-import {
-  createMultiSearchResponse,
-  forceDelay,
-} from '../../../../test/utils/createApiResponse';
-import {
-  createRecommendClient,
-  hit,
-  initialState,
-} from '../../../../test/utils/createRecommendClient';
+import { hit, initialState } from '../../../../test/utils/constants';
+import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
+import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
+import { forceDelay } from '../../../../test/utils/fixtures';
 import { useTrendingFacets } from '../useTrendingFacets';
 
 function createMockedRecommendClient() {
