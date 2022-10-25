@@ -1,8 +1,8 @@
 import {
   createMultiSearchResponse,
   createRecommendClient,
-  hit,
 } from '../../../../test/utils';
+import { hit } from '../../../../test/utils/constants';
 import { getTrendingFacets } from '../getTrendingFacets';
 
 describe('getTrendingFacets', () => {

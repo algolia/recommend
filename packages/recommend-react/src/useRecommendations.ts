@@ -20,21 +20,23 @@ export function useRecommendations<TObject>({
   recommendClient,
   threshold,
   transformItems: userTransformItems,
-  initialState,
+  initialState: userInitialState,
 }: GetRecommendationsProps<TObject> & {
   initialState?: InitialResults<TObject>;
 }) {
-  const initialResults = initialState ?? { recommendations: [] };
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
-    initialResults
-  );
   const isFirstRenderRef = useRef(false);
 
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);
   const transformItems = useStableValue(userTransformItems);
+  const initialState = useStableValue(userInitialState);
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
+
+  const initialResults = initialState ?? { recommendations: [] };
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
+    initialResults
+  );
 
   useAlgoliaAgent({ recommendClient });
 

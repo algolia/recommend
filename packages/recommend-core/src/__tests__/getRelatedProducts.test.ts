@@ -1,8 +1,8 @@
 import {
   createMultiSearchResponse,
   createRecommendClient,
-  hit,
 } from '../../../../test/utils';
+import { hit } from '../../../../test/utils/constants';
 import { getRelatedProducts } from '../getRelatedProducts';
 
 describe('getRelatedProducts', () => {

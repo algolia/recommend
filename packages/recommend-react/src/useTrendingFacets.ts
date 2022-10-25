@@ -19,21 +19,23 @@ export function useTrendingFacets<TObject>({
   threshold,
   transformItems: userTransformItems,
   facetName,
-  initialState,
+  initialState: userInitialState,
 }: GetTrendingFacetsProps<TObject> & {
   initialState?: InitialResults<TObject>;
 }) {
+  const isFirstRenderRef = useRef(false);
+
+  const { status, setStatus } = useStatus('loading');
+  const transformItems = useStableValue(userTransformItems);
+  const initialState = useStableValue(userInitialState);
+  const queryParameters = useStableValue(userQueryParameters);
+  const fallbackParameters = useStableValue(userFallbackParameters);
+
   const initialResults = initialState ?? { recommendations: [] };
 
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>(
     initialResults
   );
-  const isFirstRenderRef = useRef(false);
-
-  const { status, setStatus } = useStatus('loading');
-  const transformItems = useStableValue(userTransformItems);
-  const queryParameters = useStableValue(userQueryParameters);
-  const fallbackParameters = useStableValue(userFallbackParameters);
 
   useAlgoliaAgent({ recommendClient });
 
