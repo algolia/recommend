@@ -33,7 +33,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
 
-  useAlgoliaAgent({ recommendClient, initialState });
+  useAlgoliaAgent({ recommendClient });
 
   useEffect(() => {
     if (!initialState || isFirstRenderRef.current) {

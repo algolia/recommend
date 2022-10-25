@@ -35,7 +35,7 @@ export function useTrendingFacets<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  useAlgoliaAgent({ recommendClient, initialState });
+  useAlgoliaAgent({ recommendClient });
 
   useEffect(() => {
     setStatus('loading');

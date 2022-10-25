@@ -36,7 +36,7 @@ export function useRelatedProducts<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  useAlgoliaAgent({ recommendClient, initialState });
+  useAlgoliaAgent({ recommendClient });
 
   useEffect(() => {
     if (!initialState || isFirstRenderRef.current) {
