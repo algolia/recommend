@@ -137,6 +137,9 @@ describe('useTrendingItems', () => {
     );
     expect(recommendClient.getTrendingItems).toHaveBeenCalledTimes(0);
 
+    // we force a delay in order to simulate a prop change
+    // (that is a dependency prop in the useEffect from the hook we are testing)
+    // so that we can test that a network call is triggered
     await forceDelay(1000);
 
     rerender({ indexName: 'test1' });
