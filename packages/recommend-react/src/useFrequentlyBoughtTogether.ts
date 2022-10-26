@@ -22,7 +22,7 @@ export function useFrequentlyBoughtTogether<TObject>({
 }: GetFrequentlyBoughtTogetherProps<TObject> & {
   initialState?: InitialResults<TObject>;
 }) {
-  const isFirstRenderRef = useRef(true);
+  const isFirstRenderRef = useRef(false);
 
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);

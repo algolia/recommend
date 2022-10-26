@@ -33,7 +33,6 @@ export function useRelatedProducts<TObject>({
   const fallbackParameters = useStableValue(userFallbackParameters);
 
   const initialResults = initialState ?? { recommendations: [] };
-
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
     initialResults
   );
