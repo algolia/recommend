@@ -33,10 +33,10 @@ export function useRecommendations<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const initialResults = initialState ?? { recommendations: [] };
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
-    initialResults
-  );
+  const initialRecommendationsResult = initialState ?? { recommendations: [] };
+  const [recommendationsResult, setRecommendationsResult] = useState<
+    GetRecommendationsResult<TObject>
+  >(initialRecommendationsResult);
 
   useAlgoliaAgent({ recommendClient });
 
@@ -54,7 +54,7 @@ export function useRecommendations<TObject>({
         threshold,
         transformItems,
       }).then((response) => {
-        setResult(response);
+        setRecommendationsResult(response);
         setStatus('idle');
       });
     } else {
@@ -75,7 +75,7 @@ export function useRecommendations<TObject>({
   ]);
 
   return {
-    ...result,
+    ...recommendationsResult,
     status,
   };
 }

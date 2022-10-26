@@ -30,10 +30,10 @@ export function useFrequentlyBoughtTogether<TObject>({
   const initialState = useStableValue(userInitialState);
   const queryParameters = useStableValue(userQueryParameters);
 
-  const initialResults = initialState ?? { recommendations: [] };
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
-    initialResults
-  );
+  const initialRecommendationsResult = initialState ?? { recommendations: [] };
+  const [recommendationsResult, setRecommendationsResult] = useState<
+    GetRecommendationsResult<TObject>
+  >(initialRecommendationsResult);
 
   useAlgoliaAgent({ recommendClient });
 
@@ -49,7 +49,7 @@ export function useFrequentlyBoughtTogether<TObject>({
         threshold,
         transformItems,
       }).then((response) => {
-        setResult(response);
+        setRecommendationsResult(response);
         setStatus('idle');
       });
     } else {
@@ -68,7 +68,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   ]);
 
   return {
-    ...result,
+    ...recommendationsResult,
     status,
   };
 }

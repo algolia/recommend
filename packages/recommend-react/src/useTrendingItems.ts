@@ -32,11 +32,10 @@ export function useTrendingItems<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const initialResults = initialState ?? { recommendations: [] };
-
-  const [result, setResult] = useState<GetTrendingItemsResult<TObject>>(
-    initialResults
-  );
+  const initialRecommendationsResult = initialState ?? { recommendations: [] };
+  const [recommendationsResult, setRecommendationsResult] = useState<
+    GetTrendingItemsResult<TObject>
+  >(initialRecommendationsResult);
 
   useAlgoliaAgent({ recommendClient });
 
@@ -54,7 +53,7 @@ export function useTrendingItems<TObject>({
         facetName,
         facetValue,
       }).then((response) => {
-        setResult(response);
+        setRecommendationsResult(response);
         setStatus('idle');
       });
     } else {
@@ -75,7 +74,7 @@ export function useTrendingItems<TObject>({
   ]);
 
   return {
-    ...result,
+    ...recommendationsResult,
     status,
   };
 }
