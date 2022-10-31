@@ -2,7 +2,7 @@ import {
   getTrendingFacets,
   GetTrendingFacetsProps,
   GetTrendingFacetsResult,
-  InitialResults,
+  InitialState,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -21,26 +21,30 @@ export function useTrendingFacets<TObject>({
   facetName,
   initialState: userInitialState,
 }: GetTrendingFacetsProps<TObject> & {
-  initialState?: InitialResults<TObject>;
+  initialState?: InitialState<TObject>;
 }) {
-  const isFirstRenderRef = useRef(false);
+  const isFirstRenderRef = useRef(true);
 
   const { status, setStatus } = useStatus('loading');
   const transformItems = useStableValue(userTransformItems);
-  const initialState = useStableValue(userInitialState);
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const initialRecommendationsResult = initialState ?? { recommendations: [] };
+  const initialState = useStableValue<GetTrendingFacetsResult<TObject>>({
+    recommendations: [],
+    ...userInitialState,
+  });
   const [recommendationsResult, setRecommendationsResult] = useState<
     GetTrendingFacetsResult<TObject>
-  >(initialRecommendationsResult);
+  >(initialState);
 
   useAlgoliaAgent({ recommendClient });
 
   useEffect(() => {
-    setStatus('loading');
-    if (!initialState || isFirstRenderRef.current) {
+    const shouldFetch = !userInitialState || !isFirstRenderRef.current;
+
+    if (shouldFetch) {
+      setStatus('loading');
       getTrendingFacets({
         recommendClient,
         transformItems,
@@ -54,11 +58,10 @@ export function useTrendingFacets<TObject>({
         setRecommendationsResult(response);
         setStatus('idle');
       });
-    } else {
-      isFirstRenderRef.current = true;
     }
+    isFirstRenderRef.current = false;
   }, [
-    initialState,
+    userInitialState,
     fallbackParameters,
     indexName,
     maxRecommendations,

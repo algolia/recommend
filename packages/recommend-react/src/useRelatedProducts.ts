@@ -2,7 +2,7 @@ import {
   getRelatedProducts,
   GetRelatedProductsProps,
   GetRecommendationsResult,
-  InitialResults,
+  InitialState,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -21,26 +21,30 @@ export function useRelatedProducts<TObject>({
   transformItems: userTransformItems,
   initialState: userInitialState,
 }: GetRelatedProductsProps<TObject> & {
-  initialState?: InitialResults<TObject>;
+  initialState?: InitialState<TObject>;
 }) {
-  const isFirstRenderRef = useRef(false);
+  const isFirstRenderRef = useRef(true);
 
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);
   const transformItems = useStableValue(userTransformItems);
-  const initialState = useStableValue(userInitialState);
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const initialRecommendationsResult = initialState ?? { recommendations: [] };
+  const initialState = useStableValue<GetRecommendationsResult<TObject>>({
+    recommendations: [],
+    ...userInitialState,
+  });
   const [recommendationsResult, setRecommendationsResult] = useState<
     GetRecommendationsResult<TObject>
-  >(initialRecommendationsResult);
+  >(initialState);
 
   useAlgoliaAgent({ recommendClient });
 
   useEffect(() => {
-    if (!initialState || isFirstRenderRef.current) {
+    const shouldFetch = !userInitialState || !isFirstRenderRef.current;
+
+    if (shouldFetch) {
       setStatus('loading');
       getRelatedProducts({
         fallbackParameters,
@@ -55,11 +59,10 @@ export function useRelatedProducts<TObject>({
         setRecommendationsResult(response);
         setStatus('idle');
       });
-    } else {
-      isFirstRenderRef.current = true;
     }
+    isFirstRenderRef.current = false;
   }, [
-    initialState,
+    userInitialState,
     fallbackParameters,
     indexName,
     maxRecommendations,

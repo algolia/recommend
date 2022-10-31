@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -11,7 +12,7 @@ const app = express();
 app.get('/', (req, res) => {
   const app = ReactDOMServer.renderToString(<App />);
 
-  const initResults = {
+  const initialState = {
     recommendations: [
       {
         name: 'Sneakers Hogan Rebel pink',
@@ -20,7 +21,6 @@ app.get('/', (req, res) => {
           value: 278,
           currency: 'EUR',
         },
-        // eslint-disable-next-line @typescript-eslint/camelcase
         image_urls: [
           'https://res.cloudinary.com/hilnmyskv/image/upload/v1638372051/flagship_sunrise/M0E20000000DWIV_0.jpg',
         ],
@@ -32,7 +32,6 @@ app.get('/', (req, res) => {
           value: 343,
           currency: 'EUR',
         },
-        // eslint-disable-next-line @typescript-eslint/camelcase
         image_urls: [
           'https://res.cloudinary.com/hilnmyskv/image/upload/v1638372051/flagship_sunrise/M0E20000000DWIV_0.jpg',
         ],
@@ -44,7 +43,6 @@ app.get('/', (req, res) => {
           value: 268,
           currency: 'EUR',
         },
-        // eslint-disable-next-line @typescript-eslint/camelcase
         image_urls: [
           'https://res.cloudinary.com/hilnmyskv/image/upload/v1638372051/flagship_sunrise/M0E20000000DWIV_0.jpg',
         ],
@@ -55,7 +53,7 @@ app.get('/', (req, res) => {
   res.send(
     html({
       body: app,
-      initialState: initResults,
+      initialState,
     })
   );
 });

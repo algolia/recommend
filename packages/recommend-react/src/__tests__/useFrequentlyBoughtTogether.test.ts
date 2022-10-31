@@ -1,11 +1,10 @@
 import { waitFor } from '@testing-library/dom';
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 
 import { hit, initialState } from '../../../../test/utils/constants';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
-import { forceDelay } from '../../../../test/utils/fixtures';
 import { useFrequentlyBoughtTogether } from '../useFrequentlyBoughtTogether';
 
 function createMockedRecommendClient() {
@@ -125,12 +124,9 @@ describe('useFrequentlyBoughtTogether', () => {
       0
     );
 
-    // we force a delay in order to simulate a prop change
-    // (that is a dependency prop in the useEffect from the hook we are testing)
-    // so that we can test that a network call is triggered
-    await forceDelay(1000);
-
-    rerender({ indexName: 'test1' });
+    act(() => {
+      rerender({ indexName: 'test1' });
+    });
 
     expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(
       1
