@@ -106,7 +106,7 @@ describe('useRelatedProducts', () => {
     expect(recommendClient.getRelatedProducts).toHaveBeenCalledTimes(0);
   });
 
-  test('fetches recommendations when props change with initialState', async () => {
+  test('fetches recommendations when props change with initialState', () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { rerender } = renderHook(
