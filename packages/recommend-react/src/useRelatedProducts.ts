@@ -35,9 +35,9 @@ export function useRelatedProducts<TObject>({
     recommendations: [],
     ...userInitialState,
   });
-  const [recommendationsResult, setRecommendationsResult] = useState<
-    GetRecommendationsResult<TObject>
-  >(initialState);
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
+    initialState
+  );
 
   useAlgoliaAgent({ recommendClient });
 
@@ -56,7 +56,7 @@ export function useRelatedProducts<TObject>({
         threshold,
         transformItems,
       }).then((response) => {
-        setRecommendationsResult(response);
+        setResult(response);
         setStatus('idle');
       });
     }
@@ -75,7 +75,7 @@ export function useRelatedProducts<TObject>({
   ]);
 
   return {
-    ...recommendationsResult,
+    ...result,
     status,
   };
 }

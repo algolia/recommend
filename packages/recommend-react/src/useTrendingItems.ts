@@ -35,9 +35,9 @@ export function useTrendingItems<TObject>({
     recommendations: [],
     ...userInitialState,
   });
-  const [recommendationsResult, setRecommendationsResult] = useState<
-    GetTrendingItemsResult<TObject>
-  >(initialState);
+  const [result, setResult] = useState<GetTrendingItemsResult<TObject>>(
+    initialState
+  );
 
   useAlgoliaAgent({ recommendClient });
 
@@ -57,7 +57,7 @@ export function useTrendingItems<TObject>({
         facetName,
         facetValue,
       }).then((response) => {
-        setRecommendationsResult(response);
+        setResult(response);
         setStatus('idle');
       });
     }
@@ -77,7 +77,7 @@ export function useTrendingItems<TObject>({
   ]);
 
   return {
-    ...recommendationsResult,
+    ...result,
     status,
   };
 }
