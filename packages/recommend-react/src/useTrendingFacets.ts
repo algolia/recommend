@@ -25,7 +25,9 @@ export function useTrendingFacets<TObject>({
 }) {
   const isFirstRenderRef = useRef(true);
 
-  const { status, setStatus } = useStatus('loading');
+  const { status, setStatus } = useStatus(
+    userInitialState ? 'idle' : 'loading'
+  );
   const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);

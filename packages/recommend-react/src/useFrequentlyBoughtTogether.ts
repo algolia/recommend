@@ -24,7 +24,9 @@ export function useFrequentlyBoughtTogether<TObject>({
 }) {
   const isFirstRenderRef = useRef(true);
 
-  const { status, setStatus } = useStatus('loading');
+  const { status, setStatus } = useStatus(
+    userInitialState ? 'idle' : 'loading'
+  );
   const objectIDs = useStableValue(userObjectIDs);
   const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
@@ -56,10 +58,7 @@ export function useFrequentlyBoughtTogether<TObject>({
         setResult(response);
         setStatus('idle');
       });
-    } else {
-      setStatus('idle');
     }
-
     isFirstRenderRef.current = false;
   }, [
     userInitialState,

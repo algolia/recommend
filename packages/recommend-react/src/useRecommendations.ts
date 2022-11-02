@@ -26,7 +26,9 @@ export function useRecommendations<TObject>({
 }) {
   const isFirstRenderRef = useRef(true);
 
-  const { status, setStatus } = useStatus('loading');
+  const { status, setStatus } = useStatus(
+    userInitialState ? 'idle' : 'loading'
+  );
   const objectIDs = useStableValue(userObjectIDs);
   const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
@@ -61,10 +63,7 @@ export function useRecommendations<TObject>({
         setResult(response);
         setStatus('idle');
       });
-    } else {
-      setStatus('idle');
     }
-
     isFirstRenderRef.current = false;
   }, [
     userInitialState,
