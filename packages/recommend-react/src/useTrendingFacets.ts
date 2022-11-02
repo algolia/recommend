@@ -58,7 +58,10 @@ export function useTrendingFacets<TObject>({
         setResult(response);
         setStatus('idle');
       });
+    } else {
+      setStatus('idle');
     }
+
     isFirstRenderRef.current = false;
   }, [
     userInitialState,

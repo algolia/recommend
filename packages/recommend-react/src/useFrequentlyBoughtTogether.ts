@@ -56,7 +56,10 @@ export function useFrequentlyBoughtTogether<TObject>({
         setResult(response);
         setStatus('idle');
       });
+    } else {
+      setStatus('idle');
     }
+
     isFirstRenderRef.current = false;
   }, [
     userInitialState,

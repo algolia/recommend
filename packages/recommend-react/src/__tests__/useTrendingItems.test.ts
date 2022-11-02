@@ -78,6 +78,7 @@ describe('useTrendingItems', () => {
       expect(result.current.recommendations).toEqual(
         initialState.recommendations
       );
+      expect(result.current.status).toBe('idle');
     });
   });
 

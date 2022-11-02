@@ -59,7 +59,10 @@ export function useRelatedProducts<TObject>({
         setResult(response);
         setStatus('idle');
       });
+    } else {
+      setStatus('idle');
     }
+
     isFirstRenderRef.current = false;
   }, [
     userInitialState,
