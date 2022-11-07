@@ -9,6 +9,10 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
+export type UseFrequentlyBoughtTogetherProps<
+  TObject
+> = GetFrequentlyBoughtTogetherProps<TObject>;
+
 export function useFrequentlyBoughtTogether<TObject>({
   indexName,
   maxRecommendations,
@@ -17,7 +21,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   recommendClient,
   threshold,
   transformItems: userTransformItems,
-}: GetFrequentlyBoughtTogetherProps<TObject>) {
+}: UseFrequentlyBoughtTogetherProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });

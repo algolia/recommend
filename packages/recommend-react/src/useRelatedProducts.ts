@@ -9,6 +9,8 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
+export type UseRelatedProductsProps<TObject> = GetRelatedProductsProps<TObject>;
+
 export function useRelatedProducts<TObject>({
   fallbackParameters: userFallbackParameters,
   indexName,
@@ -18,7 +20,7 @@ export function useRelatedProducts<TObject>({
   recommendClient,
   threshold,
   transformItems: userTransformItems,
-}: GetRelatedProductsProps<TObject>) {
+}: UseRelatedProductsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });

@@ -14,7 +14,7 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
   }
 );
 
-type FrequentlyBoughtTogetherProps<
+export type FrequentlyBoughtTogetherProps<
   TObject
 > = GetFrequentlyBoughtTogetherProps<TObject> &
   Omit<FrequentlyBoughtTogetherVDOMProps<TObject>, 'items' | 'status'>;
