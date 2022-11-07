@@ -9,6 +9,8 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
+export type UseTrendingItemsProps<TObject> = GetTrendingItemsProps<TObject>;
+
 export function useTrendingItems<TObject>({
   fallbackParameters: userFallbackParameters,
   indexName,
@@ -19,7 +21,7 @@ export function useTrendingItems<TObject>({
   transformItems: userTransformItems,
   facetName,
   facetValue,
-}: GetTrendingItemsProps<TObject>) {
+}: UseTrendingItemsProps<TObject>) {
   const [result, setResult] = useState<GetTrendingItemsResult<TObject>>({
     recommendations: [],
   });

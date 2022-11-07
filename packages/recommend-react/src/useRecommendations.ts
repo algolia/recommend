@@ -9,6 +9,8 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
+export type UseRecommendationsProps<TObject> = GetRecommendationsProps<TObject>;
+
 export function useRecommendations<TObject>({
   fallbackParameters: userFallbackParameters,
   indexName,
@@ -19,7 +21,7 @@ export function useRecommendations<TObject>({
   recommendClient,
   threshold,
   transformItems: userTransformItems,
-}: GetRecommendationsProps<TObject>) {
+}: UseRecommendationsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });

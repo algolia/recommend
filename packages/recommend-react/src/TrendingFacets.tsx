@@ -12,7 +12,7 @@ const UncontrolledTrendingFacets = createTrendingFacetsComponent({
   Fragment,
 });
 
-type TrendingFacetsProps<TObject> = GetTrendingFacetsProps<TObject> &
+export type TrendingFacetsProps<TObject> = GetTrendingFacetsProps<TObject> &
   Omit<TrendingFacetsVDOMProps<TObject>, 'items' | 'status'>;
 
 export function TrendingFacets<TObject>(props: TrendingFacetsProps<TObject>) {
