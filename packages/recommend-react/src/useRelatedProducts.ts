@@ -28,7 +28,9 @@ export function useRelatedProducts<TObject>({
   const fallbackParameters = useStableValue(userFallbackParameters);
 
   const transformItemsRef = useRef(userTransformItems);
-  const transformItems = transformItemsRef.current;
+  useEffect(() => {
+    transformItemsRef.current = userTransformItems;
+  }, [userTransformItems]);
 
   useAlgoliaAgent({ recommendClient });
 
@@ -42,7 +44,7 @@ export function useRelatedProducts<TObject>({
       queryParameters,
       recommendClient,
       threshold,
-      transformItems,
+      transformItems: transformItemsRef.current,
     }).then((response) => {
       setResult(response);
       setStatus('idle');
@@ -56,7 +58,7 @@ export function useRelatedProducts<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    transformItems,
+    transformItemsRef,
   ]);
 
   return {

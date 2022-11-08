@@ -26,7 +26,9 @@ export function useFrequentlyBoughtTogether<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
 
   const transformItemsRef = useRef(userTransformItems);
-  const transformItems = transformItemsRef.current;
+  useEffect(() => {
+    transformItemsRef.current = userTransformItems;
+  }, [userTransformItems]);
 
   useAlgoliaAgent({ recommendClient });
 
@@ -39,7 +41,7 @@ export function useFrequentlyBoughtTogether<TObject>({
       queryParameters,
       recommendClient,
       threshold,
-      transformItems,
+      transformItems: transformItemsRef.current,
     }).then((response) => {
       setResult(response);
       setStatus('idle');
@@ -52,7 +54,7 @@ export function useFrequentlyBoughtTogether<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    transformItems,
+    transformItemsRef,
   ]);
 
   return {

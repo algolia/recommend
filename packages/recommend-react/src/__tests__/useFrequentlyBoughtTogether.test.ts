@@ -1,4 +1,6 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/dom';
+import { act, renderHook } from '@testing-library/react-hooks';
+import { StrictMode } from 'react';
 
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import {
@@ -24,11 +26,11 @@ function createMockedRecommendClient() {
 }
 
 describe('useFrequentlyBoughtTogether', () => {
-  test('gets Frequently Bought Together products', () => {
+  test('returns FBT recommendations', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
-    renderHook(() => {
-      const { recommendations } = useFrequentlyBoughtTogether({
+    const { result } = renderHook(() =>
+      useFrequentlyBoughtTogether({
         indexName: 'test',
         recommendClient,
         threshold: 0,
@@ -36,10 +38,50 @@ describe('useFrequentlyBoughtTogether', () => {
         queryParameters: {
           facetFilters: ['test'],
         },
-        transformItems: (items) => items,
-      });
+      })
+    );
+    await waitFor(() => {
+      expect(result.current.recommendations).toEqual([hit]);
+    });
+  });
 
-      expect(recommendations).toEqual([hit]);
+  test('assures that the transformItems function always returns an array', async () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    const { result, rerender } = renderHook(
+      () =>
+        useFrequentlyBoughtTogether({
+          indexName: 'test',
+          recommendClient,
+          threshold: 0,
+          objectIDs: ['testing'],
+          queryParameters: {
+            facetFilters: ['test'],
+          },
+          transformItems: (items) => {
+            return items.map((item) => {
+              return item.name;
+            });
+          },
+        }),
+      {
+        wrapper: StrictMode,
+      }
+    );
+    await waitFor(() => {
+      expect(result.current.recommendations).toEqual([
+        'Landoh 4-Pocket Jumpsuit',
+      ]);
+    });
+
+    act(() => {
+      rerender();
+    });
+
+    await waitFor(() => {
+      expect(result.current.recommendations).toEqual([
+        'Landoh 4-Pocket Jumpsuit',
+      ]);
     });
   });
 });
