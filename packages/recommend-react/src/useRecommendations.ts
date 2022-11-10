@@ -61,7 +61,6 @@ export function useRecommendations<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    transformItemsRef,
   ]);
 
   return {

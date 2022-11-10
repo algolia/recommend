@@ -58,7 +58,6 @@ export function useRelatedProducts<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    transformItemsRef,
   ]);
 
   return {

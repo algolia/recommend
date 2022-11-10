@@ -54,7 +54,6 @@ export function useFrequentlyBoughtTogether<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    transformItemsRef,
   ]);
 
   return {

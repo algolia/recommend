@@ -3,7 +3,7 @@ import {
   FrequentlyBoughtTogether,
   RelatedProducts,
   TrendingItems,
-  TrendingFacets,
+  TrendingFacets, useFrequentlyBoughtTogether,
 } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
@@ -65,9 +65,28 @@ function App() {
     null
   );
 
+  const { recommendations } = useFrequentlyBoughtTogether({
+    recommendClient,
+    indexName: 'test_FLAGSHIP_ECOM_recommend',
+    objectIDs: ['M0E20000000EAAK'],
+    maxRecommendations: 2,
+    transformItems: (items) => {
+      console.log('transformItems', { items });
+      return items;
+    },
+  });
+
   return (
     <div className="container">
       <h1>Algolia Recommend</h1>
+      <h2>Frequently bought together</h2>
+      <ul className="ais-Hits-list">
+        {recommendations.map((hit) => (
+          <li className="ais-Hits-item" key={hit.objectID}>
+            <Hit hit={hit} />
+          </li>
+        ))}
+      </ul>
       <Autocomplete
         placeholder="Search for a product"
         openOnFocus={true}

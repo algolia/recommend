@@ -58,7 +58,6 @@ export function useTrendingItems<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    transformItemsRef,
     facetName,
     facetValue,
   ]);
