@@ -2,13 +2,13 @@ import { waitFor } from '@testing-library/dom';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { StrictMode } from 'react';
 
+import { getItemName, getItemPrice } from '../../../../test/utils';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import {
   createRecommendClient,
   hit,
 } from '../../../../test/utils/createRecommendClient';
 import { useFrequentlyBoughtTogether } from '../useFrequentlyBoughtTogether';
-import {getItemName, getItemPrice} from "../../../../test/utils";
 
 function createMockedRecommendClient() {
   const recommendClient = createRecommendClient({
@@ -27,7 +27,7 @@ function createMockedRecommendClient() {
 }
 
 describe('useFrequentlyBoughtTogether', () => {
-  test.skip('returns FBT recommendations', async () => {
+  test('returns FBT recommendations', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { result } = renderHook(() =>
@@ -46,7 +46,7 @@ describe('useFrequentlyBoughtTogether', () => {
     });
   });
 
-  test.skip('assures that the transformItems function always returns an array', async () => {
+  test('assures that the transformItems function always returns an array', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { result, rerender } = renderHook(
