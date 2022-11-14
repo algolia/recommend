@@ -50,46 +50,6 @@ describe('useRelatedProducts', () => {
     });
   });
 
-  test('assures that the transformItems function always returns an array', async () => {
-    const { recommendClient } = createMockedRecommendClient();
-
-    const { result, rerender } = renderHook(
-      () =>
-        useRelatedProducts({
-          indexName: 'test',
-          recommendClient,
-          threshold: 0,
-          objectIDs: ['testing'],
-          queryParameters: {
-            facetFilters: ['test'],
-          },
-          transformItems: (items) => {
-            return items.map((item) => {
-              return item.name;
-            });
-          },
-        }),
-      {
-        wrapper: StrictMode,
-      }
-    );
-    await waitFor(() => {
-      expect(result.current.recommendations).toEqual([
-        'Landoh 4-Pocket Jumpsuit',
-      ]);
-    });
-
-    act(() => {
-      rerender();
-    });
-
-    await waitFor(() => {
-      expect(result.current.recommendations).toEqual([
-        'Landoh 4-Pocket Jumpsuit',
-      ]);
-    });
-  });
-
   test('assures that the transformItems function is applied properly after rerender', async () => {
     const { recommendClient } = createMockedRecommendClient();
 

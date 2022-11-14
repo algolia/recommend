@@ -25,12 +25,12 @@ export function useFrequentlyBoughtTogether<TObject>({
   const objectIDs = useStableValue(userObjectIDs);
   const queryParameters = useStableValue(userQueryParameters);
 
+  useAlgoliaAgent({ recommendClient });
+
   const transformItemsRef = useRef(userTransformItems);
   useEffect(() => {
     transformItemsRef.current = userTransformItems;
   }, [userTransformItems]);
-
-  useAlgoliaAgent({ recommendClient });
 
   useEffect(() => {
     setStatus('loading');

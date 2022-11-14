@@ -50,49 +50,6 @@ describe('useTrendingFacets', () => {
     });
   });
 
-  test('assures that the transformItems function always returns an array', async () => {
-    const { recommendClient } = createMockedRecommendClient();
-
-    const { result, rerender } = renderHook(
-      () =>
-        useTrendingFacets({
-          indexName: 'test',
-          recommendClient,
-          threshold: 0,
-          queryParameters: {
-            facetFilters: ['test'],
-          },
-          fallbackParameters: {
-            facetFilters: ['test2'],
-          },
-          facetName: 'test4',
-          transformItems: (items) => {
-            return items.map((item) => {
-              return item.name;
-            });
-          },
-        }),
-      {
-        wrapper: StrictMode,
-      }
-    );
-    await waitFor(() => {
-      expect(result.current.recommendations).toEqual([
-        'Landoh 4-Pocket Jumpsuit',
-      ]);
-    });
-
-    act(() => {
-      rerender();
-    });
-
-    await waitFor(() => {
-      expect(result.current.recommendations).toEqual([
-        'Landoh 4-Pocket Jumpsuit',
-      ]);
-    });
-  });
-
   test('assures that the transformItems function is applied properly after rerender', async () => {
     const { recommendClient } = createMockedRecommendClient();
 

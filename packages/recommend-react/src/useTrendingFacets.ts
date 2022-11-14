@@ -26,12 +26,12 @@ export function useTrendingFacets<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
+  useAlgoliaAgent({ recommendClient });
+
   const transformItemsRef = useRef(userTransformItems);
   useEffect(() => {
     transformItemsRef.current = userTransformItems;
   }, [userTransformItems]);
-
-  useAlgoliaAgent({ recommendClient });
 
   useEffect(() => {
     setStatus('loading');
