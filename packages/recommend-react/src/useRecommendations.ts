@@ -3,7 +3,7 @@ import {
   GetRecommendationsProps,
   GetRecommendationsResult,
 } from '@algolia/recommend-core';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
@@ -27,11 +27,15 @@ export function useRecommendations<TObject>({
   });
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);
-  const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
   useAlgoliaAgent({ recommendClient });
+
+  const transformItemsRef = useRef(userTransformItems);
+  useEffect(() => {
+    transformItemsRef.current = userTransformItems;
+  }, [userTransformItems]);
 
   useEffect(() => {
     setStatus('loading');
@@ -44,7 +48,7 @@ export function useRecommendations<TObject>({
       queryParameters,
       recommendClient,
       threshold,
-      transformItems,
+      transformItems: transformItemsRef.current,
     }).then((response) => {
       setResult(response);
       setStatus('idle');
@@ -59,7 +63,6 @@ export function useRecommendations<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    transformItems,
   ]);
 
   return {

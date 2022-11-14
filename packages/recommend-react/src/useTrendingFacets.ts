@@ -3,7 +3,7 @@ import {
   GetTrendingFacetsProps,
   GetTrendingFacetsResult,
 } from '@algolia/recommend-core';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
@@ -25,17 +25,21 @@ export function useTrendingFacets<TObject>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
-  const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
   useAlgoliaAgent({ recommendClient });
 
+  const transformItemsRef = useRef(userTransformItems);
+  useEffect(() => {
+    transformItemsRef.current = userTransformItems;
+  }, [userTransformItems]);
+
   useEffect(() => {
     setStatus('loading');
     getTrendingFacets({
       recommendClient,
-      transformItems,
+      transformItems: transformItemsRef.current,
       fallbackParameters,
       indexName,
       maxRecommendations,
@@ -54,7 +58,6 @@ export function useTrendingFacets<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    transformItems,
     facetName,
   ]);
 
