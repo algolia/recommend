@@ -1,3 +1,17 @@
+# [1.8.0](https://github.com/algolia/recommend/compare/v1.7.1...v1.8.0) (2022-11-14)
+
+
+### Bug Fixes
+
+* **react:** correctly stabilize `transformItems` function ([#110](https://github.com/algolia/recommend/issues/110)) ([3384224](https://github.com/algolia/recommend/commit/3384224cd534b6801f2f5d9d6d096a79f9198156))
+
+
+### Features
+
+* **react:** export props types ([#112](https://github.com/algolia/recommend/issues/112)) ([9abee3f](https://github.com/algolia/recommend/commit/9abee3fc729dac53c498f392ad0f0f9087b8c983))
+
+
+
 ## [1.7.1](https://github.com/algolia/recommend/compare/v1.7.0...v1.7.1) (2022-09-26)
 
 
