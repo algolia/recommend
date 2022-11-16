@@ -10,6 +10,8 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
+export type UseTrendingFacetsProps<TObject> = GetTrendingFacetsProps<TObject>;
+
 export function useTrendingFacets<TObject>({
   fallbackParameters: userFallbackParameters,
   indexName,
@@ -20,7 +22,7 @@ export function useTrendingFacets<TObject>({
   transformItems: userTransformItems,
   facetName,
   initialState: userInitialState,
-}: GetTrendingFacetsProps<TObject> & {
+}: UseTrendingFacetsProps<TObject> & {
   initialState?: InitialState<TObject>;
 }) {
   const isFirstRenderRef = useRef(true);
@@ -42,6 +44,11 @@ export function useTrendingFacets<TObject>({
 
   useAlgoliaAgent({ recommendClient });
 
+  const transformItemsRef = useRef(userTransformItems);
+  useEffect(() => {
+    transformItemsRef.current = userTransformItems;
+  }, [userTransformItems]);
+
   useEffect(() => {
     const shouldFetch = !userInitialState || !isFirstRenderRef.current;
 
@@ -49,7 +56,7 @@ export function useTrendingFacets<TObject>({
       setStatus('loading');
       getTrendingFacets({
         recommendClient,
-        transformItems,
+        transformItems: transformItemsRef.current,
         fallbackParameters,
         indexName,
         maxRecommendations,
@@ -71,7 +78,6 @@ export function useTrendingFacets<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    transformItems,
     facetName,
   ]);
 

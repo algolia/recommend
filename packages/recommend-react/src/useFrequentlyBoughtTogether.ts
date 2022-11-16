@@ -10,6 +10,10 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
+export type UseFrequentlyBoughtTogetherProps<
+  TObject
+> = GetFrequentlyBoughtTogetherProps<TObject>;
+
 export function useFrequentlyBoughtTogether<TObject>({
   indexName,
   maxRecommendations,
@@ -19,7 +23,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   threshold,
   transformItems: userTransformItems,
   initialState: userInitialState,
-}: GetFrequentlyBoughtTogetherProps<TObject> & {
+}: UseFrequentlyBoughtTogetherProps<TObject> & {
   initialState?: InitialState<TObject>;
 }) {
   const isFirstRenderRef = useRef(true);
@@ -28,7 +32,6 @@ export function useFrequentlyBoughtTogether<TObject>({
     userInitialState ? 'idle' : 'loading'
   );
   const objectIDs = useStableValue(userObjectIDs);
-  const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
 
   const initialState = useStableValue<GetRecommendationsResult<TObject>>({
@@ -40,6 +43,11 @@ export function useFrequentlyBoughtTogether<TObject>({
   );
 
   useAlgoliaAgent({ recommendClient });
+
+  const transformItemsRef = useRef(userTransformItems);
+  useEffect(() => {
+    transformItemsRef.current = userTransformItems;
+  }, [userTransformItems]);
 
   useEffect(() => {
     const shouldFetch = !userInitialState || !isFirstRenderRef.current;
@@ -53,7 +61,7 @@ export function useFrequentlyBoughtTogether<TObject>({
         queryParameters,
         recommendClient,
         threshold,
-        transformItems,
+        transformItems: transformItemsRef.current,
       }).then((response) => {
         setResult(response);
         setStatus('idle');
@@ -69,7 +77,6 @@ export function useFrequentlyBoughtTogether<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    transformItems,
   ]);
 
   return {

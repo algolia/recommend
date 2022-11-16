@@ -12,7 +12,7 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
   Fragment,
 });
 
-type RelatedProductsProps<TObject> = GetRelatedProductsProps<TObject> &
+export type RelatedProductsProps<TObject> = GetRelatedProductsProps<TObject> &
   Omit<RelatedProductsVDOMProps<TObject>, 'items' | 'status'>;
 
 export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {

@@ -10,6 +10,8 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
+export type UseRelatedProductsProps<TObject> = GetRelatedProductsProps<TObject>;
+
 export function useRelatedProducts<TObject>({
   fallbackParameters: userFallbackParameters,
   indexName,
@@ -20,7 +22,7 @@ export function useRelatedProducts<TObject>({
   threshold,
   transformItems: userTransformItems,
   initialState: userInitialState,
-}: GetRelatedProductsProps<TObject> & {
+}: UseRelatedProductsProps<TObject> & {
   initialState?: InitialState<TObject>;
 }) {
   const isFirstRenderRef = useRef(true);
@@ -29,7 +31,6 @@ export function useRelatedProducts<TObject>({
     userInitialState ? 'idle' : 'loading'
   );
   const objectIDs = useStableValue(userObjectIDs);
-  const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
@@ -42,6 +43,11 @@ export function useRelatedProducts<TObject>({
   );
 
   useAlgoliaAgent({ recommendClient });
+
+  const transformItemsRef = useRef(userTransformItems);
+  useEffect(() => {
+    transformItemsRef.current = userTransformItems;
+  }, [userTransformItems]);
 
   useEffect(() => {
     const shouldFetch = !userInitialState || !isFirstRenderRef.current;
@@ -56,7 +62,7 @@ export function useRelatedProducts<TObject>({
         queryParameters,
         recommendClient,
         threshold,
-        transformItems,
+        transformItems: transformItemsRef.current,
       }).then((response) => {
         setResult(response);
         setStatus('idle');
@@ -73,7 +79,6 @@ export function useRelatedProducts<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    transformItems,
   ]);
 
   return {
