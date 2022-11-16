@@ -31,7 +31,6 @@ export function useTrendingItems<TObject>({
   const { status, setStatus } = useStatus(
     userInitialState ? 'idle' : 'loading'
   );
-  const transformItems = useStableValue(userTransformItems);
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
