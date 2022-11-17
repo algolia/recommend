@@ -1,10 +1,9 @@
 import { waitFor } from '@testing-library/dom';
 import { act, renderHook } from '@testing-library/react-hooks';
-
-import { hit, initialState } from '../../../../test/utils/constants';
 import { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
+import { hit, initialState } from '../../../../test/utils/constants';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
 import { useTrendingFacets } from '../useTrendingFacets';
@@ -174,13 +173,21 @@ describe('useTrendingFacets', () => {
       }
     );
     expect(recommendClient.getTrendingFacets).toHaveBeenCalledTimes(0);
-    expect(recommendClient.getTrendingFacets).toHaveBeenCalledWith({indexName: 'test'});
 
     act(() => {
       rerender({ indexName: 'test1' });
     });
 
     expect(recommendClient.getTrendingFacets).toHaveBeenCalledTimes(1);
-    expect(recommendClient.getTrendingFacets).toHaveBeenCalledWith({indexName: 'test1'});
+    expect(recommendClient.getTrendingFacets).toHaveBeenCalledWith([
+      {
+        fallbackParameters: { facetFilters: ['test2'] },
+        indexName: 'test1',
+        maxRecommendations: undefined,
+        facetName: 'test4',
+        queryParameters: { facetFilters: ['test'] },
+        threshold: 0,
+      },
+    ]);
   });
 });
