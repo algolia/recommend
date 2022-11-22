@@ -180,14 +180,9 @@ describe('useTrendingFacets', () => {
 
     expect(recommendClient.getTrendingFacets).toHaveBeenCalledTimes(1);
     expect(recommendClient.getTrendingFacets).toHaveBeenCalledWith([
-      {
-        fallbackParameters: { facetFilters: ['test2'] },
+      expect.objectContaining({
         indexName: 'test1',
-        maxRecommendations: undefined,
-        facetName: 'test4',
-        queryParameters: { facetFilters: ['test'] },
-        threshold: 0,
-      },
+      }),
     ]);
   });
 });

@@ -182,15 +182,9 @@ describe('useRecommendations', () => {
 
     expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1);
     expect(recommendClient.getRecommendations).toHaveBeenCalledWith([
-      {
-        fallbackParameters: { facetFilters: ['test2'] },
+      expect.objectContaining({
         indexName: 'test1',
-        maxRecommendations: undefined,
-        model: 'bought-together',
-        objectID: 'testing',
-        queryParameters: { facetFilters: ['test'] },
-        threshold: 0,
-      },
+      }),
     ]);
   });
 });

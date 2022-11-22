@@ -185,15 +185,9 @@ describe('useTrendingItems', () => {
 
     expect(recommendClient.getTrendingItems).toHaveBeenCalledTimes(1);
     expect(recommendClient.getTrendingItems).toHaveBeenCalledWith([
-      {
-        fallbackParameters: { facetFilters: ['test2'] },
+      expect.objectContaining({
         indexName: 'test1',
-        maxRecommendations: undefined,
-        facetName: 'test4',
-        facetValue: 'test3',
-        queryParameters: { facetFilters: ['test'] },
-        threshold: 0,
-      },
+      }),
     ]);
   });
 });

@@ -177,14 +177,9 @@ describe('useRelatedProducts', () => {
 
     expect(recommendClient.getRelatedProducts).toHaveBeenCalledTimes(1);
     expect(recommendClient.getRelatedProducts).toHaveBeenCalledWith([
-      {
-        fallbackParameters: { facetFilters: ['test2'] },
+      expect.objectContaining({
         indexName: 'test1',
-        maxRecommendations: undefined,
-        objectID: 'testing',
-        queryParameters: { facetFilters: ['test'] },
-        threshold: 0,
-      },
+      }),
     ]);
   });
 });

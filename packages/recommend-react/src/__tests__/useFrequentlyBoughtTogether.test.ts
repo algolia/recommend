@@ -170,13 +170,9 @@ describe('useFrequentlyBoughtTogether', () => {
       1
     );
     expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledWith([
-      {
+      expect.objectContaining({
         indexName: 'test1',
-        maxRecommendations: undefined,
-        objectID: 'testing',
-        queryParameters: { facetFilters: ['test'] },
-        threshold: 0,
-      },
+      }),
     ]);
   });
 });
