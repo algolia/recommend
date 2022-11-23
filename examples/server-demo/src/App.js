@@ -10,7 +10,6 @@ const indexName = 'test_FLAGSHIP_ECOM_recommend';
 const recommendClient = algoliarecommend(appId, apiKey);
 
 const App = ({ initialRecommendations }) => {
-
   const { recommendations: trendingItems } = useTrendingItems({
     recommendClient,
     indexName,
@@ -51,7 +50,7 @@ const App = ({ initialRecommendations }) => {
         }}
       >
         {trendingItems.map((item) => (
-          <ProductItem item={item} />
+          <ProductItem item={item} key={item.objectID} />
         ))}
       </div>
 
@@ -66,7 +65,7 @@ const App = ({ initialRecommendations }) => {
         }}
       >
         {relatedProducts.map((item) => (
-          <ProductItem item={item} />
+          <ProductItem item={item} key={item.objectID} />
         ))}
       </div>
 
@@ -81,7 +80,7 @@ const App = ({ initialRecommendations }) => {
         }}
       >
         {fbtProducts.map((item) => (
-          <ProductItem item={item} />
+          <ProductItem item={item} key={item.objectID} />
         ))}
       </div>
     </div>
