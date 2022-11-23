@@ -10,7 +10,7 @@
   "dependencies": {
     "@algolia/client-search": "4.10.5",
     "@algolia/recommend": "4.13.0",
-    "@algolia/recommend-react": "1.7.1",
+    "@algolia/recommend-react": "1.8.0",
     "algoliasearch": "4.10.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",

@@ -26,6 +26,6 @@ export const hit = {
   ],
 };
 
-export const initialState = {
+export const initialRecommendations = {
   recommendations: [hit],
 };

@@ -2,7 +2,7 @@ import {
   getTrendingItems,
   GetTrendingItemsProps,
   GetTrendingItemsResult,
-  InitialState,
+  InitialRecommendations,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -22,21 +22,21 @@ export function useTrendingItems<TObject>({
   transformItems: userTransformItems,
   facetName,
   facetValue,
-  initialState: userInitialState,
+  initialRecommendations: userInitialRecommendations,
 }: UseTrendingItemsProps<TObject> & {
-  initialState?: InitialState<TObject>;
+  initialRecommendations?: InitialRecommendations<TObject>;
 }) {
   const isFirstRenderRef = useRef(true);
 
   const { status, setStatus } = useStatus(
-    userInitialState ? 'idle' : 'loading'
+    userInitialRecommendations ? 'idle' : 'loading'
   );
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
   const initialState = useStableValue<GetTrendingItemsResult<TObject>>({
     recommendations: [],
-    ...userInitialState,
+    ...userInitialRecommendations,
   });
   const [result, setResult] = useState<GetTrendingItemsResult<TObject>>(
     initialState
@@ -50,7 +50,8 @@ export function useTrendingItems<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    const shouldFetch = !userInitialState || !isFirstRenderRef.current;
+    const shouldFetch =
+      !userInitialRecommendations || !isFirstRenderRef.current;
 
     if (shouldFetch) {
       setStatus('loading');
@@ -71,7 +72,7 @@ export function useTrendingItems<TObject>({
     }
     isFirstRenderRef.current = false;
   }, [
-    userInitialState,
+    userInitialRecommendations,
     fallbackParameters,
     indexName,
     maxRecommendations,

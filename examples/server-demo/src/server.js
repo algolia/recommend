@@ -12,7 +12,7 @@ const app = express();
 app.get('/', (req, res) => {
   const app = ReactDOMServer.renderToString(<App />);
 
-  const initialState = {
+  const initialRecommendations = {
     recommendations: [
       {
         name: 'Sneakers Hogan Rebel pink',
@@ -53,7 +53,7 @@ app.get('/', (req, res) => {
   res.send(
     html({
       body: app,
-      initialState,
+      initialRecommendations,
     })
   );
 });

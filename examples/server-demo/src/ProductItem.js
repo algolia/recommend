@@ -4,6 +4,8 @@ const ProductItem = ({ item }) => {
   // eslint-disable-next-line @typescript-eslint/camelcase
   const { name, objectID, price, image_urls } = item;
 
+  console.log(item)
+
   return (
     <div style={{ maxWidth: '18%' }}>
       <img

@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
-import { hit, initialState } from '../../../../test/utils/constants';
+import { hit, initialRecommendations } from '../../../../test/utils/constants';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
 import { useFrequentlyBoughtTogether } from '../useFrequentlyBoughtTogether';
@@ -96,7 +96,7 @@ describe('useFrequentlyBoughtTogether', () => {
             facetFilters: ['test'],
           },
           transformItems: (items) => items,
-          initialState,
+          initialRecommendations,
         }),
       {
         wrapper: StrictMode,
@@ -105,7 +105,7 @@ describe('useFrequentlyBoughtTogether', () => {
 
     await waitFor(() => {
       expect(result.current.recommendations).toEqual(
-        initialState.recommendations
+        initialRecommendations.recommendations
       );
       expect(result.current.status).toBe('idle');
     });
@@ -125,7 +125,7 @@ describe('useFrequentlyBoughtTogether', () => {
             facetFilters: ['test'],
           },
           transformItems: (items) => items,
-          initialState,
+          initialRecommendations,
         }),
       {
         wrapper: StrictMode,
@@ -151,7 +151,7 @@ describe('useFrequentlyBoughtTogether', () => {
             facetFilters: ['test'],
           },
           transformItems: (items) => items,
-          initialState,
+          initialRecommendations,
         }),
       {
         wrapper: StrictMode,

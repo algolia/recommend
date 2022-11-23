@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
-import { hit, initialState } from '../../../../test/utils/constants';
+import { hit, initialRecommendations } from '../../../../test/utils/constants';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
 import { useTrendingFacets } from '../useTrendingFacets';
@@ -106,7 +106,7 @@ describe('useTrendingFacets', () => {
           },
           facetName: 'test4',
           transformItems: (items) => items,
-          initialState,
+          initialRecommendations,
         }),
       {
         wrapper: StrictMode,
@@ -115,7 +115,7 @@ describe('useTrendingFacets', () => {
 
     await waitFor(() => {
       expect(result.current.recommendations).toEqual(
-        initialState.recommendations
+        initialRecommendations.recommendations
       );
       expect(result.current.status).toBe('idle');
     });
@@ -138,7 +138,7 @@ describe('useTrendingFacets', () => {
           },
           facetName: 'test4',
           transformItems: (items) => items,
-          initialState,
+          initialRecommendations,
         }),
       {
         wrapper: StrictMode,
@@ -165,7 +165,7 @@ describe('useTrendingFacets', () => {
           },
           facetName: 'test4',
           transformItems: (items) => items,
-          initialState,
+          initialRecommendations,
         }),
       {
         wrapper: StrictMode,

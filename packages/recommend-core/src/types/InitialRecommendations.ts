@@ -1,5 +1,5 @@
 import { ProductRecord } from './ProductRecord';
 
-export type InitialState<TObject> = {
+export type InitialRecommendations<TObject> = {
   recommendations: Array<ProductRecord<TObject>>;
 };

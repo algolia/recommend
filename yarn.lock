@@ -188,25 +188,6 @@
   dependencies:
     "@algolia/logger-common" "4.13.0"
 
-"@algolia/recommend-core@1.7.1":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@algolia/recommend-core/-/recommend-core-1.7.1.tgz#32af0b9bf73228ca115a24180bc532b5a0e1add5"
-  integrity sha512-11Oi0QeKekRv8G82jBz98whbUVjp1B5uOS+TT4o793vrDeCnuBTPHM0n5zHt2yqjmpHqC3VjmPxjuaOu07wuPQ==
-
-"@algolia/recommend-react@1.7.1":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@algolia/recommend-react/-/recommend-react-1.7.1.tgz#5602d83a196a6c488a34a54537e6545f069ce311"
-  integrity sha512-/6W5P5yEgjRy/PdJCotwQHcN6N0vI91hOVwOvQtMiwitXn0lkRHLm/VgRRvM0rT8WO4EG5yB9Y49jPaFUa6+9A==
-  dependencies:
-    "@algolia/recommend-core" "1.7.1"
-    "@algolia/recommend-vdom" "1.7.1"
-    dequal "^2.0.0"
-
-"@algolia/recommend-vdom@1.7.1":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@algolia/recommend-vdom/-/recommend-vdom-1.7.1.tgz#7c1761705cde6fd15d609ad0d87660a180e401e2"
-  integrity sha512-Ap+y+pCMFJZVrGl2UG64tuKeWKeuvzzW3AuGG3XS8UEcvJRn/ROBOjWNMwE0kURHQSWhfoyEuciYdsKa7Pc90w==
-
 "@algolia/recommend@4.13.0":
   version "4.13.0"
   resolved "https://registry.npmjs.org/@algolia/recommend/-/recommend-4.13.0.tgz"
