@@ -2,6 +2,7 @@ import {
   getTrendingItems,
   GetTrendingItemsProps,
   GetTrendingItemsResult,
+  InitialResult,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -21,13 +22,25 @@ export function useTrendingItems<TObject>({
   transformItems: userTransformItems,
   facetName,
   facetValue,
-}: UseTrendingItemsProps<TObject>) {
-  const [result, setResult] = useState<GetTrendingItemsResult<TObject>>({
-    recommendations: [],
-  });
-  const { status, setStatus } = useStatus('loading');
+  initialResult: userInitialResult,
+}: UseTrendingItemsProps<TObject> & {
+  initialResult?: InitialResult<TObject>;
+}) {
+  const isFirstRenderRef = useRef(true);
+
+  const { status, setStatus } = useStatus(
+    userInitialResult ? 'idle' : 'loading'
+  );
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
+
+  const initialResult = useStableValue<GetTrendingItemsResult<TObject>>({
+    recommendations: [],
+    ...userInitialResult,
+  });
+  const [result, setResult] = useState<GetTrendingItemsResult<TObject>>(
+    initialResult
+  );
 
   useAlgoliaAgent({ recommendClient });
 
@@ -37,22 +50,28 @@ export function useTrendingItems<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    setStatus('loading');
-    getTrendingItems({
-      recommendClient,
-      transformItems: transformItemsRef.current,
-      fallbackParameters,
-      indexName,
-      maxRecommendations,
-      queryParameters,
-      threshold,
-      facetName,
-      facetValue,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    const shouldFetch = !userInitialResult || !isFirstRenderRef.current;
+
+    if (shouldFetch) {
+      setStatus('loading');
+      getTrendingItems({
+        recommendClient,
+        transformItems: transformItemsRef.current,
+        fallbackParameters,
+        indexName,
+        maxRecommendations,
+        queryParameters,
+        threshold,
+        facetName,
+        facetValue,
+      }).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
+    }
+    isFirstRenderRef.current = false;
   }, [
+    userInitialResult,
     fallbackParameters,
     indexName,
     maxRecommendations,

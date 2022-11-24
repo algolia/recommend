@@ -3,11 +3,9 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
+import { hit, initialResult } from '../../../../test/utils/constants';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
-import {
-  createRecommendClient,
-  hit,
-} from '../../../../test/utils/createRecommendClient';
+import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
 import { useTrendingItems } from '../useTrendingItems';
 
 function createMockedRecommendClient() {
@@ -91,5 +89,105 @@ describe('useTrendingItems', () => {
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([250]);
     });
+  });
+
+  test('gets trending items from initialResult', async () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    const { result } = renderHook(
+      () =>
+        useTrendingItems({
+          indexName: 'test',
+          recommendClient,
+          threshold: 0,
+          queryParameters: {
+            facetFilters: ['test'],
+          },
+          fallbackParameters: {
+            facetFilters: ['test2'],
+          },
+          facetName: 'test4',
+          facetValue: 'test3',
+          transformItems: (items) => items,
+          initialResult,
+        }),
+      {
+        wrapper: StrictMode,
+      }
+    );
+
+    await waitFor(() => {
+      expect(result.current.recommendations).toEqual(
+        initialResult.recommendations
+      );
+      expect(result.current.status).toBe('idle');
+    });
+  });
+
+  test("doesn't initially fetch the recommendations with initialResult", () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    renderHook(
+      () =>
+        useTrendingItems({
+          indexName: 'test',
+          recommendClient,
+          threshold: 0,
+          queryParameters: {
+            facetFilters: ['test'],
+          },
+          fallbackParameters: {
+            facetFilters: ['test2'],
+          },
+          facetName: 'test4',
+          facetValue: 'test3',
+          transformItems: (items) => items,
+          initialResult,
+        }),
+      {
+        wrapper: StrictMode,
+      }
+    );
+
+    expect(recommendClient.getTrendingItems).toHaveBeenCalledTimes(0);
+  });
+
+  test('fetches recommendations when props change with initialResult', () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    const { rerender } = renderHook(
+      ({ indexName }) =>
+        useTrendingItems({
+          indexName,
+          recommendClient,
+          threshold: 0,
+          queryParameters: {
+            facetFilters: ['test'],
+          },
+          fallbackParameters: {
+            facetFilters: ['test2'],
+          },
+          facetName: 'test4',
+          facetValue: 'test3',
+          transformItems: (items) => items,
+          initialResult,
+        }),
+      {
+        wrapper: StrictMode,
+        initialProps: { indexName: 'test' },
+      }
+    );
+    expect(recommendClient.getTrendingItems).toHaveBeenCalledTimes(0);
+
+    act(() => {
+      rerender({ indexName: 'test1' });
+    });
+
+    expect(recommendClient.getTrendingItems).toHaveBeenCalledTimes(1);
+    expect(recommendClient.getTrendingItems).toHaveBeenCalledWith([
+      expect.objectContaining({
+        indexName: 'test1',
+      }),
+    ]);
   });
 });

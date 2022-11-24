@@ -2,6 +2,7 @@ import {
   getFrequentlyBoughtTogether,
   GetFrequentlyBoughtTogetherProps,
   GetRecommendationsResult,
+  InitialResult,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -21,13 +22,25 @@ export function useFrequentlyBoughtTogether<TObject>({
   recommendClient,
   threshold,
   transformItems: userTransformItems,
-}: UseFrequentlyBoughtTogetherProps<TObject>) {
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
-    recommendations: [],
-  });
-  const { status, setStatus } = useStatus('loading');
+  initialResult: userInitialResult,
+}: UseFrequentlyBoughtTogetherProps<TObject> & {
+  initialResult?: InitialResult<TObject>;
+}) {
+  const isFirstRenderRef = useRef(true);
+
+  const { status, setStatus } = useStatus(
+    userInitialResult ? 'idle' : 'loading'
+  );
   const objectIDs = useStableValue(userObjectIDs);
   const queryParameters = useStableValue(userQueryParameters);
+
+  const initialResult = useStableValue<GetRecommendationsResult<TObject>>({
+    recommendations: [],
+    ...userInitialResult,
+  });
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
+    initialResult
+  );
 
   useAlgoliaAgent({ recommendClient });
 
@@ -37,20 +50,26 @@ export function useFrequentlyBoughtTogether<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    setStatus('loading');
-    getFrequentlyBoughtTogether({
-      indexName,
-      maxRecommendations,
-      objectIDs,
-      queryParameters,
-      recommendClient,
-      threshold,
-      transformItems: transformItemsRef.current,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    const shouldFetch = !userInitialResult || !isFirstRenderRef.current;
+
+    if (shouldFetch) {
+      setStatus('loading');
+      getFrequentlyBoughtTogether({
+        indexName,
+        maxRecommendations,
+        objectIDs,
+        queryParameters,
+        recommendClient,
+        threshold,
+        transformItems: transformItemsRef.current,
+      }).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
+    }
+    isFirstRenderRef.current = false;
   }, [
+    userInitialResult,
     indexName,
     maxRecommendations,
     objectIDs,

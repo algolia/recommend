@@ -1,0 +1,29 @@
+{
+  "name": "@algolia/recommend-server-example",
+  "description": "Recommend Server example",
+  "version": "1.7.1",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start-server": "webpack && nodemon ./dist/server.js"
+  },
+  "dependencies": {
+    "@algolia/client-search": "4.10.5",
+    "@algolia/recommend": "4.13.0",
+    "@algolia/recommend-react": "1.8.0",
+    "algoliasearch": "4.10.5",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "express": "4.17.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.4.5",
+    "@babel/plugin-proposal-class-properties": "7.4.4",
+    "babel-core": "6.26.3",
+    "babel-loader": "8.0.6",
+    "nodemon": "1.19.3",
+    "webpack": "5.74.0",
+    "webpack-cli": "4.9.2",
+    "webpack-node-externals": "3.0.0"
+  }
+}

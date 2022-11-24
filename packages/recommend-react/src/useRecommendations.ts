@@ -2,6 +2,7 @@ import {
   getRecommendations,
   GetRecommendationsProps,
   GetRecommendationsResult,
+  InitialResult,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -21,14 +22,26 @@ export function useRecommendations<TObject>({
   recommendClient,
   threshold,
   transformItems: userTransformItems,
-}: UseRecommendationsProps<TObject>) {
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
-    recommendations: [],
-  });
-  const { status, setStatus } = useStatus('loading');
+  initialResult: userInitialResult,
+}: UseRecommendationsProps<TObject> & {
+  initialResult?: InitialResult<TObject>;
+}) {
+  const isFirstRenderRef = useRef(true);
+
+  const { status, setStatus } = useStatus(
+    userInitialResult ? 'idle' : 'loading'
+  );
   const objectIDs = useStableValue(userObjectIDs);
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
+
+  const initialResult = useStableValue<GetRecommendationsResult<TObject>>({
+    recommendations: [],
+    ...userInitialResult,
+  });
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
+    initialResult
+  );
 
   useAlgoliaAgent({ recommendClient });
 
@@ -38,22 +51,28 @@ export function useRecommendations<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    setStatus('loading');
-    getRecommendations({
-      fallbackParameters,
-      indexName,
-      maxRecommendations,
-      model,
-      objectIDs,
-      queryParameters,
-      recommendClient,
-      threshold,
-      transformItems: transformItemsRef.current,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    const shouldFetch = !userInitialResult || !isFirstRenderRef.current;
+
+    if (shouldFetch) {
+      setStatus('loading');
+      getRecommendations({
+        fallbackParameters,
+        indexName,
+        maxRecommendations,
+        model,
+        objectIDs,
+        queryParameters,
+        recommendClient,
+        threshold,
+        transformItems: transformItemsRef.current,
+      }).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
+    }
+    isFirstRenderRef.current = false;
   }, [
+    userInitialResult,
     fallbackParameters,
     indexName,
     maxRecommendations,

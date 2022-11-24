@@ -3,11 +3,9 @@ import { ObjectWithObjectID } from '@algolia/client-search';
 import { waitFor, within } from '@testing-library/dom';
 import { Fragment, h } from 'preact';
 
+import { hit } from '../../../../test/utils/constants';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
-import {
-  createRecommendClient,
-  hit,
-} from '../../../../test/utils/createRecommendClient';
+import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
 import { trendingFacets } from '../trendingFacets';
 
 function createMockedRecommendClient(recommendations: ObjectWithObjectID[]) {

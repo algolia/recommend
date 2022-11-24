@@ -3,11 +3,9 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
+import { hit, initialResult } from '../../../../test/utils/constants';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
-import {
-  createRecommendClient,
-  hit,
-} from '../../../../test/utils/createRecommendClient';
+import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
 import { useFrequentlyBoughtTogether } from '../useFrequentlyBoughtTogether';
 
 function createMockedRecommendClient() {
@@ -82,5 +80,99 @@ describe('useFrequentlyBoughtTogether', () => {
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([250]);
     });
+  });
+
+  test('returns FBT recommendations from initialResult', async () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    const { result } = renderHook(
+      () =>
+        useFrequentlyBoughtTogether({
+          indexName: 'test',
+          recommendClient,
+          threshold: 0,
+          objectIDs: ['testing'],
+          queryParameters: {
+            facetFilters: ['test'],
+          },
+          transformItems: (items) => items,
+          initialResult,
+        }),
+      {
+        wrapper: StrictMode,
+      }
+    );
+
+    await waitFor(() => {
+      expect(result.current.recommendations).toEqual(
+        initialResult.recommendations
+      );
+      expect(result.current.status).toBe('idle');
+    });
+  });
+
+  test("doesn't initially fetch the recommendations with initialResult", () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    renderHook(
+      () =>
+        useFrequentlyBoughtTogether({
+          indexName: 'test',
+          recommendClient,
+          threshold: 0,
+          objectIDs: ['testing'],
+          queryParameters: {
+            facetFilters: ['test'],
+          },
+          transformItems: (items) => items,
+          initialResult,
+        }),
+      {
+        wrapper: StrictMode,
+      }
+    );
+
+    expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(
+      0
+    );
+  });
+
+  test('fetches recommendations when props change with initialResult', () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    const { rerender } = renderHook(
+      ({ indexName }) =>
+        useFrequentlyBoughtTogether({
+          indexName,
+          recommendClient,
+          threshold: 0,
+          objectIDs: ['testing'],
+          queryParameters: {
+            facetFilters: ['test'],
+          },
+          transformItems: (items) => items,
+          initialResult,
+        }),
+      {
+        wrapper: StrictMode,
+        initialProps: { indexName: 'test' },
+      }
+    );
+    expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(
+      0
+    );
+
+    act(() => {
+      rerender({ indexName: 'test1' });
+    });
+
+    expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledTimes(
+      1
+    );
+    expect(recommendClient.getFrequentlyBoughtTogether).toHaveBeenCalledWith([
+      expect.objectContaining({
+        indexName: 'test1',
+      }),
+    ]);
   });
 });
