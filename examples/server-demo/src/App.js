@@ -9,12 +9,12 @@ const apiKey = '098f71f9e2267178bdfc08cc986d2999';
 const indexName = 'test_FLAGSHIP_ECOM_recommend';
 const recommendClient = algoliarecommend(appId, apiKey);
 
-const App = ({ initialRecommendations }) => {
+const App = ({ initialResults }) => {
   const { recommendations: trendingItems } = useTrendingItems({
     recommendClient,
     indexName,
     maxRecommendations: 3,
-    initialRecommendations,
+    initialResults,
   });
 
   const { recommendations: relatedProducts } = useRelatedProducts({
@@ -22,7 +22,7 @@ const App = ({ initialRecommendations }) => {
     indexName,
     objectIDs: ['M0E20000000DWIV'],
     maxRecommendations: 3,
-    initialRecommendations,
+    initialResults,
   });
 
   const { recommendations: fbtProducts } = useRelatedProducts({
@@ -30,7 +30,7 @@ const App = ({ initialRecommendations }) => {
     indexName,
     objectIDs: ['M0E20000000DWIV'],
     maxRecommendations: 3,
-    initialRecommendations,
+    initialResults,
   });
 
   return (

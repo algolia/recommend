@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
-import { hit, initialRecommendations } from '../../../../test/utils/constants';
+import { hit, initialResults } from '../../../../test/utils/constants';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
 import { useRelatedProducts } from '../useRelatedProducts';
@@ -86,7 +86,7 @@ describe('useRelatedProducts', () => {
     });
   });
 
-  test('gets related products from initialState', async () => {
+  test('gets related products from initialResults', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { result } = renderHook(
@@ -103,7 +103,7 @@ describe('useRelatedProducts', () => {
             facetFilters: ['test2'],
           },
           transformItems: (items) => items,
-          initialRecommendations,
+          initialResults,
         }),
       {
         wrapper: StrictMode,
@@ -112,7 +112,7 @@ describe('useRelatedProducts', () => {
 
     await waitFor(() => {
       expect(result.current.recommendations).toEqual(
-        initialRecommendations.recommendations
+        initialResults.recommendations
       );
       expect(result.current.status).toBe('idle');
     });
@@ -135,7 +135,7 @@ describe('useRelatedProducts', () => {
             facetFilters: ['test2'],
           },
           transformItems: (items) => items,
-          initialRecommendations,
+          initialResults,
         }),
       {
         wrapper: StrictMode,
@@ -162,7 +162,7 @@ describe('useRelatedProducts', () => {
             facetFilters: ['test2'],
           },
           transformItems: (items) => items,
-          initialRecommendations,
+          initialResults,
         }),
       {
         wrapper: StrictMode,

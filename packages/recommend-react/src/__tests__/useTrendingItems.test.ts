@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
-import { hit, initialRecommendations } from '../../../../test/utils/constants';
+import { hit, initialResults } from '../../../../test/utils/constants';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
 import { useTrendingItems } from '../useTrendingItems';
@@ -91,7 +91,7 @@ describe('useTrendingItems', () => {
     });
   });
 
-  test('gets trending items from initialState', async () => {
+  test('gets trending items from initialResults', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { result } = renderHook(
@@ -109,7 +109,7 @@ describe('useTrendingItems', () => {
           facetName: 'test4',
           facetValue: 'test3',
           transformItems: (items) => items,
-          initialRecommendations,
+          initialResults,
         }),
       {
         wrapper: StrictMode,
@@ -118,13 +118,13 @@ describe('useTrendingItems', () => {
 
     await waitFor(() => {
       expect(result.current.recommendations).toEqual(
-        initialRecommendations.recommendations
+        initialResults.recommendations
       );
       expect(result.current.status).toBe('idle');
     });
   });
 
-  test("doesn't initially fetch the recommendations with initialState", () => {
+  test("doesn't initially fetch the recommendations with initialResults", () => {
     const { recommendClient } = createMockedRecommendClient();
 
     renderHook(
@@ -142,7 +142,7 @@ describe('useTrendingItems', () => {
           facetName: 'test4',
           facetValue: 'test3',
           transformItems: (items) => items,
-          initialRecommendations,
+          initialResults,
         }),
       {
         wrapper: StrictMode,
@@ -170,7 +170,7 @@ describe('useTrendingItems', () => {
           facetName: 'test4',
           facetValue: 'test3',
           transformItems: (items) => items,
-          initialRecommendations,
+          initialResults,
         }),
       {
         wrapper: StrictMode,

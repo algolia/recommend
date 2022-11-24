@@ -3,4 +3,4 @@ export * from './RecommendModel';
 export * from './FacetEntry';
 export * from './RecordWithObjectID';
 export * from './TrendingFacet';
-export * from './InitialRecommendations';
+export * from './InitialResults';

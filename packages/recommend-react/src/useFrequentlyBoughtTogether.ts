@@ -2,7 +2,7 @@ import {
   getFrequentlyBoughtTogether,
   GetFrequentlyBoughtTogetherProps,
   GetRecommendationsResult,
-  InitialRecommendations,
+  InitialResults,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -22,21 +22,21 @@ export function useFrequentlyBoughtTogether<TObject>({
   recommendClient,
   threshold,
   transformItems: userTransformItems,
-  initialRecommendations: userInitialRecommendations,
+  initialResults: userInitialResults,
 }: UseFrequentlyBoughtTogetherProps<TObject> & {
-  initialRecommendations?: InitialRecommendations<TObject>;
+  initialResults?: InitialResults<TObject>;
 }) {
   const isFirstRenderRef = useRef(true);
 
   const { status, setStatus } = useStatus(
-    userInitialRecommendations ? 'idle' : 'loading'
+    userInitialResults ? 'idle' : 'loading'
   );
   const objectIDs = useStableValue(userObjectIDs);
   const queryParameters = useStableValue(userQueryParameters);
 
   const initialState = useStableValue<GetRecommendationsResult<TObject>>({
     recommendations: [],
-    ...userInitialRecommendations,
+    ...userInitialResults,
   });
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
     initialState
@@ -50,8 +50,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    const shouldFetch =
-      !userInitialRecommendations || !isFirstRenderRef.current;
+    const shouldFetch = !userInitialResults || !isFirstRenderRef.current;
 
     if (shouldFetch) {
       setStatus('loading');
@@ -70,7 +69,7 @@ export function useFrequentlyBoughtTogether<TObject>({
     }
     isFirstRenderRef.current = false;
   }, [
-    userInitialRecommendations,
+    userInitialResults,
     indexName,
     maxRecommendations,
     objectIDs,
