@@ -1,9 +1,9 @@
-export default ({ body, initialResults }) => `
+export default ({ body, initialResult }) => `
     <!DOCTYPE html>
     <html>
       <head>
         <script>window.__APP_INITIAL_STATE__ = ${JSON.stringify(
-          initialResults
+          initialResult
         )}</script>
         <title>Recommend SSR</title>
       </head>

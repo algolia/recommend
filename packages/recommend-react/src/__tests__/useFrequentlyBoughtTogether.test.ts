@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
-import { hit, initialResults } from '../../../../test/utils/constants';
+import { hit, initialResult } from '../../../../test/utils/constants';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
 import { useFrequentlyBoughtTogether } from '../useFrequentlyBoughtTogether';
@@ -82,7 +82,7 @@ describe('useFrequentlyBoughtTogether', () => {
     });
   });
 
-  test('returns FBT recommendations from initialResults', async () => {
+  test('returns FBT recommendations from initialResult', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { result } = renderHook(
@@ -96,7 +96,7 @@ describe('useFrequentlyBoughtTogether', () => {
             facetFilters: ['test'],
           },
           transformItems: (items) => items,
-          initialResults,
+          initialResult,
         }),
       {
         wrapper: StrictMode,
@@ -105,13 +105,13 @@ describe('useFrequentlyBoughtTogether', () => {
 
     await waitFor(() => {
       expect(result.current.recommendations).toEqual(
-        initialResults.recommendations
+        initialResult.recommendations
       );
       expect(result.current.status).toBe('idle');
     });
   });
 
-  test("doesn't initially fetch the recommendations with initialResults", () => {
+  test("doesn't initially fetch the recommendations with initialResult", () => {
     const { recommendClient } = createMockedRecommendClient();
 
     renderHook(
@@ -125,7 +125,7 @@ describe('useFrequentlyBoughtTogether', () => {
             facetFilters: ['test'],
           },
           transformItems: (items) => items,
-          initialResults,
+          initialResult,
         }),
       {
         wrapper: StrictMode,
@@ -137,7 +137,7 @@ describe('useFrequentlyBoughtTogether', () => {
     );
   });
 
-  test('fetches recommendations when props change with initialResults', () => {
+  test('fetches recommendations when props change with initialResult', () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { rerender } = renderHook(
@@ -151,7 +151,7 @@ describe('useFrequentlyBoughtTogether', () => {
             facetFilters: ['test'],
           },
           transformItems: (items) => items,
-          initialResults,
+          initialResult,
         }),
       {
         wrapper: StrictMode,

@@ -26,6 +26,6 @@ export const hit = {
   ],
 };
 
-export const initialResults = {
+export const initialResult = {
   recommendations: [hit],
 };

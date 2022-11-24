@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
-import { hit, initialResults } from '../../../../test/utils/constants';
+import { hit, initialResult } from '../../../../test/utils/constants';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
 import { createRecommendClient } from '../../../../test/utils/createRecommendClient';
 import { useTrendingFacets } from '../useTrendingFacets';
@@ -89,7 +89,7 @@ describe('useTrendingFacets', () => {
     });
   });
 
-  test('gets trendingFacets from initialResults', async () => {
+  test('gets trendingFacets from initialResult', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { result } = renderHook(
@@ -106,7 +106,7 @@ describe('useTrendingFacets', () => {
           },
           facetName: 'test4',
           transformItems: (items) => items,
-          initialResults,
+          initialResult,
         }),
       {
         wrapper: StrictMode,
@@ -115,13 +115,13 @@ describe('useTrendingFacets', () => {
 
     await waitFor(() => {
       expect(result.current.recommendations).toEqual(
-        initialResults.recommendations
+        initialResult.recommendations
       );
       expect(result.current.status).toBe('idle');
     });
   });
 
-  test("doesn't initially fetch the recommendations with initialResults", () => {
+  test("doesn't initially fetch the recommendations with initialResult", () => {
     const { recommendClient } = createMockedRecommendClient();
 
     renderHook(
@@ -138,7 +138,7 @@ describe('useTrendingFacets', () => {
           },
           facetName: 'test4',
           transformItems: (items) => items,
-          initialResults,
+          initialResult,
         }),
       {
         wrapper: StrictMode,
@@ -148,7 +148,7 @@ describe('useTrendingFacets', () => {
     expect(recommendClient.getTrendingFacets).toHaveBeenCalledTimes(0);
   });
 
-  test('fetches recommendations when props change with initialResults', () => {
+  test('fetches recommendations when props change with initialResult', () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { rerender } = renderHook(
@@ -165,7 +165,7 @@ describe('useTrendingFacets', () => {
           },
           facetName: 'test4',
           transformItems: (items) => items,
-          initialResults,
+          initialResult,
         }),
       {
         wrapper: StrictMode,
