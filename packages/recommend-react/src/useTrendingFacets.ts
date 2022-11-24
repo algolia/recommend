@@ -33,12 +33,12 @@ export function useTrendingFacets<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const initialState = useStableValue<GetTrendingFacetsResult<TObject>>({
+  const initialResults = useStableValue<GetTrendingFacetsResult<TObject>>({
     recommendations: [],
     ...userInitialResults,
   });
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>(
-    initialState
+    initialResults
   );
 
   useAlgoliaAgent({ recommendClient });

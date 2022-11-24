@@ -34,12 +34,12 @@ export function useRelatedProducts<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const initialState = useStableValue<GetRecommendationsResult<TObject>>({
+  const initialResults = useStableValue<GetRecommendationsResult<TObject>>({
     recommendations: [],
     ...userInitialResults,
   });
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>(
-    initialState
+    initialResults
   );
 
   useAlgoliaAgent({ recommendClient });
