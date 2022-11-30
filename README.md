@@ -134,13 +134,13 @@ Continue reading our [**Getting Started**](https://www.algolia.com/doc/ui-librar
 
 ## Documentation
 
-The [documentation](https://www.algolia.com/doc/doc/ui-libraries/recommend/introduction/what-is-recommend/) offers a few ways to learn about the Recommend library:
+The [documentation](https://www.algolia.com/doc/ui-libraries/recommend/introduction/what-is-recommend/) offers a few ways to learn about the Recommend library:
 
 - Follow the [**Building your Recommend UI guide**](https://www.algolia.com/doc/guides/algolia-ai/recommend/#building-your-recommendation-ui) to display recommendations on your website.
 - Refer to the [**JavaScript API reference**](https://www.algolia.com/doc/ui-libraries/recommend/api-reference/recommend-js/) or [**React API reference**](https://www.algolia.com/doc/ui-libraries/recommend/api-reference/recommend-react/) for a comprehensive list of parameters and options.
 - Try out the [**Playground**](https://codesandbox.io/s/github/algolia/recommend/tree/next/examples/playground?file=/app.tsx) where you can fork a basic implementation and play around.
 
-You can find more on the [documentation](https://www.algolia.com/doc/doc/ui-libraries/recommend/introduction/what-is-recommend/).
+You can find more on the [documentation](https://www.algolia.com/doc/ui-libraries/recommend/introduction/what-is-recommend/).
 
 ## Support
 
