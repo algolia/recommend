@@ -29,18 +29,14 @@ export type GetTrendingFacetsProps<TObject> = TrendingFacetsProps<TObject> &
 export function getTrendingFacets<TObject>({
   recommendClient,
   transformItems = (x) => x,
-  fallbackParameters,
   indexName,
   maxRecommendations,
-  queryParameters,
   threshold,
   facetName,
 }: GetTrendingFacetsProps<TObject>) {
   const query = {
-    fallbackParameters,
     indexName,
     maxRecommendations,
-    queryParameters,
     threshold,
     facetName,
   };

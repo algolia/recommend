@@ -35,12 +35,6 @@ describe('useTrendingFacets', () => {
         indexName: 'test',
         recommendClient,
         threshold: 0,
-        queryParameters: {
-          facetFilters: ['test'],
-        },
-        fallbackParameters: {
-          facetFilters: ['test2'],
-        },
         facetName: 'test4',
       })
     );
@@ -59,12 +53,6 @@ describe('useTrendingFacets', () => {
           indexName,
           recommendClient,
           threshold: 0,
-          queryParameters: {
-            facetFilters: ['test'],
-          },
-          fallbackParameters: {
-            facetFilters: ['test2'],
-          },
           facetName: 'test4',
           transformItems,
         }),
