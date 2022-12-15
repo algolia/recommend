@@ -10,7 +10,7 @@
     },
     {
       "path": "packages/recommend-react/dist/umd/index.js",
-      "maxSize": "4.00 kB"
+      "maxSize": "4.10 kB"
     },
     {
       "path": "packages/recommend-vdom/dist/umd/index.js",
