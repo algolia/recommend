@@ -1,3 +1,13 @@
+## [1.8.1](https://github.com/algolia/recommend/compare/v1.8.0...v1.8.1) (2022-12-20)
+
+
+### Bug Fixes
+
+* **recommend:** remove unused trendingFacets props (RECO-1173) ([#118](https://github.com/algolia/recommend/issues/118)) ([f1b9a0e](https://github.com/algolia/recommend/commit/f1b9a0eac1b9fc95e6a94d94027e650277b0c9b6))
+* fix Recommend doc URL ([#115](https://github.com/algolia/recommend/issues/115)) ([43f031b](https://github.com/algolia/recommend/commit/43f031b30c36fefde0f90bcd44193d0a9bf9d3d0))
+
+
+
 # [1.8.0](https://github.com/algolia/recommend/compare/v1.7.1...v1.8.0) (2022-11-14)
 
 
