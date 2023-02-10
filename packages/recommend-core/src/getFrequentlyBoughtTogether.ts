@@ -31,12 +31,15 @@ export function getFrequentlyBoughtTogether<TObject>({
 
   return recommendClient
     .getFrequentlyBoughtTogether<TObject>(queries)
-    .then((response) =>
-      mapToRecommendations<ProductRecord<TObject>>({
+    .then((response) => ({
+      hits: mapToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
         hits: response.results.map((result) => result.hits),
         nrOfObjs: objectIDs.length,
-      })
+      }),
+      queryID: response.results.map((result) => result.queryID)[0]
+    })
+      
     )
-    .then((hits) => ({ recommendations: transformItems(hits) }));
+    .then(({hits,queryID}) => ({ recommendations: transformItems(hits), queryID }));
 }
