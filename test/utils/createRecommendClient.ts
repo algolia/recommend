@@ -33,6 +33,8 @@ export const hit = {
   ],
 };
 
+export const queryID = 'query-id-eb04631b-68c8-468d-a6bd-0a6bb452c032';
+
 export function createRecommendClient(
   args: Partial<RecommendClient> = {}
 ): RecommendClient {

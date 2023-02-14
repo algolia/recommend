@@ -23,6 +23,7 @@ export function useTrendingItems<TObject>({
   facetValue,
 }: UseTrendingItemsProps<TObject>) {
   const [result, setResult] = useState<GetTrendingItemsResult<TObject>>({
+    queryID: undefined,
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');

@@ -25,6 +25,7 @@ const UncontrolledTrendingFacets = createTrendingFacetsComponent({
 
 function useTrendingFacets<TObject>(props: GetTrendingFacetsProps<TObject>) {
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
+    queryID: '',
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');

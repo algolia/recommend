@@ -7,6 +7,7 @@ import { createMultiSearchResponse } from '../../../../test/utils/createApiRespo
 import {
   createRecommendClient,
   hit,
+  queryID,
 } from '../../../../test/utils/createRecommendClient';
 import { useFrequentlyBoughtTogether } from '../useFrequentlyBoughtTogether';
 
@@ -16,6 +17,7 @@ function createMockedRecommendClient() {
       Promise.resolve(
         createMultiSearchResponse({
           hits: [hit],
+          queryID,
         })
       )
     ),
@@ -41,8 +43,10 @@ describe('useFrequentlyBoughtTogether', () => {
         },
       })
     );
+
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([hit]);
+      expect(result.current.queryID).toEqual(queryID);
     });
   });
 

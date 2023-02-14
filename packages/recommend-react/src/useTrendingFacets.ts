@@ -19,6 +19,7 @@ export function useTrendingFacets<TObject>({
   facetName,
 }: UseTrendingFacetsProps<TObject>) {
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
+    queryID: undefined,
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');

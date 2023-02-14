@@ -20,6 +20,7 @@ export type TrendingFacetsProps<TObject> = {
 };
 
 export type GetTrendingFacetsResult<TObject> = {
+  queryID?: string;
   recommendations: Array<TrendingFacet<TObject>>;
 };
 
@@ -45,11 +46,15 @@ export function getTrendingFacets<TObject>({
 
   return recommendClient
     .getTrendingFacets<TObject>([query])
-    .then((response) =>
-      mapByScoreToRecommendations<TrendingFacet<TObject>>({
+    .then((response) => ({
+      hits: mapByScoreToRecommendations<TrendingFacet<TObject>>({
         maxRecommendations,
         hits: response.results.map((result) => result.hits).flat(),
-      })
-    )
-    .then((hits) => ({ recommendations: transformItems(hits) }));
+      }),
+      queryID: response.results.map((result) => result.queryID)[0],
+    }))
+    .then(({ hits, queryID }) => ({
+      recommendations: transformItems(hits),
+      queryID,
+    }));
 }

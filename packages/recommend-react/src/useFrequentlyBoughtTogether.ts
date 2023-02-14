@@ -23,6 +23,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   transformItems: userTransformItems,
 }: UseFrequentlyBoughtTogetherProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
+    queryID: undefined,
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');

@@ -20,6 +20,7 @@ export type TrendingItemsProps<TObject> = {
 };
 
 export type GetTrendingItemsResult<TObject> = {
+  queryID?: string;
   recommendations: Array<ProductRecord<TObject>>;
 };
 
@@ -51,16 +52,19 @@ export function getTrendingItems<TObject>({
 
   return recommendClient
     .getTrendingItems<TObject>([query])
-    .then((response) =>
-      mapByScoreToRecommendations<ProductRecord<TObject>>({
+    .then((response) => ({
+      hits: mapByScoreToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
-        // Multiple identical recommended `objectID`s can be returned b
-        // the engine, so we need to remove duplicates.
+        // Multiple identical recommended `objectID`s can be returned by the engine, so we need to remove duplicates.
         hits: uniqBy<ProductRecord<TObject>>(
           'objectID',
           response.results.map((result) => result.hits).flat()
         ),
-      })
-    )
-    .then((hits) => ({ recommendations: transformItems(hits) }));
+      }),
+      queryID: response.results.map((result) => result.queryID)[0],
+    }))
+    .then(({ hits, queryID }) => ({
+      recommendations: transformItems(hits),
+      queryID,
+    }));
 }

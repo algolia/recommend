@@ -25,6 +25,7 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
 
 function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
+    queryID: '',
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');

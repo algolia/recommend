@@ -31,12 +31,16 @@ export function getRelatedProducts<TObject>({
 
   return recommendClient
     .getRelatedProducts<TObject>(queries)
-    .then((response) =>
-      mapToRecommendations<ProductRecord<TObject>>({
+    .then((response) => ({
+      hits: mapToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
         hits: response.results.map((result) => result.hits),
         nrOfObjs: objectIDs.length,
-      })
-    )
-    .then((hits) => ({ recommendations: transformItems(hits) }));
+      }),
+      queryID: response.results.map((result) => result.queryID)[0],
+    }))
+    .then(({ hits, queryID }) => ({
+      recommendations: transformItems(hits),
+      queryID,
+    }));
 }

@@ -25,6 +25,7 @@ const UncontrolledTrendingItems = createTrendingItemsComponent({
 
 function useTrendingItems<TObject>(props: GetTrendingItemsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
+    queryID: '',
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
