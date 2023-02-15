@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx h */
 import algoliarecommend from '@algolia/recommend';
 import {

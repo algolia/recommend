@@ -1,5 +1,5 @@
 {
-  "name": "@algolia/recommend-templating",
+  "name": "@algolia/recommend-templating-example",
   "description": "Recommend templating examples",
   "version": "1.8.1",
   "private": true,
@@ -20,6 +20,6 @@
     "@algolia/recommend-vdom": "1.8.1",
     "@babel/runtime": "7.20.13",
     "algoliasearch": "4.10.5",
-    "parcel": "2.0.0-beta.2"
+    "parcel": "2.8.3"
   }
 }
