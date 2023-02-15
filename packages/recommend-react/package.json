@@ -31,7 +31,7 @@
   "dependencies": {
     "@algolia/recommend-core": "1.8.1",
     "@algolia/recommend-vdom": "1.8.1",
-    "dequal": "^2.0.0"
+    "dequal": "2.0.3"
   },
   "peerDependencies": {
     "@algolia/recommend": "^4.13.3",
