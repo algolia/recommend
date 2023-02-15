@@ -30,7 +30,7 @@ describe('useRelatedProducts', () => {
   test('gets Related Products', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
-    const { result } = renderHook(() =>
+    const { result, waitForNextUpdate } = renderHook(() =>
       useRelatedProducts({
         indexName: 'test',
         recommendClient,
@@ -45,6 +45,7 @@ describe('useRelatedProducts', () => {
       })
     );
 
+    await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([hit]);
     });
@@ -53,7 +54,7 @@ describe('useRelatedProducts', () => {
   test('assures that the transformItems function is applied properly after rerender', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
-    const { result, rerender } = renderHook(
+    const { result, rerender, waitForNextUpdate } = renderHook(
       ({ transformItems, indexName }) =>
         useRelatedProducts({
           indexName,
@@ -73,6 +74,8 @@ describe('useRelatedProducts', () => {
         },
       }
     );
+
+    await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([
         'Landoh 4-Pocket Jumpsuit',
@@ -83,6 +86,7 @@ describe('useRelatedProducts', () => {
       rerender({ transformItems: getItemPrice, indexName: 'test1' });
     });
 
+    await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([250]);
     });

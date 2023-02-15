@@ -30,7 +30,7 @@ describe('useTrendingItems', () => {
   test('gets trending items', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
-    const { result } = renderHook(() =>
+    const { result, waitForNextUpdate } = renderHook(() =>
       useTrendingItems({
         indexName: 'test',
         recommendClient,
@@ -46,6 +46,7 @@ describe('useTrendingItems', () => {
       })
     );
 
+    await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([hit]);
     });
@@ -54,7 +55,7 @@ describe('useTrendingItems', () => {
   test('assures that the transformItems function is applied properly after rerender', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
-    const { result, rerender } = renderHook(
+    const { result, rerender, waitForNextUpdate } = renderHook(
       ({ transformItems, indexName }) =>
         useTrendingItems({
           indexName,
@@ -78,6 +79,8 @@ describe('useTrendingItems', () => {
         },
       }
     );
+
+    await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([
         'Landoh 4-Pocket Jumpsuit',
@@ -88,6 +91,7 @@ describe('useTrendingItems', () => {
       rerender({ transformItems: getItemPrice, indexName: 'test1' });
     });
 
+    await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([250]);
     });
