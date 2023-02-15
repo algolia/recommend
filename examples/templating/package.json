@@ -18,7 +18,7 @@
     "@algolia/recommend": "4.14.3",
     "@algolia/recommend-js": "1.8.1",
     "@algolia/recommend-vdom": "1.8.1",
-    "@babel/runtime": "7.14.5",
+    "@babel/runtime": "7.20.13",
     "algoliasearch": "4.10.5",
     "parcel": "2.0.0-beta.2"
   }
