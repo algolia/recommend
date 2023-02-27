@@ -30,7 +30,7 @@ describe('useFrequentlyBoughtTogether', () => {
   test('returns FBT recommendations', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
-    const { result } = renderHook(() =>
+    const { result, waitForNextUpdate } = renderHook(() =>
       useFrequentlyBoughtTogether({
         indexName: 'test',
         recommendClient,
@@ -41,6 +41,7 @@ describe('useFrequentlyBoughtTogether', () => {
         },
       })
     );
+    await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([hit]);
     });
@@ -49,7 +50,7 @@ describe('useFrequentlyBoughtTogether', () => {
   test('assures that the transformItems function is applied properly after rerender', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
-    const { result, rerender } = renderHook(
+    const { result, rerender, waitForNextUpdate } = renderHook(
       ({ transformItems, indexName }) =>
         useFrequentlyBoughtTogether({
           indexName,
@@ -69,6 +70,7 @@ describe('useFrequentlyBoughtTogether', () => {
         },
       }
     );
+    await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([
         'Landoh 4-Pocket Jumpsuit',
@@ -79,6 +81,7 @@ describe('useFrequentlyBoughtTogether', () => {
       rerender({ transformItems: getItemPrice, indexName: 'test1' });
     });
 
+    await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([250]);
     });

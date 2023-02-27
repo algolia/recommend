@@ -93,6 +93,7 @@ describe('trendingFacets', () => {
       document.body.appendChild(container);
 
       trendingFacets<ObjectWithObjectID>({
+        facetName: 'facet-name',
         container,
         recommendClient,
         indexName: 'products',
@@ -149,6 +150,7 @@ describe('trendingFacets', () => {
       document.body.appendChild(container);
 
       trendingFacets<ObjectWithObjectID>({
+        facetName: 'facet-name',
         container,
         recommendClient,
         indexName: 'products',
@@ -203,6 +205,7 @@ describe('trendingFacets', () => {
       document.body.appendChild(container);
 
       trendingFacets<ObjectWithObjectID>({
+        facetName: 'facet-name',
         container,
         recommendClient,
         indexName: 'products',
@@ -263,6 +266,7 @@ describe('trendingFacets', () => {
       document.body.appendChild(container);
 
       trendingFacets<ObjectWithObjectID>({
+        facetName: 'facet-name',
         container,
         recommendClient,
         indexName: 'products',
@@ -288,6 +292,7 @@ describe('trendingFacets', () => {
       document.body.appendChild(container);
 
       trendingFacets<ObjectWithObjectID>({
+        facetName: 'facet-name',
         container,
         recommendClient,
         indexName: 'products',
@@ -315,6 +320,7 @@ describe('trendingFacets', () => {
       document.body.appendChild(container);
 
       trendingFacets<ObjectWithObjectID>({
+        facetName: 'facet-name',
         container,
         recommendClient,
         indexName: 'products',
@@ -452,6 +458,7 @@ describe('trendingFacets', () => {
       document.body.appendChild(container);
 
       trendingFacets<ObjectWithObjectID>({
+        facetName: 'facet-name',
         container,
         recommendClient,
         indexName: 'products',

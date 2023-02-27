@@ -40,7 +40,7 @@ export function createFrequentlyBoughtTogetherComponent({
       createDefaultHeaderComponent({ createElement, Fragment });
     const ViewComponent =
       props.view ?? createListViewComponent({ createElement, Fragment });
-    const View = (viewProps: unknown) => (
+    const View = (viewProps: any) => (
       <ViewComponent
         classNames={classNames}
         itemComponent={props.itemComponent}

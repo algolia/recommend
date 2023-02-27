@@ -36,7 +36,7 @@ export function createTrendingFacetsComponent({
       createDefaultHeaderComponent({ createElement, Fragment });
     const ViewComponent =
       props.view ?? createFacetsView({ createElement, Fragment });
-    const View = (viewProps: unknown) => (
+    const View = (viewProps: any) => (
       <ViewComponent
         classNames={classNames}
         itemComponent={props.itemComponent}
