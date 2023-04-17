@@ -15,8 +15,8 @@ function formatPriceDefault(price: number) {
 type BundleViewProps<TObject> = {
   currentItem: TObject;
   formatPrice?: (price: number) => string;
-  getAmount?(items: TObject[]): number;
-  itemComponent({ item }): JSX.Element;
+  getAmount?: (items: TObject[]) => number;
+  itemComponent: ({ item }) => JSX.Element;
   items: TObject[];
   translations?: BundleViewTranslations;
 };

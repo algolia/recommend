@@ -9,7 +9,7 @@ import './style.css';
 type HitProps = {
   hit: ProductHit;
   insights: InsightsClient;
-  onSelect(hit: ProductHit): void;
+  onSelect: (hit: ProductHit) => void;
 };
 
 export function Hit({ hit, onSelect, insights }: HitProps) {

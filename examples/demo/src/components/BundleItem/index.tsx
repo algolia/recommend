@@ -6,7 +6,7 @@ import { ProductHit } from '../../types';
 
 type BundleItemProps<TObject> = {
   item: TObject;
-  onSelect(item: TObject): void;
+  onSelect: (item: TObject) => void;
   insights: InsightsClient;
 };
 

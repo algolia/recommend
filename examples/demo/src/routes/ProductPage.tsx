@@ -54,8 +54,8 @@ export const ProductPage: React.FC = () => {
         itemComponent={({ item }) => (
           <BundleItem
             item={item}
-            onSelect={setSelectedProduct}
             insights={insights}
+            onSelect={setSelectedProduct}
           />
         )}
         maxRecommendations={2}

@@ -28,6 +28,7 @@ export const HomePage: React.FC = () => {
           <Facet
             hit={item}
             insights={insights}
+            indexName={indexName}
             onSelect={(facetHits) => {
               setSelectedFacetValue(
                 facetHits.facetValue === selectedFacetValue?.facetValue
@@ -35,7 +36,6 @@ export const HomePage: React.FC = () => {
                   : facetHits
               );
             }}
-            indexName={indexName}
           />
         )}
         maxRecommendations={5}
