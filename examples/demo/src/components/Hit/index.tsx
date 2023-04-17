@@ -1,9 +1,18 @@
 import React from 'react';
+import { InsightsClient } from 'search-insights';
 
-import './Hit.css';
-import { HitProps } from './types';
+import { indexName } from '../../config';
+import { ProductHit } from '../../types';
 
-export function Hit({ hit, insights, onSelect }: HitProps) {
+import './style.css';
+
+type HitProps = {
+  hit: ProductHit;
+  insights: InsightsClient;
+  onSelect(hit: ProductHit): void;
+};
+
+export function Hit({ hit, onSelect, insights }: HitProps) {
   return (
     <a
       className="Hit Hit-link"
@@ -14,15 +23,13 @@ export function Hit({ hit, insights, onSelect }: HitProps) {
         onSelect(hit);
         insights('clickedObjectIDs', {
           objectIDs: [hit.objectID],
-          positions: [hit.__position],
           eventName: 'Product Clicked',
-          queryID: hit.__queryID,
-          index: hit.__indexName,
+          index: indexName,
         });
       }}
     >
       <div className="Hit-Image">
-        <img src={hit.image_urls[0]} alt={hit.name} />
+        <img src={hit.image_urls[0]} alt={hit.name} className="product-image" />
       </div>
 
       <div className="Hit-Content">
@@ -35,12 +42,11 @@ export function Hit({ hit, insights, onSelect }: HitProps) {
           className="Hit-Button"
           onClick={(event) => {
             event.preventDefault();
-
             insights('convertedObjectIDsAfterSearch', {
-              objectIDs: [hit.objectID],
               eventName: 'Product Added To Cart',
+              objectIDs: [hit.objectID],
+              index: indexName,
               queryID: hit.__queryID,
-              index: hit.__indexName,
             });
           }}
         >

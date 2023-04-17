@@ -11,6 +11,9 @@
 
 .Hit-Image img {
   max-width: 100%;
+  min-width: 150px;
+  min-height: 200px;
+  background-color: var(--auc-primary-color);
 }
 
 .Hit-Content {

@@ -3,16 +3,12 @@ import {
   AutocompleteOptions,
   getAlgoliaResults,
 } from '@algolia/autocomplete-js';
-import React, {
-  createElement,
-  Fragment,
-  ReactElement,
-  useEffect,
-  useRef,
-} from 'react';
-import { render } from 'react-dom';
+import React, { createElement, Fragment, useEffect, useRef } from 'react';
+import { createRoot, Root } from 'react-dom/client';
 
-import { ProductHit } from './types';
+import { ProductHit } from '../../types';
+
+let container: Root | null = null;
 
 export function Autocomplete(props: Partial<AutocompleteOptions<ProductHit>>) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -24,9 +20,12 @@ export function Autocomplete(props: Partial<AutocompleteOptions<ProductHit>>) {
 
     const search = autocomplete({
       container: containerRef.current,
-      renderer: { createElement, Fragment },
+      renderer: { createElement, Fragment, render: () => {} },
       render({ children }, root) {
-        render(children as ReactElement, root);
+        if (!container) {
+          container = createRoot(root);
+        }
+        container.render(children);
       },
       ...props,
     });
