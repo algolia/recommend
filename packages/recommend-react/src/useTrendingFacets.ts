@@ -1,3 +1,4 @@
+import { RecommendationsQuery, RecommendClient } from '@algolia/recommend';
 import {
   getTrendingFacets,
   GetTrendingFacetsProps,
@@ -5,10 +6,15 @@ import {
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
+import { useRecommendContext } from './RecommendContext';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
+import { pickRecommendClient } from './utils/pickRecommendClient';
 
-export type UseTrendingFacetsProps<TObject> = GetTrendingFacetsProps<TObject>;
+export type UseTrendingFacetsProps<TObject> = Omit<
+  GetTrendingFacetsProps<TObject>,
+  'recommendClient'
+> & { recommendClient?: RecommendClient };
 
 export function useTrendingFacets<TObject>({
   indexName,
@@ -23,7 +29,18 @@ export function useTrendingFacets<TObject>({
   });
   const { status, setStatus } = useStatus('loading');
 
-  useAlgoliaAgent({ recommendClient });
+  const {
+    recommendClient: recommendClientFromContext,
+    hasProvider,
+    register,
+  } = useRecommendContext();
+
+  const { client, isContextClient } = pickRecommendClient(
+    recommendClientFromContext,
+    recommendClient
+  );
+
+  useAlgoliaAgent({ recommendClient: client });
 
   const transformItemsRef = useRef(userTransformItems);
   useEffect(() => {
@@ -31,25 +48,69 @@ export function useTrendingFacets<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    setStatus('loading');
-    getTrendingFacets({
-      recommendClient,
-      transformItems: transformItemsRef.current,
+    let unregister: Function | undefined;
+
+    const param: RecommendationsQuery = {
+      model: 'trending-facets',
       indexName,
-      maxRecommendations,
-      threshold,
+      // @ts-expect-error
       facetName,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+      threshold,
+      maxRecommendations,
+      transformItems: transformItemsRef.current,
+    };
+    const key = JSON.stringify(param);
+
+    if (!hasProvider || !isContextClient) {
+      setStatus('loading');
+      getTrendingFacets({
+        recommendClient: client,
+        transformItems: transformItemsRef.current,
+        indexName,
+        maxRecommendations,
+        threshold,
+        facetName,
+      }).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
+    } else {
+      unregister = register({
+        key,
+        getParameters() {
+          return {
+            queries: [param],
+            keyPair: {
+              key,
+              value: 1,
+            },
+          };
+        },
+        onRequest() {
+          setStatus('loading');
+        },
+        onResult(response) {
+          // @ts-ignore
+          setResult(response);
+          setStatus('idle');
+        },
+      });
+    }
+    return () => {
+      if (unregister) {
+        unregister(key);
+      }
+    };
   }, [
     indexName,
     maxRecommendations,
-    recommendClient,
+    client,
     setStatus,
     threshold,
     facetName,
+    hasProvider,
+    isContextClient,
+    register,
   ]);
 
   return {

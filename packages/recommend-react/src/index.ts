@@ -7,3 +7,4 @@ export * from './useRecommendations';
 export * from './useRelatedProducts';
 export * from './useTrendingFacets';
 export * from './useTrendingItems';
+export * from './RecommendContext';
