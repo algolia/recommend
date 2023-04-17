@@ -12,7 +12,7 @@ import React, {
 } from 'react';
 import { render } from 'react-dom';
 
-import { ProductHit } from './types';
+import { ProductHit } from '../../types';
 
 export function Autocomplete(props: Partial<AutocompleteOptions<ProductHit>>) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -24,7 +24,7 @@ export function Autocomplete(props: Partial<AutocompleteOptions<ProductHit>>) {
 
     const search = autocomplete({
       container: containerRef.current,
-      renderer: { createElement, Fragment },
+      renderer: { createElement, Fragment, render: () => {} },
       render({ children }, root) {
         render(children as ReactElement, root);
       },

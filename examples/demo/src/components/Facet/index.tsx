@@ -1,9 +1,18 @@
 import React from 'react';
+import { InsightsClient } from 'search-insights';
 
-import './Facet.css';
-import { FacetProps } from './types';
+import { FacetHit } from '../../types';
 
-export function Facet({ hit, insights, onSelect, indexName }: FacetProps) {
+import './style.css';
+
+type FacetProps = {
+  hit: FacetHit;
+  indexName: string;
+  insights: InsightsClient;
+  onSelect: (hit: FacetHit) => void;
+};
+
+export function Facet({ hit, onSelect, indexName, insights }: FacetProps) {
   return (
     <div
       className="Hit"

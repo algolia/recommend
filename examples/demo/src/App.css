@@ -20,3 +20,14 @@ h3 {
   margin: 0 auto;
   max-width: 1100px;
 }
+
+.product-image {
+  min-width: 150px;
+  min-height: 200px;
+  background-color: var(--auc-primary-color);
+}
+
+.title a {
+  text-decoration: none;
+  color: var(--auc-dark-color);
+}
