@@ -8,18 +8,18 @@ export type PragmaFrag = any;
 
 type ComponentChild =
   | VNode<any>
+  | boolean
+  | number
   | object
   | string
-  | number
-  | boolean
   | null
   | undefined;
 
-type ComponentChildren = ComponentChild[] | ComponentChild;
+type ComponentChildren = ComponentChild | ComponentChild[];
 
 export type VNode<TProps = any> = {
   type: any;
-  key: string | number | any;
+  key: any | number | string;
   props: TProps & { children: ComponentChildren; key?: any };
 };
 

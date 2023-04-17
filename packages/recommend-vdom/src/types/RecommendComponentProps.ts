@@ -7,11 +7,11 @@ import { RecommendTranslations } from './RecommendTranslations';
 import { Renderer } from './Renderer';
 import { ViewProps } from './ViewProps';
 
-export type ItemComponentProps<TObject> = {
+export type ItemComponentProps<TObject> = Renderer & {
   item: TObject;
-} & Renderer;
+};
 
-export type HeaderComponentProps<TObject> = Renderer & ComponentProps<TObject>;
+export type HeaderComponentProps<TObject> = ComponentProps<TObject> & Renderer;
 
 export type ComponentProps<TObject> = {
   classNames: RecommendClassNames;
@@ -20,56 +20,56 @@ export type ComponentProps<TObject> = {
 };
 
 export type ChildrenProps<TObject> = ComponentProps<TObject> & {
-  Fallback(): JSX.Element | null;
-  Header(props: HeaderComponentProps<TObject>): JSX.Element | null;
+  Fallback: () => JSX.Element | null;
+  Header: (props: HeaderComponentProps<TObject>) => JSX.Element | null;
   status: RecommendStatus;
-  View(props: unknown): JSX.Element;
+  View: (props: unknown) => JSX.Element;
 };
 
 export type RecommendComponentProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 > = {
-  itemComponent(
+  itemComponent: (
     props: ItemComponentProps<RecordWithObjectID<TObject>> & TComponentProps
-  ): JSX.Element;
+  ) => JSX.Element;
   items: Array<RecordWithObjectID<TObject>>;
   classNames?: RecommendClassNames;
-  children?(props: ChildrenProps<TObject> & TComponentProps): JSX.Element;
-  fallbackComponent?(props: Renderer & TComponentProps): JSX.Element;
-  headerComponent?(
+  children?: (props: ChildrenProps<TObject> & TComponentProps) => JSX.Element;
+  fallbackComponent?: (props: Renderer & TComponentProps) => JSX.Element;
+  headerComponent?: (
     props: HeaderComponentProps<TObject> & TComponentProps
-  ): JSX.Element;
+  ) => JSX.Element;
   status: RecommendStatus;
   translations?: RecommendTranslations;
-  view?(
-    props: ViewProps<
-      RecordWithObjectID<TObject>,
-      Required<RecommendTranslations>,
-      Record<string, string>
-    > &
-      Renderer &
-      TComponentProps
-  ): JSX.Element;
+  view?: (
+    props: Renderer &
+      TComponentProps &
+      ViewProps<
+        RecordWithObjectID<TObject>,
+        Required<RecommendTranslations>,
+        Record<string, string>
+      >
+  ) => JSX.Element;
 };
 
 export type TrendingComponentProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 > = {
-  itemComponent(
+  itemComponent: (
     props: ItemComponentProps<FacetEntry<TObject>> & TComponentProps
-  ): JSX.Element;
+  ) => JSX.Element;
   items: Array<FacetEntry<TObject>>;
   classNames?: RecommendClassNames;
-  children?(props: ChildrenProps<TObject> & TComponentProps): JSX.Element;
-  fallbackComponent?(props: Renderer & TComponentProps): JSX.Element;
-  headerComponent?(
+  children?: (props: ChildrenProps<TObject> & TComponentProps) => JSX.Element;
+  fallbackComponent?: (props: Renderer & TComponentProps) => JSX.Element;
+  headerComponent?: (
     props: HeaderComponentProps<TObject> & TComponentProps
-  ): JSX.Element;
+  ) => JSX.Element;
   status: RecommendStatus;
   translations?: RecommendTranslations;
-  view?(
+  view?: (
     props: FacetsViewProps<
       FacetEntry<TObject>,
       Required<RecommendTranslations>,
@@ -77,5 +77,5 @@ export type TrendingComponentProps<
     > &
       Renderer &
       TComponentProps
-  ): JSX.Element;
+  ) => JSX.Element;
 };

@@ -1,1 +1,1 @@
-export type RecommendStatus = 'loading' | 'stalled' | 'idle';
+export type RecommendStatus = 'idle' | 'loading' | 'stalled';

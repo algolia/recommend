@@ -23,8 +23,11 @@ export type RecommendationsProps<TObject> = {
   ) => Array<ProductRecord<TObject>>;
 };
 
-export type GetRecommendationsProps<TObject> = RecommendationsProps<TObject> &
-  Omit<RecommendationsQuery, 'objectID'>;
+export type GetRecommendationsProps<TObject> = Omit<
+  RecommendationsQuery,
+  'objectID'
+> &
+  RecommendationsProps<TObject>;
 
 export type GetRecommendationsResult<TObject> = {
   recommendations: Array<RecordWithObjectID<TObject>>;

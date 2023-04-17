@@ -57,6 +57,8 @@ function TrendingItems<
 >(props: TrendingItemsProps<TObject, TComponentProps>) {
   const { recommendations, status } = useTrendingItems<TObject>(props);
   return (
+    // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
+    // @ts-ignore
     <UncontrolledTrendingItems
       {...props}
       items={recommendations}
@@ -74,7 +76,7 @@ export function trendingItems<TObject>({
   view,
   children,
   ...props
-}: TrendingItemsProps<TObject, HTMLTemplate> & EnvironmentProps) {
+}: EnvironmentProps & TrendingItemsProps<TObject, HTMLTemplate>) {
   const vnode = (
     <TrendingItems<TObject, HTMLTemplate>
       {...props}

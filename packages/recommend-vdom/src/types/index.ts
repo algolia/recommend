@@ -1,5 +1,4 @@
 export * from './FacetsViewProps';
-export * from './FacetsViewProps';
 export * from './RecommendTranslations';
 export * from './RecommendClassNames';
 export * from './RecommendComponentProps';

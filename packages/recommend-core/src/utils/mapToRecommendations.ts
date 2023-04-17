@@ -7,9 +7,9 @@ import { getAverageIndices } from './computeAverageIndices';
 /**
  * Returns the reordered list of recommendations based on average indices.
  *
- * @param hits - recommendations
- * @param maxRecommendations - max number of recommendations
- * @param nrOfObjs - total number of products for which we are retrieving recommendations (objectsIDs.length)
+ * @param hits - Recommendations.
+ * @param maxRecommendations - Max number of recommendations.
+ * @param nrOfObjs - Total number of products for which we are retrieving recommendations (objectsIDs.length).
  */
 
 type MapToRecommendations<TObject> = {

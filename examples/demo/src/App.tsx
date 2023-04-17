@@ -42,9 +42,7 @@ function BundleItem({ item, onSelect }: BundleItemProps<ProductHit>) {
         onSelect(item);
         insights('clickedObjectIDs', {
           objectIDs: [item.objectID],
-          positions: [item.__position],
           eventName: 'Product Clicked',
-          queryID: item.__queryID,
           index: item.__indexName,
         });
       }}
@@ -167,7 +165,7 @@ function App() {
               clickAnalytics: true,
               facetFilters: selectedFacetValue
                 ? [`brand:${selectedFacetValue}`]
-                : null,
+                : [],
             }}
             view={({ itemComponent, items }) => (
               <BundleView
@@ -234,7 +232,7 @@ function App() {
               clickAnalytics: true,
               facetFilters: [
                 `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-                selectedFacetValue ? `brand:${selectedFacetValue}` : null,
+                selectedFacetValue ? `brand:${selectedFacetValue}` : '',
               ],
             }}
           />
@@ -248,14 +246,14 @@ function App() {
           <Facet
             hit={item}
             insights={insights}
+            indexName={indexName}
             onSelect={(facetHits) => {
               setSelectedFacetValue(
                 facetHits.facetValue === selectedFacetValue?.facetValue
-                  ? undefined
+                  ? null
                   : facetHits
               );
             }}
-            indexName={indexName}
           />
         )}
         maxRecommendations={5}

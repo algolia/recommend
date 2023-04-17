@@ -5,10 +5,11 @@ import { ProductRecord } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
 
-export type GetFrequentlyBoughtTogetherProps<
-  TObject
-> = RecommendationsProps<TObject> &
-  Omit<FrequentlyBoughtTogetherQuery, 'objectID'>;
+export type GetFrequentlyBoughtTogetherProps<TObject> = Omit<
+  FrequentlyBoughtTogetherQuery,
+  'objectID'
+> &
+  RecommendationsProps<TObject>;
 
 export function getFrequentlyBoughtTogether<TObject>({
   objectIDs,

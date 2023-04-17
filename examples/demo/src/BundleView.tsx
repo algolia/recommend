@@ -50,14 +50,6 @@ export function BundleView<TObject extends BaseObject>(
               selectedItems.find((x) => x.objectID === item.objectID)
             );
 
-            function onChange(event: React.ChangeEvent<HTMLInputElement>) {
-              setSelectedItems((items) =>
-                event.target.checked
-                  ? [...items, item]
-                  : items.filter((x) => x.objectID !== item.objectID)
-              );
-            }
-
             return (
               <li
                 key={item.objectID}
@@ -109,7 +101,13 @@ export function BundleView<TObject extends BaseObject>(
                     className="uic-BundleView-checkbox"
                     type="checkbox"
                     defaultChecked={isSelected}
-                    onChange={onChange}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      setSelectedItems((_items) =>
+                        event.target.checked
+                          ? [..._items, item]
+                          : _items.filter((x) => x.objectID !== item.objectID)
+                      );
+                    }}
                   />
                   {item.objectID === props.currentItem.objectID && (
                     <span className="uic-BundleView-label-currentArticle">

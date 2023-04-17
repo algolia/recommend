@@ -12,7 +12,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNEXT"
+    "target": "ESNEXT",
+    "declaration": true
   },
   "exclude": [
     "**/__fixtures__/**/*",

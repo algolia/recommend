@@ -8,9 +8,9 @@ export type FacetsViewProps<
   TClassNames extends Record<string, string>
 > = {
   classNames: TClassNames;
-  itemComponent<TComponentProps extends Record<string, unknown> = {}>(
-    props: { item: TItem } & Renderer & TComponentProps
-  ): JSX.Element;
+  itemComponent: <TComponentProps extends Record<string, unknown> = {}>(
+    props: Renderer & TComponentProps & { item: TItem }
+  ) => JSX.Element;
   items: TItem[];
   translations: TTranslations;
 };

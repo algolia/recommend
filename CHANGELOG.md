@@ -1,65 +1,47 @@
 ## [1.8.1](https://github.com/algolia/recommend/compare/v1.8.0...v1.8.1) (2022-12-20)
 
-
 ### Bug Fixes
 
-* **recommend:** remove unused trendingFacets props (RECO-1173) ([#118](https://github.com/algolia/recommend/issues/118)) ([f1b9a0e](https://github.com/algolia/recommend/commit/f1b9a0eac1b9fc95e6a94d94027e650277b0c9b6))
-* fix Recommend doc URL ([#115](https://github.com/algolia/recommend/issues/115)) ([43f031b](https://github.com/algolia/recommend/commit/43f031b30c36fefde0f90bcd44193d0a9bf9d3d0))
-
-
+- **recommend:** remove unused trendingFacets props (RECO-1173) ([#118](https://github.com/algolia/recommend/issues/118)) ([f1b9a0e](https://github.com/algolia/recommend/commit/f1b9a0eac1b9fc95e6a94d94027e650277b0c9b6))
+- fix Recommend doc URL ([#115](https://github.com/algolia/recommend/issues/115)) ([43f031b](https://github.com/algolia/recommend/commit/43f031b30c36fefde0f90bcd44193d0a9bf9d3d0))
 
 # [1.8.0](https://github.com/algolia/recommend/compare/v1.7.1...v1.8.0) (2022-11-14)
 
-
 ### Bug Fixes
 
-* **react:** correctly stabilize `transformItems` function ([#110](https://github.com/algolia/recommend/issues/110)) ([3384224](https://github.com/algolia/recommend/commit/3384224cd534b6801f2f5d9d6d096a79f9198156))
-
+- **react:** correctly stabilize `transformItems` function ([#110](https://github.com/algolia/recommend/issues/110)) ([3384224](https://github.com/algolia/recommend/commit/3384224cd534b6801f2f5d9d6d096a79f9198156))
 
 ### Features
 
-* **react:** export props types ([#112](https://github.com/algolia/recommend/issues/112)) ([9abee3f](https://github.com/algolia/recommend/commit/9abee3fc729dac53c498f392ad0f0f9087b8c983))
-
-
+- **react:** export props types ([#112](https://github.com/algolia/recommend/issues/112)) ([9abee3f](https://github.com/algolia/recommend/commit/9abee3fc729dac53c498f392ad0f0f9087b8c983))
 
 ## [1.7.1](https://github.com/algolia/recommend/compare/v1.7.0...v1.7.1) (2022-09-26)
 
-
 ### Bug Fixes
 
-* **react:** add support for react 18 ([#107](https://github.com/algolia/recommend/issues/107)) ([ab3f68c](https://github.com/algolia/recommend/commit/ab3f68c8bfc8dffe7b9645f347c85b7f8e00f89d))
-
-
+- **react:** add support for react 18 ([#107](https://github.com/algolia/recommend/issues/107)) ([ab3f68c](https://github.com/algolia/recommend/commit/ab3f68c8bfc8dffe7b9645f347c85b7f8e00f89d))
 
 # [1.7.0](https://github.com/algolia/recommend/compare/v1.6.0...v1.7.0) (2022-09-07)
+
 ### Features
 
-* **recommend-js:** HTML Templating ([#104](https://github.com/algolia/recommend/issues/93)) ([30dc38e](https://github.com/algolia/recommend/commit/30dc38e413b33afc6ba74c8f1419ca598313c731))
-
-
+- **recommend-js:** HTML Templating ([#104](https://github.com/algolia/recommend/issues/93)) ([30dc38e](https://github.com/algolia/recommend/commit/30dc38e413b33afc6ba74c8f1419ca598313c731))
 
 # [1.6.0](https://github.com/algolia/recommend/compare/v1.5.0...v1.6.0) (2022-08-12)
 
-
 ### Features
 
-* **recommend-vdom:** Return createElement and Fragment from View ([#93](https://github.com/algolia/recommend/issues/93)) ([a657b91](https://github.com/algolia/recommend/commit/a657b91f38e47914efca9666dfeef7ecfa8e3360))
-
-
+- **recommend-vdom:** Return createElement and Fragment from View ([#93](https://github.com/algolia/recommend/issues/93)) ([a657b91](https://github.com/algolia/recommend/commit/a657b91f38e47914efca9666dfeef7ecfa8e3360))
 
 # [1.5.0](https://github.com/algolia/recommend/compare/v1.4.0...v1.5.0) (2022-06-28)
 
-
 ### Bug Fixes
 
-* **js-demo:** fix rendering bug ([#88](https://github.com/algolia/recommend/issues/88)) ([dbc7077](https://github.com/algolia/recommend/commit/dbc7077dfc5ed41f16b036a642473e2ce53b0c2e))
-
+- **js-demo:** fix rendering bug ([#88](https://github.com/algolia/recommend/issues/88)) ([dbc7077](https://github.com/algolia/recommend/commit/dbc7077dfc5ed41f16b036a642473e2ce53b0c2e))
 
 ### Features
 
-* **rendering:** remove headerComponent when no recommendations are returned ([#91](https://github.com/algolia/recommend/issues/91)) ([8d5d545](https://github.com/algolia/recommend/commit/8d5d5450f48ea7a91cf4f83b0ed16280d55f3daa))
-
-
+- **rendering:** remove headerComponent when no recommendations are returned ([#91](https://github.com/algolia/recommend/issues/91)) ([8d5d545](https://github.com/algolia/recommend/commit/8d5d5450f48ea7a91cf4f83b0ed16280d55f3daa))
 
 # [1.4.0](https://github.com/algolia/recommend/compare/v1.3.1...v1.4.0) (2022-06-21)
 

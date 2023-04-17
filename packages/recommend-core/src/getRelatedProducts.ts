@@ -5,8 +5,11 @@ import { ProductRecord } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
 
-export type GetRelatedProductsProps<TObject> = RecommendationsProps<TObject> &
-  Omit<RelatedProductsQuery, 'objectID'>;
+export type GetRelatedProductsProps<TObject> = Omit<
+  RelatedProductsQuery,
+  'objectID'
+> &
+  RecommendationsProps<TObject>;
 
 export function getRelatedProducts<TObject>({
   objectIDs,

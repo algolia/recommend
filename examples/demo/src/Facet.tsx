@@ -7,6 +7,8 @@ export function Facet({ hit, insights, onSelect, indexName }: FacetProps) {
   return (
     <div
       className="Hit"
+      role="button"
+      tabIndex={-1}
       onClick={(event) => {
         event.preventDefault();
 
@@ -14,7 +16,6 @@ export function Facet({ hit, insights, onSelect, indexName }: FacetProps) {
         insights('clickedFilters', {
           filters: [`${hit.facetName}:${hit.facetValue}`],
           eventName: 'Facet Clicked',
-          queryID: hit.__queryID,
           index: indexName,
         });
       }}

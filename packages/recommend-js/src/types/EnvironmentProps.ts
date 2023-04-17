@@ -6,7 +6,7 @@ export type EnvironmentProps = {
    *
    * @link https://www.algolia.com/doc/ui-libraries/recommend/api-reference/recommend-js/frequentlyBoughtTogether/#param-container
    */
-  container?: string | HTMLElement;
+  container?: HTMLElement | string;
   /**
    * The environment in which your application is running.
    *

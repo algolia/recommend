@@ -1,5 +1,5 @@
 export function getHTMLElement(
-  value: string | HTMLElement,
+  value: HTMLElement | string,
   environment: typeof window
 ): HTMLElement {
   if (typeof value === 'string') {

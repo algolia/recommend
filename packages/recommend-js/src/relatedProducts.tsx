@@ -58,6 +58,8 @@ function RelatedProducts<
   const { recommendations, status } = useRelatedProducts<TObject>(props);
 
   return (
+    // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
+    // @ts-ignore
     <UncontrolledRelatedProducts
       {...props}
       items={recommendations}
@@ -75,7 +77,7 @@ export function relatedProducts<TObject>({
   view,
   children,
   ...props
-}: RelatedProductsProps<TObject, HTMLTemplate> & EnvironmentProps) {
+}: EnvironmentProps & RelatedProductsProps<TObject, HTMLTemplate>) {
   const vnode = (
     <RelatedProducts<TObject, HTMLTemplate>
       {...props}

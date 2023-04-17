@@ -6,7 +6,7 @@ import { HTMLTemplate } from '../types';
 
 export function withHtml<TProps>(
   Component: preact.FunctionComponent<TProps>
-): (props: TProps & HTMLTemplate) => JSX.Element {
+): (props: HTMLTemplate & TProps) => JSX.Element {
   const ComponentWithHtml = (props: TProps) => (
     <Component {...props} html={html} />
   );

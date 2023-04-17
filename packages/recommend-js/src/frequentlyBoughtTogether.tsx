@@ -18,16 +18,12 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
 import { withHtml } from './utils';
 
-const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherComponent(
-  {
-    createElement,
-    Fragment,
-  }
-);
+const UncontrolledFBT = createFrequentlyBoughtTogetherComponent({
+  createElement,
+  Fragment,
+});
 
-function useFrequentlyBoughtTogether<TObject>(
-  props: GetFrequentlyBoughtTogetherProps<TObject>
-) {
+function useFBT<TObject>(props: GetFrequentlyBoughtTogetherProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -62,17 +58,11 @@ function FrequentlyBoughtTogether<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 >(props: FrequentlyBoughtTogetherProps<TObject, TComponentProps>) {
-  const { recommendations, status } = useFrequentlyBoughtTogether<TObject>(
-    props
-  );
+  const { recommendations, status } = useFBT<TObject>(props);
 
-  return (
-    <UncontrolledFrequentlyBoughtTogether
-      {...props}
-      items={recommendations}
-      status={status}
-    />
-  );
+  // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
+  // @ts-ignore
+  return <UncontrolledFBT {...props} items={recommendations} status={status} />;
 }
 
 export function frequentlyBoughtTogether<TObject>({
@@ -84,7 +74,7 @@ export function frequentlyBoughtTogether<TObject>({
   view,
   children,
   ...props
-}: FrequentlyBoughtTogetherProps<TObject, HTMLTemplate> & EnvironmentProps) {
+}: EnvironmentProps & FrequentlyBoughtTogetherProps<TObject, HTMLTemplate>) {
   const vnode = (
     <FrequentlyBoughtTogether<TObject, HTMLTemplate>
       {...props}

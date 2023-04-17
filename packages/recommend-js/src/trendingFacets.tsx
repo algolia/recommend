@@ -58,6 +58,8 @@ function TrendingFacets<
   const { recommendations, status } = useTrendingFacets<TObject>(props);
 
   return (
+    // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
+    // @ts-ignore
     <UncontrolledTrendingFacets
       {...props}
       items={recommendations}
@@ -74,7 +76,7 @@ export function trendingFacets<TObject>({
   view,
   children,
   ...props
-}: TrendingFacetsProps<TObject, HTMLTemplate> & EnvironmentProps) {
+}: EnvironmentProps & TrendingFacetsProps<TObject, HTMLTemplate>) {
   const vnode = (
     <TrendingFacets<TObject, HTMLTemplate>
       {...props}
