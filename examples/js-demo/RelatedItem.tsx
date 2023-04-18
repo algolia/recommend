@@ -19,9 +19,7 @@ export function RelatedItem({ item, insights, onSelect }: RelatedItemProps) {
 
         insights('clickedObjectIDs', {
           objectIDs: [item.objectID],
-          positions: [item.__position],
           eventName: 'Product Clicked',
-          queryID: item.__queryID,
           index: item.__indexName,
         });
       }}

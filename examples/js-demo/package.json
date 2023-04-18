@@ -9,17 +9,17 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "@algolia/autocomplete-js": "1.7.0",
-    "@algolia/autocomplete-theme-classic": "1.7.0",
-    "@algolia/client-search": "4.10.5",
-    "@algolia/recommend": "4.14.3",
+    "@algolia/autocomplete-js": "1.8.3",
+    "@algolia/autocomplete-theme-classic": "1.8.3",
+    "@algolia/client-search": "4.17.0",
+    "@algolia/recommend": "4.17.0",
     "@algolia/recommend-js": "1.8.1",
-    "@algolia/ui-components-horizontal-slider-js": "1.0.0",
-    "@algolia/ui-components-horizontal-slider-theme": "1.0.0",
-    "@babel/runtime": "7.20.13",
-    "algoliasearch": "4.10.5",
-    "preact": "10.5.13",
-    "search-insights": "2.0.0"
+    "@algolia/ui-components-horizontal-slider-js": "1.2.1",
+    "@algolia/ui-components-horizontal-slider-theme": "1.2.1",
+    "@babel/runtime": "7.21.0",
+    "algoliasearch": "4.17.0",
+    "preact": "10.13.2",
+    "search-insights": "2.4.0"
   },
   "devDependencies": {
     "parcel": "2.8.3"

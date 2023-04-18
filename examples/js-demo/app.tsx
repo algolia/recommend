@@ -30,7 +30,7 @@ insights('setUserToken', 'user-token-1');
 function updateReferenceItem(item: ProductHit) {
   render(
     <ReferenceItem item={item} />,
-    document.querySelector('#referenceHit')
+    document.querySelector('#referenceHit')!
   );
   renderRecommendations(item);
 }
@@ -170,37 +170,39 @@ function renderRecommendations(selectedProduct: ProductHit) {
       clickAnalytics: true,
     },
     fallbackComponent() {
-      return relatedProducts<ProductHit>({
-        recommendClient,
-        indexName,
-        objectIDs: [selectedProduct.objectID],
-        itemComponent({ item }) {
-          return (
-            <RelatedItem
-              item={item}
-              insights={insights}
-              onSelect={updateReferenceItem}
-            />
-          );
-        },
-        view: horizontalSlider,
-        maxRecommendations: 10,
-        translations: {
-          title: 'Related products (fallback)',
-        },
-        fallbackParameters: {
-          facetFilters: [
-            `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-          ],
-        },
-        queryParameters: {
-          analytics: true,
-          clickAnalytics: true,
-          facetFilters: [
-            `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-          ],
-        },
-      });
+      return (
+        relatedProducts<ProductHit>({
+          recommendClient,
+          indexName,
+          objectIDs: [selectedProduct.objectID],
+          itemComponent({ item }) {
+            return (
+              <RelatedItem
+                item={item}
+                insights={insights}
+                onSelect={updateReferenceItem}
+              />
+            );
+          },
+          view: horizontalSlider,
+          maxRecommendations: 10,
+          translations: {
+            title: 'Related products (fallback)',
+          },
+          fallbackParameters: {
+            facetFilters: [
+              `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
+            ],
+          },
+          queryParameters: {
+            analytics: true,
+            clickAnalytics: true,
+            facetFilters: [
+              `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
+            ],
+          },
+        }) ?? <div>Loading...</div>
+      );
     },
   });
 
