@@ -54,11 +54,11 @@ export function RelatedItem({ item, insights, onSelect }: RelatedItemProps) {
       <div>
         <div className="text-sm text-gray-500">{item.brand}</div>
 
-        <div className="text-gray-900 font-semibold mb-1 whitespace-normal">
+        <div className="text-gray-900 font-semibold mb-1 whitespace-normal clamp-1">
           {item.name}
         </div>
 
-        {Boolean(item.reviewScore) && (
+        {Boolean(item.reviews.count) && (
           <div className="items-center flex flex-grow text-sm text-gray-700">
             <svg
               className="mr-1 text-orange-400"
@@ -71,8 +71,12 @@ export function RelatedItem({ item, insights, onSelect }: RelatedItemProps) {
             >
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
             </svg>
-            <span className="mr-1">{item.reviewScore.toFixed(1) || '--'}</span>
-            <span className="text-gray-400">({item.reviewCount} reviews)</span>
+            <span className="mr-1">
+              {item.reviews.bayesian_avg.toFixed(1) || '--'}
+            </span>
+            <span className="text-gray-400">
+              ({item.reviews.count} reviews)
+            </span>
           </div>
         )}
 

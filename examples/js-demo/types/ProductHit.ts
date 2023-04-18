@@ -20,8 +20,11 @@ export type ProductRecord = {
     on_sales: boolean;
   };
   _score: number;
-  reviewScore: number;
-  reviewCount: number;
+  reviews: {
+    bayesian_avg: number;
+    count: number;
+    rating: number;
+  };
   url: string;
 };
 

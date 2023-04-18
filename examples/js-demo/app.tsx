@@ -116,11 +116,11 @@ function ReferenceItem({ item }: ReferenceItemProps) {
         <div>
           <div className="text-sm text-gray-500">{item.brand}</div>
 
-          <div className="text-gray-900 font-semibold mb-1 whitespace-normal">
+          <div className="text-gray-900 font-semibold mb-1 whitespace-normal clamp-1">
             {item.name}
           </div>
 
-          {Boolean(item.reviewScore) && (
+          {Boolean(item.reviews.count) && (
             <div className="items-center flex flex-grow text-sm text-gray-700">
               <svg
                 className="mr-1 text-orange-400"
@@ -134,15 +134,17 @@ function ReferenceItem({ item }: ReferenceItemProps) {
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
               </svg>
               <span className="mr-1">
-                {item.reviewScore.toFixed(1) || '--'}
+                {item.reviews.bayesian_avg.toFixed(1) || '--'}
               </span>
               <span className="text-gray-400">
-                ({item.reviewCount} reviews)
+                ({item.reviews.count} reviews)
               </span>
             </div>
           )}
 
-          <div className="my-2 font-semibold text-gray-800">${item.price}</div>
+          <div className="my-2 font-semibold text-gray-800">
+            {item.price.value} {item.price.currency}
+          </div>
         </div>
       </div>
     </div>
@@ -184,7 +186,7 @@ function renderRecommendations(selectedProduct: ProductHit) {
               />
             );
           },
-          view: horizontalSlider,
+          view: (...props) => horizontalSlider(...props) ?? <div>Loading</div>,
           maxRecommendations: 10,
           translations: {
             title: 'Related products (fallback)',
@@ -220,7 +222,7 @@ function renderRecommendations(selectedProduct: ProductHit) {
         />
       );
     },
-    view: horizontalSlider,
+    view: (...props) => horizontalSlider(...props) ?? <div>Loading</div>,
     maxRecommendations: 10,
     translations: {
       title: 'Related products',
