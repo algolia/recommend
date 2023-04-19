@@ -29,3 +29,9 @@ h3 {
 .RelatedItem:hover .RelatedItem-info {
   display: block;
 }
+
+.clamp-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -12,10 +12,19 @@ export type ProductRecord = {
     lvl5?: string;
   };
   name: string;
-  price: { value: number };
+  price: {
+    value: number;
+    currency: string;
+    discount_level: number;
+    discounted_value: number;
+    on_sales: boolean;
+  };
   _score: number;
-  reviewScore: number;
-  reviewCount: number;
+  reviews: {
+    bayesian_avg: number;
+    count: number;
+    rating: number;
+  };
   url: string;
 };
 
