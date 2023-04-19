@@ -1,6 +1,7 @@
 import algoliarecommend from '@algolia/recommend';
 import {
   FrequentlyBoughtTogether,
+  RecommendProvider,
   RelatedProducts,
 } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
@@ -25,7 +26,7 @@ export const ProductPage: React.FC = () => {
   }
 
   return (
-    <div>
+    <RecommendProvider recommendClient={recommendClient}>
       <div style={{ padding: '1rem 0' }}>
         <div
           className="Hit"
@@ -48,7 +49,6 @@ export const ProductPage: React.FC = () => {
         </div>
       </div>
       <FrequentlyBoughtTogether<ProductHit>
-        recommendClient={recommendClient}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (
@@ -75,7 +75,6 @@ export const ProductPage: React.FC = () => {
         )}
         fallbackComponent={() => (
           <RelatedProducts<ProductHit>
-            recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={({ item }) => (
@@ -106,7 +105,6 @@ export const ProductPage: React.FC = () => {
         )}
       />
       <RelatedProducts<ProductHit>
-        recommendClient={recommendClient}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (
@@ -131,6 +129,6 @@ export const ProductPage: React.FC = () => {
           ],
         }}
       />
-    </div>
+    </RecommendProvider>
   );
 };

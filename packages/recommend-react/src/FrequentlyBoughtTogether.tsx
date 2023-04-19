@@ -1,3 +1,4 @@
+import { RecommendClient } from '@algolia/recommend';
 import { GetFrequentlyBoughtTogetherProps } from '@algolia/recommend-core';
 import {
   createFrequentlyBoughtTogetherComponent,
@@ -14,10 +15,13 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
   }
 );
 
-export type FrequentlyBoughtTogetherProps<
-  TObject
-> = GetFrequentlyBoughtTogetherProps<TObject> &
-  Omit<FrequentlyBoughtTogetherVDOMProps<TObject>, 'items' | 'status'>;
+export type FrequentlyBoughtTogetherProps<TObject> = Omit<
+  GetFrequentlyBoughtTogetherProps<TObject>,
+  'recommendClient'
+> & { recommendClient?: RecommendClient } & Omit<
+    FrequentlyBoughtTogetherVDOMProps<TObject>,
+    'items' | 'status'
+  >;
 
 export function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>
