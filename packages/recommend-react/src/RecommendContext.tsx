@@ -31,7 +31,7 @@ type RecommendContextType<TObject> = {
   recommendClient: RecommendClient;
 };
 
-type RecommendContextProviderProps = {
+type RecommendProviderProps = {
   children: React.ReactNode;
   recommendClient: RecommendClient;
 };
@@ -137,10 +137,10 @@ const reducer: React.Reducer<StateType<unknown>, Action<any>> = (
   }
 };
 
-export function RecommendContextProvider<TObject>({
+export function RecommendProvider<TObject>({
   recommendClient,
   children,
-}: RecommendContextProviderProps) {
+}: RecommendProviderProps) {
   const [state, dispatch] = React.useReducer(reducer, {
     isDirty: null,
     cache: {},
