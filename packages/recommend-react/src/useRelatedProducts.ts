@@ -1,15 +1,18 @@
+import { RecommendationsQuery } from '@algolia/recommend';
 import {
   getRelatedProducts,
-  GetRelatedProductsProps,
   GetRecommendationsResult,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
+import { useRecommendContext } from './RecommendContext';
+import { RelatedProductsProps } from './RelatedProducts';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
+import { pickRecommendClient } from './utils/pickRecommendClient';
 
-export type UseRelatedProductsProps<TObject> = GetRelatedProductsProps<TObject>;
+export type UseRelatedProductsProps<TObject> = RelatedProductsProps<TObject>;
 
 export function useRelatedProducts<TObject>({
   fallbackParameters: userFallbackParameters,
@@ -29,7 +32,18 @@ export function useRelatedProducts<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  useAlgoliaAgent({ recommendClient });
+  const {
+    recommendClient: recommendClientFromContext,
+    hasProvider,
+    register,
+  } = useRecommendContext();
+
+  const { client, isContextClient } = pickRecommendClient(
+    recommendClientFromContext,
+    recommendClient
+  );
+
+  useAlgoliaAgent({ recommendClient: client });
 
   const transformItemsRef = useRef(userTransformItems);
   useEffect(() => {
@@ -37,27 +51,83 @@ export function useRelatedProducts<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    setStatus('loading');
-    getRelatedProducts({
+    const param = {
       fallbackParameters,
       indexName,
       maxRecommendations,
       objectIDs,
       queryParameters,
-      recommendClient,
       threshold,
       transformItems: transformItemsRef.current,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    };
+
+    const key = JSON.stringify(param);
+    let unregister: Function | undefined;
+
+    if (!hasProvider || !isContextClient) {
+      setStatus('loading');
+      getRelatedProducts({
+        fallbackParameters,
+        indexName,
+        maxRecommendations,
+        objectIDs,
+        queryParameters,
+        recommendClient: client,
+        threshold,
+        transformItems: transformItemsRef.current,
+      }).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
+    } else {
+      const queries = objectIDs.map(
+        (objectID: string): RecommendationsQuery => ({
+          indexName,
+          model: 'related-products',
+          threshold,
+          maxRecommendations,
+          objectID,
+          queryParameters,
+          fallbackParameters,
+        })
+      );
+      unregister = register({
+        key,
+        getParameters() {
+          return {
+            queries,
+            keyPair: {
+              key,
+              value: objectIDs.length,
+            },
+          };
+        },
+        onRequest() {
+          setStatus('loading');
+        },
+        onResult(response) {
+          // @ts-ignore
+          setResult(response);
+          setStatus('idle');
+        },
+      });
+    }
+
+    return () => {
+      if (unregister) {
+        unregister(key);
+      }
+    };
   }, [
+    client,
     fallbackParameters,
+    hasProvider,
     indexName,
+    isContextClient,
     maxRecommendations,
     objectIDs,
     queryParameters,
-    recommendClient,
+    register,
     setStatus,
     threshold,
   ]);

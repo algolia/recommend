@@ -1,21 +1,18 @@
-import { RecommendationsQuery, RecommendClient } from '@algolia/recommend';
+import { RecommendationsQuery } from '@algolia/recommend';
 import {
   getTrendingItems,
-  GetTrendingItemsProps,
   GetTrendingItemsResult,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
 import { useRecommendContext } from './RecommendContext';
+import { TrendingItemsProps } from './TrendingItems';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 import { pickRecommendClient } from './utils/pickRecommendClient';
 
-export type UseTrendingItemsProps<TObject> = Omit<
-  GetTrendingItemsProps<TObject>,
-  'recommendClient'
-> & { recommendClient?: RecommendClient };
+export type UseTrendingItemsProps<TObject> = TrendingItemsProps<TObject>;
 
 export function useTrendingItems<TObject>({
   fallbackParameters: userFallbackParameters,
