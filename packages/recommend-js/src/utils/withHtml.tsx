@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx h */
 import { html } from 'htm/preact';
 import { h } from 'preact';

@@ -4,7 +4,7 @@ import { ProductHit } from '../types/ProductHit';
 
 export type ProductItemProps = {
   item: ProductHit;
-  html: HTMLTemplate;
+  html: HTMLTemplate['html'];
 };
 
 export function productItem({ item, html }: ProductItemProps) {
@@ -43,7 +43,6 @@ export function productItem({ item, html }: ProductItemProps) {
       <div className="text-gray-900 font-semibold mb-1 whitespace-normal">
         ${item.name}
       </div>
-
       ${Boolean(item.reviewScore) &&
       html`<div className="items-center flex flex-grow text-sm text-gray-700">
         <svg
@@ -59,10 +58,11 @@ export function productItem({ item, html }: ProductItemProps) {
             points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
           />
         </svg>
+
         <span className="mr-1">${item.reviewScore.toFixed(1) || '--'}</span>
+
         <span className="text-gray-400">(${item.reviewCount} reviews)</span>
       </div>`}
-
       <div className="my-2 font-semibold text-gray-800">
         ${item.price.value} ${item.price.currency}
       </div>

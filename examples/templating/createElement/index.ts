@@ -39,12 +39,14 @@ relatedProducts<ProductHit>({
     createElement('h3', null, 'Related products'),
   itemComponent: productItem,
   view({ items, createElement, Fragment, itemComponent }) {
-    return horizontalSlider({
-      items,
-      itemComponent({ item }) {
-        return itemComponent({ item, createElement, Fragment });
-      },
-    });
+    return (
+      horizontalSlider({
+        items,
+        itemComponent({ item }) {
+          return itemComponent({ item, createElement, Fragment });
+        },
+      }) ?? createElement('div', null, 'Loading')
+    );
   },
 });
 
@@ -56,12 +58,14 @@ trendingItems<ProductHit>({
     createElement('h3', null, 'Trending items'),
   itemComponent: productItem,
   view({ items, itemComponent, Fragment, createElement }) {
-    return horizontalSlider({
-      items,
-      itemComponent({ item }) {
-        return itemComponent({ item, createElement, Fragment });
-      },
-    });
+    return (
+      horizontalSlider({
+        items,
+        itemComponent({ item }) {
+          return itemComponent({ item, createElement, Fragment });
+        },
+      }) ?? createElement('div', null, 'Loading')
+    );
   },
 });
 
