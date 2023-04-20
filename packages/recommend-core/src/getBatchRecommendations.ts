@@ -1,6 +1,5 @@
 import { RecommendClient, RecommendationsQuery } from '@algolia/recommend';
 
-import { GetRecommendationsResult } from './getRecommendations';
 import { ProductRecord, TrendingFacet } from './types';
 import { mapByScoreToRecommendations, mapToRecommendations } from './utils';
 import { version } from './version';
@@ -19,6 +18,12 @@ export type GetBatchRecommendations<TObject> = {
   ) => Array<ProductRecord<TObject>>;
 };
 
+export type BatchRecommendations<TObject> = {
+  recommendations:
+    | ReturnType<typeof mapByScoreToRecommendations>
+    | ReturnType<typeof mapToRecommendations>;
+};
+
 export async function getBatchRecommendations<TObject>({
   keys,
   queries,
@@ -30,7 +35,8 @@ export async function getBatchRecommendations<TObject>({
 
   let prevChunks = 0;
   let allChunks = 0;
-  const results: Record<string, GetRecommendationsResult<TObject>> = {};
+
+  const results: Record<string, BatchRecommendations<TObject>> = {};
 
   keys.forEach((keyPair) => {
     const { model } = JSON.parse(keyPair.key);
@@ -40,20 +46,21 @@ export async function getBatchRecommendations<TObject>({
     const splitResult = response?.results?.slice(prevChunks, allChunks);
     prevChunks += keyPair.value;
 
-    let hits: any[] = [];
+    let recommendations: BatchRecommendations<TObject>['recommendations'];
+
     if (model === 'trending-facets' || model === 'trending-items') {
-      hits = mapByScoreToRecommendations<TrendingFacet<TObject>>({
+      recommendations = mapByScoreToRecommendations<TrendingFacet<TObject>>({
         maxRecommendations,
         hits: splitResult.map((res) => res.hits).flat(),
       });
     } else {
-      hits = mapToRecommendations<ProductRecord<TObject>>({
+      recommendations = mapToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
         hits: splitResult.map((res) => res.hits),
         nrOfObjs: keyPair.value,
       });
     }
-    results[keyPair.key] = { recommendations: hits };
+    results[keyPair.key] = { recommendations };
   });
 
   return results;

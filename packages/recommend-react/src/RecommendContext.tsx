@@ -1,8 +1,8 @@
 import { RecommendationsQuery, RecommendClient } from '@algolia/recommend';
 import { BatchKeyPair } from '@algolia/recommend-core';
 import {
+  BatchRecommendations,
   getBatchRecommendations,
-  GetRecommendationsResult,
 } from '@algolia/recommend-core/src';
 import { dequal } from 'dequal';
 import React from 'react';
@@ -17,7 +17,7 @@ type GetParametersResult = {
 
 type RecommendWidget<TObject> = {
   getParameters: () => GetParametersResult;
-  onResult: (value: unknown) => void; // GetRecommendationsResult<TObject>
+  onResult: (value: BatchRecommendations<TObject>) => void;
   onRequest: () => void;
   key: string;
   param: GetParametersResult;
@@ -38,7 +38,7 @@ type RecommendProviderProps = {
 
 type StateType<TObject> = {
   isDirty: number | null;
-  cache: Record<string, GetRecommendationsResult<TObject>>;
+  cache: Record<string, BatchRecommendations<TObject>>;
   widgets: Array<RecommendWidget<TObject>>;
   recommendClient: RecommendClient | null;
 };
