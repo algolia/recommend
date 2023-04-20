@@ -9,7 +9,6 @@ import React from 'react';
 
 import { isPresent } from './utils/isPresent';
 
-// Types
 type GetParametersResult = {
   queries: RecommendationsQuery[];
   keyPair: BatchKeyPair;
@@ -48,17 +47,14 @@ type Action<TObject> =
   | { type: 'unregister'; key: string }
   | { type: 'request_success' };
 
-// Context
-// Not sure about using "unknown" here ?
 export const RecommendContext = React.createContext<
-  RecommendContextType<unknown>
+  RecommendContextType<unknown> // Not sure about using "unknown" here ?
 >({
   hasProvider: false,
 } as RecommendContextType<unknown>);
 
 export const useRecommendContext = () => React.useContext(RecommendContext);
 
-// Provider
 function isRegistered<TObject>(
   widgets: Array<RecommendWidget<TObject>>,
   param: GetParametersResult
