@@ -5,12 +5,11 @@ import {
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRecommendContext } from './RecommendContext';
+import { useRecommendClient, useRecommendContext } from './Recommend';
 import { RelatedProductsProps } from './RelatedProducts';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
-import { pickRecommendClient } from './utils/pickRecommendClient';
 
 export type UseRelatedProductsProps<TObject> = RelatedProductsProps<TObject>;
 
@@ -32,16 +31,8 @@ export function useRelatedProducts<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const {
-    recommendClient: recommendClientFromContext,
-    hasProvider,
-    register,
-  } = useRecommendContext();
-
-  const { client, isContextClient } = pickRecommendClient(
-    recommendClientFromContext,
-    recommendClient
-  );
+  const { hasProvider, register } = useRecommendContext();
+  const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
 
@@ -58,22 +49,15 @@ export function useRelatedProducts<TObject>({
       objectIDs,
       queryParameters,
       threshold,
-      transformItems: transformItemsRef.current,
     };
-
     const key = JSON.stringify(param);
     let unregister: Function | undefined;
 
     if (!hasProvider || !isContextClient) {
       setStatus('loading');
       getRelatedProducts({
-        fallbackParameters,
-        indexName,
-        maxRecommendations,
-        objectIDs,
-        queryParameters,
+        ...param,
         recommendClient: client,
-        threshold,
         transformItems: transformItemsRef.current,
       }).then((response) => {
         setResult(response);

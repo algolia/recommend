@@ -1,6 +1,6 @@
 import algoliarecommend from '@algolia/recommend';
 import {
-  RecommendProvider,
+  Recommend,
   TrendingFacets,
   TrendingItems,
 } from '@algolia/recommend-react';
@@ -23,7 +23,7 @@ export const HomePage: React.FC = () => {
   ] = useApplicationContext();
 
   return (
-    <RecommendProvider recommendClient={recommendClient}>
+    <Recommend recommendClient={recommendClient}>
       <TrendingFacets<FacetHit>
         indexName={indexName}
         facetName="brand"
@@ -70,6 +70,6 @@ export const HomePage: React.FC = () => {
           }`,
         }}
       />
-    </RecommendProvider>
+    </Recommend>
   );
 };

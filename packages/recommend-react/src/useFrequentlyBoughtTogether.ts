@@ -6,11 +6,10 @@ import {
 import { useEffect, useRef, useState } from 'react';
 
 import { FrequentlyBoughtTogetherProps } from './FrequentlyBoughtTogether';
-import { useRecommendContext } from './RecommendContext';
+import { useRecommendClient, useRecommendContext } from './Recommend';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
-import { pickRecommendClient } from './utils/pickRecommendClient';
 
 export type UseFrequentlyBoughtTogetherProps<
   TObject
@@ -32,16 +31,8 @@ export function useFrequentlyBoughtTogether<TObject>({
   const objectIDs = useStableValue(userObjectIDs);
   const queryParameters = useStableValue(userQueryParameters);
 
-  const {
-    recommendClient: recommendClientFromContext,
-    hasProvider,
-    register,
-  } = useRecommendContext();
-
-  const { client, isContextClient } = pickRecommendClient(
-    recommendClientFromContext,
-    recommendClient
-  );
+  const { hasProvider, register } = useRecommendContext();
+  const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
 
@@ -57,7 +48,6 @@ export function useFrequentlyBoughtTogether<TObject>({
       objectIDs,
       queryParameters,
       threshold,
-      transformItems: transformItemsRef.current,
     };
     const key = JSON.stringify(param);
     let unregister: Function | undefined;
@@ -65,12 +55,8 @@ export function useFrequentlyBoughtTogether<TObject>({
     if (!hasProvider || !isContextClient) {
       setStatus('loading');
       getFrequentlyBoughtTogether({
-        indexName,
-        maxRecommendations,
-        objectIDs,
-        queryParameters,
+        ...param,
         recommendClient: client,
-        threshold,
         transformItems: transformItemsRef.current,
       }).then((response) => {
         setResult(response);
