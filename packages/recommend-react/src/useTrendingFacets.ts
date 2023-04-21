@@ -39,10 +39,12 @@ export function useTrendingFacets<TObject>({
       maxRecommendations,
       threshold,
       facetName,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(() => {});
   }, [
     indexName,
     maxRecommendations,

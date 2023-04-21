@@ -48,10 +48,12 @@ export function useTrendingItems<TObject>({
       threshold,
       facetName,
       facetValue,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(() => {});
   }, [
     fallbackParameters,
     indexName,

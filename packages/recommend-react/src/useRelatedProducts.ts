@@ -47,10 +47,12 @@ export function useRelatedProducts<TObject>({
       recommendClient,
       threshold,
       transformItems: transformItemsRef.current,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(() => {});
   }, [
     fallbackParameters,
     indexName,

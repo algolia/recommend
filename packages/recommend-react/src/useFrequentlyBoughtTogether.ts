@@ -46,10 +46,12 @@ export function useFrequentlyBoughtTogether<TObject>({
       recommendClient,
       threshold,
       transformItems: transformItemsRef.current,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(() => {});
   }, [
     indexName,
     maxRecommendations,
