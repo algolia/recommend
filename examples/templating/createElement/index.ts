@@ -45,7 +45,7 @@ relatedProducts<ProductHit>({
         itemComponent({ item }) {
           return itemComponent({ item, createElement, Fragment });
         },
-      }) ?? createElement('div', null, 'Loading')
+      }) || createElement('div', null, 'Loading')
     );
   },
 });
@@ -64,7 +64,7 @@ trendingItems<ProductHit>({
         itemComponent({ item }) {
           return itemComponent({ item, createElement, Fragment });
         },
-      }) ?? createElement('div', null, 'Loading')
+      }) || createElement('div', null, 'Loading')
     );
   },
 });

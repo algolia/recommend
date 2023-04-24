@@ -12,7 +12,7 @@ export function productItem({ item, createElement }: ProductItemProps) {
     createElement('div', { className: 'relative' }, [
       createElement('img', {
         className: 'max-h-80',
-        src: item.image_urls?.[0],
+        src: item.image_urls[0],
       }),
       createElement('div', { className: 'ProductItem-info relative' }, [
         createElement(
