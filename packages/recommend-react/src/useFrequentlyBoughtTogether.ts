@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
+import { useAsyncError } from './utils/useAsyncError';
 
 export type UseFrequentlyBoughtTogetherProps<
   TObject
@@ -22,6 +23,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   threshold,
   transformItems: userTransformItems,
 }: UseFrequentlyBoughtTogetherProps<TObject>) {
+  const throwAsyncError = useAsyncError();
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -46,10 +48,12 @@ export function useFrequentlyBoughtTogether<TObject>({
       recommendClient,
       threshold,
       transformItems: transformItemsRef.current,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(throwAsyncError);
   }, [
     indexName,
     maxRecommendations,
@@ -58,6 +62,7 @@ export function useFrequentlyBoughtTogether<TObject>({
     recommendClient,
     setStatus,
     threshold,
+    throwAsyncError,
   ]);
 
   return {

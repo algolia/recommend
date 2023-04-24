@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
+import { useAsyncError } from './utils/useAsyncError';
 
 export type UseTrendingFacetsProps<TObject> = GetTrendingFacetsProps<TObject>;
 
@@ -18,6 +19,7 @@ export function useTrendingFacets<TObject>({
   transformItems: userTransformItems,
   facetName,
 }: UseTrendingFacetsProps<TObject>) {
+  const throwAsyncError = useAsyncError();
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
     recommendations: [],
   });
@@ -39,10 +41,12 @@ export function useTrendingFacets<TObject>({
       maxRecommendations,
       threshold,
       facetName,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(throwAsyncError);
   }, [
     indexName,
     maxRecommendations,
@@ -50,6 +54,7 @@ export function useTrendingFacets<TObject>({
     setStatus,
     threshold,
     facetName,
+    throwAsyncError,
   ]);
 
   return {

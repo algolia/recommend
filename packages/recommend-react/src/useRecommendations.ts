@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
+import { useAsyncError } from './utils/useAsyncError';
 
 export type UseRecommendationsProps<TObject> = GetRecommendationsProps<TObject>;
 
@@ -22,6 +23,7 @@ export function useRecommendations<TObject>({
   threshold,
   transformItems: userTransformItems,
 }: UseRecommendationsProps<TObject>) {
+  const throwAsyncError = useAsyncError();
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -49,10 +51,12 @@ export function useRecommendations<TObject>({
       recommendClient,
       threshold,
       transformItems: transformItemsRef.current,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(throwAsyncError);
   }, [
     fallbackParameters,
     indexName,
@@ -63,6 +67,7 @@ export function useRecommendations<TObject>({
     recommendClient,
     setStatus,
     threshold,
+    throwAsyncError,
   ]);
 
   return {
