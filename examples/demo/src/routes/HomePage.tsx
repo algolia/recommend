@@ -30,7 +30,8 @@ export const HomePage: React.FC = () => {
             insights={insights}
             onSelect={(facetHits) => {
               const isSameValue =
-                facetHits.facetValue === selectedFacetValue?.facetValue;
+                selectedFacetValue &&
+                facetHits.facetValue === selectedFacetValue.facetValue;
               setSelectedFacetValue(isSameValue ? null : facetHits);
             }}
             indexName={indexName}
