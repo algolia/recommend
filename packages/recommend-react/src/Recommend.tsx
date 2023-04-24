@@ -1,9 +1,9 @@
 import { RecommendationsQuery, RecommendClient } from '@algolia/recommend';
-import { BatchKeyPair } from '@algolia/recommend-core';
 import {
+  BatchKeyPair,
   BatchRecommendations,
   getBatchRecommendations,
-} from '@algolia/recommend-core/src';
+} from '@algolia/recommend-core';
 import { dequal } from 'dequal';
 import React from 'react';
 
@@ -58,7 +58,30 @@ if (__DEV__) {
   RecommendContext.displayName = 'Recommend';
 }
 
-export const useRecommendContext = () => React.useContext(RecommendContext);
+const useRecommendClient = (
+  recommendClient?: RecommendClient | null
+): { client: RecommendClient; isContextClient: boolean } => {
+  const context = React.useContext(RecommendContext);
+  if (recommendClient) {
+    return { client: recommendClient, isContextClient: false };
+  }
+
+  if (context.recommendClient) {
+    return { client: context.recommendClient, isContextClient: true };
+  }
+
+  throw new Error( // To do work on error message
+    'Pass an Algolia `recommendClient` instance either to the Recommend React context, a component or hook.'
+  );
+};
+
+export const useRecommendContext = (
+  recommendClient?: RecommendClient | null
+) => {
+  const context = React.useContext(RecommendContext);
+  const { client, isContextClient } = useRecommendClient(recommendClient);
+  return { ...context, client, isContextClient };
+};
 
 function isRegistered<TObject>(
   widgets: Array<RecommendWidget<TObject>>,
@@ -210,21 +233,3 @@ export function Recommend<TObject>({
     </RecommendContext.Provider>
   );
 }
-
-export const useRecommendClient = (
-  recommendClient?: RecommendClient | null
-): { client: RecommendClient; isContextClient: boolean } => {
-  const { recommendClient: recommendClientFromContext } = useRecommendContext();
-
-  if (recommendClient) {
-    return { client: recommendClient, isContextClient: false };
-  }
-
-  if (recommendClientFromContext) {
-    return { client: recommendClientFromContext, isContextClient: true };
-  }
-
-  throw new Error( // To do work on error message
-    'Pass an Algolia `recommendClient` instance either to the Recommend React context, a component or hook.'
-  );
-};

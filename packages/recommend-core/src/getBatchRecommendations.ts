@@ -1,6 +1,6 @@
 import { RecommendClient, RecommendationsQuery } from '@algolia/recommend';
 
-import { ProductRecord, TrendingFacet } from './types';
+import { ProductRecord, RecordWithObjectID, TrendingFacet } from './types';
 import { mapByScoreToRecommendations, mapToRecommendations } from './utils';
 import { version } from './version';
 
@@ -20,15 +20,18 @@ export type GetBatchRecommendations<TObject> = {
 
 export type BatchRecommendations<TObject> = {
   recommendations:
-    | ReturnType<typeof mapByScoreToRecommendations>
-    | ReturnType<typeof mapToRecommendations>;
+    | RecordWithObjectID[]
+    | Array<TrendingFacet<TObject>>
+    | Array<ProductRecord<TObject>>;
 };
 
 export async function getBatchRecommendations<TObject>({
   keys,
   queries,
   recommendClient,
-}: GetBatchRecommendations<TObject>) {
+}: GetBatchRecommendations<TObject>): Promise<
+  Record<string, BatchRecommendations<TObject>>
+> {
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
   const response = await recommendClient.getRecommendations<TObject>(queries);

@@ -6,7 +6,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 
 import { FrequentlyBoughtTogetherProps } from './FrequentlyBoughtTogether';
-import { useRecommendClient, useRecommendContext } from './Recommend';
+import { useRecommendContext } from './Recommend';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
@@ -31,8 +31,12 @@ export function useFrequentlyBoughtTogether<TObject>({
   const objectIDs = useStableValue(userObjectIDs);
   const queryParameters = useStableValue(userQueryParameters);
 
-  const { hasProvider, register } = useRecommendContext();
-  const { client, isContextClient } = useRecommendClient(recommendClient);
+  const {
+    hasProvider,
+    register,
+    client,
+    isContextClient,
+  } = useRecommendContext(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
 
@@ -88,8 +92,7 @@ export function useFrequentlyBoughtTogether<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          // @ts-ignore
-          setResult(response);
+          setResult(response as GetRecommendationsResult<TObject>);
           setStatus('idle');
         },
       });

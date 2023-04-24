@@ -3,9 +3,10 @@ import {
   getTrendingFacets,
   GetTrendingFacetsResult,
 } from '@algolia/recommend-core';
+import { GetRecommendationsResult } from '@algolia/recommend-core/src';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRecommendClient, useRecommendContext } from './Recommend';
+import { useRecommendContext } from './Recommend';
 import { TrendingFacetsProps } from './TrendingFacets';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
@@ -25,8 +26,12 @@ export function useTrendingFacets<TObject>({
   });
   const { status, setStatus } = useStatus('loading');
 
-  const { hasProvider, register } = useRecommendContext();
-  const { client, isContextClient } = useRecommendClient(recommendClient);
+  const {
+    hasProvider,
+    register,
+    client,
+    isContextClient,
+  } = useRecommendContext(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
 
@@ -75,8 +80,7 @@ export function useTrendingFacets<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          // @ts-ignore
-          setResult(response);
+          setResult(response as GetRecommendationsResult<TObject>);
           setStatus('idle');
         },
       });

@@ -5,7 +5,7 @@ import {
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRecommendClient, useRecommendContext } from './Recommend';
+import { useRecommendContext } from './Recommend';
 import { RelatedProductsProps } from './RelatedProducts';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
@@ -31,8 +31,12 @@ export function useRelatedProducts<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const { hasProvider, register } = useRecommendContext();
-  const { client, isContextClient } = useRecommendClient(recommendClient);
+  const {
+    hasProvider,
+    register,
+    client,
+    isContextClient,
+  } = useRecommendContext(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
 
@@ -90,8 +94,7 @@ export function useRelatedProducts<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          // @ts-ignore
-          setResult(response);
+          setResult(response as GetRecommendationsResult<TObject>);
           setStatus('idle');
         },
       });
