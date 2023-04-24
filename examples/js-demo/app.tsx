@@ -186,7 +186,7 @@ function renderRecommendations(selectedProduct: ProductHit) {
               />
             );
           },
-          view: (...props) => horizontalSlider(...props) ?? <div>Loading</div>,
+          view: (...props) => horizontalSlider(...props) || <div>Loading</div>,
           maxRecommendations: 10,
           translations: {
             title: 'Related products (fallback)',
@@ -203,7 +203,7 @@ function renderRecommendations(selectedProduct: ProductHit) {
               `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
             ],
           },
-        }) ?? <div>Loading...</div>
+        }) || <div>Loading...</div>
       );
     },
   });
@@ -222,7 +222,7 @@ function renderRecommendations(selectedProduct: ProductHit) {
         />
       );
     },
-    view: (...props) => horizontalSlider(...props) ?? <div>Loading</div>,
+    view: (...props) => horizontalSlider(...props) || <div>Loading</div>,
     maxRecommendations: 10,
     translations: {
       title: 'Related products',

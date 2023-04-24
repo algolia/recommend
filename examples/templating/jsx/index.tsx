@@ -35,7 +35,7 @@ relatedProducts<ProductHit>({
   container: '#relatedProducts',
   recommendClient,
   indexName,
-  view: (...props) => horizontalSlider(...props) ?? <div>Loading</div>,
+  view: (...props) => horizontalSlider(...props) || <div>Loading</div>,
   objectIDs: ['M0E20000000EAAK'],
   itemComponent({ item }) {
     return <ProductItem item={item} />;
@@ -46,7 +46,7 @@ trendingItems<ProductHit>({
   container: '#trendingItems',
   recommendClient,
   indexName,
-  view: (...props) => horizontalSlider(...props) ?? <div>Loading</div>,
+  view: (...props) => horizontalSlider(...props) || <div>Loading</div>,
   itemComponent({ item }) {
     return <ProductItem item={item} />;
   },
