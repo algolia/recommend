@@ -9,7 +9,9 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
-export type UseTrendingItemsProps<TObject> = GetTrendingItemsProps<TObject>;
+export type UseTrendingItemsProps<TObject> = GetTrendingItemsProps<TObject> & {
+  onError?: (error: Error) => void;
+};
 
 export function useTrendingItems<TObject>({
   fallbackParameters: userFallbackParameters,
@@ -21,6 +23,7 @@ export function useTrendingItems<TObject>({
   transformItems: userTransformItems,
   facetName,
   facetValue,
+  onError = () => {},
 }: UseTrendingItemsProps<TObject>) {
   const [result, setResult] = useState<GetTrendingItemsResult<TObject>>({
     recommendations: [],
@@ -53,7 +56,7 @@ export function useTrendingItems<TObject>({
         setResult(response);
         setStatus('idle');
       })
-      .catch(() => {});
+      .catch(onError);
   }, [
     fallbackParameters,
     indexName,

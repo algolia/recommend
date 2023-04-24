@@ -26,6 +26,28 @@ function createMockedRecommendClient() {
   };
 }
 
+function createMockedRecommendClientFailure() {
+  const recommendClient = createRecommendClient({
+    getTrendingItems: jest
+      .fn()
+      .mockImplementationOnce(
+        () =>
+          Promise.reject(new Error('Could not find recommendations.')) as any
+      )
+      .mockImplementationOnce(() =>
+        Promise.resolve(
+          createMultiSearchResponse({
+            hits: [hit],
+          })
+        )
+      ),
+  });
+
+  return {
+    recommendClient,
+  };
+}
+
 describe('useTrendingItems', () => {
   test('gets trending items', async () => {
     const { recommendClient } = createMockedRecommendClient();
@@ -85,6 +107,51 @@ describe('useTrendingItems', () => {
       expect(result.current.recommendations).toEqual([
         'Landoh 4-Pocket Jumpsuit',
       ]);
+    });
+
+    act(() => {
+      rerender({ transformItems: getItemPrice, indexName: 'test1' });
+    });
+
+    await waitForNextUpdate();
+    await waitFor(() => {
+      expect(result.current.recommendations).toEqual([250]);
+    });
+  });
+
+  test('assures it handles error', async () => {
+    const { recommendClient } = createMockedRecommendClientFailure();
+    const handleError = jest.fn();
+
+    const { result, rerender, waitForNextUpdate } = renderHook(
+      ({ transformItems, indexName }) =>
+        useTrendingItems({
+          indexName,
+          recommendClient,
+          threshold: 0,
+          queryParameters: {
+            facetFilters: ['test'],
+          },
+          fallbackParameters: {
+            facetFilters: ['test2'],
+          },
+          facetName: 'test4',
+          facetValue: 'test3',
+          transformItems,
+          onError: handleError,
+        }),
+      {
+        wrapper: StrictMode,
+        initialProps: {
+          transformItems: getItemName,
+          indexName: 'test',
+        },
+      }
+    );
+
+    await waitForNextUpdate();
+    await waitFor(() => {
+      expect(handleError).toHaveBeenCalled();
     });
 
     act(() => {

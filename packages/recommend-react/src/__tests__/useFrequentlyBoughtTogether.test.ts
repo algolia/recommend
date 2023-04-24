@@ -26,6 +26,18 @@ function createMockedRecommendClient() {
   };
 }
 
+function createMockedRecommendClientFailure() {
+  const recommendClient = createRecommendClient({
+    getFrequentlyBoughtTogether: jest.fn(
+      () => Promise.reject(new Error('Could not find recommendations.')) as any
+    ),
+  });
+
+  return {
+    recommendClient,
+  };
+}
+
 describe('useFrequentlyBoughtTogether', () => {
   test('returns FBT recommendations', async () => {
     const { recommendClient } = createMockedRecommendClient();
@@ -84,6 +96,29 @@ describe('useFrequentlyBoughtTogether', () => {
     await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([250]);
+    });
+  });
+
+  test('assures it handles error', async () => {
+    const { recommendClient } = createMockedRecommendClientFailure();
+    const handleError = jest.fn();
+
+    const { waitForNextUpdate } = renderHook(() =>
+      useFrequentlyBoughtTogether({
+        indexName: 'test',
+        recommendClient,
+        threshold: 0,
+        objectIDs: ['testing'],
+        queryParameters: {
+          facetFilters: ['test'],
+        },
+        onError: handleError,
+      })
+    );
+
+    await waitForNextUpdate();
+    await waitFor(() => {
+      expect(handleError).toHaveBeenCalled();
     });
   });
 });

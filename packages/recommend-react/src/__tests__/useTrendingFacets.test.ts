@@ -26,6 +26,18 @@ function createMockedRecommendClient() {
   };
 }
 
+function createMockedRecommendClientFailure() {
+  const recommendClient = createRecommendClient({
+    getTrendingFacets: jest.fn(
+      () => Promise.reject(new Error('Could not find recommendations.')) as any
+    ),
+  });
+
+  return {
+    recommendClient,
+  };
+}
+
 describe('useTrendingFacets', () => {
   test('gets trending facets', async () => {
     const { recommendClient } = createMockedRecommendClient();
@@ -80,6 +92,26 @@ describe('useTrendingFacets', () => {
     await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([250]);
+    });
+  });
+
+  test('assures it handles error', async () => {
+    const { recommendClient } = createMockedRecommendClientFailure();
+    const handleError = jest.fn();
+
+    const { waitForNextUpdate } = renderHook(() =>
+      useTrendingFacets({
+        indexName: 'test',
+        recommendClient,
+        threshold: 0,
+        facetName: 'test4',
+        onError: handleError,
+      })
+    );
+
+    await waitForNextUpdate();
+    await waitFor(() => {
+      expect(handleError).toHaveBeenCalled();
     });
   });
 });
