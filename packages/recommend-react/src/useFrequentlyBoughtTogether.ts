@@ -48,8 +48,8 @@ export function useFrequentlyBoughtTogether<TObject>({
       objectIDs,
       queryParameters,
       threshold,
+      transformItems: transformItemsRef.current,
     };
-
     let unregister: Function | undefined;
 
     if (!hasProvider || !isContextClient) {
@@ -57,7 +57,6 @@ export function useFrequentlyBoughtTogether<TObject>({
       getFrequentlyBoughtTogether({
         ...param,
         recommendClient: client,
-        transformItems: transformItemsRef.current,
       }).then((response) => {
         setResult(response);
         setStatus('idle');

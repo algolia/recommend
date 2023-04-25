@@ -49,8 +49,8 @@ export function useRelatedProducts<TObject>({
       objectIDs,
       queryParameters,
       threshold,
+      transformItems: transformItemsRef.current,
     };
-
     let unregister: Function | undefined;
 
     if (!hasProvider || !isContextClient) {
@@ -58,7 +58,6 @@ export function useRelatedProducts<TObject>({
       getRelatedProducts({
         ...param,
         recommendClient: client,
-        transformItems: transformItemsRef.current,
       }).then((response) => {
         setResult(response);
         setStatus('idle');

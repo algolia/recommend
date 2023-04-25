@@ -53,6 +53,7 @@ export function useTrendingItems<TObject>({
       // @ts-expect-error
       facetName,
       facetValue,
+      transformItems: transformItemsRef.current,
     };
 
     if (!hasProvider || !isContextClient) {
@@ -60,7 +61,6 @@ export function useTrendingItems<TObject>({
       getTrendingItems({
         ...param,
         recommendClient: client,
-        transformItems: transformItemsRef.current,
       }).then((response) => {
         setResult(response);
         setStatus('idle');

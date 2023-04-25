@@ -37,8 +37,6 @@ export function useTrendingFacets<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    let unregister: Function | undefined;
-
     const param: RecommendationsQuery = {
       model: 'trending-facets',
       indexName,
@@ -46,7 +44,9 @@ export function useTrendingFacets<TObject>({
       facetName,
       threshold,
       maxRecommendations,
+      transformItems: transformItemsRef.current,
     };
+    let unregister: Function | undefined;
 
     if (!hasProvider || !isContextClient) {
       setStatus('loading');
@@ -54,7 +54,6 @@ export function useTrendingFacets<TObject>({
         ...param,
         recommendClient: client,
         facetName,
-        transformItems: transformItemsRef.current,
       }).then((response) => {
         setResult(response);
         setStatus('idle');
