@@ -6,7 +6,7 @@ import {
 import { GetRecommendationsResult } from '@algolia/recommend-core/src';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRecommendContext } from './Recommend';
+import { useRecommendContext, useRecommendClient } from './Recommend';
 import { TrendingFacetsProps } from './TrendingFacets';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
@@ -26,12 +26,8 @@ export function useTrendingFacets<TObject>({
   });
   const { status, setStatus } = useStatus('loading');
 
-  const {
-    hasProvider,
-    register,
-    client,
-    isContextClient,
-  } = useRecommendContext(recommendClient);
+  const { hasProvider, register } = useRecommendContext();
+  const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
 
@@ -51,7 +47,6 @@ export function useTrendingFacets<TObject>({
       threshold,
       maxRecommendations,
     };
-    const key = JSON.stringify(param);
 
     if (!hasProvider || !isContextClient) {
       setStatus('loading');
@@ -65,6 +60,7 @@ export function useTrendingFacets<TObject>({
         setStatus('idle');
       });
     } else {
+      const key = JSON.stringify(param);
       unregister = register({
         key,
         getParameters() {
@@ -87,7 +83,7 @@ export function useTrendingFacets<TObject>({
     }
     return () => {
       if (unregister) {
-        unregister(key);
+        unregister();
       }
     };
   }, [

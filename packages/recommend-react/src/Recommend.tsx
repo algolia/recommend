@@ -7,7 +7,6 @@ import {
 import { dequal } from 'dequal';
 import React from 'react';
 
-import { useStableValue } from './useStableValue';
 import { isPresent } from './utils/isPresent';
 
 type GetParametersResult = {
@@ -31,7 +30,7 @@ type RecommendContextType<TObject> = {
   recommendClient: RecommendClient;
 };
 
-type RecommendProps = {
+export type RecommendProps = {
   children: React.ReactNode;
   recommendClient: RecommendClient;
 };
@@ -58,7 +57,7 @@ if (__DEV__) {
   RecommendContext.displayName = 'Recommend';
 }
 
-const useRecommendClient = (
+export const useRecommendClient = (
   recommendClient?: RecommendClient | null
 ): { client: RecommendClient; isContextClient: boolean } => {
   const context = React.useContext(RecommendContext);
@@ -75,13 +74,7 @@ const useRecommendClient = (
   );
 };
 
-export const useRecommendContext = (
-  recommendClient?: RecommendClient | null
-) => {
-  const context = React.useContext(RecommendContext);
-  const { client, isContextClient } = useRecommendClient(recommendClient);
-  return { ...context, client, isContextClient };
-};
+export const useRecommendContext = () => React.useContext(RecommendContext);
 
 function isRegistered<TObject>(
   widgets: Array<RecommendWidget<TObject>>,
@@ -148,8 +141,7 @@ const reducer: React.Reducer<StateType<unknown>, Action<any>> = (
 
     case 'unregister': {
       const { key } = action;
-      state.widgets = state.widgets.filter((w) => w.key !== key);
-      return state;
+      return { ...state, widgets: state.widgets.filter((w) => w.key !== key) };
     }
 
     case 'request_success': {
@@ -162,11 +154,9 @@ const reducer: React.Reducer<StateType<unknown>, Action<any>> = (
 };
 
 export function Recommend<TObject>({
-  recommendClient: userRecommendClient,
+  recommendClient,
   children,
 }: RecommendProps) {
-  const recommendClient = useStableValue(userRecommendClient);
-
   const [state, dispatch] = React.useReducer(reducer, {
     isDirty: null,
     cache: {},
@@ -214,21 +204,20 @@ export function Recommend<TObject>({
   const register = React.useCallback(
     (widget: Omit<RecommendWidget<TObject>, 'param'>) => {
       dispatch({ type: 'register', widget });
-      return (key: string) => {
-        dispatch({ type: 'unregister', key });
+      return () => {
+        dispatch({ type: 'unregister', key: widget.key });
       };
     },
     []
   );
 
+  const value = React.useMemo(
+    () => ({ register, recommendClient, hasProvider: true }),
+    [recommendClient, register]
+  );
+
   return (
-    <RecommendContext.Provider
-      value={{
-        register,
-        recommendClient,
-        hasProvider: true,
-      }}
-    >
+    <RecommendContext.Provider value={value}>
       {children}
     </RecommendContext.Provider>
   );

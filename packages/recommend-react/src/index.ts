@@ -7,4 +7,4 @@ export * from './useRecommendations';
 export * from './useRelatedProducts';
 export * from './useTrendingFacets';
 export * from './useTrendingItems';
-export { Recommend } from './Recommend';
+export { Recommend, RecommendProps } from './Recommend';

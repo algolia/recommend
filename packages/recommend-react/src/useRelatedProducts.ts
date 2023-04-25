@@ -5,7 +5,7 @@ import {
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRecommendContext } from './Recommend';
+import { useRecommendContext, useRecommendClient } from './Recommend';
 import { RelatedProductsProps } from './RelatedProducts';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
@@ -31,12 +31,8 @@ export function useRelatedProducts<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const {
-    hasProvider,
-    register,
-    client,
-    isContextClient,
-  } = useRecommendContext(recommendClient);
+  const { hasProvider, register } = useRecommendContext();
+  const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
 
@@ -54,7 +50,7 @@ export function useRelatedProducts<TObject>({
       queryParameters,
       threshold,
     };
-    const key = JSON.stringify(param);
+
     let unregister: Function | undefined;
 
     if (!hasProvider || !isContextClient) {
@@ -68,6 +64,7 @@ export function useRelatedProducts<TObject>({
         setStatus('idle');
       });
     } else {
+      const key = JSON.stringify(param);
       const queries = objectIDs.map(
         (objectID: string): RecommendationsQuery => ({
           indexName,
@@ -102,7 +99,7 @@ export function useRelatedProducts<TObject>({
 
     return () => {
       if (unregister) {
-        unregister(key);
+        unregister();
       }
     };
   }, [

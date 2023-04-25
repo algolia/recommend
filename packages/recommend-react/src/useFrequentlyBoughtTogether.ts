@@ -6,7 +6,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 
 import { FrequentlyBoughtTogetherProps } from './FrequentlyBoughtTogether';
-import { useRecommendContext } from './Recommend';
+import { useRecommendContext, useRecommendClient } from './Recommend';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
@@ -31,12 +31,8 @@ export function useFrequentlyBoughtTogether<TObject>({
   const objectIDs = useStableValue(userObjectIDs);
   const queryParameters = useStableValue(userQueryParameters);
 
-  const {
-    hasProvider,
-    register,
-    client,
-    isContextClient,
-  } = useRecommendContext(recommendClient);
+  const { hasProvider, register } = useRecommendContext();
+  const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
 
@@ -53,7 +49,7 @@ export function useFrequentlyBoughtTogether<TObject>({
       queryParameters,
       threshold,
     };
-    const key = JSON.stringify(param);
+
     let unregister: Function | undefined;
 
     if (!hasProvider || !isContextClient) {
@@ -67,6 +63,7 @@ export function useFrequentlyBoughtTogether<TObject>({
         setStatus('idle');
       });
     } else {
+      const key = JSON.stringify(param);
       const queries = objectIDs.map(
         (objectID: string): RecommendationsQuery => ({
           indexName,
@@ -99,7 +96,7 @@ export function useFrequentlyBoughtTogether<TObject>({
     }
     return () => {
       if (unregister) {
-        unregister(key);
+        unregister();
       }
     };
   }, [

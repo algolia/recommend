@@ -5,7 +5,7 @@ import {
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRecommendContext } from './Recommend';
+import { useRecommendContext, useRecommendClient } from './Recommend';
 import { TrendingItemsProps } from './TrendingItems';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
@@ -31,12 +31,8 @@ export function useTrendingItems<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const {
-    hasProvider,
-    register,
-    client,
-    isContextClient,
-  } = useRecommendContext(recommendClient);
+  const { hasProvider, register } = useRecommendContext();
+  const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
 
@@ -58,7 +54,6 @@ export function useTrendingItems<TObject>({
       facetName,
       facetValue,
     };
-    const key = JSON.stringify(param);
 
     if (!hasProvider || !isContextClient) {
       setStatus('loading');
@@ -71,6 +66,7 @@ export function useTrendingItems<TObject>({
         setStatus('idle');
       });
     } else {
+      const key = JSON.stringify(param);
       unregister = register({
         key,
         getParameters() {
@@ -94,7 +90,7 @@ export function useTrendingItems<TObject>({
 
     return () => {
       if (unregister) {
-        unregister(key);
+        unregister();
       }
     };
   }, [
