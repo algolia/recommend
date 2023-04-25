@@ -9,20 +9,25 @@ export type BatchKeyPair = {
   value: number;
 };
 
+type Recommendation<TObject> =
+  | RecordWithObjectID
+  | TrendingFacet<TObject>
+  | ProductRecord<TObject>;
+
+type Query<TObject> = RecommendationsQuery & {
+  transformItems?: (
+    items: Array<Recommendation<TObject>>
+  ) => Array<Recommendation<TObject>>;
+};
+
 export type GetBatchRecommendations<TObject> = {
   keys: BatchKeyPair[];
-  queries: RecommendationsQuery[];
+  queries: Array<Query<TObject>>;
   recommendClient: RecommendClient;
-  transformItems?: (
-    items: Array<ProductRecord<TObject>>
-  ) => Array<ProductRecord<TObject>>;
 };
 
 export type BatchRecommendations<TObject> = {
-  recommendations:
-    | RecordWithObjectID[]
-    | Array<TrendingFacet<TObject>>
-    | Array<ProductRecord<TObject>>;
+  recommendations: Array<Recommendation<TObject>>;
 };
 
 export async function getBatchRecommendations<TObject>({
@@ -45,7 +50,7 @@ export async function getBatchRecommendations<TObject>({
     const { model } = JSON.parse(keyPair.key);
 
     allChunks += keyPair.value;
-    const { maxRecommendations } = queries[prevChunks];
+    const { maxRecommendations, transformItems } = queries[prevChunks];
     const splitResult = response?.results?.slice(prevChunks, allChunks);
     prevChunks += keyPair.value;
 
@@ -62,6 +67,9 @@ export async function getBatchRecommendations<TObject>({
         hits: splitResult.map((res) => res.hits),
         nrOfObjs: keyPair.value,
       });
+    }
+    if (transformItems) {
+      recommendations = transformItems(recommendations);
     }
     results[keyPair.key] = { recommendations };
   });
