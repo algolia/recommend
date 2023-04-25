@@ -43,7 +43,7 @@ relatedProducts<ProductHit>({
         itemComponent({ item }) {
           return itemComponent({ item, ...renderer });
         },
-      }) ?? renderer.html`<div>Loading</div>`
+      }) || renderer.html`<div>Loading</div>`
     );
   },
 });
@@ -61,7 +61,7 @@ trendingItems<ProductHit>({
         itemComponent({ item }) {
           return itemComponent({ item, ...renderer });
         },
-      }) ?? renderer.html`<div>Loading</div>`
+      }) || renderer.html`<div>Loading</div>`
     );
   },
 });

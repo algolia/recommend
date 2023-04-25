@@ -2,6 +2,6 @@
   "packages": ["packages/*"],
   "buildCommand": false,
   "^": "buildCommand is false because `yarn prepare` is going to build packages anyway.",
-  "sandboxes": ["/examples/demo", "/examples/js-demo"],
-  "node": "14"
+  "sandboxes": ["/examples/demo", "/examples/js-demo", "/examples/templating"],
+  "node": "18"
 }

@@ -9,17 +9,18 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "@algolia/ui-components-horizontal-slider-js": "1.2.1",
-    "@algolia/ui-components-horizontal-slider-theme": "1.2.1",
-    "preact": "10.13.2"
-  },
-  "devDependencies": {
+    "algoliasearch": "4.17.0",
     "@algolia/client-search": "4.17.0",
     "@algolia/recommend": "4.17.0",
     "@algolia/recommend-js": "1.8.1",
     "@algolia/recommend-vdom": "1.8.1",
+    "@algolia/ui-components-horizontal-slider-js": "1.2.1",
+    "@algolia/ui-components-horizontal-slider-theme": "1.2.1",
+    "preact": "10.13.2"
+
+  },
+  "devDependencies": {
     "@babel/runtime": "7.21.0",
-    "algoliasearch": "4.17.0",
     "parcel": "2.8.3"
   }
 }

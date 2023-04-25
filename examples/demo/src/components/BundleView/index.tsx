@@ -25,8 +25,8 @@ export function BundleView<TObject extends BaseObject>(
   props: BundleViewProps<TObject>
 ): JSX.Element {
   const items = Array.from(new Set([props.currentItem, ...props.items]));
-  const formatPrice = props.formatPrice ?? formatPriceDefault;
-  const getAmount = props.getAmount ?? getAmountDefault;
+  const formatPrice = props.formatPrice || formatPriceDefault;
+  const getAmount = props.getAmount || getAmountDefault;
 
   const [selectedItems, setSelectedItems] = useState(() => items);
   const [price, setPrice] = useState(() => getAmount(selectedItems));
