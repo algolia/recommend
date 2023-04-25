@@ -3,23 +3,24 @@ import {
   BatchKeyPair,
   BatchRecommendations,
   getBatchRecommendations,
+  BatchQuery,
 } from '@algolia/recommend-core';
 import { dequal } from 'dequal';
 import React from 'react';
 
 import { isPresent } from './utils/isPresent';
 
-type GetParametersResult = {
-  queries: RecommendationsQuery[];
+type GetParametersResult<TObject> = {
+  queries: Array<BatchQuery<TObject>>;
   keyPair: BatchKeyPair;
 };
 
 type RecommendWidget<TObject> = {
-  getParameters: () => GetParametersResult;
+  getParameters: () => GetParametersResult<any>;
   onResult: (value: BatchRecommendations<TObject>) => void;
   onRequest: () => void;
   key: string;
-  param: GetParametersResult;
+  param: GetParametersResult<any>;
 };
 
 type RecommendContextType<TObject> = {
@@ -78,7 +79,7 @@ export const useRecommendContext = () => React.useContext(RecommendContext);
 
 function isRegistered<TObject>(
   widgets: Array<RecommendWidget<TObject>>,
-  param: GetParametersResult
+  param: GetParametersResult<TObject>
 ) {
   return Boolean(widgets.find((w) => dequal(w.param, param)));
 }
@@ -110,13 +111,14 @@ function getCachedPrams<TObject>(
     .filter(isPresent);
 }
 
-const getQueryKeys = (params: GetParametersResult[]) => {
+function getQueryKeys<TObject>(params: Array<GetParametersResult<TObject>>) {
   const queries = params
     .map((p) => p.queries)
     .reduce((a, b) => a.concat(b), []);
   const keys = params.map((p) => p.keyPair);
   return { queries, keys };
-};
+}
+
 // Not sure about using "unknown"/"any" here ?
 const reducer: React.Reducer<StateType<unknown>, Action<any>> = (
   state,

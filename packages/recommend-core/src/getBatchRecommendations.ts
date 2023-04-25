@@ -14,7 +14,7 @@ type Recommendation<TObject> =
   | TrendingFacet<TObject>
   | ProductRecord<TObject>;
 
-type Query<TObject> = RecommendationsQuery & {
+export type BatchQuery<TObject> = RecommendationsQuery & {
   transformItems?: (
     items: Array<Recommendation<TObject>>
   ) => Array<Recommendation<TObject>>;
@@ -22,7 +22,7 @@ type Query<TObject> = RecommendationsQuery & {
 
 export type GetBatchRecommendations<TObject> = {
   keys: BatchKeyPair[];
-  queries: Array<Query<TObject>>;
+  queries: Array<BatchQuery<TObject>>;
   recommendClient: RecommendClient;
 };
 

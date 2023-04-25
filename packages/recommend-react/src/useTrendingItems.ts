@@ -61,6 +61,7 @@ export function useTrendingItems<TObject>({
       getTrendingItems({
         ...param,
         recommendClient: client,
+        transformItems: transformItemsRef.current,
       }).then((response) => {
         setResult(response);
         setStatus('idle');

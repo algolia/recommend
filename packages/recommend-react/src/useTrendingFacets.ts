@@ -54,6 +54,7 @@ export function useTrendingFacets<TObject>({
         ...param,
         recommendClient: client,
         facetName,
+        transformItems: transformItemsRef.current,
       }).then((response) => {
         setResult(response);
         setStatus('idle');
