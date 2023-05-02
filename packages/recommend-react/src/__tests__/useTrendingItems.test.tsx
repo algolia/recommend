@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/dom';
 import { act, renderHook } from '@testing-library/react-hooks';
-import { StrictMode } from 'react';
+import React, { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
@@ -8,11 +8,11 @@ import {
   createRecommendClient,
   hit,
 } from '../../../../test/utils/createRecommendClient';
-import { useRelatedProducts } from '../useRelatedProducts';
+import { useTrendingItems } from '../useTrendingItems';
 
 function createMockedRecommendClient() {
   const recommendClient = createRecommendClient({
-    getRelatedProducts: jest.fn(() =>
+    getTrendingItems: jest.fn(() =>
       Promise.resolve(
         createMultiSearchResponse({
           hits: [hit],
@@ -26,22 +26,24 @@ function createMockedRecommendClient() {
   };
 }
 
-describe('useRelatedProducts', () => {
-  test('gets Related Products', async () => {
+describe('useTrendingItems', () => {
+  test('gets trending items', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
     const { result, waitForNextUpdate } = renderHook(() =>
-      useRelatedProducts({
+      useTrendingItems({
         indexName: 'test',
         recommendClient,
         threshold: 0,
-        objectIDs: ['testing'],
         queryParameters: {
           facetFilters: ['test'],
         },
         fallbackParameters: {
           facetFilters: ['test2'],
         },
+        facetName: 'test4',
+        facetValue: 'test3',
+        itemComponent: (item) => <>{item}</>,
       })
     );
 
@@ -56,15 +58,20 @@ describe('useRelatedProducts', () => {
 
     const { result, rerender, waitForNextUpdate } = renderHook(
       ({ transformItems, indexName }) =>
-        useRelatedProducts({
+        useTrendingItems({
           indexName,
           recommendClient,
           threshold: 0,
-          objectIDs: ['testing'],
           queryParameters: {
             facetFilters: ['test'],
           },
+          fallbackParameters: {
+            facetFilters: ['test2'],
+          },
+          facetName: 'test4',
+          facetValue: 'test3',
           transformItems,
+          itemComponent: (item) => <>{item}</>,
         }),
       {
         wrapper: StrictMode,
