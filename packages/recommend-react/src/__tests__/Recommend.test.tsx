@@ -1,6 +1,5 @@
 import { RecommendModel } from '@algolia/recommend';
 import { render, waitFor } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
 import React, { StrictMode } from 'react';
 import '@testing-library/jest-dom';
 
@@ -9,11 +8,8 @@ import {
   createRecommendClient,
   hit,
 } from '../../../../test/utils/createRecommendClient';
-import {
-  Recommend,
-  useRecommendContext,
-  useRecommendClient,
-} from '../Recommend';
+import { RelatedProducts, FrequentlyBoughtTogether } from '../index';
+import { Recommend, useRecommendContext } from '../Recommend';
 
 function createMockedRecommendClient() {
   const recommendClient = createRecommendClient({
@@ -67,44 +63,104 @@ const RecommendComponent = ({
 };
 
 describe('Recommend', () => {
-  it('should throw an Error when no recommend client is provided', () => {
-    jest.spyOn(console, 'error').mockImplementation();
-    renderHook(() => useRecommendClient(null));
-    // eslint-disable-next-line no-console
-    expect(console.error).toHaveBeenCalled();
-  });
-
-  it('prefer the recommendClient from the context', () => {
+  it('should use the recommendClient from the provider by default', async () => {
     const { recommendClient } = createMockedRecommendClient();
 
-    const { result } = renderHook(() => useRecommendClient(null), {
-      wrapper: ({ children }) => (
-        <StrictMode>
-          <Recommend recommendClient={recommendClient}>{children}</Recommend>
-        </StrictMode>
-      ),
+    render(
+      <StrictMode>
+        <Recommend recommendClient={recommendClient}>
+          <RelatedProducts
+            indexName="index"
+            objectIDs={['1234']}
+            maxRecommendations={10}
+            itemComponent={(item) => <>{`${item}`}</>}
+          />
+          <FrequentlyBoughtTogether
+            indexName="index"
+            objectIDs={['5678']}
+            maxRecommendations={10}
+            itemComponent={(item) => <>{`${item}`}</>}
+          />
+        </Recommend>
+      </StrictMode>
+    );
+
+    await waitFor(() => {
+      expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1);
+      expect(recommendClient.getRecommendations).toHaveBeenLastCalledWith([
+        {
+          indexName: 'index',
+          maxRecommendations: 10,
+          model: 'related-products',
+          objectID: '1234',
+          fallbackParameters: undefined,
+          queryParameters: undefined,
+          threshold: undefined,
+        },
+        {
+          indexName: 'index',
+          maxRecommendations: 10,
+          model: 'related-products',
+          objectID: '5678',
+          fallbackParameters: undefined,
+          queryParameters: undefined,
+          threshold: undefined,
+        },
+      ]);
     });
-    expect(result.current.client).toEqual(recommendClient);
-    expect(result.current.isContextClient).toEqual(true);
   });
 
-  it('prefer the recommendClient from parameters', () => {
+  it('should use the recommendClient from the component if provided', async () => {
+    const { recommendClient } = createMockedRecommendClient();
     const {
-      recommendClient: recommendClientContext,
+      recommendClient: recommendClientFbt,
     } = createMockedRecommendClient();
-    const { recommendClient } = createMockedRecommendClient();
 
-    const { result } = renderHook(() => useRecommendClient(recommendClient), {
-      wrapper: ({ children }) => (
-        <StrictMode>
-          <Recommend recommendClient={recommendClientContext}>
-            {children}
-          </Recommend>
-        </StrictMode>
-      ),
+    render(
+      <StrictMode>
+        <Recommend recommendClient={recommendClient}>
+          <RelatedProducts
+            indexName="index"
+            objectIDs={['1234']}
+            maxRecommendations={10}
+            itemComponent={(item) => <>{`${item}`}</>}
+          />
+          <FrequentlyBoughtTogether
+            indexName="index"
+            objectIDs={['5678']}
+            maxRecommendations={10}
+            recommendClient={recommendClientFbt}
+            itemComponent={(item) => <>{`${item}`}</>}
+          />
+        </Recommend>
+      </StrictMode>
+    );
+
+    await waitFor(() => {
+      expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1);
+      expect(recommendClient.getRecommendations).toHaveBeenLastCalledWith([
+        {
+          indexName: 'index',
+          maxRecommendations: 10,
+          model: 'related-products',
+          objectID: '1234',
+        },
+      ]);
+      expect(
+        recommendClientFbt.getFrequentlyBoughtTogether
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        recommendClientFbt.getFrequentlyBoughtTogether
+      ).toHaveBeenLastCalledWith([
+        {
+          indexName: 'index',
+          maxRecommendations: 10,
+          objectID: '5678',
+          queryParameters: undefined,
+          threshold: undefined,
+        },
+      ]);
     });
-    expect(result.current.client).toEqual(recommendClient);
-    expect(result.current.isContextClient).toEqual(false);
   });
 
   it('should use the recommendClient', async () => {
@@ -136,5 +192,87 @@ describe('Recommend', () => {
         },
       ])
     );
+  });
+
+  it('should cache results', async () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    const { rerender } = render(
+      <Recommend recommendClient={recommendClient}>
+        <RecommendComponent model="related-products" objectId="1234" />
+        <RecommendComponent model="bought-together" objectId="5678" />
+      </Recommend>,
+      {
+        wrapper: StrictMode,
+      }
+    );
+
+    await waitFor(() =>
+      expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1)
+    );
+
+    rerender(
+      <Recommend recommendClient={recommendClient}>
+        <RecommendComponent model="related-products" objectId="1234" />
+        <RecommendComponent model="bought-together" objectId="5678" />
+      </Recommend>
+    );
+
+    await waitFor(() =>
+      expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1)
+    );
+  });
+
+  it('should only query the required data', async () => {
+    const { recommendClient } = createMockedRecommendClient();
+
+    const { rerender } = render(
+      <Recommend recommendClient={recommendClient}>
+        <RecommendComponent model="related-products" objectId="1234" />
+        <RecommendComponent model="bought-together" objectId="5678" />
+      </Recommend>,
+      {
+        wrapper: StrictMode,
+      }
+    );
+
+    await waitFor(() =>
+      expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(1)
+    );
+
+    rerender(
+      <Recommend recommendClient={recommendClient}>
+        <RecommendComponent model="related-products" objectId="1234" />
+        <RecommendComponent model="bought-together" objectId="5555" />
+      </Recommend>
+    );
+
+    await waitFor(() => {
+      expect(recommendClient.getRecommendations).toHaveBeenCalledTimes(2);
+
+      expect(recommendClient.getRecommendations).toHaveBeenNthCalledWith(1, [
+        {
+          indexName: 'index',
+          maxRecommendations: 10,
+          model: 'related-products',
+          objectID: '1234',
+        },
+        {
+          indexName: 'index',
+          maxRecommendations: 10,
+          model: 'bought-together',
+          objectID: '5678',
+        },
+      ]);
+
+      expect(recommendClient.getRecommendations).toHaveBeenNthCalledWith(2, [
+        {
+          indexName: 'index',
+          maxRecommendations: 10,
+          model: 'bought-together',
+          objectID: '5555',
+        },
+      ]);
+    });
   });
 });

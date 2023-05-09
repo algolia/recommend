@@ -4,8 +4,7 @@ import {
   hit,
 } from '../../../../test/utils';
 import { getBatchRecommendations } from '../getBatchRecommendations';
-import * as mapByScoreToRecommendations from '../utils/mapByScoreToRecommendations';
-import * as mapToRecommendations from '../utils/mapToRecommendations';
+import '@testing-library/jest-dom';
 
 const recommendClient = createRecommendClient({
   getRecommendations: jest.fn(() =>
@@ -35,65 +34,6 @@ describe('getBatchRecommendations', () => {
     expect(Object.keys(result)[0]).toEqual('{"key":"key-1"}');
     expect(Object.values(result)[0]).toEqual({ recommendations: [hit] });
   });
-
-  it.each([
-    {
-      model: 'trending-facets',
-      mapByScore: true,
-      mapTo: false,
-    },
-    {
-      model: 'trending-items',
-      mapByScore: true,
-      mapTo: false,
-    },
-    {
-      model: 'bought-together',
-      mapByScore: false,
-      mapTo: true,
-    },
-    {
-      model: 'related-products',
-      mapByScore: false,
-      mapTo: true,
-    },
-  ])(
-    'should use the proper mapper for $model model',
-    async ({ model, mapByScore, mapTo }) => {
-      const mapByScoreToRecommendationsSpy = jest
-        .spyOn(mapByScoreToRecommendations, 'mapByScoreToRecommendations')
-        .mockReturnValue([]);
-      const mapToRecommendationsSpy = jest
-        .spyOn(mapToRecommendations, 'mapToRecommendations')
-        .mockReturnValue([]);
-
-      await getBatchRecommendations({
-        keys: [
-          {
-            key: JSON.stringify({ key: 'key-1', model }),
-            value: 1,
-          },
-        ],
-        queries: [
-          {
-            // @ts-expect-error
-            model,
-            indexName: 'indexName',
-            objectID: 'objectID',
-          },
-        ],
-        recommendClient,
-      });
-
-      expect(mapByScoreToRecommendationsSpy).toHaveBeenCalledTimes(
-        mapByScore ? 1 : 0
-      );
-      expect(mapToRecommendationsSpy).toHaveReturnedTimes(mapTo ? 1 : 0);
-
-      mapByScoreToRecommendationsSpy.mockReset();
-      mapToRecommendationsSpy.mockReset();
-    }
-  );
 
   it('should transform items', async () => {
     const result = await getBatchRecommendations({
