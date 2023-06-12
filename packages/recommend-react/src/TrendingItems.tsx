@@ -13,7 +13,10 @@ const UncontrolledTrendingItems = createTrendingItemsComponent({
 });
 
 export type TrendingItemsProps<TObject> = GetTrendingItemsProps<TObject> &
-  Omit<TrendingItemsVDOMProps<TObject>, 'items' | 'status'>;
+  Omit<
+    TrendingItemsVDOMProps<TObject>,
+    'items' | 'status' | 'createElement' | 'Fragment'
+  >;
 
 export function TrendingItems<TObject>(props: TrendingItemsProps<TObject>) {
   const { recommendations, status } = useTrendingItems<TObject>(props);
