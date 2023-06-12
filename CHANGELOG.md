@@ -1,3 +1,20 @@
+## [1.8.2](https://github.com/algolia/recommend/compare/v1.8.1...v1.8.2) (2023-06-12)
+
+
+### Bug Fixes
+
+* Fix Examples TypeScript issues ([#133](https://github.com/algolia/recommend/issues/133)) ([800f7f1](https://github.com/algolia/recommend/commit/800f7f196ced378f9e55f5eef9b389ed04651572))
+* Fix JS playground ([#132](https://github.com/algolia/recommend/issues/132)) ([c8c9578](https://github.com/algolia/recommend/commit/c8c9578d76e2be76924413acecfbd86caf2dc57f))
+* Fix transpilation errors in codesanbox demo examples ([#136](https://github.com/algolia/recommend/issues/136)) ([bb88801](https://github.com/algolia/recommend/commit/bb88801b39819edf0491cd93b08401be31c27128))
+* remove vdom renderer from react props ([#140](https://github.com/algolia/recommend/issues/140)) ([9ba18b7](https://github.com/algolia/recommend/commit/9ba18b75da8359abd53c46a04cc368a007b041dd))
+
+
+### Features
+
+* update react playground demo ([#130](https://github.com/algolia/recommend/issues/130)) ([3768368](https://github.com/algolia/recommend/commit/3768368a32c53706d92c68003fa09dd1c1f7bdc7))
+
+
+
 ## [1.8.1](https://github.com/algolia/recommend/compare/v1.8.0...v1.8.1) (2022-12-20)
 
 
