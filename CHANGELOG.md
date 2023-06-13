@@ -1,3 +1,12 @@
+## [1.8.2](https://github.com/algolia/recommend/compare/v1.8.1...v1.8.2) (2023-06-12)
+
+
+### Bug Fixes
+
+* remove VDOM renderer typings from React component props ([#140](https://github.com/algolia/recommend/issues/140)) ([9ba18b7](https://github.com/algolia/recommend/commit/9ba18b75da8359abd53c46a04cc368a007b041dd))
+
+
+
 ## [1.8.1](https://github.com/algolia/recommend/compare/v1.8.0...v1.8.1) (2022-12-20)
 
 
