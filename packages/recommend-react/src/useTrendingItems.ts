@@ -1,4 +1,3 @@
-import { RecommendationsQuery, TrendingQuery } from '@algolia/recommend';
 import {
   BatchQuery,
   getTrendingItems,
