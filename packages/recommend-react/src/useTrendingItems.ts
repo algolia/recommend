@@ -1,5 +1,6 @@
-import { RecommendationsQuery } from '@algolia/recommend';
+import { RecommendationsQuery, TrendingQuery } from '@algolia/recommend';
 import {
+  BatchQuery,
   getTrendingItems,
   GetTrendingItemsResult,
 } from '@algolia/recommend-core';
@@ -43,14 +44,13 @@ export function useTrendingItems<TObject>({
 
   useEffect(() => {
     let unregister: Function | undefined;
-    const param: RecommendationsQuery = {
+    const param: BatchQuery<TObject> = {
       model: 'trending-items',
       fallbackParameters,
       indexName,
       maxRecommendations,
       queryParameters,
       threshold,
-      // @ts-expect-error
       facetName,
       facetValue,
       transformItems: transformItemsRef.current,

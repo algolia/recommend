@@ -22,7 +22,7 @@ export function mapToRecommendations<TObject>({
   hits,
   maxRecommendations,
   nrOfObjs,
-}: MapToRecommendations<TObject>) {
+}: MapToRecommendations<TObject>): Array<ProductRecord<TObject>> {
   const indexTracker: IndexTracker = {};
 
   hits.forEach((hitsArray) => {

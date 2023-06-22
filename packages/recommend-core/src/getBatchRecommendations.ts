@@ -1,6 +1,10 @@
-import { RecommendClient, RecommendationsQuery } from '@algolia/recommend';
+import {
+  RecommendClient,
+  RecommendationsQuery,
+  TrendingQuery,
+} from '@algolia/recommend';
 
-import { ProductRecord, RecordWithObjectID, TrendingFacet } from './types';
+import { ProductRecord, TrendingFacet } from './types';
 import { mapByScoreToRecommendations, mapToRecommendations } from './utils';
 import { version } from './version';
 
@@ -9,15 +13,16 @@ export type BatchKeyPair = {
   value: number;
 };
 
-type Recommendation<TObject> =
-  | RecordWithObjectID
-  | TrendingFacet<TObject>
-  | ProductRecord<TObject>;
+type Recommendation<TObject> = ProductRecord<TObject>;
 
-export type BatchQuery<TObject> = RecommendationsQuery & {
+// | RecordWithObjectID
+// | TrendingFacet<TObject>
+// | ProductRecord<TObject>;
+
+export type BatchQuery<TObject> = (RecommendationsQuery | TrendingQuery) & {
   transformItems?: (
-    items: Array<Recommendation<TObject>>
-  ) => Array<Recommendation<TObject>>;
+    items: Array<ProductRecord<TObject>>
+  ) => Array<ProductRecord<TObject>>;
 };
 
 export type GetBatchRecommendations<TObject> = {
@@ -54,7 +59,7 @@ export async function getBatchRecommendations<TObject>({
     const splitResult = response?.results?.slice(prevChunks, allChunks);
     prevChunks += keyPair.value;
 
-    let recommendations: BatchRecommendations<TObject>['recommendations'];
+    let recommendations: Array<ProductRecord<ProductRecord<TObject>>>;
 
     if (model === 'trending-facets' || model === 'trending-items') {
       recommendations = mapByScoreToRecommendations<TrendingFacet<TObject>>({

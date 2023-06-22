@@ -1,4 +1,4 @@
-import { RecommendationsQuery } from '@algolia/recommend';
+import { TrendingModel } from '@algolia/recommend';
 import {
   getTrendingFacets,
   GetTrendingFacetsResult,
@@ -37,10 +37,9 @@ export function useTrendingFacets<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    const param: RecommendationsQuery = {
-      model: 'trending-facets',
+    const param = {
+      model: 'trending-facets' as TrendingModel,
       indexName,
-      // @ts-expect-error
       facetName,
       threshold,
       maxRecommendations,

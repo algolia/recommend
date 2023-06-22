@@ -1,4 +1,4 @@
-import { RecommendationsQuery, RecommendClient } from '@algolia/recommend';
+import { RecommendClient } from '@algolia/recommend';
 import {
   BatchKeyPair,
   BatchRecommendations,
@@ -84,13 +84,13 @@ function isRegistered<TObject>(
   return Boolean(widgets.find((w) => dequal(w.param, param)));
 }
 
-const getCacheKey = (queries: RecommendationsQuery[]) => {
+function getCacheKey<TObject>(queries: Array<BatchQuery<TObject>>) {
   return JSON.stringify(queries);
-};
+}
 
 function isCached<TObject>(
   cache: StateType<TObject>['cache'],
-  queries: RecommendationsQuery[]
+  queries: Array<BatchQuery<TObject>>
 ) {
   return Boolean(cache[getCacheKey(queries)]);
 }
