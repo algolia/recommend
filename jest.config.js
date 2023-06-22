@@ -12,6 +12,4 @@ module.exports = {
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
   ],
-  collectCoverage: false,
-  collectCoverageFrom: ['packages/**/src/**/*.{ts,tsx}', '!**/node_modules/**'],
 };
