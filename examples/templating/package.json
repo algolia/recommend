@@ -1,7 +1,7 @@
 {
   "name": "@algolia/recommend-templating-example",
   "description": "Recommend templating examples",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -9,13 +9,13 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "algoliasearch": "4.17.0",
     "@algolia/client-search": "4.17.0",
     "@algolia/recommend": "4.17.2",
-    "@algolia/recommend-js": "1.8.1",
-    "@algolia/recommend-vdom": "1.8.1",
+    "@algolia/recommend-js": "1.8.2",
+    "@algolia/recommend-vdom": "1.8.2",
     "@algolia/ui-components-horizontal-slider-js": "1.2.1",
     "@algolia/ui-components-horizontal-slider-theme": "1.2.1",
+    "algoliasearch": "4.17.0",
     "preact": "10.13.2"
   },
   "devDependencies": {

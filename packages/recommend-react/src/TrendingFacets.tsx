@@ -18,7 +18,7 @@ export type TrendingFacetsProps<TObject> = Omit<
   'recommendClient'
 > & { recommendClient?: RecommendClient } & Omit<
     TrendingFacetsVDOMProps<TObject>,
-    'items' | 'status'
+    'items' | 'status' | 'createElement' | 'Fragment'
   >;
 
 export function TrendingFacets<TObject>(props: TrendingFacetsProps<TObject>) {

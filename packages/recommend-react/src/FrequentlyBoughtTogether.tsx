@@ -20,7 +20,7 @@ export type FrequentlyBoughtTogetherProps<TObject> = Omit<
   'recommendClient'
 > & { recommendClient?: RecommendClient } & Omit<
     FrequentlyBoughtTogetherVDOMProps<TObject>,
-    'items' | 'status'
+    'items' | 'status' | 'createElement' | 'Fragment'
   >;
 
 export function FrequentlyBoughtTogether<TObject>(

@@ -18,7 +18,7 @@ export type RelatedProductsProps<TObject> = Omit<
   'recommendClient'
 > & { recommendClient?: RecommendClient } & Omit<
     RelatedProductsVDOMProps<TObject>,
-    'items' | 'status'
+    'items' | 'status' | 'createElement' | 'Fragment'
   >;
 
 export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
