@@ -5,7 +5,7 @@ import {
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRecommendContext, useRecommendClient } from './Recommend';
+import { useRecommendContext, useRecommendClient } from './RecommendContext';
 import { TrendingItemsProps } from './TrendingItems';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';

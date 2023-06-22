@@ -6,7 +6,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 
 import { FrequentlyBoughtTogetherProps } from './FrequentlyBoughtTogether';
-import { useRecommendContext, useRecommendClient } from './Recommend';
+import { useRecommendContext, useRecommendClient } from './RecommendContext';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';

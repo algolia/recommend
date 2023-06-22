@@ -1,6 +1,5 @@
 import { RecommendClient } from '@algolia/recommend';
 import {
-  BatchKeyPair,
   BatchRecommendations,
   getBatchRecommendations,
   BatchQuery,
@@ -8,33 +7,13 @@ import {
 import { dequal } from 'dequal';
 import React from 'react';
 
+import {
+  GetParametersResult,
+  RecommendContext,
+  RecommendProps,
+  RecommendWidget,
+} from './RecommendContext';
 import { isPresent } from './utils/isPresent';
-
-type GetParametersResult<TObject> = {
-  queries: Array<BatchQuery<TObject>>;
-  keyPair: BatchKeyPair;
-};
-
-type RecommendWidget<TObject> = {
-  getParameters: () => GetParametersResult<any>;
-  onResult: (value: BatchRecommendations<TObject>) => void;
-  onRequest: () => void;
-  key: string;
-  param: GetParametersResult<any>;
-};
-
-type RecommendContextType<TObject> = {
-  register: (
-    widget: Omit<RecommendWidget<TObject>, 'param'>
-  ) => (key: string) => void;
-  hasProvider: boolean;
-  recommendClient: RecommendClient;
-};
-
-export type RecommendProps = {
-  children: React.ReactNode;
-  recommendClient: RecommendClient;
-};
 
 type StateType<TObject> = {
   isDirty: number | null;
@@ -47,35 +26,6 @@ type Action<TObject> =
   | { type: 'register'; widget: Omit<RecommendWidget<TObject>, 'param'> }
   | { type: 'unregister'; key: string }
   | { type: 'request_success' };
-
-export const RecommendContext = React.createContext<
-  RecommendContextType<unknown> // Not sure about using "unknown" here ?
->({
-  hasProvider: false,
-} as RecommendContextType<unknown>);
-
-if (__DEV__) {
-  RecommendContext.displayName = 'Recommend';
-}
-
-export const useRecommendClient = (
-  recommendClient?: RecommendClient | null
-): { client: RecommendClient; isContextClient: boolean } => {
-  const context = React.useContext(RecommendContext);
-  if (recommendClient) {
-    return { client: recommendClient, isContextClient: false };
-  }
-
-  if (context.recommendClient) {
-    return { client: context.recommendClient, isContextClient: true };
-  }
-
-  throw new Error( // To do work on error message
-    'Pass an Algolia `recommendClient` instance either to the Recommend React context, a component or hook.'
-  );
-};
-
-export const useRecommendContext = () => React.useContext(RecommendContext);
 
 function isRegistered<TObject>(
   widgets: Array<RecommendWidget<TObject>>,

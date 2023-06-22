@@ -9,7 +9,8 @@ import {
   hit,
 } from '../../../../test/utils/createRecommendClient';
 import { RelatedProducts, FrequentlyBoughtTogether } from '../index';
-import { Recommend, useRecommendContext } from '../Recommend';
+import { Recommend } from '../Recommend';
+import { useRecommendContext } from '../RecommendContext';
 
 function createMockedRecommendClient() {
   const recommendClient = createRecommendClient({
