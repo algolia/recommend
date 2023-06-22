@@ -13,12 +13,6 @@ export type BatchKeyPair = {
   value: number;
 };
 
-type Recommendation<TObject> = ProductRecord<TObject>;
-
-// | RecordWithObjectID
-// | TrendingFacet<TObject>
-// | ProductRecord<TObject>;
-
 export type BatchQuery<TObject> = (RecommendationsQuery | TrendingQuery) & {
   transformItems?: (
     items: Array<ProductRecord<TObject>>
@@ -32,7 +26,7 @@ export type GetBatchRecommendations<TObject> = {
 };
 
 export type BatchRecommendations<TObject> = {
-  recommendations: Array<Recommendation<TObject>>;
+  recommendations: Array<ProductRecord<TObject>>;
 };
 
 export async function getBatchRecommendations<TObject>({
