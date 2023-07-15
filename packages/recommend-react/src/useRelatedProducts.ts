@@ -12,6 +12,7 @@ import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
 export function useRelatedProducts<TObject>({
+  enabled = true,
   fallbackParameters: userFallbackParameters,
   indexName,
   maxRecommendations,
@@ -40,6 +41,10 @@ export function useRelatedProducts<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
     const param = {
       fallbackParameters,
       indexName,
@@ -95,6 +100,7 @@ export function useRelatedProducts<TObject>({
     return () => {};
   }, [
     client,
+    enabled,
     fallbackParameters,
     hasProvider,
     indexName,

@@ -15,7 +15,7 @@ const UncontrolledTrendingFacets = createTrendingFacetsComponent({
 
 export type UseTrendingFacetsProps<TObject> = OptionalRecommendClient<
   GetTrendingFacetsProps<TObject>
->;
+> & { enabled?: boolean };
 
 export type TrendingFacetsProps<TObject> = UseTrendingFacetsProps<TObject> &
   Omit<

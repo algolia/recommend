@@ -12,6 +12,7 @@ import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
 export function useTrendingItems<TObject>({
+  enabled = true,
   fallbackParameters: userFallbackParameters,
   indexName,
   maxRecommendations,
@@ -40,6 +41,10 @@ export function useTrendingItems<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
     const param: BatchQuery<TObject> = {
       model: 'trending-items',
       fallbackParameters,
@@ -86,6 +91,7 @@ export function useTrendingItems<TObject>({
     });
     return () => {};
   }, [
+    enabled,
     fallbackParameters,
     indexName,
     maxRecommendations,
