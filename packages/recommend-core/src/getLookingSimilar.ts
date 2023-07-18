@@ -1,4 +1,5 @@
-import { RelatedProductsQuery } from '@algolia/recommend';
+import { SearchResponse } from '@algolia/client-search';
+import { LookingSimilarQuery } from '@algolia/recommend';
 
 import { RecommendationsProps } from './getRecommendations';
 import { ProductRecord } from './types';
@@ -6,7 +7,7 @@ import { mapToRecommendations } from './utils';
 import { version } from './version';
 
 export type GetLookingSimilarProps<TObject> = RecommendationsProps<TObject> &
-  Omit<RelatedProductsQuery, 'objectID'>;
+  Omit<LookingSimilarQuery, 'objectID'>;
 
 export function getLookingSimilar<TObject>({
   objectIDs,
@@ -18,14 +19,10 @@ export function getLookingSimilar<TObject>({
   queryParameters,
   threshold,
 }: GetLookingSimilarProps<TObject>) {
-  // @ts-ignore
-  const model = 'looking-similar';
-
   const queries = objectIDs.map((objectID) => ({
     fallbackParameters,
     indexName,
     maxRecommendations,
-    model,
     objectID,
     queryParameters,
     threshold,
@@ -33,17 +30,18 @@ export function getLookingSimilar<TObject>({
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
-  return (
-    recommendClient
-      // @ts-ignore
-      .getRecommendations<TObject>(queries)
-      .then((response) =>
-        mapToRecommendations<ProductRecord<TObject>>({
-          maxRecommendations,
-          hits: response.results.map((result) => result.hits),
-          nrOfObjs: objectIDs.length,
-        })
-      )
-      .then((hits) => ({ recommendations: transformItems(hits) }))
-  );
+  return recommendClient
+    .getLookingSimilar<TObject>(queries)
+    .then((response) =>
+      mapToRecommendations<ProductRecord<TObject>>({
+        maxRecommendations,
+        hits: response.results.map((result) => {
+          // revert type assertion once bug is fixed on client
+          const _result = result as SearchResponse<TObject>;
+          return _result.hits;
+        }),
+        nrOfObjs: objectIDs.length,
+      })
+    )
+    .then((hits) => ({ recommendations: transformItems(hits) }));
 }

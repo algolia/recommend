@@ -1,3 +1,4 @@
+import { SearchResponse } from '@algolia/client-search';
 import { FrequentlyBoughtTogetherQuery } from '@algolia/recommend';
 
 import { RecommendationsProps } from './getRecommendations';
@@ -34,7 +35,11 @@ export function getFrequentlyBoughtTogether<TObject>({
     .then((response) =>
       mapToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
-        hits: response.results.map((result) => result.hits),
+        hits: response.results.map((result) => {
+          // revert type assertion once bug is fixed on client
+          const _result = result as SearchResponse<TObject>;
+          return _result.hits;
+        }),
         nrOfObjs: objectIDs.length,
       })
     )

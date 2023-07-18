@@ -1,9 +1,11 @@
+import { SearchResponse } from '@algolia/client-search';
 import { RelatedProductsQuery } from '@algolia/recommend';
 
 import { RecommendationsProps } from './getRecommendations';
 import { ProductRecord } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
+
 
 export type GetRelatedProductsProps<TObject> = RecommendationsProps<TObject> &
   Omit<RelatedProductsQuery, 'objectID'>;
@@ -34,7 +36,11 @@ export function getRelatedProducts<TObject>({
     .then((response) =>
       mapToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
-        hits: response.results.map((result) => result.hits),
+        hits: response.results.map((result) => {
+          // revert type assertion once bug is fixed on client
+          const _result = result as SearchResponse<TObject>;
+          return _result.hits;
+        }),
         nrOfObjs: objectIDs.length,
       })
     )

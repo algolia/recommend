@@ -2,6 +2,7 @@ import algoliarecommend from '@algolia/recommend';
 import {
   FrequentlyBoughtTogether,
   RelatedProducts,
+  LookingSimilar,
 } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import React from 'react';
@@ -47,6 +48,21 @@ export const ProductPage: React.FC = () => {
           </div>
         </div>
       </div>
+      <LookingSimilar<ProductHit>
+        recommendClient={recommendClient}
+        indexName={indexName}
+        objectIDs={[selectedProduct.objectID]}
+        itemComponent={({ item }) => (
+          <Hit hit={item} insights={insights} onSelect={setSelectedProduct} />
+        )}
+        maxRecommendations={10}
+        threshold={75}
+        view={HorizontalSlider}
+        queryParameters={{
+          analytics: true,
+          clickAnalytics: true,
+        }}
+      />
       <FrequentlyBoughtTogether<ProductHit>
         recommendClient={recommendClient}
         indexName={indexName}
