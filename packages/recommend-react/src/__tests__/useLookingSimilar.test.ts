@@ -45,8 +45,6 @@ describe('useLookingSimilar', () => {
       })
     );
 
-    console.log(result.current);
-
     await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([hit]);

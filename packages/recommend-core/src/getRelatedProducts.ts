@@ -6,7 +6,6 @@ import { ProductRecord } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
 
-
 export type GetRelatedProductsProps<TObject> = RecommendationsProps<TObject> &
   Omit<RelatedProductsQuery, 'objectID'>;
 
