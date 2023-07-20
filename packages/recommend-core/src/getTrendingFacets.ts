@@ -1,4 +1,3 @@
-import { SearchResponse } from '@algolia/client-search';
 import { RecommendClient, TrendingFacetsQuery } from '@algolia/recommend';
 
 import { TrendingFacet } from './types';

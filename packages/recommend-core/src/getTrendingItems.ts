@@ -1,4 +1,3 @@
-import { SearchResponse } from '@algolia/client-search';
 import { RecommendClient, TrendingItemsQuery } from '@algolia/recommend';
 
 import { ProductRecord } from './types';

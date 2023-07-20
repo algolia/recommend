@@ -1,4 +1,3 @@
-import { SearchResponse } from '@algolia/client-search';
 import { FrequentlyBoughtTogetherQuery } from '@algolia/recommend';
 
 import { RecommendationsProps } from './getRecommendations';
