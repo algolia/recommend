@@ -59,13 +59,7 @@ export function getTrendingItems<TObject>({
         // the engine, so we need to remove duplicates.
         hits: uniqBy<ProductRecord<TObject>>(
           'objectID',
-          response.results
-            .map((result) => {
-              // revert type assertion once bug is fixed on client
-              const _result = result as SearchResponse<TObject>;
-              return _result.hits;
-            })
-            .flat()
+          response.results.map((result) => result.hits).flat()
         ),
       })
     )

@@ -61,11 +61,7 @@ export function getRecommendations<TObject>({
     .then((response) =>
       mapToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
-        hits: response.results.map((result) => {
-          // revert type assertion once bug is fixed on client
-          const _result = result as SearchResponse<TObject>;
-          return _result.hits;
-        }),
+        hits: response.results.map((result) => result.hits),
         nrOfObjs: objectIDs.length,
       })
     )

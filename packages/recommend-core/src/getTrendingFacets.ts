@@ -49,13 +49,7 @@ export function getTrendingFacets<TObject>({
     .then((response) =>
       mapByScoreToRecommendations<TrendingFacet<TObject>>({
         maxRecommendations,
-        hits: response.results
-          .map((result) => {
-            // revert type assertion once bug is fixed on client
-            const _result = result as SearchResponse<TObject>;
-            return _result.hits;
-          })
-          .flat(),
+        hits: response.results.map((result) => result.hits).flat(),
       })
     )
     .then((hits) => ({ recommendations: transformItems(hits) }));
