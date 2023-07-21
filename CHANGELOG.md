@@ -1,3 +1,7 @@
+# [1.9.0](https://github.com/algolia/recommend/compare/v1.8.2...v1.9.0) (2023-07-21)
+
+
+
 ## [1.8.2](https://github.com/algolia/recommend/compare/v1.8.1...v1.8.2) (2023-06-12)
 
 
