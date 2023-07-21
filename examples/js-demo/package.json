@@ -12,8 +12,8 @@
   "dependencies": {
     "@algolia/autocomplete-js": "1.8.3",
     "@algolia/autocomplete-theme-classic": "1.8.3",
-    "@algolia/client-search": "4.17.0",
-    "@algolia/recommend": "4.17.0",
+    "@algolia/client-search": "4.19.1",
+    "@algolia/recommend": "4.19.1",
     "@algolia/recommend-js": "1.8.2",
     "@algolia/ui-components-horizontal-slider-js": "1.2.1",
     "@algolia/ui-components-horizontal-slider-theme": "1.2.1",

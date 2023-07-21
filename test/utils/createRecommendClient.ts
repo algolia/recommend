@@ -62,6 +62,13 @@ export function createRecommendClient(
         )
       )
     ),
+    getLookingSimilar: jest.fn((requests) =>
+      Promise.resolve(
+        createMultiSearchResponse(
+          ...requests.map(() => createSingleSearchResponse())
+        )
+      )
+    ),
     getTrendingFacets: jest.fn((requests) =>
       Promise.resolve(
         createMultiSearchResponse(
