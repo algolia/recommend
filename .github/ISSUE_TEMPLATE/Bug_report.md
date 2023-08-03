@@ -9,9 +9,13 @@ about: Help us improve Recommend.
 
 ## Reproduction
 
-<!-- Fork the sandbox, reproduce the bug and paste the URL. -->
+<!-- Fork the appropriate sandbox, reproduce the bug and paste the URL. -->
 
-[**Preview →**](https://codesandbox.io/s/github/algolia/recommend/tree/next/examples/js-demo?file=/app.js)
+[**Preview JavaScript →**](https://codesandbox.io/s/github/algolia/recommend/tree/next/examples/js-demo?file=/app.js)
+
+[**Preview React →**](https://codesandbox.io/s/github/algolia/recommend/tree/next/examples/demo?file=/src/index.tsx)
+
+[**Preview Templating →**](https://codesandbox.io/s/github/algolia/recommend/tree/next/examples/templating)
 
 **Steps**
 
