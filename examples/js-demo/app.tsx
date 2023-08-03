@@ -5,6 +5,7 @@ import algoliarecommend from '@algolia/recommend';
 import {
   frequentlyBoughtTogether,
   relatedProducts,
+  lookingSimilar,
 } from '@algolia/recommend-js';
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 import algoliasearch from 'algoliasearch';
@@ -152,6 +153,30 @@ function ReferenceItem({ item }: ReferenceItemProps) {
 }
 
 function renderRecommendations(selectedProduct: ProductHit) {
+  lookingSimilar<ProductHit>({
+    container: '#lookingSimilar',
+    recommendClient,
+    indexName,
+    objectIDs: [selectedProduct.objectID],
+    itemComponent({ item }) {
+      return (
+        <RelatedItem
+          item={item}
+          insights={insights}
+          onSelect={updateReferenceItem}
+        />
+      );
+    },
+    view: (...props) => horizontalSlider(...props) || <div>Loading</div>,
+    maxRecommendations: 10,
+    translations: {
+      title: 'Looking Similar',
+    },
+    queryParameters: {
+      analytics: true,
+      clickAnalytics: true,
+    },
+  });
   frequentlyBoughtTogether<ProductHit>({
     container: '#frequentlyBoughtTogether',
     recommendClient,

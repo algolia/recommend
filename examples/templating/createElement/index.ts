@@ -1,6 +1,7 @@
 import algoliarecommend from '@algolia/recommend';
 import {
   frequentlyBoughtTogether,
+  lookingSimilar,
   relatedProducts,
   trendingFacets,
   trendingItems,
@@ -37,6 +38,26 @@ relatedProducts<ProductHit>({
   objectIDs: ['M0E20000000EAAK'],
   headerComponent: ({ createElement }) =>
     createElement('h3', null, 'Related products'),
+  itemComponent: productItem,
+  view({ items, createElement, Fragment, itemComponent }) {
+    return (
+      horizontalSlider({
+        items,
+        itemComponent({ item }) {
+          return itemComponent({ item, createElement, Fragment });
+        },
+      }) || createElement('div', null, 'Loading')
+    );
+  },
+});
+
+lookingSimilar<ProductHit>({
+  container: '#lookingSimilar',
+  recommendClient,
+  indexName,
+  objectIDs: ['M0E20000000EAAK'],
+  headerComponent: ({ createElement }) =>
+    createElement('h3', null, 'Looking similar'),
   itemComponent: productItem,
   view({ items, createElement, Fragment, itemComponent }) {
     return (
