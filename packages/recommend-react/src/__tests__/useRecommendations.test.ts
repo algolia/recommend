@@ -26,6 +26,18 @@ function createMockedRecommendClient() {
   };
 }
 
+function createMockedRecommendClientFailure() {
+  const recommendClient = createRecommendClient({
+    getRecommendations: jest.fn(
+      () => Promise.reject(new Error('Could not find recommendations.')) as any
+    ),
+  });
+
+  return {
+    recommendClient,
+  };
+}
+
 describe('useRecommendations', () => {
   test('gets recommendations', async () => {
     const { recommendClient } = createMockedRecommendClient();
@@ -90,6 +102,33 @@ describe('useRecommendations', () => {
     await waitForNextUpdate();
     await waitFor(() => {
       expect(result.current.recommendations).toEqual([250]);
+    });
+  });
+
+  test('assures it handles error', async () => {
+    const { recommendClient } = createMockedRecommendClientFailure();
+    const handleError = jest.fn();
+
+    const { waitForNextUpdate } = renderHook(() =>
+      useRecommendations({
+        model: 'bought-together',
+        indexName: 'test',
+        recommendClient,
+        threshold: 0,
+        objectIDs: ['testing'],
+        queryParameters: {
+          facetFilters: ['test'],
+        },
+        fallbackParameters: {
+          facetFilters: ['test2'],
+        },
+        onError: handleError,
+      })
+    );
+
+    await waitForNextUpdate();
+    await waitFor(() => {
+      expect(handleError).toHaveBeenCalled();
     });
   });
 });

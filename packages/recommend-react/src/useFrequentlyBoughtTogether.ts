@@ -11,7 +11,9 @@ import { useStatus } from './useStatus';
 
 export type UseFrequentlyBoughtTogetherProps<
   TObject
-> = GetFrequentlyBoughtTogetherProps<TObject>;
+> = GetFrequentlyBoughtTogetherProps<TObject> & {
+  onError?: (error: Error) => void;
+};
 
 export function useFrequentlyBoughtTogether<TObject>({
   indexName,
@@ -21,6 +23,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   recommendClient,
   threshold,
   transformItems: userTransformItems,
+  onError = () => {},
 }: UseFrequentlyBoughtTogetherProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
@@ -46,10 +49,12 @@ export function useFrequentlyBoughtTogether<TObject>({
       recommendClient,
       threshold,
       transformItems: transformItemsRef.current,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(onError);
   }, [
     indexName,
     maxRecommendations,
