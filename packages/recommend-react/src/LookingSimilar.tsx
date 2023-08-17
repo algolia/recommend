@@ -1,3 +1,4 @@
+import { RecommendClient } from '@algolia/recommend';
 import { GetLookingSimilarProps } from '@algolia/recommend-core';
 import {
   createLookingSimilarComponent,
@@ -12,8 +13,10 @@ const UncontrolledLookingSimilar = createLookingSimilarComponent({
   Fragment,
 });
 
-export type LookingSimilarProps<TObject> = GetLookingSimilarProps<TObject> &
-  Omit<
+export type LookingSimilarProps<TObject> = Omit<
+  GetLookingSimilarProps<TObject>,
+  'recommendClient'
+> & { recommendClient?: RecommendClient } & Omit<
     LookingSimilarVDOMProps<TObject>,
     'items' | 'status' | 'createElement' | 'Fragment'
   >;

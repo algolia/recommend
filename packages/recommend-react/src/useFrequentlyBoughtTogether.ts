@@ -66,7 +66,7 @@ export function useFrequentlyBoughtTogether<TObject>({
       const queries = objectIDs.map(
         (objectID: string): RecommendationsQuery => ({
           indexName,
-          model: 'related-products',
+          model: 'bought-together',
           threshold,
           maxRecommendations,
           objectID,

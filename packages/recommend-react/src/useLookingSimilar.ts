@@ -1,15 +1,17 @@
+import { RecommendationsQuery } from '@algolia/recommend';
 import {
   getLookingSimilar,
-  GetLookingSimilarProps,
   GetRecommendationsResult,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
+import { LookingSimilarProps } from './LookingSimilar';
+import { useRecommendClient, useRecommendContext } from './RecommendContext';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
-export type UseLookingSimilarProps<TObject> = GetLookingSimilarProps<TObject>;
+export type UseLookingSimilarProps<TObject> = LookingSimilarProps<TObject>;
 
 export function useLookingSimilar<TObject>({
   fallbackParameters: userFallbackParameters,
@@ -29,7 +31,10 @@ export function useLookingSimilar<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  useAlgoliaAgent({ recommendClient });
+  const { hasProvider, register } = useRecommendContext();
+  const { client, isContextClient } = useRecommendClient(recommendClient);
+
+  useAlgoliaAgent({ recommendClient: client });
 
   const transformItemsRef = useRef(userTransformItems);
   useEffect(() => {
@@ -37,27 +42,75 @@ export function useLookingSimilar<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    setStatus('loading');
-    getLookingSimilar({
+    const param = {
       fallbackParameters,
       indexName,
       maxRecommendations,
       objectIDs,
       queryParameters,
-      recommendClient,
       threshold,
       transformItems: transformItemsRef.current,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    };
+    let unregister: Function | undefined;
+
+    if (!hasProvider || !isContextClient) {
+      setStatus('loading');
+      getLookingSimilar({
+        ...param,
+        recommendClient: client,
+      }).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
+    } else {
+      const key = JSON.stringify(param);
+      const queries = objectIDs.map(
+        (objectID: string): RecommendationsQuery => ({
+          indexName,
+          model: 'looking-similar',
+          threshold,
+          maxRecommendations,
+          objectID,
+          queryParameters,
+          fallbackParameters,
+        })
+      );
+      unregister = register({
+        key,
+        getParameters() {
+          return {
+            queries,
+            keyPair: {
+              key,
+              value: objectIDs.length,
+            },
+          };
+        },
+        onRequest() {
+          setStatus('loading');
+        },
+        onResult(response) {
+          setResult(response as GetRecommendationsResult<TObject>);
+          setStatus('idle');
+        },
+      });
+    }
+
+    return () => {
+      if (unregister) {
+        unregister();
+      }
+    };
   }, [
+    client,
     fallbackParameters,
+    hasProvider,
     indexName,
+    isContextClient,
     maxRecommendations,
     objectIDs,
     queryParameters,
-    recommendClient,
+    register,
     setStatus,
     threshold,
   ]);

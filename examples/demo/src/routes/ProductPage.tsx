@@ -50,7 +50,6 @@ export const ProductPage: React.FC = () => {
         </div>
       </div>
       <LookingSimilar<ProductHit>
-        recommendClient={recommendClient}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (
