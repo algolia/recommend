@@ -101,7 +101,7 @@ describe('Recommend', () => {
         {
           indexName: 'index',
           maxRecommendations: 10,
-          model: 'related-products',
+          model: 'bought-together',
           objectID: '5678',
           fallbackParameters: undefined,
           queryParameters: undefined,
