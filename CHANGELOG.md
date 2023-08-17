@@ -1,3 +1,12 @@
+# [1.9.0](https://github.com/algolia/recommend/compare/v1.8.2...v1.9.0) (2023-07-21)
+
+
+### Features
+
+* looking similar components ([#146](https://github.com/algolia/recommend/issues/146)) ([c9c328b](https://github.com/algolia/recommend/commit/c9c328b90c4e6bcfb7a77fd5ccee90a6d716da94))
+
+
+
 ## [1.8.2](https://github.com/algolia/recommend/compare/v1.8.1...v1.8.2) (2023-06-12)
 
 
