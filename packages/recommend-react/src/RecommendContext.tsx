@@ -20,9 +20,7 @@ export type RecommendWidget<TObject> = {
 };
 
 type RecommendContextType<TObject> = {
-  register: (
-    widget: Omit<RecommendWidget<TObject>, 'param'>
-  ) => (key: string) => void;
+  register: (widget: Omit<RecommendWidget<TObject>, 'param'>) => () => void;
   hasProvider: boolean;
   recommendClient: RecommendClient;
 };

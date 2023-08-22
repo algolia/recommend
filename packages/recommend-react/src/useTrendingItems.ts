@@ -42,7 +42,6 @@ export function useTrendingItems<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    let unregister: Function | undefined;
     const param: BatchQuery<TObject> = {
       model: 'trending-items',
       fallbackParameters,
@@ -55,19 +54,9 @@ export function useTrendingItems<TObject>({
       transformItems: transformItemsRef.current,
     };
 
-    if (!hasProvider || !isContextClient) {
-      setStatus('loading');
-      getTrendingItems({
-        ...param,
-        recommendClient: client,
-        transformItems: transformItemsRef.current,
-      }).then((response) => {
-        setResult(response);
-        setStatus('idle');
-      });
-    } else {
+    if (hasProvider && isContextClient) {
       const key = JSON.stringify(param);
-      unregister = register({
+      return register({
         key,
         getParameters() {
           return {
@@ -88,11 +77,16 @@ export function useTrendingItems<TObject>({
       });
     }
 
-    return () => {
-      if (unregister) {
-        unregister();
-      }
-    };
+    setStatus('loading');
+    getTrendingItems({
+      ...param,
+      recommendClient: client,
+      transformItems: transformItemsRef.current,
+    }).then((response) => {
+      setResult(response);
+      setStatus('idle');
+    });
+    return () => {};
   }, [
     fallbackParameters,
     indexName,

@@ -45,22 +45,10 @@ export function useTrendingFacets<TObject>({
       maxRecommendations,
       transformItems: transformItemsRef.current,
     };
-    let unregister: Function | undefined;
 
-    if (!hasProvider || !isContextClient) {
-      setStatus('loading');
-      getTrendingFacets({
-        ...param,
-        recommendClient: client,
-        facetName,
-        transformItems: transformItemsRef.current,
-      }).then((response) => {
-        setResult(response);
-        setStatus('idle');
-      });
-    } else {
+    if (hasProvider && isContextClient) {
       const key = JSON.stringify(param);
-      unregister = register({
+      return register({
         key,
         getParameters() {
           return {
@@ -80,11 +68,18 @@ export function useTrendingFacets<TObject>({
         },
       });
     }
-    return () => {
-      if (unregister) {
-        unregister();
-      }
-    };
+
+    setStatus('loading');
+    getTrendingFacets({
+      ...param,
+      recommendClient: client,
+      facetName,
+      transformItems: transformItemsRef.current,
+    }).then((response) => {
+      setResult(response);
+      setStatus('idle');
+    });
+    return () => {};
   }, [
     indexName,
     maxRecommendations,

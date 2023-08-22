@@ -50,18 +50,8 @@ export function useFrequentlyBoughtTogether<TObject>({
       threshold,
       transformItems: transformItemsRef.current,
     };
-    let unregister: Function | undefined;
 
-    if (!hasProvider || !isContextClient) {
-      setStatus('loading');
-      getFrequentlyBoughtTogether({
-        ...param,
-        recommendClient: client,
-      }).then((response) => {
-        setResult(response);
-        setStatus('idle');
-      });
-    } else {
+    if (hasProvider && isContextClient) {
       const key = JSON.stringify(param);
       const queries = objectIDs.map(
         (objectID: string): RecommendationsQuery => ({
@@ -73,7 +63,7 @@ export function useFrequentlyBoughtTogether<TObject>({
           queryParameters,
         })
       );
-      unregister = register({
+      return register({
         key,
         getParameters() {
           return {
@@ -93,11 +83,16 @@ export function useFrequentlyBoughtTogether<TObject>({
         },
       });
     }
-    return () => {
-      if (unregister) {
-        unregister();
-      }
-    };
+
+    setStatus('loading');
+    getFrequentlyBoughtTogether({
+      ...param,
+      recommendClient: client,
+    }).then((response) => {
+      setResult(response);
+      setStatus('idle');
+    });
+    return () => {};
   }, [
     indexName,
     maxRecommendations,

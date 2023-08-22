@@ -51,18 +51,8 @@ export function useRelatedProducts<TObject>({
       threshold,
       transformItems: transformItemsRef.current,
     };
-    let unregister: Function | undefined;
 
-    if (!hasProvider || !isContextClient) {
-      setStatus('loading');
-      getRelatedProducts({
-        ...param,
-        recommendClient: client,
-      }).then((response) => {
-        setResult(response);
-        setStatus('idle');
-      });
-    } else {
+    if (hasProvider && isContextClient) {
       const key = JSON.stringify(param);
       const queries = objectIDs.map(
         (objectID: string): RecommendationsQuery => ({
@@ -75,7 +65,7 @@ export function useRelatedProducts<TObject>({
           fallbackParameters,
         })
       );
-      unregister = register({
+      return register({
         key,
         getParameters() {
           return {
@@ -96,11 +86,15 @@ export function useRelatedProducts<TObject>({
       });
     }
 
-    return () => {
-      if (unregister) {
-        unregister();
-      }
-    };
+    setStatus('loading');
+    getRelatedProducts({
+      ...param,
+      recommendClient: client,
+    }).then((response) => {
+      setResult(response);
+      setStatus('idle');
+    });
+    return () => {};
   }, [
     client,
     fallbackParameters,
