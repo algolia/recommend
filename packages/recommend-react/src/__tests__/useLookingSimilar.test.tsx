@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/dom';
 import { act, renderHook } from '@testing-library/react-hooks';
-import React, { StrictMode } from 'react';
+import { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
