@@ -16,7 +16,7 @@ export function useTrendingFacets<TObject>({
   maxRecommendations,
   recommendClient,
   threshold,
-  transformItems: userTransformItems,
+  transformItems: userTransformItems = (x) => x,
   facetName,
 }: UseTrendingFacetsProps<TObject>) {
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({

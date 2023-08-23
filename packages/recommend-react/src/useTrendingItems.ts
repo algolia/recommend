@@ -18,7 +18,7 @@ export function useTrendingItems<TObject>({
   queryParameters: userQueryParameters,
   recommendClient,
   threshold,
-  transformItems: userTransformItems,
+  transformItems: userTransformItems = (x) => x,
   facetName,
   facetValue,
 }: UseTrendingItemsProps<TObject>) {

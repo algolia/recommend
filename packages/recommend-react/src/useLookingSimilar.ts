@@ -19,7 +19,7 @@ export function useLookingSimilar<TObject>({
   queryParameters: userQueryParameters,
   recommendClient,
   threshold,
-  transformItems: userTransformItems,
+  transformItems: userTransformItems = (x) => x,
 }: UseLookingSimilarProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],

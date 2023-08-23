@@ -49,7 +49,9 @@ export async function getBatchRecommendations<TObject>({
     const { model } = JSON.parse(keyPair.key);
 
     allChunks += keyPair.value;
-    const { maxRecommendations, transformItems } = queries[prevChunks];
+    const { maxRecommendations, transformItems = (x) => x } = queries[
+      prevChunks
+    ];
     const splitResult = response?.results?.slice(prevChunks, allChunks);
     prevChunks += keyPair.value;
 
@@ -67,9 +69,7 @@ export async function getBatchRecommendations<TObject>({
         nrOfObjs: keyPair.value,
       });
     }
-    if (transformItems) {
-      recommendations = transformItems(recommendations);
-    }
+    recommendations = transformItems(recommendations);
     results[keyPair.key] = { recommendations };
   });
 
