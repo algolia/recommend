@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/dom';
 import { act, renderHook } from '@testing-library/react-hooks';
-import React, { StrictMode } from 'react';
+import { StrictMode } from 'react';
 
 import { getItemName, getItemPrice } from '../../../../test/utils';
 import { createMultiSearchResponse } from '../../../../test/utils/createApiResponse';
@@ -39,7 +39,6 @@ describe('useFrequentlyBoughtTogether', () => {
         queryParameters: {
           facetFilters: ['test'],
         },
-        itemComponent: (item) => <>{item}</>,
       })
     );
     await waitForNextUpdate();
@@ -62,7 +61,6 @@ describe('useFrequentlyBoughtTogether', () => {
             facetFilters: ['test'],
           },
           transformItems,
-          itemComponent: (item) => <>{item}</>,
         }),
       {
         wrapper: StrictMode,

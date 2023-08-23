@@ -42,7 +42,6 @@ describe('useLookingSimilar', () => {
         fallbackParameters: {
           facetFilters: ['test2'],
         },
-        itemComponent: (item) => <>{item}</>,
       })
     );
 
@@ -66,7 +65,6 @@ describe('useLookingSimilar', () => {
             facetFilters: ['test'],
           },
           transformItems,
-          itemComponent: (item) => <>{item}</>,
         }),
       {
         wrapper: StrictMode,

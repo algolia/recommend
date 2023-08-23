@@ -1,4 +1,3 @@
-import { RecommendClient } from '@algolia/recommend';
 import { GetFrequentlyBoughtTogetherProps } from '@algolia/recommend-core';
 import {
   createFrequentlyBoughtTogetherComponent,
@@ -6,6 +5,7 @@ import {
 } from '@algolia/recommend-vdom';
 import React, { createElement, Fragment } from 'react';
 
+import { OptionalRecommendClient } from './types/OptionalRecommendClient';
 import { useFrequentlyBoughtTogether } from './useFrequentlyBoughtTogether';
 
 const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherComponent(
@@ -15,10 +15,14 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
   }
 );
 
-export type FrequentlyBoughtTogetherProps<TObject> = Omit<
-  GetFrequentlyBoughtTogetherProps<TObject>,
-  'recommendClient'
-> & { recommendClient?: RecommendClient } & Omit<
+export type UseFrequentlyBoughtTogetherProps<TObject> = OptionalRecommendClient<
+  GetFrequentlyBoughtTogetherProps<TObject>
+>;
+
+export type FrequentlyBoughtTogetherProps<
+  TObject
+> = UseFrequentlyBoughtTogetherProps<TObject> &
+  Omit<
     FrequentlyBoughtTogetherVDOMProps<TObject>,
     'items' | 'status' | 'createElement' | 'Fragment'
   >;

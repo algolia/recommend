@@ -7,11 +7,9 @@ import { GetRecommendationsResult } from '@algolia/recommend-core/src';
 import { useEffect, useRef, useState } from 'react';
 
 import { useRecommendContext, useRecommendClient } from './RecommendContext';
-import { TrendingFacetsProps } from './TrendingFacets';
+import { UseTrendingFacetsProps } from './TrendingFacets';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
-
-export type UseTrendingFacetsProps<TObject> = TrendingFacetsProps<TObject>;
 
 export function useTrendingFacets<TObject>({
   indexName,

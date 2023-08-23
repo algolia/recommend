@@ -6,12 +6,10 @@ import {
 import { useEffect, useRef, useState } from 'react';
 
 import { useRecommendContext, useRecommendClient } from './RecommendContext';
-import { RelatedProductsProps } from './RelatedProducts';
+import { UseRelatedProductsProps } from './RelatedProducts';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
-
-export type UseRelatedProductsProps<TObject> = RelatedProductsProps<TObject>;
 
 export function useRelatedProducts<TObject>({
   fallbackParameters: userFallbackParameters,

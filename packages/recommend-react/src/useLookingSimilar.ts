@@ -5,13 +5,11 @@ import {
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
-import { LookingSimilarProps } from './LookingSimilar';
+import { UseLookingSimilarProps } from './LookingSimilar';
 import { useRecommendClient, useRecommendContext } from './RecommendContext';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
-
-export type UseLookingSimilarProps<TObject> = LookingSimilarProps<TObject>;
 
 export function useLookingSimilar<TObject>({
   fallbackParameters: userFallbackParameters,

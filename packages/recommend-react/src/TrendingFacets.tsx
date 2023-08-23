@@ -1,4 +1,3 @@
-import { RecommendClient } from '@algolia/recommend';
 import { GetTrendingFacetsProps } from '@algolia/recommend-core';
 import {
   createTrendingFacetsComponent,
@@ -6,6 +5,7 @@ import {
 } from '@algolia/recommend-vdom';
 import React, { createElement, Fragment } from 'react';
 
+import { OptionalRecommendClient } from './types/OptionalRecommendClient';
 import { useTrendingFacets } from './useTrendingFacets';
 
 const UncontrolledTrendingFacets = createTrendingFacetsComponent({
@@ -13,10 +13,12 @@ const UncontrolledTrendingFacets = createTrendingFacetsComponent({
   Fragment,
 });
 
-export type TrendingFacetsProps<TObject> = Omit<
-  GetTrendingFacetsProps<TObject>,
-  'recommendClient'
-> & { recommendClient?: RecommendClient } & Omit<
+export type UseTrendingFacetsProps<TObject> = OptionalRecommendClient<
+  GetTrendingFacetsProps<TObject>
+>;
+
+export type TrendingFacetsProps<TObject> = UseTrendingFacetsProps<TObject> &
+  Omit<
     TrendingFacetsVDOMProps<TObject>,
     'items' | 'status' | 'createElement' | 'Fragment'
   >;

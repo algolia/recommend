@@ -6,12 +6,10 @@ import {
 import { useEffect, useRef, useState } from 'react';
 
 import { useRecommendContext, useRecommendClient } from './RecommendContext';
-import { TrendingItemsProps } from './TrendingItems';
+import { UseTrendingItemsProps } from './TrendingItems';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
-
-export type UseTrendingItemsProps<TObject> = TrendingItemsProps<TObject>;
 
 export function useTrendingItems<TObject>({
   fallbackParameters: userFallbackParameters,
