@@ -16,11 +16,11 @@
     "@algolia/ui-components-horizontal-slider-js": "1.2.1",
     "@algolia/ui-components-horizontal-slider-theme": "1.2.1",
     "algoliasearch": "4.17.0",
-    "preact": "10.13.2"
+    "preact": "10.17.1"
   },
   "devDependencies": {
-    "@babel/runtime": "7.21.0",
-    "parcel": "2.8.3",
-    "@babel/core": "7.21.4"
+    "@babel/core": "7.22.15",
+    "@babel/runtime": "7.22.15",
+    "parcel": "2.9.3"
   }
 }
