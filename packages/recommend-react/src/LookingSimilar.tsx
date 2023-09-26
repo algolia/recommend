@@ -5,6 +5,7 @@ import {
 } from '@algolia/recommend-vdom';
 import React, { createElement, Fragment } from 'react';
 
+import { OptionalRecommendClient } from './types/OptionalRecommendClient';
 import { useLookingSimilar } from './useLookingSimilar';
 
 const UncontrolledLookingSimilar = createLookingSimilarComponent({
@@ -12,7 +13,11 @@ const UncontrolledLookingSimilar = createLookingSimilarComponent({
   Fragment,
 });
 
-export type LookingSimilarProps<TObject> = GetLookingSimilarProps<TObject> &
+export type UseLookingSimilarProps<TObject> = OptionalRecommendClient<
+  GetLookingSimilarProps<TObject>
+>;
+
+export type LookingSimilarProps<TObject> = UseLookingSimilarProps<TObject> &
   Omit<
     LookingSimilarVDOMProps<TObject>,
     'items' | 'status' | 'createElement' | 'Fragment'

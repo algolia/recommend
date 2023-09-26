@@ -5,6 +5,7 @@ import {
 } from '@algolia/recommend-vdom';
 import React, { createElement, Fragment } from 'react';
 
+import { OptionalRecommendClient } from './types/OptionalRecommendClient';
 import { useTrendingItems } from './useTrendingItems';
 
 const UncontrolledTrendingItems = createTrendingItemsComponent({
@@ -12,7 +13,11 @@ const UncontrolledTrendingItems = createTrendingItemsComponent({
   Fragment,
 });
 
-export type TrendingItemsProps<TObject> = GetTrendingItemsProps<TObject> &
+export type UseTrendingItemsProps<TObject> = OptionalRecommendClient<
+  GetTrendingItemsProps<TObject>
+>;
+
+export type TrendingItemsProps<TObject> = UseTrendingItemsProps<TObject> &
   Omit<
     TrendingItemsVDOMProps<TObject>,
     'items' | 'status' | 'createElement' | 'Fragment'

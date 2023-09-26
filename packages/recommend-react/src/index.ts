@@ -9,3 +9,4 @@ export * from './useRelatedProducts';
 export * from './useLookingSimilar';
 export * from './useTrendingFacets';
 export * from './useTrendingItems';
+export * from './Recommend';

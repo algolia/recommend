@@ -1,15 +1,15 @@
+import { RecommendationsQuery } from '@algolia/recommend';
 import {
   getRelatedProducts,
-  GetRelatedProductsProps,
   GetRecommendationsResult,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
+import { useRecommendContext, useRecommendClient } from './RecommendContext';
+import { UseRelatedProductsProps } from './RelatedProducts';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
-
-export type UseRelatedProductsProps<TObject> = GetRelatedProductsProps<TObject>;
 
 export function useRelatedProducts<TObject>({
   fallbackParameters: userFallbackParameters,
@@ -19,7 +19,7 @@ export function useRelatedProducts<TObject>({
   queryParameters: userQueryParameters,
   recommendClient,
   threshold,
-  transformItems: userTransformItems,
+  transformItems: userTransformItems = (x) => x,
 }: UseRelatedProductsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
@@ -29,7 +29,10 @@ export function useRelatedProducts<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  useAlgoliaAgent({ recommendClient });
+  const { hasProvider, register } = useRecommendContext();
+  const { client, isContextClient } = useRecommendClient(recommendClient);
+
+  useAlgoliaAgent({ recommendClient: client });
 
   const transformItemsRef = useRef(userTransformItems);
   useEffect(() => {
@@ -37,27 +40,69 @@ export function useRelatedProducts<TObject>({
   }, [userTransformItems]);
 
   useEffect(() => {
-    setStatus('loading');
-    getRelatedProducts({
+    const param = {
       fallbackParameters,
       indexName,
       maxRecommendations,
       objectIDs,
       queryParameters,
-      recommendClient,
       threshold,
       transformItems: transformItemsRef.current,
+    };
+
+    if (hasProvider && isContextClient) {
+      const key = JSON.stringify(param);
+      const queries = objectIDs.map(
+        (objectID: string): RecommendationsQuery => ({
+          indexName,
+          model: 'related-products',
+          threshold,
+          maxRecommendations,
+          objectID,
+          queryParameters,
+          fallbackParameters,
+        })
+      );
+      return register({
+        key,
+        getParameters() {
+          return {
+            queries,
+            keyPair: {
+              key,
+              value: objectIDs.length,
+            },
+          };
+        },
+        onRequest() {
+          setStatus('loading');
+        },
+        onResult(response) {
+          setResult(response as GetRecommendationsResult<TObject>);
+          setStatus('idle');
+        },
+      });
+    }
+
+    setStatus('loading');
+    getRelatedProducts({
+      ...param,
+      recommendClient: client,
     }).then((response) => {
       setResult(response);
       setStatus('idle');
     });
+    return () => {};
   }, [
+    client,
     fallbackParameters,
+    hasProvider,
     indexName,
+    isContextClient,
     maxRecommendations,
     objectIDs,
     queryParameters,
-    recommendClient,
+    register,
     setStatus,
     threshold,
   ]);

@@ -1,5 +1,9 @@
 import algoliarecommend from '@algolia/recommend';
-import { TrendingFacets, TrendingItems } from '@algolia/recommend-react';
+import {
+  Recommend,
+  TrendingFacets,
+  TrendingItems,
+} from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -19,9 +23,8 @@ export const HomePage: React.FC = () => {
   ] = useApplicationContext();
 
   return (
-    <div>
+    <Recommend recommendClient={recommendClient}>
       <TrendingFacets<FacetHit>
-        recommendClient={recommendClient}
         indexName={indexName}
         facetName="brand"
         itemComponent={({ item }) => (
@@ -43,7 +46,6 @@ export const HomePage: React.FC = () => {
         }}
       />
       <TrendingItems<ProductHit>
-        recommendClient={recommendClient}
         indexName={indexName}
         facetName={selectedFacetValue ? 'brand' : undefined}
         facetValue={
@@ -67,6 +69,6 @@ export const HomePage: React.FC = () => {
           }`,
         }}
       />
-    </div>
+    </Recommend>
   );
 };

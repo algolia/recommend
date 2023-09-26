@@ -20,7 +20,7 @@ export function useRecommendations<TObject>({
   queryParameters: userQueryParameters,
   recommendClient,
   threshold,
-  transformItems: userTransformItems,
+  transformItems: userTransformItems = (x) => x,
 }: UseRecommendationsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],

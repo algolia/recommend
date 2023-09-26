@@ -5,6 +5,7 @@ import {
 } from '@algolia/recommend-vdom';
 import React, { createElement, Fragment } from 'react';
 
+import { OptionalRecommendClient } from './types/OptionalRecommendClient';
 import { useRelatedProducts } from './useRelatedProducts';
 
 const UncontrolledRelatedProducts = createRelatedProductsComponent({
@@ -12,7 +13,11 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
   Fragment,
 });
 
-export type RelatedProductsProps<TObject> = GetRelatedProductsProps<TObject> &
+export type UseRelatedProductsProps<TObject> = OptionalRecommendClient<
+  GetRelatedProductsProps<TObject>
+>;
+
+export type RelatedProductsProps<TObject> = UseRelatedProductsProps<TObject> &
   Omit<
     RelatedProductsVDOMProps<TObject>,
     'items' | 'status' | 'createElement' | 'Fragment'

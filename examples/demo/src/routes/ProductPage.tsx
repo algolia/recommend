@@ -1,6 +1,7 @@
 import algoliarecommend from '@algolia/recommend';
 import {
   FrequentlyBoughtTogether,
+  Recommend,
   RelatedProducts,
   LookingSimilar,
 } from '@algolia/recommend-react';
@@ -26,7 +27,7 @@ export const ProductPage: React.FC = () => {
   }
 
   return (
-    <div>
+    <Recommend recommendClient={recommendClient}>
       <div style={{ padding: '1rem 0' }}>
         <div
           className="Hit"
@@ -49,7 +50,6 @@ export const ProductPage: React.FC = () => {
         </div>
       </div>
       <LookingSimilar<ProductHit>
-        recommendClient={recommendClient}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (
@@ -64,7 +64,6 @@ export const ProductPage: React.FC = () => {
         }}
       />
       <FrequentlyBoughtTogether<ProductHit>
-        recommendClient={recommendClient}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (
@@ -91,7 +90,6 @@ export const ProductPage: React.FC = () => {
         )}
         fallbackComponent={() => (
           <RelatedProducts<ProductHit>
-            recommendClient={recommendClient}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={({ item }) => (
@@ -122,7 +120,6 @@ export const ProductPage: React.FC = () => {
         )}
       />
       <RelatedProducts<ProductHit>
-        recommendClient={recommendClient}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (
@@ -147,6 +144,6 @@ export const ProductPage: React.FC = () => {
           ],
         }}
       />
-    </div>
+    </Recommend>
   );
 };
