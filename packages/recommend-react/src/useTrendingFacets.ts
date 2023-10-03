@@ -90,7 +90,6 @@ export function useTrendingFacets<TObject>({
     setStatus,
     threshold,
     facetName,
-
     throwAsyncError,
     hasProvider,
     isContextClient,
