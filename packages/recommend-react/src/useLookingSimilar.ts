@@ -1,30 +1,33 @@
-import { TrendingModel } from '@algolia/recommend';
+import { RecommendationsQuery } from '@algolia/recommend';
 import {
-  getTrendingFacets,
-  GetTrendingFacetsResult,
+  getLookingSimilar,
+  GetRecommendationsResult,
 } from '@algolia/recommend-core';
-import { GetRecommendationsResult } from '@algolia/recommend-core/src';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRecommendContext, useRecommendClient } from './RecommendContext';
-import { UseTrendingFacetsProps } from './TrendingFacets';
+import { UseLookingSimilarProps } from './LookingSimilar';
+import { useRecommendClient, useRecommendContext } from './RecommendContext';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
+import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
-import { useAsyncError } from './utils/useAsyncError';
 
-export function useTrendingFacets<TObject>({
+export function useLookingSimilar<TObject>({
+  fallbackParameters: userFallbackParameters,
   indexName,
   maxRecommendations,
+  objectIDs: userObjectIDs,
+  queryParameters: userQueryParameters,
   recommendClient,
   threshold,
   transformItems: userTransformItems = (x) => x,
-  facetName,
-}: UseTrendingFacetsProps<TObject>) {
-  const throwAsyncError = useAsyncError();
-  const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
+}: UseLookingSimilarProps<TObject>) {
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
+  const objectIDs = useStableValue(userObjectIDs);
+  const queryParameters = useStableValue(userQueryParameters);
+  const fallbackParameters = useStableValue(userFallbackParameters);
 
   const { hasProvider, register } = useRecommendContext();
   const { client, isContextClient } = useRecommendClient(recommendClient);
@@ -38,24 +41,36 @@ export function useTrendingFacets<TObject>({
 
   useEffect(() => {
     const param = {
-      model: 'trending-facets' as TrendingModel,
+      fallbackParameters,
       indexName,
-      facetName,
-      threshold,
       maxRecommendations,
+      objectIDs,
+      queryParameters,
+      threshold,
       transformItems: transformItemsRef.current,
     };
 
     if (hasProvider && isContextClient) {
       const key = JSON.stringify(param);
+      const queries = objectIDs.map(
+        (objectID: string): RecommendationsQuery => ({
+          indexName,
+          model: 'looking-similar',
+          threshold,
+          maxRecommendations,
+          objectID,
+          queryParameters,
+          fallbackParameters,
+        })
+      );
       return register({
         key,
         getParameters() {
           return {
-            queries: [param],
+            queries,
             keyPair: {
               key,
-              value: 1,
+              value: objectIDs.length,
             },
           };
         },
@@ -70,31 +85,26 @@ export function useTrendingFacets<TObject>({
     }
 
     setStatus('loading');
-    getTrendingFacets({
+    getLookingSimilar({
       ...param,
       recommendClient: client,
-      facetName,
-
-      transformItems: transformItemsRef.current,
-    })
-      .then((response) => {
-        setResult(response);
-        setStatus('idle');
-      })
-      .catch(throwAsyncError);
+    }).then((response) => {
+      setResult(response);
+      setStatus('idle');
+    });
     return () => {};
   }, [
-    indexName,
-    maxRecommendations,
     client,
+    fallbackParameters,
+    hasProvider,
+    indexName,
+    isContextClient,
+    maxRecommendations,
+    objectIDs,
+    queryParameters,
+    register,
     setStatus,
     threshold,
-    facetName,
-
-    throwAsyncError,
-    hasProvider,
-    isContextClient,
-    register,
   ]);
 
   return {

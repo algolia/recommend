@@ -1,3 +1,36 @@
+# [1.10.0](https://github.com/algolia/recommend/compare/v1.9.0...v1.10.0) (2023-09-26)
+
+
+### Bug Fixes
+
+* CodeSanbox transpile nullish coalescing error ([#149](https://github.com/algolia/recommend/issues/149)) ([4278640](https://github.com/algolia/recommend/commit/427864095e1f548f0b4c22bf2f7dac6b60aded8b))
+* yarn lock issue ([#151](https://github.com/algolia/recommend/issues/151)) ([3ff0b83](https://github.com/algolia/recommend/commit/3ff0b83e447f5cae78345065d36d9293c9f7d910))
+
+
+### Features
+
+* implement Recommend Batch Context (RECO-961) ([#131](https://github.com/algolia/recommend/issues/131)) ([fe347ed](https://github.com/algolia/recommend/commit/fe347ed48cc905d3aad29de187610a06a4eddf2a))
+
+
+
+# [1.9.0](https://github.com/algolia/recommend/compare/v1.8.2...v1.9.0) (2023-07-21)
+
+
+### Features
+
+* looking similar components ([#146](https://github.com/algolia/recommend/issues/146)) ([c9c328b](https://github.com/algolia/recommend/commit/c9c328b90c4e6bcfb7a77fd5ccee90a6d716da94))
+
+
+
+## [1.8.2](https://github.com/algolia/recommend/compare/v1.8.1...v1.8.2) (2023-06-12)
+
+
+### Bug Fixes
+
+* remove VDOM renderer typings from React component props ([#140](https://github.com/algolia/recommend/issues/140)) ([9ba18b7](https://github.com/algolia/recommend/commit/9ba18b75da8359abd53c46a04cc368a007b041dd))
+
+
+
 ## [1.8.1](https://github.com/algolia/recommend/compare/v1.8.0...v1.8.1) (2022-12-20)
 
 

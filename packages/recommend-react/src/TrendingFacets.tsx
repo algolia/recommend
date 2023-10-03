@@ -5,6 +5,7 @@ import {
 } from '@algolia/recommend-vdom';
 import React, { createElement, Fragment } from 'react';
 
+import { OptionalRecommendClient } from './types/OptionalRecommendClient';
 import { useTrendingFacets } from './useTrendingFacets';
 
 const UncontrolledTrendingFacets = createTrendingFacetsComponent({
@@ -12,8 +13,15 @@ const UncontrolledTrendingFacets = createTrendingFacetsComponent({
   Fragment,
 });
 
-export type TrendingFacetsProps<TObject> = GetTrendingFacetsProps<TObject> &
-  Omit<TrendingFacetsVDOMProps<TObject>, 'items' | 'status'>;
+export type UseTrendingFacetsProps<TObject> = OptionalRecommendClient<
+  GetTrendingFacetsProps<TObject>
+>;
+
+export type TrendingFacetsProps<TObject> = UseTrendingFacetsProps<TObject> &
+  Omit<
+    TrendingFacetsVDOMProps<TObject>,
+    'items' | 'status' | 'createElement' | 'Fragment'
+  >;
 
 export function TrendingFacets<TObject>(props: TrendingFacetsProps<TObject>) {
   const { recommendations, status } = useTrendingFacets<TObject>(props);

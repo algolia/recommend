@@ -21,7 +21,7 @@ export function useRecommendations<TObject>({
   queryParameters: userQueryParameters,
   recommendClient,
   threshold,
-  transformItems: userTransformItems,
+  transformItems: userTransformItems = (x) => x,
 }: UseRecommendationsProps<TObject>) {
   const throwAsyncError = useAsyncError();
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
