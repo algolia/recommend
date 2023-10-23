@@ -1,6 +1,6 @@
 {
   "name": "@algolia/recommend-react",
-  "description": "Horizontal slider UI component.",
+  "description": "React package for Algolia Recommend.",
   "version": "1.10.0",
   "license": "MIT",
   "homepage": "https://github.com/algolia/recommend",
