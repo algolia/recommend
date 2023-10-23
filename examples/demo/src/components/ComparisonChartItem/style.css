@@ -45,3 +45,11 @@
   font-size: large;
   color: #3C4FE0;
 }
+
+.uic-ButtonComponent-container {
+  width: 100%;
+}
+
+.Item-link {
+  text-decoration: none;
+}
