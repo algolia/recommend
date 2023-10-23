@@ -44,11 +44,11 @@
   color: #141d61;
   cursor: pointer;
   display: flex;
-  padding: 0;
   justify-content: center;
   padding: 6px;
   font-weight: 600;
   position: relative;
+  width: 100%;
 }
 
 .Hit-ButtonIcon {

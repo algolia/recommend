@@ -14,6 +14,17 @@ export type ProductRecord = {
   name: string;
   price: { value: number };
   url: string;
+  gender: string;
+  reviews: ProductReviews;
+  color: {
+    original_name: string;
+    filter_group: string;
+  };
+};
+export type ProductReviews = {
+  bayesian_avg: number;
+  count: number;
+  rating: number;
 };
 
 type WithInsights<THit> = THit & {

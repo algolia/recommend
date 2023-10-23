@@ -9,7 +9,13 @@ import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { Hit, BundleItem, BundleView } from '../components';
+import {
+  Hit,
+  BundleItem,
+  BundleView,
+  ComparisonChartView,
+} from '../components';
+import { ComparisonChartItem } from '../components/ComparisonChartItem';
 import { apiKey, appId, indexName } from '../config';
 import { ProductHit } from '../types';
 
@@ -141,6 +147,33 @@ export const ProductPage: React.FC = () => {
           facetFilters: [
             `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
             selectedFacetValue ? `brand:${selectedFacetValue}` : '',
+          ],
+        }}
+      />
+      <RelatedProducts<ProductHit>
+        indexName={indexName}
+        objectIDs={[selectedProduct.objectID]}
+        itemComponent={({ item }) => (
+          <ComparisonChartItem
+            item={item}
+            insights={insights}
+            onSelect={setSelectedProduct}
+          />
+        )}
+        maxRecommendations={3}
+        view={({ itemComponent, items }) => (
+          <ComparisonChartView
+            currentItem={selectedProduct}
+            itemComponent={itemComponent}
+            items={items}
+          />
+        )}
+        translations={{
+          title: 'Comparison Chart',
+        }}
+        fallbackParameters={{
+          facetFilters: [
+            `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
           ],
         }}
       />
