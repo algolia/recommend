@@ -15,6 +15,20 @@ export type ProductRecord = {
   price: { value: number };
   url: string;
 };
+export type ProductReviews = {
+  bayesian_avg: number;
+  count: number;
+  rating: number;
+};
+
+type ExtendedProductRecord = {
+  gender: string;
+  reviews: ProductReviews;
+  color: {
+    original_name: string;
+    filter_group: string;
+  };
+};
 
 type WithInsights<THit> = THit & {
   __position: string;
@@ -23,3 +37,6 @@ type WithInsights<THit> = THit & {
 };
 
 export type ProductHit = WithInsights<Hit<ProductRecord>>;
+export type ExtendedProductHit = WithInsights<
+  Hit<ProductRecord & ExtendedProductRecord>
+>;
