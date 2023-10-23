@@ -17,7 +17,7 @@ import {
 } from '../components';
 import { ComparisonChartItem } from '../components/ComparisonChartItem';
 import { apiKey, appId, indexName } from '../config';
-import { ExtendedProductHit, ProductHit } from '../types';
+import { ProductHit } from '../types';
 
 import { useApplicationContext } from './Root';
 
@@ -150,7 +150,7 @@ export const ProductPage: React.FC = () => {
           ],
         }}
       />
-      <RelatedProducts<ExtendedProductHit>
+      <RelatedProducts<ProductHit>
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (

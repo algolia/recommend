@@ -3,7 +3,7 @@ import './style.css';
 import { InsightsClient } from 'search-insights';
 
 import { indexName } from '../../config';
-import { ExtendedProductHit, ProductReviews } from '../../types';
+import { ProductHit, ProductReviews } from '../../types';
 
 type ChartItemProps<TObject> = {
   item: TObject;
@@ -40,9 +40,11 @@ export const StarRating: React.FC<ChartItemReviews> = ({
   );
 };
 
-export const ComparisonChartItem: React.FC<
-  ChartItemProps<ExtendedProductHit>
-> = ({ item, onSelect, insights }): JSX.Element => {
+export const ComparisonChartItem: React.FC<ChartItemProps<ProductHit>> = ({
+  item,
+  onSelect,
+  insights,
+}): JSX.Element => {
   return (
     <div className="uic-ComparisonChart-itemContainer">
       <div className="uic-ComparisonChart-itemHeading">
