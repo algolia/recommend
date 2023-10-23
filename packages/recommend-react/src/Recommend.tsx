@@ -25,7 +25,8 @@ type StateType<TObject> = {
 type Action<TObject> =
   | { type: 'register'; widget: Omit<RecommendWidget<TObject>, 'param'> }
   | { type: 'unregister'; key: string }
-  | { type: 'request_success' };
+  | { type: 'request_success' }
+  | { type: 'request_error' };
 
 function isRegistered<TObject>(
   widgets: Array<RecommendWidget<TObject>>,
@@ -100,6 +101,10 @@ const reducer: React.Reducer<StateType<unknown>, Action<any>> = (
       return { ...state, status: 'idle', isDirty: null };
     }
 
+    case 'request_error': {
+      return { ...state, status: 'idle', isDirty: null };
+    }
+
     default:
       return state;
   }
@@ -139,18 +144,25 @@ export function Recommend<TObject>({
       recommendClient,
       queries,
       keys,
-    }).then((result) => {
-      Object.entries(result).forEach(([key, value]) => {
-        state.widgets.forEach((widget) => {
-          if (widget.key === key) {
-            widget.onResult(value);
-            state.cache[getCacheKey(widget.param.queries)] = value;
-          }
+    })
+      .then((result) => {
+        Object.entries(result).forEach(([key, value]) => {
+          state.widgets.forEach((widget) => {
+            if (widget.key === key) {
+              widget.onResult(value);
+              state.cache[getCacheKey(widget.param.queries)] = value;
+            }
+          });
         });
-      });
 
-      dispatch({ type: 'request_success' });
-    });
+        dispatch({ type: 'request_success' });
+      })
+      .catch((error: Error) => {
+        state.widgets.forEach((widget) => {
+          widget.onError(error);
+        });
+        dispatch({ type: 'request_error' });
+      });
   }, [state.isDirty, dispatch, state.widgets, state.cache, recommendClient]);
 
   const register = React.useCallback(

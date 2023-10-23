@@ -79,6 +79,9 @@ export function useFrequentlyBoughtTogether<TObject>({
           setResult(response as GetRecommendationsResult<TObject>);
           setStatus('idle');
         },
+        onError(error) {
+          throwAsyncError(error);
+        },
       });
     }
 

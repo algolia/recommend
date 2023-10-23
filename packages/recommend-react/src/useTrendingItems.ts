@@ -74,6 +74,9 @@ export function useTrendingItems<TObject>({
           setResult(response as GetTrendingItemsResult<TObject>);
           setStatus('idle');
         },
+        onError(error) {
+          throwAsyncError(error);
+        },
       });
     }
 
