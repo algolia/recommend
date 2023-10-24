@@ -50,6 +50,10 @@
   position: relative;
   width: 100%;
 }
+.Hit-Button:active {
+  background: #5468ff;
+  color: #fff;
+}
 
 .Hit-ButtonIcon {
   position: absolute;

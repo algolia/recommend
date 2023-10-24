@@ -40,6 +40,7 @@ export function Hit({ hit, onSelect, insights }: HitProps) {
         <ButtonComponent
           label="Add to cart"
           onClick={(event) => {
+            event.stopPropagation();
             event.preventDefault();
             insights('convertedObjectIDsAfterSearch', {
               eventName: 'Product Added To Cart',
