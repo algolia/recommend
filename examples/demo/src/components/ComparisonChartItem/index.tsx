@@ -73,6 +73,7 @@ export const ComparisonChartItem: React.FC<ChartItemProps<ProductHit>> = ({
           <div className="uic-ButtonComponent-container">
             <ButtonComponent
               onClick={(event) => {
+                event.stopPropagation();
                 event.preventDefault();
                 insights('convertedObjectIDsAfterSearch', {
                   eventName: 'Product Added To Cart',

@@ -89,3 +89,8 @@
   padding: 6px;
   position: relative;
 }
+
+.uic-BundleView-addToCart:active {
+  background: #5468ff;
+  color: #fff;
+}

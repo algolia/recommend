@@ -22,7 +22,6 @@
 .uic-ComparisonChart-itemImage {
   width: 100%;
   height: 100%;
-
 }
 
 .uic-ComparisonChart-item {
@@ -41,9 +40,9 @@
   width: 9rem;
 }
 
-.uic-StarRating-star{
+.uic-StarRating-star {
   font-size: large;
-  color: #3C4FE0;
+  color: #5468ff;
 }
 
 .uic-ButtonComponent-container {
