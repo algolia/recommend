@@ -4,7 +4,7 @@ import { Link, Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import insights, { InsightsClient } from 'search-insights';
 
 import { Autocomplete, getAlgoliaResults } from '../components/Autocomplete';
-import { ErrorBoundary } from '../components/ErrorBoundry';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 import { apiKey, appId, indexName } from '../config';
 import { FacetHit, ProductHit } from '../types';
 
