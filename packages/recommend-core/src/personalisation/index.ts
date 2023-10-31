@@ -24,10 +24,18 @@ export async function personaliseRecommendations<TObject>({
       });
     });
 
+    // normalise scores
+    const delta =
+      _hits.reduce((max, hit) => Math.max(max, hit._score_personalised), 0) -
+      100;
+
     return _hits
       .sort((a, b) => b._score_personalised - a._score_personalised)
       .map((hit) => {
-        const h = { ...hit, _score: hit._score_personalised };
+        const h = {
+          ...hit,
+          _score: Math.max(hit._score_personalised - delta, 0),
+        };
         // @ts-expect-error
         delete h._score_personalised;
         return h;
