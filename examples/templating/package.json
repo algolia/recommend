@@ -9,13 +9,13 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "@algolia/client-search": "4.19.1",
-    "@algolia/recommend": "4.19.1",
+    "@algolia/client-search": "4.20.0",
+    "@algolia/recommend": "4.20.0",
     "@algolia/recommend-js": "1.10.0",
     "@algolia/recommend-vdom": "1.10.0",
-    "@algolia/ui-components-horizontal-slider-js": "1.2.1",
-    "@algolia/ui-components-horizontal-slider-theme": "1.2.1",
-    "algoliasearch": "4.17.0",
+    "@algolia/ui-components-horizontal-slider-js": "1.2.2",
+    "@algolia/ui-components-horizontal-slider-theme": "1.2.2",
+    "algoliasearch": "4.20.0",
     "preact": "10.13.2"
   },
   "devDependencies": {

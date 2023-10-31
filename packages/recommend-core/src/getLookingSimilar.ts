@@ -44,7 +44,8 @@ export function getLookingSimilar<TObject>({
     .then((hits) => {
       if (logRegion && userToken) {
         return personaliseRecommendations({
-          apiKey: recommendClient.transporter.headers['X-Algolia-API-Key'],
+          apiKey:
+            recommendClient.transporter.queryParameters['x-algolia-api-key'],
           appID: recommendClient.appId,
           logRegion,
           userToken,

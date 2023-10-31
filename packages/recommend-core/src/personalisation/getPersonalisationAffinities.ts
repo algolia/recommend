@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { AffinitiesResponse, PersonalisationAffinities } from './types';
 
 export const getPersonalisationAffinities = async ({
@@ -12,14 +11,13 @@ export const getPersonalisationAffinities = async ({
   headers.append('X-Algolia-Application-Id', appID);
   headers.append('X-Algolia-API-Key', apiKey);
 
-  console.log({ userToken, logRegion, apiKey, appID });
-
   const response = await fetch(
     `https://personalization.${logRegion}.algolia.com/1/profiles/personalization/${userToken}`,
     {
       headers,
     }
   );
+
   if (!response.ok) {
     throw new Error(
       `Failed to fetch personalisation affinities for application="${appID}" region="${logRegion}", user="${userToken}" status="${

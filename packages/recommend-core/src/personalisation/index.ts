@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable no-console */
 import { getPersonalisationAffinities } from './getPersonalisationAffinities';
 import { PersonaliseRecommendations } from './types';
 
@@ -8,14 +10,53 @@ export async function personaliseRecommendations<TObject>({
   try {
     const affinities = await getPersonalisationAffinities(options);
 
-    // eslint-disable-next-line no-console
-    console.log({ affinities });
+    const _hits = hits.map((hit) => {
+      return { ...hit, _score_personalised: hit._score ?? 0 };
+    });
 
-    return hits;
+    Object.entries(affinities.scores).forEach(([facet, values]) => {
+      Object.entries(values).forEach(([facetValue, score]) => {
+        _hits.forEach((hit) => {
+          if (getNestedValue(hit, facet) === facetValue) {
+            hit._score_personalised += score;
+          }
+        });
+      });
+    });
+
+    return _hits
+      .sort((a, b) => b._score_personalised - a._score_personalised)
+      .map((hit) => {
+        const h = { ...hit, _score: hit._score_personalised };
+        // @ts-expect-error
+        delete h._score_personalised;
+        return h;
+      });
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
-
     return hits;
   }
+}
+
+// to do: Add unit tests
+// eslint-disable-next-line @typescript-eslint/ban-types
+function getNestedValue(obj: Object, path: string) {
+  const keys = path.split('.');
+  let current: any = obj;
+
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    if (!isNaN(Number(key)) && Array.isArray(current)) {
+      if (current[key] === undefined) {
+        return undefined;
+      } else {
+        current = current[key];
+      }
+    } else if (current[key] === undefined) {
+      return undefined;
+    } else {
+      current = current[key];
+    }
+  }
+  return current;
 }
