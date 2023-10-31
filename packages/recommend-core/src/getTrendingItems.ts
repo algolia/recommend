@@ -1,5 +1,6 @@
 import { RecommendClient, TrendingItemsQuery } from '@algolia/recommend';
 
+import { personaliseRecommendations } from './personalisation';
 import { ProductRecord } from './types';
 import { mapByScoreToRecommendations, uniqBy } from './utils';
 import { version } from './version';
@@ -17,6 +18,9 @@ export type TrendingItemsProps<TObject> = {
   transformItems?: (
     items: Array<ProductRecord<TObject>>
   ) => Array<ProductRecord<TObject>>;
+
+  userToken?: string;
+  logRegion?: string;
 };
 
 export type GetTrendingItemsResult<TObject> = {
@@ -36,6 +40,8 @@ export function getTrendingItems<TObject>({
   threshold,
   facetName,
   facetValue,
+  logRegion,
+  userToken,
 }: GetTrendingItemsProps<TObject>) {
   const query = {
     fallbackParameters,
@@ -46,6 +52,8 @@ export function getTrendingItems<TObject>({
     facetName,
     facetValue,
   };
+
+  console.log({ query });
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
@@ -62,5 +70,20 @@ export function getTrendingItems<TObject>({
         ),
       })
     )
+    .then((hits) => {
+      console.log({ recommendClient });
+
+      if (logRegion && userToken) {
+        return personaliseRecommendations({
+          apiKey:
+            recommendClient.transporter.queryParameters['x-algolia-api-key'],
+          appID: recommendClient.appId,
+          logRegion,
+          userToken,
+          hits,
+        });
+      }
+      return hits;
+    })
     .then((hits) => ({ recommendations: transformItems(hits) }));
 }

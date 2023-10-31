@@ -1,5 +1,6 @@
 import type { RecommendClient, RecommendationsQuery } from '@algolia/recommend';
 
+import { personaliseRecommendations } from './personalisation';
 import { ProductRecord, RecordWithObjectID } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
@@ -21,6 +22,9 @@ export type RecommendationsProps<TObject> = {
   transformItems?: (
     items: Array<ProductRecord<TObject>>
   ) => Array<ProductRecord<TObject>>;
+
+  userToken?: string;
+  logRegion?: string;
 };
 
 export type GetRecommendationsProps<TObject> = RecommendationsProps<TObject> &
@@ -40,6 +44,8 @@ export function getRecommendations<TObject>({
   model,
   queryParameters,
   threshold,
+  logRegion,
+  userToken,
 }: GetRecommendationsProps<TObject>): Promise<
   GetRecommendationsResult<TObject>
 > {
@@ -64,5 +70,17 @@ export function getRecommendations<TObject>({
         nrOfObjs: objectIDs.length,
       })
     )
+    .then((hits) => {
+      if (logRegion && userToken) {
+        return personaliseRecommendations({
+          apiKey: recommendClient.transporter.headers['X-Algolia-API-Key'],
+          appID: recommendClient.appId,
+          logRegion,
+          userToken,
+          hits,
+        });
+      }
+      return hits;
+    })
     .then((hits) => ({ recommendations: transformItems(hits) }));
 }

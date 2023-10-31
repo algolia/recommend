@@ -47,8 +47,11 @@ export const HomePage: React.FC = () => {
         }}
       />
       <TrendingItems<ProductHit>
+        recommendClient={recommendClient}
         indexName={indexName}
         facetName={selectedFacetValue ? 'brand' : undefined}
+        logRegion="eu"
+        userToken="foobar"
         facetValue={
           selectedFacetValue ? selectedFacetValue.facetValue : undefined
         }

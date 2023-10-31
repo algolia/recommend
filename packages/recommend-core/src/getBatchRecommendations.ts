@@ -17,7 +17,7 @@ export type BatchQuery<TObject> = (RecommendationsQuery | TrendingQuery) & {
   transformItems?: (
     items: Array<ProductRecord<TObject>>
   ) => Array<ProductRecord<TObject>>;
-};
+} & { readonly logRegion?: string; readonly userToken?: string };
 
 export type GetBatchRecommendations<TObject> = {
   keys: BatchKeyPair[];
