@@ -68,6 +68,8 @@ export const ProductPage: React.FC = () => {
           analytics: true,
           clickAnalytics: true,
         }}
+        logRegion="eu"
+        userToken="foobar"
       />
       <FrequentlyBoughtTogether<ProductHit>
         indexName={indexName}
