@@ -6,8 +6,9 @@ import {
   LookingSimilar,
 } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import algoliasearch from 'algoliasearch';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
   Hit,
@@ -21,15 +22,30 @@ import { ProductHit } from '../types';
 
 import { useApplicationContext } from './Root';
 
+const searchClient = algoliasearch(appId, apiKey);
+const index = searchClient.initIndex(indexName);
 const recommendClient = algoliarecommend(appId, apiKey);
 
 export const ProductPage: React.FC = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
   const [
     { insights, selectedProduct, setSelectedProduct, selectedFacetValue },
   ] = useApplicationContext();
 
+  useEffect(() => {
+    if (!selectedProduct && id !== undefined) {
+      index.getObject<ProductHit>(id).then((product) => {
+        setSelectedProduct(product);
+      });
+    } else if (!selectedProduct && id === undefined) {
+      navigate('/');
+    }
+  }, [id, navigate, selectedProduct, setSelectedProduct]);
+
   if (!selectedProduct) {
-    return <Navigate to="/" />;
+    return <div>Loading</div>;
   }
 
   return (
