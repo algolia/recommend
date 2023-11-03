@@ -1,7 +1,39 @@
-/* eslint-disable @typescript-eslint/camelcase */
-/* eslint-disable no-console */
 import { getPersonalisationAffinities } from './getPersonalisationAffinities';
 import { PersonaliseRecommendations } from './types';
+
+const p90 = (scores: number[]) => {
+  scores.sort((a, b) => a - b);
+  const index = Math.ceil(0.9 * scores.length);
+  return scores[index - 1];
+};
+
+function calculatePosPrime({
+  pos,
+  impact,
+  score,
+  p90Score,
+  textBucket,
+}: {
+  pos: number;
+  impact: number;
+  score: number;
+  p90Score: number;
+  textBucket: Array<{ pos: number }>;
+}): number {
+  // Calculate the minimum position within the text bucket
+  const minPosInTextBucket = Math.min(...textBucket.map((r) => r.pos));
+
+  // Calculate the power term
+  const powerTerm = Math.min(1, score / p90Score);
+
+  // Calculate the new position
+  const newPos = Math.floor(pos * Math.pow((100 - impact) / 100, powerTerm));
+
+  // Take the maximum of the minimum position in the text bucket and the calculated new position
+  const posPrime = Math.max(minPosInTextBucket, newPos);
+
+  return posPrime;
+}
 
 export async function personaliseRecommendations<TObject>({
   hits,
@@ -11,37 +43,56 @@ export async function personaliseRecommendations<TObject>({
     const affinities = await getPersonalisationAffinities(options);
 
     const _hits = hits.map((hit) => {
-      return { ...hit, _score_personalised: hit._score ?? 0 };
+      return {
+        ...hit,
+        filterScore: 0,
+      };
     });
 
     Object.entries(affinities.scores).forEach(([facet, values]) => {
       Object.entries(values).forEach(([facetValue, score]) => {
         _hits.forEach((hit) => {
           if (getNestedValue(hit, facet) === facetValue) {
-            hit._score_personalised += score;
+            hit.filterScore += score;
+            //  hit._score_personalised += score; // do personalised score computation here TBD
           }
         });
       });
     });
 
-    // normalise scores
-    const delta =
-      _hits.reduce((max, hit) => Math.max(max, hit._score_personalised), 0) -
-      100;
+    const scoreP90 = p90(_hits.map((hit) => hit.filterScore));
 
-    return _hits
-      .sort((a, b) => b._score_personalised - a._score_personalised)
-      .map((hit) => {
-        const h = {
+    const result = _hits
+      .map((hit, index) => {
+        const position = calculatePosPrime({
+          pos: index,
+          impact: 100,
+          score: hit.filterScore,
+          p90Score: scoreP90,
+          textBucket: [{ pos: 0 }],
+        });
+
+        return {
           ...hit,
-          _score: Math.max(hit._score_personalised - delta, 0),
+          position: position === 0 ? index : position,
         };
-        // @ts-expect-error
-        delete h._score_personalised;
-        return h;
+      })
+      .sort((a, b) => {
+        if (a.position === b.position) {
+          if (
+            a._score !== undefined &&
+            b._score !== undefined &&
+            a._score !== b._score
+          ) {
+            return b._score - a._score;
+          }
+          return b.filterScore - a.filterScore;
+        }
+        return a.position - b.position;
       });
+
+    return result;
   } catch (e) {
-    console.error(e);
     return hits;
   }
 }
