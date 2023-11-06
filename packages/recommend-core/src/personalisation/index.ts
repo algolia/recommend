@@ -2,12 +2,12 @@ import { getPersonalisationAffinities } from './getPersonalisationAffinities';
 import { PersonaliseRecommendations } from './types';
 
 const p90 = (scores: number[]) => {
-  scores.sort((a, b) => a - b);
-  const index = Math.ceil(0.9 * scores.length);
-  return scores[index - 1];
+  const arr = [...scores].sort((a, b) => a - b);
+  const index = Math.ceil(0.9 * arr.length);
+  return arr[index - 1];
 };
 
-function calculatePosPrime({
+const calculatePosPrime = ({
   pos,
   impact,
   score,
@@ -19,7 +19,7 @@ function calculatePosPrime({
   score: number;
   p90Score: number;
   textBucket: Array<{ pos: number }>;
-}): number {
+}): number => {
   // Calculate the minimum position within the text bucket
   const minPosInTextBucket = Math.min(...textBucket.map((r) => r.pos));
 
@@ -33,73 +33,9 @@ function calculatePosPrime({
   const posPrime = Math.max(minPosInTextBucket, newPos);
 
   return posPrime;
-}
+};
 
-export async function personaliseRecommendations<TObject>({
-  hits,
-  ...options
-}: PersonaliseRecommendations<TObject>) {
-  try {
-    const affinities = await getPersonalisationAffinities(options);
-
-    const _hits = hits.map((hit) => {
-      return {
-        ...hit,
-        filterScore: 0,
-      };
-    });
-
-    Object.entries(affinities.scores).forEach(([facet, values]) => {
-      Object.entries(values).forEach(([facetValue, score]) => {
-        _hits.forEach((hit) => {
-          if (getNestedValue(hit, facet) === facetValue) {
-            hit.filterScore += score;
-            //  hit._score_personalised += score; // do personalised score computation here TBD
-          }
-        });
-      });
-    });
-
-    const scoreP90 = p90(_hits.map((hit) => hit.filterScore));
-
-    const result = _hits
-      .map((hit, index) => {
-        const position = calculatePosPrime({
-          pos: index,
-          impact: 100,
-          score: hit.filterScore,
-          p90Score: scoreP90,
-          textBucket: [{ pos: 0 }],
-        });
-
-        return {
-          ...hit,
-          position: position === 0 ? index : position,
-        };
-      })
-      .sort((a, b) => {
-        if (a.position === b.position) {
-          if (
-            a._score !== undefined &&
-            b._score !== undefined &&
-            a._score !== b._score
-          ) {
-            return b._score - a._score;
-          }
-          return b.filterScore - a.filterScore;
-        }
-        return a.position - b.position;
-      });
-
-    return result;
-  } catch (e) {
-    return hits;
-  }
-}
-
-// to do: Add unit tests
-// eslint-disable-next-line @typescript-eslint/ban-types
-function getNestedValue(obj: Object, path: string) {
+export const getNestedValue = (obj: Record<string, any>, path: string) => {
   const keys = path.split('.');
   let current: any = obj;
 
@@ -118,4 +54,70 @@ function getNestedValue(obj: Object, path: string) {
     }
   }
   return current;
+};
+
+export async function personaliseRecommendations<TObject>({
+  hits,
+  ...options
+}: PersonaliseRecommendations<TObject>) {
+  try {
+    const affinities = await getPersonalisationAffinities(options);
+
+    const _hits = hits.map((hit) => {
+      return {
+        ...hit,
+        __filterScore: 0,
+      };
+    });
+
+    Object.entries(affinities.scores).forEach(([facet, values]) => {
+      Object.entries(values).forEach(([facetValue, score]) => {
+        _hits.forEach((hit) => {
+          if (getNestedValue(hit, facet) === facetValue) {
+            hit.__filterScore += score;
+            //  hit._score_personalised += score; // do personalised score computation here TBD
+          }
+        });
+      });
+    });
+
+    const scoreP90 = p90(_hits.map((hit) => hit.__filterScore));
+
+    const result = _hits
+      .map((hit, index) => {
+        const position = calculatePosPrime({
+          pos: index,
+          impact: 99,
+          score: hit.__filterScore,
+          p90Score: scoreP90,
+          textBucket: [{ pos: 0 }],
+        });
+
+        return {
+          ...hit,
+          position,
+        };
+      })
+      .sort((a, b) => {
+        if (a.position === b.position) {
+          if (
+            a._score !== undefined &&
+            b._score !== undefined &&
+            a._score !== b._score
+          ) {
+            return b._score - a._score;
+          }
+          return b.__filterScore - a.__filterScore;
+        }
+        return a.position - b.position;
+      })
+      .map((hit) => {
+        const { __filterScore, position, ...rest } = hit;
+        return rest;
+      });
+
+    return result;
+  } catch (e) {
+    return hits;
+  }
 }
