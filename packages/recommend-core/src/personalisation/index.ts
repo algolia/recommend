@@ -91,7 +91,7 @@ export async function personaliseRecommendations<TObject>({
       .map((hit, index) => {
         const position = calculatePosPrime({
           pos: index,
-          impact: 99,
+          impact: 100,
           score: hit.__filterScore,
           p90Score: scoreP90,
           textBucket: [{ pos: 0 }],
