@@ -57,8 +57,8 @@ describe('personalisation', () => {
         scores: {
           brand: {
             Apple: 20,
-            HTCOnePlus: 5,
-            OnePlus: 5,
+            OnePlus: 10,
+            HTC: 5,
             Samsung: 1,
           },
         },
@@ -88,6 +88,16 @@ describe('personalisation', () => {
             brand: 'Apple',
             _score: 60,
           },
+          {
+            objectID: 'op3',
+            brand: 'OnePlus',
+            _score: 60,
+          },
+          {
+            objectID: 'HTC One',
+            brand: 'HTC',
+            _score: 60,
+          },
         ],
         apiKey: 'apiKey',
         appID: 'appID',
@@ -99,6 +109,16 @@ describe('personalisation', () => {
         {
           objectID: 'iphone',
           brand: 'Apple',
+          _score: 60,
+        },
+        {
+          objectID: 'op3',
+          brand: 'OnePlus',
+          _score: 60,
+        },
+        {
+          objectID: 'HTC One',
+          brand: 'HTC',
           _score: 60,
         },
         {
