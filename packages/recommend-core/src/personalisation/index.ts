@@ -1,3 +1,5 @@
+import { ProductRecord } from '../types';
+
 import { getPersonalisationAffinities } from './getPersonalisationAffinities';
 import { PersonaliseRecommendations } from './types';
 
@@ -59,7 +61,9 @@ export const getNestedValue = (obj: Record<string, any>, path: string) => {
 export async function personaliseRecommendations<TObject>({
   hits,
   ...options
-}: PersonaliseRecommendations<TObject>) {
+}: PersonaliseRecommendations<TObject>): Promise<
+  Array<ProductRecord<ProductRecord<TObject>>>
+> {
   try {
     const affinities = await getPersonalisationAffinities(options);
 
@@ -111,9 +115,13 @@ export async function personaliseRecommendations<TObject>({
         }
         return a.position - b.position;
       })
-      .map((hit) => {
-        const { __filterScore, position, ...rest } = hit;
-        return rest;
+      .map((hit: ProductRecord<TObject>) => {
+        // @ts-expect-error
+        delete hit.__filterScore;
+        // @ts-expect-error
+        delete hit.position;
+
+        return hit;
       });
 
     return result;
