@@ -15,6 +15,11 @@ export const Root: React.FC = () => {
   const navigate = useNavigate();
 
   const [
+    isPersonalisationEnabled,
+    setIsPersonalisationEnabled,
+  ] = React.useState(false);
+
+  const [
     selectedProduct,
     setSelectedProduct,
   ] = React.useState<ProductHit | null>(null);
@@ -24,11 +29,25 @@ export const Root: React.FC = () => {
     setSelectedFacetValue,
   ] = React.useState<FacetHit | null>(null);
 
+  const onPersoToggle = (event) => {
+    setIsPersonalisationEnabled(event.target.checked);
+  };
+
   return (
     <div className="container">
+      <div className="personalisation_wrapper">
+        <input
+          type="checkbox"
+          id="personalisation"
+          checked={isPersonalisationEnabled}
+          onChange={onPersoToggle}
+        />
+        <label htmlFor="personalisation">Enable personalisation</label>
+      </div>
       <h1 className="title">
         <Link to="/">Algolia Recommend</Link>
       </h1>
+
       <Autocomplete
         placeholder="Search for a product"
         openOnFocus={true}
@@ -97,6 +116,7 @@ export const Root: React.FC = () => {
             setSelectedProduct,
             selectedFacetValue,
             setSelectedFacetValue,
+            isPersonalisationEnabled,
           },
         ]}
       />
@@ -110,6 +130,7 @@ type ApplicationContextType = Array<{
   setSelectedProduct: (hit: ProductHit | null) => void;
   selectedFacetValue: FacetHit | null;
   setSelectedFacetValue: (facet: FacetHit | null) => void;
+  isPersonalisationEnabled: boolean;
 }>;
 
 export function useApplicationContext() {

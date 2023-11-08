@@ -1,7 +1,6 @@
 import algoliarecommend from '@algolia/recommend';
 import {
   FrequentlyBoughtTogether,
-  Recommend,
   RelatedProducts,
   LookingSimilar,
 } from '@algolia/recommend-react';
@@ -25,7 +24,13 @@ const recommendClient = algoliarecommend(appId, apiKey);
 
 export const ProductPage: React.FC = () => {
   const [
-    { insights, selectedProduct, setSelectedProduct, selectedFacetValue },
+    {
+      insights,
+      selectedProduct,
+      setSelectedProduct,
+      selectedFacetValue,
+      isPersonalisationEnabled,
+    },
   ] = useApplicationContext();
 
   if (!selectedProduct) {
@@ -33,7 +38,7 @@ export const ProductPage: React.FC = () => {
   }
 
   return (
-    <Recommend recommendClient={recommendClient}>
+    <>
       <div style={{ padding: '1rem 0' }}>
         <div
           className="Hit"
@@ -64,16 +69,16 @@ export const ProductPage: React.FC = () => {
         maxRecommendations={10}
         threshold={75}
         view={HorizontalSlider}
-        queryParameters={{
-          analytics: true,
-          clickAnalytics: true,
-        }}
         logRegion="eu"
-        userToken="foobar"
+        recommendClient={recommendClient}
+        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
       />
       <FrequentlyBoughtTogether<ProductHit>
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
+        logRegion="eu"
+        recommendClient={recommendClient}
+        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
         itemComponent={({ item }) => (
           <BundleItem
             item={item}
@@ -82,13 +87,6 @@ export const ProductPage: React.FC = () => {
           />
         )}
         maxRecommendations={2}
-        queryParameters={{
-          analytics: true,
-          clickAnalytics: true,
-          facetFilters: selectedFacetValue
-            ? [`brand:${selectedFacetValue}`]
-            : [],
-        }}
         view={({ itemComponent, items }) => (
           <BundleView
             currentItem={selectedProduct}
@@ -109,20 +107,11 @@ export const ProductPage: React.FC = () => {
             )}
             view={HorizontalSlider}
             maxRecommendations={10}
+            logRegion="eu"
+            recommendClient={recommendClient}
+            userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
             translations={{
               title: 'Related products (fallback)',
-            }}
-            fallbackParameters={{
-              facetFilters: [
-                `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-              ],
-            }}
-            queryParameters={{
-              analytics: true,
-              clickAnalytics: true,
-              facetFilters: [
-                `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-              ],
             }}
           />
         )}
@@ -133,28 +122,21 @@ export const ProductPage: React.FC = () => {
         itemComponent={({ item }) => (
           <Hit hit={item} insights={insights} onSelect={setSelectedProduct} />
         )}
+        logRegion="eu"
+        recommendClient={recommendClient}
+        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
         maxRecommendations={10}
         view={HorizontalSlider}
         translations={{
           title: 'Related products',
         }}
-        fallbackParameters={{
-          facetFilters: [
-            `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-          ],
-        }}
-        queryParameters={{
-          analytics: true,
-          clickAnalytics: true,
-          facetFilters: [
-            `hierarchical_categories.lvl0:${selectedProduct.hierarchical_categories.lvl0}`,
-            selectedFacetValue ? `brand:${selectedFacetValue}` : '',
-          ],
-        }}
       />
       <RelatedProducts<ProductHit>
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
+        logRegion="eu"
+        recommendClient={recommendClient}
+        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
         itemComponent={({ item }) => (
           <ComparisonChartItem
             item={item}
@@ -173,12 +155,7 @@ export const ProductPage: React.FC = () => {
         translations={{
           title: 'Comparison Chart',
         }}
-        fallbackParameters={{
-          facetFilters: [
-            `hierarchical_categories.lvl2:${selectedProduct.hierarchical_categories.lvl2}`,
-          ],
-        }}
       />
-    </Recommend>
+    </>
   );
 };

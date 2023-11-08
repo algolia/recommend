@@ -1,9 +1,5 @@
 import algoliarecommend from '@algolia/recommend';
-import {
-  Recommend,
-  TrendingFacets,
-  TrendingItems,
-} from '@algolia/recommend-react';
+import { TrendingFacets, TrendingItems } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +15,17 @@ const recommendClient = algoliarecommend(appId, apiKey);
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [
-    { insights, setSelectedProduct, selectedFacetValue, setSelectedFacetValue },
+    {
+      insights,
+      setSelectedProduct,
+      selectedFacetValue,
+      setSelectedFacetValue,
+      isPersonalisationEnabled,
+    },
   ] = useApplicationContext();
 
   return (
-    <Recommend recommendClient={recommendClient}>
+    <>
       <TrendingFacets<FacetHit>
         indexName={indexName}
         facetName="brand"
@@ -44,13 +46,16 @@ export const HomePage: React.FC = () => {
         translations={{
           title: 'Trending Facet (brand)',
         }}
+        recommendClient={recommendClient}
+        logRegion="eu"
+        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
       />
       <TrendingItems<ProductHit>
         recommendClient={recommendClient}
         indexName={indexName}
         facetName={selectedFacetValue ? 'brand' : undefined}
         logRegion="eu"
-        userToken="user-token-1"
+        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
         facetValue={
           selectedFacetValue ? selectedFacetValue.facetValue : undefined
         }
@@ -72,6 +77,6 @@ export const HomePage: React.FC = () => {
           }`,
         }}
       />
-    </Recommend>
+    </>
   );
 };

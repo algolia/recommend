@@ -30,6 +30,8 @@ export async function getLookingSimilar<TObject>({
     threshold,
   }));
 
+  console.log('## getLookingSimilar', queries);
+
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
   const filters = await computePersoFilters({
