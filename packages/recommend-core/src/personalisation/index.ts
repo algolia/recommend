@@ -79,7 +79,6 @@ export async function personaliseRecommendations<TObject>({
         _hits.forEach((hit) => {
           if (getNestedValue(hit, facet) === facetValue) {
             hit.__filterScore += score;
-            //  hit._score_personalised += score; // do personalised score computation here TBD
           }
         });
       });
@@ -111,7 +110,7 @@ export async function personaliseRecommendations<TObject>({
           ) {
             return b._score - a._score;
           }
-          return b.__filterScore - a.__filterScore;
+          return b.__filterScore - a.__filterScore; // should never happen
         }
         return a.position - b.position;
       })
