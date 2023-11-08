@@ -19,6 +19,8 @@ export function useLookingSimilar<TObject>({
   queryParameters: userQueryParameters,
   recommendClient,
   threshold,
+  logRegion,
+  userToken,
   transformItems: userTransformItems = (x) => x,
 }: UseLookingSimilarProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
@@ -39,6 +41,8 @@ export function useLookingSimilar<TObject>({
     transformItemsRef.current = userTransformItems;
   }, [userTransformItems]);
 
+  console.log('### > useLookingSimilar', { logRegion, userToken });
+
   useEffect(() => {
     const param = {
       fallbackParameters,
@@ -47,6 +51,8 @@ export function useLookingSimilar<TObject>({
       objectIDs,
       queryParameters,
       threshold,
+      logRegion,
+      userToken,
       transformItems: transformItemsRef.current,
     };
 
@@ -105,6 +111,8 @@ export function useLookingSimilar<TObject>({
     register,
     setStatus,
     threshold,
+    logRegion,
+    userToken,
   ]);
 
   return {

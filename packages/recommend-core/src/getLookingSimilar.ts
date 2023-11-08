@@ -34,13 +34,13 @@ export function getLookingSimilar<TObject>({
 
   return recommendClient
     .getLookingSimilar<TObject>(queries)
-    .then((response) =>
-      mapToRecommendations<ProductRecord<TObject>>({
+    .then((response) => {
+      return mapToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
         hits: response.results.map((result) => result.hits),
         nrOfObjs: objectIDs.length,
-      })
-    )
+      });
+    })
     .then((hits) => {
       if (logRegion && userToken) {
         return personaliseRecommendations({
