@@ -1,7 +1,6 @@
 import algoliarecommend from '@algolia/recommend';
 import {
   FrequentlyBoughtTogether,
-  Recommend,
   RelatedProducts,
   LookingSimilar,
 } from '@algolia/recommend-react';
@@ -31,7 +30,13 @@ export const ProductPage: React.FC = () => {
   const { id } = useParams();
 
   const [
-    { insights, selectedProduct, setSelectedProduct, selectedFacetValue },
+    {
+      isPersonalisationEnabled,
+      insights,
+      selectedProduct,
+      setSelectedProduct,
+      selectedFacetValue,
+    },
   ] = useApplicationContext();
 
   useEffect(() => {
@@ -49,7 +54,7 @@ export const ProductPage: React.FC = () => {
   }
 
   return (
-    <Recommend recommendClient={recommendClient}>
+    <>
       <div style={{ padding: '1rem 0' }}>
         <div
           className="Hit"
@@ -85,11 +90,15 @@ export const ProductPage: React.FC = () => {
           clickAnalytics: true,
         }}
         logRegion="eu"
-        userToken="foobar"
+        recommendClient={recommendClient}
+        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
       />
       <FrequentlyBoughtTogether<ProductHit>
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
+        logRegion="eu"
+        recommendClient={recommendClient}
+        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
         itemComponent={({ item }) => (
           <BundleItem
             item={item}
@@ -114,6 +123,9 @@ export const ProductPage: React.FC = () => {
         )}
         fallbackComponent={() => (
           <RelatedProducts<ProductHit>
+            logRegion="eu"
+            recommendClient={recommendClient}
+            userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={({ item }) => (
@@ -144,6 +156,9 @@ export const ProductPage: React.FC = () => {
         )}
       />
       <RelatedProducts<ProductHit>
+        logRegion="eu"
+        recommendClient={recommendClient}
+        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (
@@ -169,6 +184,9 @@ export const ProductPage: React.FC = () => {
         }}
       />
       <RelatedProducts<ProductHit>
+        logRegion="eu"
+        recommendClient={recommendClient}
+        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (
@@ -195,6 +213,6 @@ export const ProductPage: React.FC = () => {
           ],
         }}
       />
-    </Recommend>
+    </>
   );
 };

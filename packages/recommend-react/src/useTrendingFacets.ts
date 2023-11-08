@@ -18,6 +18,8 @@ export function useTrendingFacets<TObject>({
   threshold,
   transformItems: userTransformItems = (x) => x,
   facetName,
+  logRegion,
+  userToken,
 }: UseTrendingFacetsProps<TObject>) {
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
     recommendations: [],
@@ -41,6 +43,8 @@ export function useTrendingFacets<TObject>({
       facetName,
       threshold,
       maxRecommendations,
+      logRegion,
+      userToken,
       transformItems: transformItemsRef.current,
     };
 
@@ -88,6 +92,8 @@ export function useTrendingFacets<TObject>({
     hasProvider,
     isContextClient,
     register,
+    logRegion,
+    userToken,
   ]);
 
   return {
