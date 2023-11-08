@@ -1,7 +1,7 @@
 import { RelatedProductsQuery } from '@algolia/recommend';
 
 import { RecommendationsProps } from './getRecommendations';
-import { personaliseRecommendations } from './personalisation';
+import { computePersoFilters } from './personalisation/computeScoreFilters';
 import { ProductRecord } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
@@ -9,7 +9,7 @@ import { version } from './version';
 export type GetRelatedProductsProps<TObject> = RecommendationsProps<TObject> &
   Omit<RelatedProductsQuery, 'objectID'>;
 
-export function getRelatedProducts<TObject>({
+export async function getRelatedProducts<TObject>({
   objectIDs,
   recommendClient,
   transformItems = (x) => x,
@@ -32,27 +32,33 @@ export function getRelatedProducts<TObject>({
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
-  return recommendClient
-    .getRelatedProducts<TObject>(queries)
-    .then((response) =>
-      mapToRecommendations<ProductRecord<TObject>>({
-        maxRecommendations,
-        hits: response.results.map((result) => result.hits),
-        nrOfObjs: objectIDs.length,
-      })
-    )
-    .then((hits) => {
-      if (logRegion && userToken) {
-        return personaliseRecommendations({
-          apiKey:
-            recommendClient.transporter.queryParameters['x-algolia-api-key'],
-          appID: recommendClient.appId,
-          logRegion,
-          userToken,
-          hits,
-        });
-      }
-      return hits;
-    })
-    .then((hits) => ({ recommendations: transformItems(hits) }));
+  const filters = await computePersoFilters({
+    apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
+    appID: recommendClient.appId,
+    userToken,
+    logRegion,
+  });
+
+  const queriesPerso = queries.map((query) => {
+    return {
+      ...query,
+      queryParameters: {
+        ...query.queryParameters,
+        optionalFilters: [
+          ...filters,
+          ...(query.queryParameters?.optionalFilters || []),
+        ],
+      },
+    };
+  });
+
+  const response = await recommendClient.getRelatedProducts<TObject>(
+    queriesPerso
+  );
+  const hits = mapToRecommendations<ProductRecord<TObject>>({
+    maxRecommendations,
+    hits: response.results.map((result) => result.hits),
+    nrOfObjs: objectIDs.length,
+  });
+  return { recommendations: transformItems(hits) };
 }

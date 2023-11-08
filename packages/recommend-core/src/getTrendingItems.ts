@@ -1,6 +1,6 @@
 import { RecommendClient, TrendingItemsQuery } from '@algolia/recommend';
 
-import { personaliseRecommendations } from './personalisation';
+import { computePersoFilters } from './personalisation/computeScoreFilters';
 import { ProductRecord } from './types';
 import { mapByScoreToRecommendations, uniqBy } from './utils';
 import { version } from './version';
@@ -30,7 +30,7 @@ export type GetTrendingItemsResult<TObject> = {
 export type GetTrendingItemsProps<TObject> = TrendingItemsProps<TObject> &
   TrendingItemsQuery;
 
-export function getTrendingItems<TObject>({
+export async function getTrendingItems<TObject>({
   recommendClient,
   transformItems = (x) => x,
   fallbackParameters,
@@ -55,31 +55,29 @@ export function getTrendingItems<TObject>({
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
-  return recommendClient
-    .getTrendingItems<TObject>([query])
-    .then((response) =>
-      mapByScoreToRecommendations<ProductRecord<TObject>>({
-        maxRecommendations,
-        // Multiple identical recommended `objectID`s can be returned b
-        // the engine, so we need to remove duplicates.
-        hits: uniqBy<ProductRecord<TObject>>(
-          'objectID',
-          response.results.map((result) => result.hits).flat()
-        ),
-      })
-    )
-    .then((hits) => {
-      if (logRegion && userToken) {
-        return personaliseRecommendations({
-          apiKey:
-            recommendClient.transporter.queryParameters['x-algolia-api-key'],
-          appID: recommendClient.appId,
-          logRegion,
-          userToken,
-          hits,
-        });
-      }
-      return hits;
-    })
-    .then((hits) => ({ recommendations: transformItems(hits) }));
+  const filters = await computePersoFilters({
+    apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
+    appID: recommendClient.appId,
+    userToken,
+    logRegion,
+  });
+  query.queryParameters = {
+    ...query.queryParameters,
+    optionalFilters: [
+      ...filters,
+      ...(query.queryParameters?.optionalFilters || []),
+    ],
+  };
+
+  const response = await recommendClient.getTrendingItems<TObject>([query]);
+  const hits = mapByScoreToRecommendations<ProductRecord<TObject>>({
+    maxRecommendations,
+    // Multiple identical recommended `objectID`s can be returned b
+    // the engine, so we need to remove duplicates.
+    hits: uniqBy<ProductRecord<TObject>>(
+      'objectID',
+      response.results.map((result) => result.hits).flat()
+    ),
+  });
+  return { recommendations: transformItems(hits) };
 }
