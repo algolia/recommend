@@ -1,6 +1,7 @@
 import { RecommendClient, TrendingItemsQuery } from '@algolia/recommend';
 
 import { personaliseRecommendations } from './personalisation';
+import { computePersonalisationFilters } from './personalisation/computePersonalisationFilters';
 import { ProductRecord } from './types';
 import { mapByScoreToRecommendations, uniqBy } from './utils';
 import { version } from './version';
@@ -21,6 +22,7 @@ export type TrendingItemsProps<TObject> = {
 
   userToken?: string;
   logRegion?: string;
+  personalisationOption?: 'disabled' | 're-rank' | 'filters';
 };
 
 export type GetTrendingItemsResult<TObject> = {
@@ -30,7 +32,7 @@ export type GetTrendingItemsResult<TObject> = {
 export type GetTrendingItemsProps<TObject> = TrendingItemsProps<TObject> &
   TrendingItemsQuery;
 
-export function getTrendingItems<TObject>({
+export async function getTrendingItems<TObject>({
   recommendClient,
   transformItems = (x) => x,
   fallbackParameters,
@@ -42,6 +44,7 @@ export function getTrendingItems<TObject>({
   facetValue,
   logRegion,
   userToken,
+  personalisationOption = 'disabled',
 }: GetTrendingItemsProps<TObject>) {
   const query = {
     fallbackParameters,
@@ -55,31 +58,42 @@ export function getTrendingItems<TObject>({
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
-  return recommendClient
-    .getTrendingItems<TObject>([query])
-    .then((response) =>
-      mapByScoreToRecommendations<ProductRecord<TObject>>({
-        maxRecommendations,
-        // Multiple identical recommended `objectID`s can be returned b
-        // the engine, so we need to remove duplicates.
-        hits: uniqBy<ProductRecord<TObject>>(
-          'objectID',
-          response.results.map((result) => result.hits).flat()
-        ),
-      })
-    )
-    .then((hits) => {
-      if (logRegion && userToken) {
-        return personaliseRecommendations({
-          apiKey:
-            recommendClient.transporter.queryParameters['x-algolia-api-key'],
-          appID: recommendClient.appId,
-          logRegion,
-          userToken,
-          hits,
-        });
-      }
-      return hits;
-    })
-    .then((hits) => ({ recommendations: transformItems(hits) }));
+  const filters = await computePersonalisationFilters({
+    apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
+    appID: recommendClient.appId,
+    userToken,
+    logRegion,
+    enabled: personalisationOption === 'filters',
+  });
+  query.queryParameters = {
+    ...query.queryParameters,
+    optionalFilters: [
+      ...filters,
+      ...(query.queryParameters?.optionalFilters || []),
+    ],
+  };
+
+  const response = await recommendClient.getTrendingItems<TObject>([query]);
+
+  const hits = mapByScoreToRecommendations<ProductRecord<TObject>>({
+    maxRecommendations,
+    // Multiple identical recommended `objectID`s can be returned b
+    // the engine, so we need to remove duplicates.
+    hits: uniqBy<ProductRecord<TObject>>(
+      'objectID',
+      response.results.map((result) => result.hits).flat()
+    ),
+  });
+  if (logRegion && userToken && personalisationOption === 're-rank') {
+    const _hits = await personaliseRecommendations({
+      apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
+      appID: recommendClient.appId,
+      logRegion,
+      userToken,
+      hits,
+    });
+    return { recommendations: transformItems(_hits) };
+  }
+
+  return { recommendations: transformItems(hits) };
 }

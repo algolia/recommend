@@ -31,11 +31,12 @@ export const ProductPage: React.FC = () => {
 
   const [
     {
-      isPersonalisationEnabled,
       insights,
+      userToken,
       selectedProduct,
       setSelectedProduct,
       selectedFacetValue,
+      personalisationOption,
     },
   ] = useApplicationContext();
 
@@ -91,14 +92,16 @@ export const ProductPage: React.FC = () => {
         }}
         logRegion="eu"
         recommendClient={recommendClient}
-        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
+        userToken={userToken}
+        personalisationOption={personalisationOption}
       />
       <FrequentlyBoughtTogether<ProductHit>
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         logRegion="eu"
         recommendClient={recommendClient}
-        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
+        userToken={userToken}
+        personalisationOption={personalisationOption}
         itemComponent={({ item }) => (
           <BundleItem
             item={item}
@@ -119,13 +122,15 @@ export const ProductPage: React.FC = () => {
             currentItem={selectedProduct}
             itemComponent={itemComponent}
             items={items}
+            insights={insights}
           />
         )}
         fallbackComponent={() => (
           <RelatedProducts<ProductHit>
             logRegion="eu"
             recommendClient={recommendClient}
-            userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
+            userToken={userToken}
+            personalisationOption={personalisationOption}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={({ item }) => (
@@ -158,7 +163,8 @@ export const ProductPage: React.FC = () => {
       <RelatedProducts<ProductHit>
         logRegion="eu"
         recommendClient={recommendClient}
-        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
+        userToken={userToken}
+        personalisationOption={personalisationOption}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (
@@ -186,7 +192,8 @@ export const ProductPage: React.FC = () => {
       <RelatedProducts<ProductHit>
         logRegion="eu"
         recommendClient={recommendClient}
-        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
+        userToken={userToken}
+        personalisationOption={personalisationOption}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (

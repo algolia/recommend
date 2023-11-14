@@ -4,20 +4,28 @@ import { Link, Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import insights, { InsightsClient } from 'search-insights';
 
 import { Autocomplete, getAlgoliaResults } from '../components/Autocomplete';
+import { PersonalisationRadio } from '../components/PersonalisationRadio';
+import { PersonalisationDebug } from '../components/PersonalisationRadio/PersonalisationDebug';
 import { apiKey, appId, indexName } from '../config';
 import { FacetHit, ProductHit } from '../types';
 
 const searchClient = algoliasearch(appId, apiKey);
 
-insights('init', { appId, apiKey, useCookie: true, userToken: 'user-token-1' });
+insights('init', {
+  appId,
+  apiKey,
+  useCookie: true,
+});
 
 export const Root: React.FC = () => {
   const navigate = useNavigate();
 
+  const [userToken, setUserToken] = React.useState('user-token-1');
+
   const [
-    isPersonalisationEnabled,
-    setIsPersonalisationEnabled,
-  ] = React.useState(false);
+    personalisationOption,
+    setSelectedPersonalisationOption,
+  ] = React.useState('disabled');
 
   const [
     selectedProduct,
@@ -29,20 +37,20 @@ export const Root: React.FC = () => {
     setSelectedFacetValue,
   ] = React.useState<FacetHit | null>(null);
 
-  const onPersoToggle = (event) => {
-    setIsPersonalisationEnabled(event.target.checked);
-  };
+  React.useEffect(() => {
+    insights('setUserToken', userToken);
+    insights('setAuthenticatedUserToken', userToken);
+  }, [userToken]);
+
   return (
     <div className="container">
-      <div className="personalisation_wrapper">
-        <input
-          type="checkbox"
-          id="personalisation"
-          checked={isPersonalisationEnabled}
-          onChange={onPersoToggle}
-        />
-        <label htmlFor="personalisation">Enable personalisation</label>
-      </div>
+      <PersonalisationRadio
+        value={personalisationOption}
+        onChange={setSelectedPersonalisationOption}
+        userToken={userToken}
+        setUserToken={setUserToken}
+      />
+
       <h1 className="title">
         <Link to="/">Algolia Recommend</Link>
       </h1>
@@ -114,10 +122,15 @@ export const Root: React.FC = () => {
             setSelectedProduct,
             selectedFacetValue,
             setSelectedFacetValue,
-            isPersonalisationEnabled,
+            personalisationOption,
+            userToken,
           },
         ]}
       />
+
+      {personalisationOption !== 'disabled' && (
+        <PersonalisationDebug userToken={userToken} />
+      )}
     </div>
   );
 };
@@ -128,7 +141,8 @@ type ApplicationContextType = Array<{
   setSelectedProduct: (hit: ProductHit | null) => void;
   selectedFacetValue: FacetHit | null;
   setSelectedFacetValue: (facet: FacetHit | null) => void;
-  isPersonalisationEnabled: boolean;
+  personalisationOption: 'disabled' | 're-rank' | 'filters';
+  userToken: string;
 }>;
 
 export function useApplicationContext() {

@@ -22,6 +22,7 @@ export function useRecommendations<TObject>({
   threshold,
   logRegion,
   userToken,
+  personalisationOption,
   transformItems: userTransformItems = (x) => x,
 }: UseRecommendationsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
@@ -52,6 +53,7 @@ export function useRecommendations<TObject>({
       threshold,
       logRegion,
       userToken,
+      personalisationOption,
       transformItems: transformItemsRef.current,
     }).then((response) => {
       setResult(response);
@@ -69,6 +71,7 @@ export function useRecommendations<TObject>({
     threshold,
     logRegion,
     userToken,
+    personalisationOption,
   ]);
 
   return {

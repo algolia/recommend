@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { InsightsClient } from 'search-insights';
 
 import { indexName } from '../../config';
@@ -13,6 +13,18 @@ type HitProps = {
 };
 
 export function Hit({ hit, onSelect, insights }: HitProps) {
+  const userToken = React.useRef<any>('');
+  insights('getUserToken', {}, (_err, token) => (userToken.current = token));
+
+  useEffect(() => {
+    insights('viewedObjectIDs', {
+      eventName: 'Product Viewed',
+      userToken: userToken.current,
+      objectIDs: [hit.objectID],
+      index: indexName,
+    });
+  }, [hit.objectID, insights]);
+
   return (
     <a
       className="Hit Hit-link"
@@ -22,7 +34,7 @@ export function Hit({ hit, onSelect, insights }: HitProps) {
 
         onSelect(hit);
         insights('clickedObjectIDs', {
-          userToken: 'user-token-1',
+          userToken: userToken.current,
           objectIDs: [hit.objectID],
           eventName: 'Product Clicked',
           index: indexName,
@@ -44,7 +56,7 @@ export function Hit({ hit, onSelect, insights }: HitProps) {
             event.stopPropagation();
             event.preventDefault();
             insights('convertedObjectIDsAfterSearch', {
-              userToken: 'user-token-1',
+              userToken: userToken.current,
               eventName: 'Product Added To Cart',
               objectIDs: [hit.objectID],
               index: indexName,

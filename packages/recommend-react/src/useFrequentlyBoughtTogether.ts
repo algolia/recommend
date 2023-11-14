@@ -20,6 +20,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   threshold,
   logRegion,
   userToken,
+  personalisationOption,
   transformItems: userTransformItems = (x) => x,
 }: UseFrequentlyBoughtTogetherProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
@@ -48,6 +49,7 @@ export function useFrequentlyBoughtTogether<TObject>({
       threshold,
       logRegion,
       userToken,
+      personalisationOption,
       transformItems: transformItemsRef.current,
     };
 
@@ -106,6 +108,7 @@ export function useFrequentlyBoughtTogether<TObject>({
     register,
     logRegion,
     userToken,
+    personalisationOption,
   ]);
 
   return {

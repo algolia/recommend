@@ -21,6 +21,7 @@ export type TrendingFacetsProps<TObject> = {
 
   userToken?: string;
   logRegion?: string;
+  personalisationOption?: 'disabled' | 're-rank' | 'filters';
 };
 
 export type GetTrendingFacetsResult<TObject> = {
@@ -30,7 +31,7 @@ export type GetTrendingFacetsResult<TObject> = {
 export type GetTrendingFacetsProps<TObject> = TrendingFacetsProps<TObject> &
   TrendingFacetsQuery;
 
-export function getTrendingFacets<TObject>({
+export async function getTrendingFacets<TObject>({
   recommendClient,
   transformItems = (x) => x,
   indexName,
@@ -39,6 +40,7 @@ export function getTrendingFacets<TObject>({
   facetName,
   logRegion,
   userToken,
+  personalisationOption = 'disabled',
 }: GetTrendingFacetsProps<TObject>) {
   const query = {
     indexName,

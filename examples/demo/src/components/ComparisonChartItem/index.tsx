@@ -46,6 +46,9 @@ export const ComparisonChartItem: React.FC<ChartItemProps<ProductHit>> = ({
   onSelect,
   insights,
 }): JSX.Element => {
+  const userToken = React.useRef<any>('');
+  insights('getUserToken', {}, (_err, token) => (userToken.current = token));
+
   return (
     <div className="uic-ComparisonChart-itemContainer">
       <div className="uic-ComparisonChart-itemHeading">
@@ -57,7 +60,7 @@ export const ComparisonChartItem: React.FC<ChartItemProps<ProductHit>> = ({
 
             onSelect(item);
             insights('clickedObjectIDs', {
-              userToken: 'user-token-1',
+              userToken: userToken.current,
               objectIDs: [item.objectID],
               eventName: 'Product Clicked',
               index: indexName,
@@ -77,7 +80,7 @@ export const ComparisonChartItem: React.FC<ChartItemProps<ProductHit>> = ({
                 event.stopPropagation();
                 event.preventDefault();
                 insights('convertedObjectIDsAfterSearch', {
-                  userToken: 'user-token-1',
+                  userToken: userToken.current,
                   eventName: 'Product Added To Cart',
                   objectIDs: [item.objectID],
                   index: indexName,

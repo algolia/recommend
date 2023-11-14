@@ -20,11 +20,12 @@ export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [
     {
-      isPersonalisationEnabled,
       insights,
+      userToken,
       setSelectedProduct,
       selectedFacetValue,
       setSelectedFacetValue,
+      personalisationOption,
     },
   ] = useApplicationContext();
 
@@ -33,7 +34,8 @@ export const HomePage: React.FC = () => {
       <TrendingFacets<FacetHit>
         logRegion="eu"
         recommendClient={recommendClient}
-        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
+        userToken={userToken}
+        personalisationOption={personalisationOption}
         indexName={indexName}
         facetName="brand"
         itemComponent={({ item }) => (
@@ -57,7 +59,8 @@ export const HomePage: React.FC = () => {
       <TrendingItems<ProductHit>
         logRegion="eu"
         recommendClient={recommendClient}
-        userToken={isPersonalisationEnabled ? 'user-token-1' : undefined}
+        userToken={userToken}
+        personalisationOption={personalisationOption}
         indexName={indexName}
         facetName={selectedFacetValue ? 'brand' : undefined}
         facetValue={

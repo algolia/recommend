@@ -23,6 +23,7 @@ export function useTrendingItems<TObject>({
   facetValue,
   logRegion,
   userToken,
+  personalisationOption,
 }: UseTrendingItemsProps<TObject>) {
   const [result, setResult] = useState<GetTrendingItemsResult<TObject>>({
     recommendations: [],
@@ -53,6 +54,7 @@ export function useTrendingItems<TObject>({
       facetValue,
       logRegion,
       userToken,
+      personalisationOption,
       transformItems: transformItemsRef.current,
     };
 
@@ -104,6 +106,7 @@ export function useTrendingItems<TObject>({
     register,
     logRegion,
     userToken,
+    personalisationOption,
   ]);
 
   return {

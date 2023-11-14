@@ -20,6 +20,7 @@ export function useTrendingFacets<TObject>({
   facetName,
   logRegion,
   userToken,
+  personalisationOption,
 }: UseTrendingFacetsProps<TObject>) {
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
     recommendations: [],
@@ -45,6 +46,7 @@ export function useTrendingFacets<TObject>({
       maxRecommendations,
       logRegion,
       userToken,
+      personalisationOption,
       transformItems: transformItemsRef.current,
     };
 
@@ -94,6 +96,7 @@ export function useTrendingFacets<TObject>({
     register,
     logRegion,
     userToken,
+    personalisationOption,
   ]);
 
   return {

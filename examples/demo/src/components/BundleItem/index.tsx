@@ -15,6 +15,9 @@ export const BundleItem: React.FC<BundleItemProps<ProductHit>> = ({
   onSelect,
   insights,
 }) => {
+  const userToken = React.useRef<any>('');
+  insights('getUserToken', {}, (_err, token) => (userToken.current = token));
+
   return (
     <a
       className="Hit Hit-link"
@@ -24,7 +27,7 @@ export const BundleItem: React.FC<BundleItemProps<ProductHit>> = ({
 
         onSelect(item);
         insights('clickedObjectIDs', {
-          userToken: 'user-token-1',
+          userToken: userToken.current,
           objectIDs: [item.objectID],
           eventName: 'Product Clicked',
           index: indexName,

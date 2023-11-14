@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
-
-import { BaseObject, BundleViewTranslations } from '../../types';
+import { InsightsClient } from 'search-insights';
 
 import './style.css';
+import { indexName } from '../../config';
+import { BaseObject, BundleViewTranslations } from '../../types';
 
 function getAmountDefault<TObject extends BaseObject>(items: TObject[]) {
   return items.reduce((sum, current) => sum + current.price.value, 0);
@@ -18,6 +19,7 @@ type BundleViewProps<TObject> = {
   getAmount?(items: TObject[]): number;
   itemComponent({ item }): JSX.Element;
   items: TObject[];
+  insights: InsightsClient;
   translations?: BundleViewTranslations;
 };
 
@@ -144,7 +146,16 @@ export function BundleView<TObject extends BaseObject>(
               {formatPrice(price)}
             </span>
           </div>
-          <button className="uic-BundleView-addToCart">
+          <button
+            className="uic-BundleView-addToCart"
+            onClick={() => {
+              props.insights('convertedObjectIDs', {
+                eventName: 'Product Added To Cart Bundle',
+                objectIDs: selectedItems.map((x) => x.objectID),
+                index: indexName,
+              });
+            }}
+          >
             {translations.addToCart(selectedItems.length)}
           </button>
         </div>

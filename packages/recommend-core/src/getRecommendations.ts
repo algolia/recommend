@@ -1,6 +1,7 @@
 import type { RecommendClient, RecommendationsQuery } from '@algolia/recommend';
 
 import { personaliseRecommendations } from './personalisation';
+import { computePersonalisationFilters } from './personalisation/computePersonalisationFilters';
 import { ProductRecord, RecordWithObjectID } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
@@ -25,6 +26,7 @@ export type RecommendationsProps<TObject> = {
 
   userToken?: string;
   logRegion?: string;
+  personalisationOption?: 'disabled' | 're-rank' | 'filters';
 };
 
 export type GetRecommendationsProps<TObject> = RecommendationsProps<TObject> &
@@ -34,7 +36,7 @@ export type GetRecommendationsResult<TObject> = {
   recommendations: Array<RecordWithObjectID<TObject>>;
 };
 
-export function getRecommendations<TObject>({
+export async function getRecommendations<TObject>({
   objectIDs,
   recommendClient,
   transformItems = (x) => x,
@@ -46,6 +48,7 @@ export function getRecommendations<TObject>({
   threshold,
   logRegion,
   userToken,
+  personalisationOption = 'disabled',
 }: GetRecommendationsProps<TObject>): Promise<
   GetRecommendationsResult<TObject>
 > {
@@ -61,27 +64,45 @@ export function getRecommendations<TObject>({
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
-  return recommendClient
-    .getRecommendations<TObject>(queries)
-    .then((response) =>
-      mapToRecommendations<ProductRecord<TObject>>({
-        maxRecommendations,
-        hits: response.results.map((result) => result.hits),
-        nrOfObjs: objectIDs.length,
-      })
-    )
-    .then((hits) => {
-      if (logRegion && userToken) {
-        return personaliseRecommendations({
-          apiKey:
-            recommendClient.transporter.queryParameters['x-algolia-api-key'],
-          appID: recommendClient.appId,
-          logRegion,
-          userToken,
-          hits,
-        });
-      }
-      return hits;
-    })
-    .then((hits) => ({ recommendations: transformItems(hits) }));
+  const filters = await computePersonalisationFilters({
+    apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
+    appID: recommendClient.appId,
+    userToken,
+    logRegion,
+    enabled: personalisationOption === 'filters',
+  });
+
+  const queriesPerso = queries.map((query) => {
+    return {
+      ...query,
+      queryParameters: {
+        ...query.queryParameters,
+        optionalFilters: [
+          ...filters,
+          ...(query.queryParameters?.optionalFilters || []),
+        ],
+      },
+    };
+  });
+
+  const response = await recommendClient.getRelatedProducts<TObject>(
+    personalisationOption === 'filters' ? queriesPerso : queries
+  );
+  const hits = mapToRecommendations<ProductRecord<TObject>>({
+    maxRecommendations,
+    hits: response.results.map((result) => result.hits),
+    nrOfObjs: objectIDs.length,
+  });
+
+  if (logRegion && userToken && personalisationOption === 're-rank') {
+    const _hits = await personaliseRecommendations({
+      apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
+      appID: recommendClient.appId,
+      logRegion,
+      userToken,
+      hits,
+    });
+    return { recommendations: transformItems(_hits) };
+  }
+  return { recommendations: transformItems(hits) };
 }

@@ -23,3 +23,22 @@
     grid-template-columns: repeat(5, 1fr);
   }
 }
+
+.perso_debug {
+  position: absolute;
+  top: 20px;
+  right: 26px;
+
+  font-size: 14px;
+
+  width: 18vw;
+  height: 40vh;
+
+  padding: 16px;
+  overflow: auto;
+
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}

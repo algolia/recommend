@@ -13,6 +13,9 @@ type FacetProps = {
 };
 
 export function Facet({ hit, onSelect, indexName, insights }: FacetProps) {
+  const userToken = React.useRef<any>('');
+  insights('getUserToken', {}, (_err, token) => (userToken.current = token));
+
   return (
     <div
       className="Hit"
@@ -21,7 +24,7 @@ export function Facet({ hit, onSelect, indexName, insights }: FacetProps) {
 
         onSelect(hit);
         insights('clickedFilters', {
-          userToken: 'user-token-1',
+          userToken: userToken.current,
           index: indexName,
           eventName: 'Facet Clicked',
           filters: [`${hit.facetName}:${hit.facetValue}`],
