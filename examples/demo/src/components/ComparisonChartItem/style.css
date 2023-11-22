@@ -17,9 +17,12 @@
   height: 10rem;
   display: block;
   margin: 0 auto 0.5rem;
+  position: relative;
+  display: inline-block; /* <= shrinks container to image size */
 }
 
 .uic-ComparisonChart-itemImage {
+  display: block;
   width: 100%;
   height: 100%;
 }

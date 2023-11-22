@@ -1,7 +1,9 @@
 import type { RecommendClient, RecommendationsQuery } from '@algolia/recommend';
 
-import { personaliseRecommendations } from './personalisation';
-import { computePersonalisationFilters } from './personalisation/computePersonalisationFilters';
+import {
+  computePersonalisationFilters,
+  personaliseRecommendations,
+} from './personalisation/v1';
 import { ProductRecord, RecordWithObjectID } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
@@ -77,6 +79,9 @@ export async function getRecommendations<TObject>({
       ...query,
       queryParameters: {
         ...query.queryParameters,
+        userToken,
+        getRankingInfo: true,
+        enablePersonalization: personalisationOption === 'filters',
         optionalFilters: [
           ...filters,
           ...(query.queryParameters?.optionalFilters || []),

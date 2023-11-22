@@ -9,11 +9,28 @@
   width: 150px;
 }
 
+.Hit-Image {
+  position: relative;
+  display: inline-block; /* <= shrinks container to image size */
+}
+
 .Hit-Image img {
+  display: block;
   max-width: 100%;
   min-width: 150px;
   min-height: 200px;
   background-color: var(--auc-primary-color);
+}
+
+.Personalized-Badge {
+  width: 30px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: 1px solid #f5f5fa;
+  border-radius: 8px;
+  background-color: #f5f5fa;
+  padding: 2px;
 }
 
 .Hit-Content {

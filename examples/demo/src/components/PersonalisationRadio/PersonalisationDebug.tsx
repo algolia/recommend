@@ -1,4 +1,5 @@
-import { getPersonalisationAffinities } from '@algolia/recommend-core/src/personalisation/getPersonalisationAffinities';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { getPersonalisationAffinities } from '@algolia/recommend-core/src/personalisation/v1/getPersonalisationAffinities';
 import React, { useEffect } from 'react';
 
 import { apiKey, appId } from '../../config';

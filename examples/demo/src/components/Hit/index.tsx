@@ -3,8 +3,8 @@ import { InsightsClient } from 'search-insights';
 
 import { indexName } from '../../config';
 import { ProductHit } from '../../types';
-import './style.css';
 import { ButtonComponent } from '../common';
+import './style.css';
 
 type HitProps = {
   hit: ProductHit;
@@ -15,6 +15,17 @@ type HitProps = {
 export function Hit({ hit, onSelect, insights }: HitProps) {
   const userToken = React.useRef<any>('');
   insights('getUserToken', {}, (_err, token) => (userToken.current = token));
+
+  const personalization = hit?._rankingInfo?.personalization ?? {
+    initialPosition: 0,
+    newPosition: 0,
+    filtersScore: 0,
+  };
+  const isPersonalized = personalization.filtersScore > 0;
+  // // @ts-expect-error
+  // (personalization?.initialPosition ?? 0) !==
+  //   // @ts-expect-error
+  //   (personalization?.newPosition ?? 0);
 
   useEffect(() => {
     insights('viewedObjectIDs', {
@@ -43,6 +54,17 @@ export function Hit({ hit, onSelect, insights }: HitProps) {
     >
       <div className="Hit-Image">
         <img src={hit.image_urls[0]} alt={hit.name} className="product-image" />
+        {isPersonalized && (
+          <svg
+            fill="none"
+            stroke="#5468ff"
+            viewBox="0 0 24 24"
+            className="Personalized-Badge"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        )}
       </div>
 
       <div className="Hit-Content">

@@ -1,4 +1,4 @@
-import { ProductRecord } from '../types';
+import { ProductRecord } from '../../types';
 
 import { getPersonalisationAffinities } from './getPersonalisationAffinities';
 import { getPersonalisationStrategy } from './getPersonalisationStrategy';

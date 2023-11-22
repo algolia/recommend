@@ -1,4 +1,4 @@
-import { ProductRecord } from '../types';
+import { ProductRecord } from '../../types';
 
 export type PersonalisationAffinities = {
   userToken: string;

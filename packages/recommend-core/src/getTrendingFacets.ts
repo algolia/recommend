@@ -1,6 +1,6 @@
 import { RecommendClient, TrendingFacetsQuery } from '@algolia/recommend';
 
-import { personaliseRecommendations } from './personalisation';
+import { personaliseRecommendations } from './personalisation/v1';
 import { TrendingFacet } from './types';
 import { mapByScoreToRecommendations } from './utils';
 import { version } from './version';
@@ -31,7 +31,7 @@ export type GetTrendingFacetsResult<TObject> = {
 export type GetTrendingFacetsProps<TObject> = TrendingFacetsProps<TObject> &
   TrendingFacetsQuery;
 
-export async function getTrendingFacets<TObject>({
+export function getTrendingFacets<TObject>({
   recommendClient,
   transformItems = (x) => x,
   indexName,
@@ -40,7 +40,6 @@ export async function getTrendingFacets<TObject>({
   facetName,
   logRegion,
   userToken,
-  personalisationOption = 'disabled',
 }: GetTrendingFacetsProps<TObject>) {
   const query = {
     indexName,
