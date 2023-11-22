@@ -1,6 +1,7 @@
 import { ProductRecord } from '../types';
 
 import { getPersonalisationAffinities } from './getPersonalisationAffinities';
+import { getPersonalisationStrategy } from './getPersonalisationStrategy';
 import { PersonaliseRecommendations } from './types';
 
 const p90 = (scores: number[]) => {
@@ -67,6 +68,12 @@ export async function personaliseRecommendations<TObject>({
   try {
     const affinities = await getPersonalisationAffinities(options);
 
+    const strategy = await getPersonalisationStrategy({
+      apiKey: options.apiKey,
+      appID: options.appID,
+      logRegion: options.logRegion,
+    });
+
     const _hits = hits.map((hit) => {
       return {
         ...hit,
@@ -78,7 +85,12 @@ export async function personaliseRecommendations<TObject>({
       Object.entries(values).forEach(([facetValue, score]) => {
         _hits.forEach((hit) => {
           if (getNestedValue(hit, facet) === facetValue) {
-            hit.__filterScore += score;
+            const weight =
+              strategy.facetsScoring.find((value) => value.facetName === facet)
+                ?.score ?? 100;
+            const weightedScore = Math.floor(score * (weight / 100));
+
+            hit.__filterScore += weightedScore;
           }
         });
       });

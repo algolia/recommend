@@ -51,8 +51,10 @@ export const PersonalisationDebug = ({ userToken }) => {
       logRegion: 'eu',
     })
       .then(setAffinities)
-      .catch(console.error);
-    getStrategy(appId, apiKey, 'eu').then(setStrategies).catch(console.error);
+      .catch(() => setAffinities(null));
+    getStrategy(appId, apiKey, 'eu')
+      .then(setStrategies)
+      .catch(() => setStrategies(null));
   }, [userToken]);
 
   if (!affinities || !strategies) {

@@ -1,4 +1,5 @@
 import { getPersonalisationAffinities } from './getPersonalisationAffinities';
+import { getPersonalisationStrategy } from './getPersonalisationStrategy';
 
 export type ComputePersonalisationFilters = {
   userToken?: string;
@@ -29,13 +30,25 @@ export const computePersonalisationFilters = async ({
       appID,
     });
 
+    const strategy = await getPersonalisationStrategy({
+      apiKey,
+      appID,
+      logRegion,
+    });
+
     Object.entries(affinities.scores).forEach(([facet, values]) => {
       Object.entries(values).forEach(([value, score]) => {
-        result.push(`${facet}:${value}<score=${score}>`);
+        const weight =
+          strategy.facetsScoring.find((value) => value.facetName === facet)
+            ?.score ?? 100;
+
+        const weightedScore = Math.floor(score * (weight / 100));
+
+        result.push(`${facet}:${value}<score=${weightedScore}>`);
       });
     });
-  } catch (e) {
-    console.log(e);
+  } catch {
+    return [];
   }
 
   return result;
