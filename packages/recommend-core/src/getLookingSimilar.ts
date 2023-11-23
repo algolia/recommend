@@ -4,7 +4,7 @@ import { RecommendationsProps } from './getRecommendations';
 import {
   computePersonalisationFilters,
   personaliseRecommendations,
-} from './personalisation/v1';
+} from './personalisation';
 import { ProductRecord } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
@@ -24,6 +24,7 @@ export async function getLookingSimilar<TObject>({
   logRegion,
   userToken,
   personalisationOption = 'disabled',
+  personalisationVersion = 'v1',
 }: GetLookingSimilarProps<TObject>) {
   const queries = objectIDs.map((objectID) => ({
     fallbackParameters,
@@ -42,6 +43,7 @@ export async function getLookingSimilar<TObject>({
     userToken,
     logRegion,
     enabled: personalisationOption === 'filters',
+    personalisationVersion,
   });
 
   const queriesPerso = queries.map((query) => {
@@ -71,6 +73,7 @@ export async function getLookingSimilar<TObject>({
 
   if (logRegion && userToken && personalisationOption === 're-rank') {
     const _hits = await personaliseRecommendations({
+      personalisationVersion,
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appID: recommendClient.appId,
       logRegion,

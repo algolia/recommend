@@ -24,6 +24,7 @@ export function useTrendingItems<TObject>({
   logRegion,
   userToken,
   personalisationOption,
+  personalisationVersion,
 }: UseTrendingItemsProps<TObject>) {
   const [result, setResult] = useState<GetTrendingItemsResult<TObject>>({
     recommendations: [],
@@ -55,6 +56,7 @@ export function useTrendingItems<TObject>({
       logRegion,
       userToken,
       personalisationOption,
+      personalisationVersion,
       transformItems: transformItemsRef.current,
     };
 
@@ -107,6 +109,7 @@ export function useTrendingItems<TObject>({
     logRegion,
     userToken,
     personalisationOption,
+    personalisationVersion,
   ]);
 
   return {

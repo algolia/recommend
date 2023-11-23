@@ -20,12 +20,16 @@ insights('init', {
 export const Root: React.FC = () => {
   const navigate = useNavigate();
 
-  const [userToken, setUserToken] = React.useState('user-token-1');
+  const [userToken, setUserToken] = React.useState('user-token-3');
 
   const [
     personalisationOption,
     setSelectedPersonalisationOption,
-  ] = React.useState('disabled');
+  ] = React.useState('re-rank');
+
+  const [personalisationVersion, setPersonalisationVersion] = React.useState(
+    'neural-perso'
+  );
 
   const [
     selectedProduct,
@@ -49,6 +53,8 @@ export const Root: React.FC = () => {
         onChange={setSelectedPersonalisationOption}
         userToken={userToken}
         setUserToken={setUserToken}
+        personalisationVersion={personalisationVersion}
+        setPersonalisationVersion={setPersonalisationVersion}
       />
 
       <h1 className="title">
@@ -123,6 +129,7 @@ export const Root: React.FC = () => {
             selectedFacetValue,
             setSelectedFacetValue,
             personalisationOption,
+            personalisationVersion,
             userToken,
           },
         ]}
@@ -142,6 +149,7 @@ type ApplicationContextType = Array<{
   selectedFacetValue: FacetHit | null;
   setSelectedFacetValue: (facet: FacetHit | null) => void;
   personalisationOption: 'disabled' | 're-rank' | 'filters';
+  personalisationVersion: 'v1' | 'neural-perso';
   userToken: string;
 }>;
 

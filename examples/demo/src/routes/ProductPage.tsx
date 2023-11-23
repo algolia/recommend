@@ -37,6 +37,7 @@ export const ProductPage: React.FC = () => {
       setSelectedProduct,
       selectedFacetValue,
       personalisationOption,
+      personalisationVersion,
     },
   ] = useApplicationContext();
 
@@ -94,6 +95,7 @@ export const ProductPage: React.FC = () => {
         recommendClient={recommendClient}
         userToken={userToken}
         personalisationOption={personalisationOption}
+        personalisationVersion={personalisationVersion}
       />
       <FrequentlyBoughtTogether<ProductHit>
         indexName={indexName}
@@ -102,6 +104,7 @@ export const ProductPage: React.FC = () => {
         recommendClient={recommendClient}
         userToken={userToken}
         personalisationOption={personalisationOption}
+        personalisationVersion={personalisationVersion}
         itemComponent={({ item }) => (
           <BundleItem
             item={item}
@@ -131,6 +134,7 @@ export const ProductPage: React.FC = () => {
             recommendClient={recommendClient}
             userToken={userToken}
             personalisationOption={personalisationOption}
+            personalisationVersion={personalisationVersion}
             indexName={indexName}
             objectIDs={[selectedProduct.objectID]}
             itemComponent={({ item }) => (
@@ -165,6 +169,7 @@ export const ProductPage: React.FC = () => {
         recommendClient={recommendClient}
         userToken={userToken}
         personalisationOption={personalisationOption}
+        personalisationVersion={personalisationVersion}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (
@@ -194,6 +199,7 @@ export const ProductPage: React.FC = () => {
         recommendClient={recommendClient}
         userToken={userToken}
         personalisationOption={personalisationOption}
+        personalisationVersion={personalisationVersion}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (

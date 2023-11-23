@@ -22,6 +22,7 @@ export function useLookingSimilar<TObject>({
   logRegion,
   userToken,
   personalisationOption,
+  personalisationVersion,
   transformItems: userTransformItems = (x) => x,
 }: UseLookingSimilarProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
@@ -53,6 +54,7 @@ export function useLookingSimilar<TObject>({
       logRegion,
       userToken,
       personalisationOption,
+      personalisationVersion,
       transformItems: transformItemsRef.current,
     };
 
@@ -114,6 +116,7 @@ export function useLookingSimilar<TObject>({
     logRegion,
     userToken,
     personalisationOption,
+    personalisationVersion,
   ]);
 
   return {

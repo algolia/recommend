@@ -26,6 +26,7 @@ export const HomePage: React.FC = () => {
       selectedFacetValue,
       setSelectedFacetValue,
       personalisationOption,
+      personalisationVersion,
     },
   ] = useApplicationContext();
 
@@ -36,6 +37,7 @@ export const HomePage: React.FC = () => {
         recommendClient={recommendClient}
         userToken={userToken}
         personalisationOption={personalisationOption}
+        personalisationVersion={personalisationVersion}
         indexName={indexName}
         facetName="brand"
         itemComponent={({ item }) => (
@@ -61,6 +63,7 @@ export const HomePage: React.FC = () => {
         recommendClient={recommendClient}
         userToken={userToken}
         personalisationOption={personalisationOption}
+        personalisationVersion={personalisationVersion}
         indexName={indexName}
         facetName={selectedFacetValue ? 'brand' : undefined}
         facetValue={

@@ -4,7 +4,7 @@ import { RecommendationsProps } from './getRecommendations';
 import {
   computePersonalisationFilters,
   personaliseRecommendations,
-} from './personalisation/v1';
+} from './personalisation';
 import { ProductRecord } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
@@ -25,6 +25,7 @@ export async function getFrequentlyBoughtTogether<TObject>({
   logRegion,
   userToken,
   personalisationOption = 'disabled',
+  personalisationVersion = 'v1',
 }: GetFrequentlyBoughtTogetherProps<TObject>) {
   const queries = objectIDs.map((objectID) => ({
     indexName,
@@ -42,6 +43,7 @@ export async function getFrequentlyBoughtTogether<TObject>({
     userToken,
     logRegion,
     enabled: personalisationOption === 'filters',
+    personalisationVersion,
   });
 
   const queriesPerso = queries.map((query) => {
@@ -71,6 +73,7 @@ export async function getFrequentlyBoughtTogether<TObject>({
 
   if (logRegion && userToken && personalisationOption === 're-rank') {
     const _hits = await personaliseRecommendations({
+      personalisationVersion,
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appID: recommendClient.appId,
       logRegion,

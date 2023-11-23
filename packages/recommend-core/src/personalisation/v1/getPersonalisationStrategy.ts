@@ -1,4 +1,4 @@
-type StrategyResponse = {
+export type StrategyResponse = {
   facetsScoring: Array<{
     facetName: string;
     score: number;

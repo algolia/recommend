@@ -3,7 +3,7 @@ import { RecommendClient, TrendingItemsQuery } from '@algolia/recommend';
 import {
   computePersonalisationFilters,
   personaliseRecommendations,
-} from './personalisation/v1';
+} from './personalisation';
 import { ProductRecord } from './types';
 import { mapByScoreToRecommendations, uniqBy } from './utils';
 import { version } from './version';
@@ -25,6 +25,7 @@ export type TrendingItemsProps<TObject> = {
   userToken?: string;
   logRegion?: string;
   personalisationOption?: 'disabled' | 're-rank' | 'filters';
+  readonly personalisationVersion?: 'v1' | 'neural-perso';
 };
 
 export type GetTrendingItemsResult<TObject> = {
@@ -47,6 +48,7 @@ export async function getTrendingItems<TObject>({
   logRegion,
   userToken,
   personalisationOption = 'disabled',
+  personalisationVersion = 'v1',
 }: GetTrendingItemsProps<TObject>) {
   const query = {
     fallbackParameters,
@@ -61,6 +63,7 @@ export async function getTrendingItems<TObject>({
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
   const filters = await computePersonalisationFilters({
+    personalisationVersion,
     apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
     appID: recommendClient.appId,
     userToken,
@@ -91,6 +94,7 @@ export async function getTrendingItems<TObject>({
   });
   if (logRegion && userToken && personalisationOption === 're-rank') {
     const _hits = await personaliseRecommendations({
+      personalisationVersion,
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appID: recommendClient.appId,
       logRegion,

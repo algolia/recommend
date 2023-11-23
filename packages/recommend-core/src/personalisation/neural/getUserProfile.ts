@@ -1,8 +1,8 @@
 import { PersonalisationParams } from '../types';
 
-import { AffinitiesResponse } from './types';
+import { UserProfileResponse } from './types';
 
-export const getPersonalisationAffinities = async ({
+export const getUserProfile = async ({
   userToken,
   logRegion,
   apiKey,
@@ -14,7 +14,7 @@ export const getPersonalisationAffinities = async ({
   headers.append('X-Algolia-API-Key', apiKey);
 
   const response = await fetch(
-    `https://personalization.${logRegion}.algolia.com/1/profiles/personalization/${userToken}`,
+    `https://neuralperso.${logRegion}.algolia.com/2/users/${userToken}`,
     {
       headers,
     }
@@ -22,11 +22,11 @@ export const getPersonalisationAffinities = async ({
 
   if (!response.ok) {
     throw new Error(
-      `Failed to fetch personalisation affinities for application="${appID}" region="${logRegion}", user="${userToken}" status="${
+      `Failed to fetch personalisation profile for application="${appID}" region="${logRegion}", user="${userToken}" status="${
         response.status
       }" error="${await response.text()}"`
     );
   }
-  const result: AffinitiesResponse = await response.json();
+  const result: UserProfileResponse = await response.json();
   return result;
 };

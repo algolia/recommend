@@ -3,7 +3,7 @@ import type { RecommendClient, RecommendationsQuery } from '@algolia/recommend';
 import {
   computePersonalisationFilters,
   personaliseRecommendations,
-} from './personalisation/v1';
+} from './personalisation';
 import { ProductRecord, RecordWithObjectID } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
@@ -29,6 +29,7 @@ export type RecommendationsProps<TObject> = {
   userToken?: string;
   logRegion?: string;
   personalisationOption?: 'disabled' | 're-rank' | 'filters';
+  personalisationVersion?: 'v1' | 'neural-perso';
 };
 
 export type GetRecommendationsProps<TObject> = RecommendationsProps<TObject> &
@@ -51,6 +52,7 @@ export async function getRecommendations<TObject>({
   logRegion,
   userToken,
   personalisationOption = 'disabled',
+  personalisationVersion = 'v1',
 }: GetRecommendationsProps<TObject>): Promise<
   GetRecommendationsResult<TObject>
 > {
@@ -67,6 +69,7 @@ export async function getRecommendations<TObject>({
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
   const filters = await computePersonalisationFilters({
+    personalisationVersion,
     apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
     appID: recommendClient.appId,
     userToken,
@@ -101,6 +104,7 @@ export async function getRecommendations<TObject>({
 
   if (logRegion && userToken && personalisationOption === 're-rank') {
     const _hits = await personaliseRecommendations({
+      personalisationVersion,
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appID: recommendClient.appId,
       logRegion,

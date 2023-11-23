@@ -1,9 +1,9 @@
+import { mapProfileToAffinities } from '../helpers';
 import { ComputePersonalisationFilters } from '../types';
 
-import { getPersonalisationAffinities } from './getPersonalisationAffinities';
-import { getPersonalisationStrategy } from './getPersonalisationStrategy';
+import { getUserProfile } from './getUserProfile';
 
-export const computePersonalisationFiltersV1 = async ({
+export const computePersonalisationFiltersNeural = async ({
   userToken,
   logRegion,
   apiKey,
@@ -17,27 +17,19 @@ export const computePersonalisationFiltersV1 = async ({
   const result: string[] = [];
 
   try {
-    const affinities = await getPersonalisationAffinities({
-      userToken,
-      logRegion,
+    const profile = await getUserProfile({
       apiKey,
       appID,
+      logRegion,
+      userToken,
     });
 
-    const strategy = await getPersonalisationStrategy({
-      apiKey,
-      appID,
-      logRegion,
-    });
+    const affinities = mapProfileToAffinities(profile);
 
     Object.entries(affinities.scores).forEach(([facet, values]) => {
       Object.entries(values).forEach(([value, score]) => {
-        const weight =
-          strategy.facetsScoring.find((value) => value.facetName === facet)
-            ?.score ?? 100;
-
+        const weight = 100;
         const weightedScore = Math.floor(score * (weight / 100));
-
         result.push(`${facet}:${value}<score=${weightedScore}>`);
       });
     });

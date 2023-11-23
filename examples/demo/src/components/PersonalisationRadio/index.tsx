@@ -5,6 +5,8 @@ export const PersonalisationRadio = ({
   onChange,
   userToken,
   setUserToken,
+  personalisationVersion,
+  setPersonalisationVersion,
 }) => {
   const onValueChange = (event: {
     target: { value: React.SetStateAction<string> };
@@ -47,6 +49,34 @@ export const PersonalisationRadio = ({
         value={value === 'disabled' ? 'N/A' : userToken}
         onChange={(e) => setUserToken(e.target.value)}
       />
+      <div>
+        <fieldset>
+          <legend>Personalisation technology</legend>
+          <div>
+            <input
+              type="checkbox"
+              id="personalisation-v1"
+              name="personalisation-v1"
+              disabled={value === 'disabled'}
+              checked={personalisationVersion === 'v1'}
+              onChange={() => setPersonalisationVersion('v1')}
+            />
+            <label htmlFor="personalisation-v1">Personalisation v1</label>
+          </div>
+
+          <div>
+            <input
+              type="checkbox"
+              id="neural-perso"
+              name="neural-perso"
+              disabled={value === 'disabled'}
+              checked={personalisationVersion === 'neural-perso'}
+              onChange={() => setPersonalisationVersion('neural-perso')}
+            />
+            <label htmlFor="neural-perso">NeuralPerso</label>
+          </div>
+        </fieldset>
+      </div>
     </div>
   );
 };

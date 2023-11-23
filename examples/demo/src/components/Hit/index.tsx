@@ -22,10 +22,6 @@ export function Hit({ hit, onSelect, insights }: HitProps) {
     filtersScore: 0,
   };
   const isPersonalized = personalization.filtersScore > 0;
-  // // @ts-expect-error
-  // (personalization?.initialPosition ?? 0) !==
-  //   // @ts-expect-error
-  //   (personalization?.newPosition ?? 0);
 
   useEffect(() => {
     insights('viewedObjectIDs', {
