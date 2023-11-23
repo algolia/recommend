@@ -27,9 +27,9 @@ export const Root: React.FC = () => {
     setSelectedPersonalisationOption,
   ] = React.useState('re-rank');
 
-  const [personalisationVersion, setPersonalisationVersion] = React.useState(
-    'neural-perso'
-  );
+  const [personalisationVersion, setPersonalisationVersion] = React.useState<
+    'v1' | 'neural-perso'
+  >('neural-perso');
 
   const [
     selectedProduct,
