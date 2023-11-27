@@ -67,13 +67,13 @@ export const PersonalisationRadio = ({
           <div>
             <input
               type="checkbox"
-              id="neural-perso"
-              name="neural-perso"
+              id="neural"
+              name="neural"
               disabled={value === 'disabled'}
-              checked={personalisationVersion === 'neural-perso'}
-              onChange={() => setPersonalisationVersion('neural-perso')}
+              checked={personalisationVersion === 'neural'}
+              onChange={() => setPersonalisationVersion('neural')}
             />
-            <label htmlFor="neural-perso">NeuralPerso</label>
+            <label htmlFor="neural">NeuralPerso</label>
           </div>
         </fieldset>
       </div>

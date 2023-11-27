@@ -44,6 +44,7 @@ export async function getFrequentlyBoughtTogether<TObject>({
     logRegion,
     enabled: personalisationOption === 'filters',
     personalisationVersion,
+    indexName,
   });
 
   const queriesPerso = queries.map((query) => {
@@ -74,6 +75,7 @@ export async function getFrequentlyBoughtTogether<TObject>({
   if (logRegion && userToken && personalisationOption === 're-rank') {
     const _hits = await personaliseRecommendations({
       personalisationVersion,
+      indexName,
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appID: recommendClient.appId,
       logRegion,

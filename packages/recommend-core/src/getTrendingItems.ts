@@ -25,7 +25,7 @@ export type TrendingItemsProps<TObject> = {
   userToken?: string;
   logRegion?: string;
   personalisationOption?: 'disabled' | 're-rank' | 'filters';
-  readonly personalisationVersion?: 'v1' | 'neural-perso';
+  readonly personalisationVersion?: 'v1' | 'neural';
 };
 
 export type GetTrendingItemsResult<TObject> = {
@@ -69,6 +69,7 @@ export async function getTrendingItems<TObject>({
     userToken,
     logRegion,
     enabled: personalisationOption === 'filters',
+    indexName,
   });
   query.queryParameters = {
     ...query.queryParameters,
@@ -95,6 +96,7 @@ export async function getTrendingItems<TObject>({
   if (logRegion && userToken && personalisationOption === 're-rank') {
     const _hits = await personaliseRecommendations({
       personalisationVersion,
+      indexName,
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appID: recommendClient.appId,
       logRegion,

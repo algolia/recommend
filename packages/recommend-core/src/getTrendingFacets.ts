@@ -21,7 +21,7 @@ export type TrendingFacetsProps<TObject> = {
   userToken?: string;
   logRegion?: string;
   personalisationOption?: 'disabled' | 're-rank' | 'filters';
-  readonly personalisationVersion?: 'v1' | 'neural-perso';
+  readonly personalisationVersion?: 'v1' | 'neural';
 };
 
 export type GetTrendingFacetsResult<TObject> = {

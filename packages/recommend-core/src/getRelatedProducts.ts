@@ -44,6 +44,7 @@ export async function getRelatedProducts<TObject>({
     userToken,
     logRegion,
     enabled: personalisationOption === 'filters',
+    indexName,
   });
 
   const queriesPerso = queries.map((query) => {
@@ -75,6 +76,7 @@ export async function getRelatedProducts<TObject>({
   if (logRegion && userToken && personalisationOption === 're-rank') {
     const _hits = await personaliseRecommendations({
       personalisationVersion,
+      indexName,
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appID: recommendClient.appId,
       logRegion,

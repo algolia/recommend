@@ -29,7 +29,7 @@ export type RecommendationsProps<TObject> = {
   userToken?: string;
   logRegion?: string;
   personalisationOption?: 'disabled' | 're-rank' | 'filters';
-  personalisationVersion?: 'v1' | 'neural-perso';
+  personalisationVersion?: 'v1' | 'neural';
 };
 
 export type GetRecommendationsProps<TObject> = RecommendationsProps<TObject> &
@@ -75,6 +75,7 @@ export async function getRecommendations<TObject>({
     userToken,
     logRegion,
     enabled: personalisationOption === 'filters',
+    indexName,
   });
 
   const queriesPerso = queries.map((query) => {
@@ -105,6 +106,7 @@ export async function getRecommendations<TObject>({
   if (logRegion && userToken && personalisationOption === 're-rank') {
     const _hits = await personaliseRecommendations({
       personalisationVersion,
+      indexName,
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appID: recommendClient.appId,
       logRegion,

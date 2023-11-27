@@ -21,7 +21,7 @@ export type BatchQuery<TObject> = (RecommendationsQuery | TrendingQuery) & {
   readonly logRegion?: string;
   readonly userToken?: string;
   readonly personalisationOption?: 'disabled' | 're-rank' | 'filters';
-  readonly personalisationVersion?: 'v1' | 'neural-perso';
+  readonly personalisationVersion?: 'v1' | 'neural';
 };
 
 export type GetBatchRecommendations<TObject> = {

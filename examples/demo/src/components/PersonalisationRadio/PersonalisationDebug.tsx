@@ -1,4 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
+import { getUserProfile } from '@algolia/recommend-core/src/personalisation/neural/getUserProfile';
 import { getPersonalisationAffinities } from '@algolia/recommend-core/src/personalisation/v1/getPersonalisationAffinities';
 import React, { useEffect } from 'react';
 
@@ -40,36 +41,62 @@ const getStrategy = async (
   return result;
 };
 
-export const PersonalisationDebug = ({ userToken }) => {
-  const [affinities, setAffinities] = React.useState<any>(null);
+export const PersonalisationDebug = ({
+  userToken,
+  indexName,
+  personalisationVersion,
+}) => {
+  const [affinitiesV1, setAffinitiesV1] = React.useState<any>(null);
+  const [affinitiesNeural, setAffinitiesNeural] = React.useState<any>(null);
   const [strategies, setStrategies] = React.useState<any>(null);
 
   useEffect(() => {
+    getUserProfile({
+      apiKey,
+      appID: appId,
+      userToken,
+      logRegion: 'eu',
+      indexName,
+    })
+      .then(setAffinitiesNeural)
+      .catch(() => setAffinitiesNeural(null));
+
     getPersonalisationAffinities({
       apiKey,
       appID: appId,
       userToken,
       logRegion: 'eu',
+      indexName,
     })
-      .then(setAffinities)
-      .catch(() => setAffinities(null));
+      .then(setAffinitiesV1)
+      .catch(() => setAffinitiesV1(null));
     getStrategy(appId, apiKey, 'eu')
       .then(setStrategies)
       .catch(() => setStrategies(null));
-  }, [userToken]);
+  }, [personalisationVersion, userToken, indexName]);
 
-  if (!affinities || !strategies) {
+  if (!affinitiesV1 || !affinitiesNeural) {
     return null;
   }
 
   return (
     <div className="perso_debug">
       <h3>
-        Personalisation: <small>{userToken}</small>
+        {personalisationVersion}: <small>{userToken}</small>
       </h3>
-      <pre>{JSON.stringify(affinities.scores, null, 1)}</pre>
-      <h3>Strategy</h3>
-      <pre>{JSON.stringify(strategies.facetsScoring, null, 1)}</pre>
+      {personalisationVersion === 'v1' && (
+        <pre>{JSON.stringify(affinitiesV1.scores, null, 1)}</pre>
+      )}
+      {personalisationVersion === 'neural' && (
+        <pre>{JSON.stringify(affinitiesNeural.affinities, null, 1)}</pre>
+      )}
+
+      {strategies && personalisationVersion === 'v1' && (
+        <>
+          <h3>Strategy</h3>
+          <pre>{JSON.stringify(strategies.facetsScoring, null, 1)}</pre>
+        </>
+      )}
     </div>
   );
 };

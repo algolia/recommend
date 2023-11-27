@@ -1,6 +1,12 @@
 import algoliasearch from 'algoliasearch';
 import React from 'react';
-import { Link, Outlet, useNavigate, useOutletContext } from 'react-router-dom';
+import {
+  Link,
+  Outlet,
+  useNavigate,
+  useOutletContext,
+  useSearchParams,
+} from 'react-router-dom';
 import insights, { InsightsClient } from 'search-insights';
 
 import { Autocomplete, getAlgoliaResults } from '../components/Autocomplete';
@@ -19,17 +25,21 @@ insights('init', {
 
 export const Root: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [userToken, setUserToken] = React.useState('user-token-3');
+  const [userToken, setUserToken] = React.useState(
+    searchParams.get('userToken') ?? 'user-token-1'
+  );
 
   const [
     personalisationOption,
     setSelectedPersonalisationOption,
-  ] = React.useState('re-rank');
+  ] = React.useState(searchParams.get('option') ?? 'disabled');
 
   const [personalisationVersion, setPersonalisationVersion] = React.useState<
-    'v1' | 'neural-perso'
-  >('neural-perso');
+    'v1' | 'neural'
+    // @ts-expect-error
+  >(searchParams.get('version') ?? 'v1');
 
   const [
     selectedProduct,
@@ -50,11 +60,23 @@ export const Root: React.FC = () => {
     <div className="container">
       <PersonalisationRadio
         value={personalisationOption}
-        onChange={setSelectedPersonalisationOption}
         userToken={userToken}
-        setUserToken={setUserToken}
         personalisationVersion={personalisationVersion}
-        setPersonalisationVersion={setPersonalisationVersion}
+        setUserToken={(v: string) => {
+          setUserToken(v);
+          searchParams.set('userToken', v);
+          setSearchParams(searchParams);
+        }}
+        onChange={(v: string) => {
+          setSelectedPersonalisationOption(v);
+          searchParams.set('option', v);
+          setSearchParams(searchParams);
+        }}
+        setPersonalisationVersion={(v: 'v1' | 'neural') => {
+          setPersonalisationVersion(v);
+          searchParams.set('version', v);
+          setSearchParams(searchParams);
+        }}
       />
 
       <h1 className="title">
@@ -136,7 +158,11 @@ export const Root: React.FC = () => {
       />
 
       {personalisationOption !== 'disabled' && (
-        <PersonalisationDebug userToken={userToken} />
+        <PersonalisationDebug
+          userToken={userToken}
+          personalisationVersion={personalisationVersion}
+          indexName={indexName}
+        />
       )}
     </div>
   );
@@ -149,7 +175,7 @@ type ApplicationContextType = Array<{
   selectedFacetValue: FacetHit | null;
   setSelectedFacetValue: (facet: FacetHit | null) => void;
   personalisationOption: 'disabled' | 're-rank' | 'filters';
-  personalisationVersion: 'v1' | 'neural-perso';
+  personalisationVersion: 'v1' | 'neural';
   userToken: string;
 }>;
 

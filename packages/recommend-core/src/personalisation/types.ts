@@ -1,6 +1,6 @@
 import { ProductRecord } from '../types';
 
-type PersonalisationVersion = 'v1' | 'neural-perso';
+type PersonalisationVersion = 'v1' | 'neural';
 
 export type Hits<TObject> = Array<ProductRecord<ProductRecord<TObject>>>;
 
@@ -9,6 +9,7 @@ export type PersonalisationParams = {
   logRegion?: string;
   appID: string;
   apiKey: string;
+  indexName: string;
 };
 
 export type ComputePersonalisationFilters = PersonalisationParams & {
@@ -18,4 +19,6 @@ export type ComputePersonalisationFilters = PersonalisationParams & {
 
 export type PersonaliseRecommendations<TObject> = {
   hits: Hits<TObject>;
-} & PersonalisationParams & { personalisationVersion: PersonalisationVersion };
+} & PersonalisationParams & {
+    personalisationVersion: PersonalisationVersion;
+  };

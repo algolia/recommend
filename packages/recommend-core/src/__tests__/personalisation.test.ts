@@ -1,8 +1,6 @@
-import * as Affinities from '../personalisation/getPersonalisationAffinities';
-import {
-  getNestedValue,
-  personaliseRecommendations,
-} from '../personalisation/index';
+import { getNestedValue } from '../personalisation/helpers';
+import { personaliseRecommendations } from '../personalisation/index';
+import * as Affinities from '../personalisation/v1/getPersonalisationAffinities';
 
 describe('personalisation', () => {
   describe('getNestedValue', () => {
@@ -67,6 +65,7 @@ describe('personalisation', () => {
 
     it('smoke test', async () => {
       const result = await personaliseRecommendations({
+        indexName: 'index',
         hits: [
           {
             objectID: 's23',
@@ -103,6 +102,7 @@ describe('personalisation', () => {
         appID: 'appID',
         logRegion: 'eu',
         userToken: 'token-1',
+        personalisationVersion: 'v1',
       });
 
       expect(result).toEqual([

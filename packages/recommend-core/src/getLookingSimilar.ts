@@ -44,6 +44,7 @@ export async function getLookingSimilar<TObject>({
     logRegion,
     enabled: personalisationOption === 'filters',
     personalisationVersion,
+    indexName,
   });
 
   const queriesPerso = queries.map((query) => {
@@ -65,6 +66,7 @@ export async function getLookingSimilar<TObject>({
   const response = await recommendClient.getLookingSimilar<TObject>(
     queriesPerso
   );
+
   const hits = mapToRecommendations<ProductRecord<TObject>>({
     maxRecommendations,
     hits: response.results.map((result) => result.hits),
@@ -74,6 +76,7 @@ export async function getLookingSimilar<TObject>({
   if (logRegion && userToken && personalisationOption === 're-rank') {
     const _hits = await personaliseRecommendations({
       personalisationVersion,
+      indexName,
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appID: recommendClient.appId,
       logRegion,

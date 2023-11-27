@@ -7,6 +7,7 @@ export const getUserProfile = async ({
   logRegion,
   apiKey,
   appID,
+  indexName,
 }: PersonalisationParams) => {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
@@ -28,5 +29,10 @@ export const getUserProfile = async ({
     );
   }
   const result: UserProfileResponse = await response.json();
-  return result;
+
+  const affinities = result.affinities.filter((affinity) => {
+    return affinity.indices.includes(indexName);
+  });
+
+  return { ...result, affinities };
 };
