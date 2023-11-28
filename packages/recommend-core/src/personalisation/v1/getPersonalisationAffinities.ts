@@ -16,6 +16,7 @@ export const getPersonalisationAffinities = async ({
   const response = await fetch(
     `https://personalization.${logRegion}.algolia.com/1/profiles/personalization/${userToken}`,
     {
+      cache: 'force-cache',
       headers,
     }
   );

@@ -9,6 +9,7 @@ export const computePersonalisationFiltersV1 = async ({
   apiKey,
   appID,
   enabled,
+  indexName,
 }: ComputePersonalisationFilters) => {
   if (!userToken || !logRegion || !enabled) {
     return [];
@@ -22,6 +23,7 @@ export const computePersonalisationFiltersV1 = async ({
       logRegion,
       apiKey,
       appID,
+      indexName,
     });
 
     const strategy = await getPersonalisationStrategy({

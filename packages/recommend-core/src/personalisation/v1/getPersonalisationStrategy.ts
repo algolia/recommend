@@ -25,6 +25,7 @@ export const getPersonalisationStrategy = async ({
   const response = await fetch(
     `https://recommendation.${logRegion}.algolia.com/1/strategies/personalization`,
     {
+      cache: 'force-cache',
       headers,
     }
   );

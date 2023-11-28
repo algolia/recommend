@@ -9,6 +9,7 @@ export const computePersonalisationFiltersNeural = async ({
   apiKey,
   appID,
   enabled,
+  indexName,
 }: ComputePersonalisationFilters) => {
   if (!userToken || !logRegion || !enabled) {
     return [];
@@ -22,6 +23,7 @@ export const computePersonalisationFiltersNeural = async ({
       appID,
       logRegion,
       userToken,
+      indexName,
     });
 
     const affinities = mapProfileToAffinities(profile);

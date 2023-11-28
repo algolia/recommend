@@ -13,10 +13,12 @@ export const getUserProfile = async ({
   headers.append('Content-Type', 'application/json');
   headers.append('X-Algolia-Application-Id', appID);
   headers.append('X-Algolia-API-Key', apiKey);
+  headers.append('X-Algolia-API-Key', apiKey);
 
   const response = await fetch(
     `https://neuralperso.${logRegion}.algolia.com/2/users/${userToken}`,
     {
+      cache: 'force-cache',
       headers,
     }
   );
