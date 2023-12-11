@@ -48,6 +48,7 @@ export function getTrendingFacets<TObject>({
     .then((response) =>
       mapByScoreToRecommendations<TrendingFacet<TObject>>({
         maxRecommendations,
+        // @ts-expect-error
         hits: response.results.map((result) => result.hits).flat(),
       })
     )

@@ -6,6 +6,7 @@ import {
   frequentlyBoughtTogether,
   relatedProducts,
   lookingSimilar,
+  recommendedForYou,
 } from '@algolia/recommend-js';
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 import algoliasearch from 'algoliasearch';
@@ -24,6 +25,10 @@ const indexName = 'test_FLAGSHIP_ECOM_recommend';
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
+const recommendClientMetis = algoliarecommend(
+  'JXN73EWQ43',
+  '988465e813ede485c5c699ffb91b6ffa'
+);
 
 insights('init', { appId, apiKey });
 insights('setUserToken', 'user-token-1');
@@ -95,6 +100,24 @@ autocomplete<ProductHit>({
       },
     ];
   },
+});
+
+recommendedForYou<ProductHit>({
+  container: '#recommendedForYou',
+  recommendClient: recommendClientMetis,
+  indexName: 'sanata_list',
+  maxRecommendations: 10,
+  queryParameters: {
+    userToken: 'likes-isnice-true',
+  },
+  itemComponent({ item }) {
+    return (
+      <div>
+        {item.objectID} | {item.isNice.toString()}
+      </div>
+    );
+  },
+  view: (...props) => horizontalSlider(...props) || <div>Loading</div>,
 });
 
 function ReferenceItem({ item }: ReferenceItemProps) {
@@ -232,7 +255,6 @@ function renderRecommendations(selectedProduct: ProductHit) {
       );
     },
   });
-
   relatedProducts<ProductHit>({
     container: '#relatedProducts',
     recommendClient,

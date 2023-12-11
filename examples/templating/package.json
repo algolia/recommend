@@ -9,8 +9,8 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "@algolia/client-search": "4.19.1",
-    "@algolia/recommend": "4.19.1",
+    "@algolia/client-search": "4.21.0",
+    "@algolia/recommend": "4.21.0",
     "@algolia/recommend-js": "1.10.0",
     "@algolia/recommend-vdom": "1.10.0",
     "@algolia/ui-components-horizontal-slider-js": "1.2.1",

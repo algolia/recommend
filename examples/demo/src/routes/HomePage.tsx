@@ -3,6 +3,7 @@ import {
   Recommend,
   TrendingFacets,
   TrendingItems,
+  RecommendedForYou,
 } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import React from 'react';
@@ -15,6 +16,10 @@ import { FacetHit, ProductHit } from '../types';
 import { useApplicationContext } from './Root';
 
 const recommendClient = algoliarecommend(appId, apiKey);
+const recommendClientMetis = algoliarecommend(
+  'JXN73EWQ43',
+  '988465e813ede485c5c699ffb91b6ffa'
+);
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -68,6 +73,20 @@ export const HomePage: React.FC = () => {
             selectedFacetValue ? `in ${selectedFacetValue.facetValue}` : ''
           }`,
         }}
+      />
+      <RecommendedForYou<ProductHit>
+        recommendClient={recommendClientMetis}
+        indexName="sanata_list"
+        maxRecommendations={10}
+        queryParameters={{
+          userToken: 'likes-isnice-true',
+        }}
+        itemComponent={({ item }) => (
+          <div>
+            {item.objectID} | {item.isNice.toString()}
+          </div>
+        )}
+        fallbackComponent={() => <div>No recommendations</div>}
       />
     </Recommend>
   );
