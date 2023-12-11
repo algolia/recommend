@@ -74,7 +74,10 @@ export const HomePage: React.FC = () => {
           }`,
         }}
       />
-      <RecommendedForYou<ProductHit>
+      <RecommendedForYou<{
+        objectID: string;
+        isNice: boolean;
+      }>
         recommendClient={recommendClientMetis}
         indexName="sanata_list"
         maxRecommendations={10}

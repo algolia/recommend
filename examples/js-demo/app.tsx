@@ -102,7 +102,7 @@ autocomplete<ProductHit>({
   },
 });
 
-recommendedForYou<ProductHit>({
+recommendedForYou<{ objectID: string; isNice: boolean }>({
   container: '#recommendedForYou',
   recommendClient: recommendClientMetis,
   indexName: 'sanata_list',
