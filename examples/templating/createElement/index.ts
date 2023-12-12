@@ -14,11 +14,11 @@ import { productItem } from './productItem';
 
 import '@algolia/ui-components-horizontal-slider-theme';
 
-const indexName = 'test_FLAGSHIP_ECOM_recommend';
+const indexName = 'prod_ECOM';
 
 const recommendClient = algoliarecommend(
-  'XX85YRZZMV',
-  '098f71f9e2267178bdfc08cc986d2999'
+  '93MWK2GLFE',
+  '63a2f2cf276ced37f901d8612ce5b40c'
 );
 
 frequentlyBoughtTogether<ProductHit>({
