@@ -25,10 +25,6 @@ const indexName = 'prod_ECOM';
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
-const recommendClientMetis = algoliarecommend(
-  'JXN73EWQ43',
-  '988465e813ede485c5c699ffb91b6ffa'
-);
 
 insights('init', { appId, apiKey });
 insights('setUserToken', 'user-token-1');
@@ -102,19 +98,21 @@ autocomplete<ProductHit>({
   },
 });
 
-recommendedForYou<{ objectID: string; isNice: boolean }>({
+recommendedForYou<ProductHit>({
   container: '#recommendedForYou',
-  recommendClient: recommendClientMetis,
-  indexName: 'sanata_list',
-  maxRecommendations: 10,
+  recommendClient,
+  indexName,
+  maxRecommendations: 15,
   queryParameters: {
-    userToken: 'likes-isnice-true',
+    userToken: 'user-token-1',
   },
   itemComponent({ item }) {
     return (
-      <div>
-        {item.objectID} | {item.isNice.toString()}
-      </div>
+      <RelatedItem
+        item={item}
+        insights={insights}
+        onSelect={updateReferenceItem}
+      />
     );
   },
   view: (...props) => horizontalSlider(...props) || <div>Loading</div>,

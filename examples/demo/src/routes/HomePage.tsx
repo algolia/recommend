@@ -16,10 +16,6 @@ import { FacetHit, ProductHit } from '../types';
 import { useApplicationContext } from './Root';
 
 const recommendClient = algoliarecommend(appId, apiKey);
-const recommendClientMetis = algoliarecommend(
-  'JXN73EWQ43',
-  '988465e813ede485c5c699ffb91b6ffa'
-);
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -74,20 +70,22 @@ export const HomePage: React.FC = () => {
           }`,
         }}
       />
-      <RecommendedForYou<{
-        objectID: string;
-        isNice: boolean;
-      }>
-        recommendClient={recommendClientMetis}
-        indexName="sanata_list"
-        maxRecommendations={10}
+      <RecommendedForYou<ProductHit>
+        recommendClient={recommendClient}
+        indexName={indexName}
+        maxRecommendations={15}
         queryParameters={{
-          userToken: 'likes-isnice-true',
+          userToken: 'user-token-1',
         }}
         itemComponent={({ item }) => (
-          <div>
-            {item.objectID} | {item.isNice.toString()}
-          </div>
+          <Hit
+            hit={item}
+            insights={insights}
+            onSelect={(item) => {
+              setSelectedProduct(item);
+              navigate(`/product/${item.objectID}`);
+            }}
+          />
         )}
         fallbackComponent={() => <div>No recommendations</div>}
       />
