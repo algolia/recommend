@@ -71,7 +71,6 @@ export const HomePage: React.FC = () => {
         }}
       />
       <RecommendedForYou<ProductHit>
-        recommendClient={recommendClient}
         indexName={indexName}
         maxRecommendations={15}
         queryParameters={{
