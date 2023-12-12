@@ -27,34 +27,39 @@ jobs:
       - name: Build example playgrounds
         run: yarn build:playgrounds
 
-      - uses: vimtor/action-zip@v1.1
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
         with:
-          dest: _site/github-pages.zip
-          files: |
-            examples/index.html
-            examples/demo/dist/
-            examples/js-demo/dist/
-            examples/templating/dist/
+          source-dir: ./examples/
 
-      - name: Fix permissions
-        run: |
-          chmod -c -R +rX "_site/" | while read line; do
-            echo "::warning title=Invalid file permissions automatically fixed::$line"
-          done
+      # - uses: vimtor/action-zip@v1.1
+      #   with:
+      #     dest: _site/github-pages.zip
+      #     files: |
+      #       examples/index.html
+      #       examples/demo/dist/
+      #       examples/js-demo/dist/
+      #       examples/templating/dist/
 
-      - name: Upload pages artifacts
-        uses: actions/upload-pages-artifact@v2
+      # - name: Fix permissions
+      #   run: |
+      #     chmod -c -R +rX "_site/" | while read line; do
+      #       echo "::warning title=Invalid file permissions automatically fixed::$line"
+      #     done
 
-  deploy:
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v3
+      # - name: Upload pages artifacts
+      #   uses: actions/upload-pages-artifact@v2
+
+  # deploy:
+  #   needs: build
+  #   permissions:
+  #     pages: write
+  #     id-token: write
+  #   environment:
+  #     name: github-pages
+  #     url: ${{ steps.deployment.outputs.page_url }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v3
