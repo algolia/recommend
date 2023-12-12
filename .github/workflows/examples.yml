@@ -29,18 +29,18 @@ jobs:
 
       - uses: vimtor/action-zip@v1.1
         with:
-          dest: github-pages
+          dest: _site/github-pages.zip
           files: |
             examples/index.html
             examples/demo/dist/
             examples/js-demo/dist/
             examples/templating/dist/
 
-      # - name: Fix permissions
-      #   run: |
-      #     chmod -v -R +rX "_site/" | while read line; do
-      #       echo "::warning title=Invalid file permissions automatically fixed::$line"
-      #     done
+      - name: Fix permissions
+        run: |
+          chmod -c -R +rX "_site/" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
 
       - name: Upload pages artifacts
         uses: actions/upload-pages-artifact@v2
