@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Algolia Recommend | Examples</title>
+
+    <style>
+      :root {
+        margin: 0;
+        padding: 0;
+        color: #000033;
+      }
+      body {
+        background: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+          'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+          'Helvetica Neue', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        background: white;
+        background-image: radial-gradient(black 1px, transparent 0);
+        background-size: 40px 40px;
+        background-position: -19px -19px;
+      }
+      main {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        margin: auto;
+        font-size: 1.1rem;
+        background-color: rgba(255, 255, 255, 0.8);
+        margin-top: 24px;
+        margin-bottom: 24px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      h1 {
+        font-size: 2rem;
+        font-weight: 500;
+        margin-top: 0;
+        color: #2b3cbb;
+      }
+      ul {
+        margin: 0 0 0 -2px;
+        padding: 20px 0 0 0;
+      }
+      ul li {
+        list-style: none;
+        margin-bottom: 16px;
+      }
+      a {
+        padding: 5px;
+        text-decoration: dotted underline;
+      }
+      a.highlight:hover {
+        text-decoration: underline;
+        background-color: #ff2a6a;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+      ul a {
+        color: #000;
+        padding: 10px 5px;
+        margin: 0 -5px;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        text-overflow: ellipsis;
+      }
+      svg {
+        height: 2.5rem;
+        vertical-align: text-bottom;
+      }
+      ::selection {
+        background-color: #5468ff;
+        color: #000;
+      }
+      ::-moz-selection {
+        background-color: #5468ff;
+        color: #000;
+      }
+      @media (min-width: 768px) {
+        ul li {
+          padding-right: 20px;
+        }
+      }
+      @media (min-width: 992px) {
+        body {
+          padding: 45px;
+        }
+        h1,
+        ul li {
+          box-sizing: border-box;
+          justify-content: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 80 80"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Algolia Recommend Logo"
+          >
+            <title>Algolia Recommend Logo</title>
+            <path d="m50 65-4 12H34l-4-12h20Z" fill="#36395A" />
+            <path
+              d="M68 32c0 15.464-12.536 28-28 28S12 47.464 12 32 24.536 4 40 4s28 12.536 28 28Z"
+              fill="#FF2A6A"
+            />
+            <path d="M43 34V17L26 34h17Z" fill="#fff" />
+            <path d="M37 30v17l17-17H37Z" fill="#fff" />
+          </svg>
+          Algolia Recommend Examples
+        </h1>
+      </header>
+
+      <ul>
+        <li>
+          <a href="./demo/dist/">React Playground Example</a>&nbsp;(<a
+            href="https://www.npmjs.com/package/@algolia/recommend-react"
+            class="highlight"
+            >@algolia/recommend-react</a
+          >)
+        </li>
+        <li>
+          <a href="./js-demo/dist/">Javascript Playground Example</a>&nbsp;(<a
+            href="https://www.npmjs.com/package/@algolia/recommend-js"
+            class="highlight"
+            >@algolia/recommend-js</a
+          >)
+        </li>
+        <li>
+          <a href="./templating/dist/">Templating Playground Example</a>
+        </li>
+
+        <li>
+          If you want to use the API client without the UI components, you can
+          use the
+          <a
+            href="https://www.npmjs.com/package/@algolia/recommend"
+            class="highlight"
+            >@algolia/recommend</a
+          >
+          package.
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>
