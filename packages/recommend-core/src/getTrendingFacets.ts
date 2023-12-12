@@ -48,7 +48,7 @@ export function getTrendingFacets<TObject>({
     .then((response) =>
       mapByScoreToRecommendations<TrendingFacet<TObject>>({
         maxRecommendations,
-        // @ts-expect-error
+        // @ts-expect-error commented out until we fix the typings
         hits: response.results.map((result) => result.hits).flat(),
       })
     )
