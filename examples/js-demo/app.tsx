@@ -18,9 +18,9 @@ import { ProductHit, ReferenceItemProps } from './types';
 import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
 
-const appId = 'XX85YRZZMV';
-const apiKey = '098f71f9e2267178bdfc08cc986d2999';
-const indexName = 'test_FLAGSHIP_ECOM_recommend';
+const appId = '93MWK2GLFE';
+const apiKey = '63a2f2cf276ced37f901d8612ce5b40c';
+const indexName = 'prod_ECOM';
 
 const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
