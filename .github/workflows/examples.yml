@@ -1,0 +1,60 @@
+name: Build and deploy examples
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          # cache: 'yarn'
+
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: yarn-deps-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-deps-${{ hashFiles('yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Build libraries
+        run: yarn build
+
+      - name: Build example playgrounds
+        run: yarn build:playgrounds
+
+      - uses: vimtor/action-zip@v1.1
+        with:
+          dest: github-pages
+          files: |
+            examples/index.html
+            examples/demo/dist/
+            examples/js-demo/dist/
+            examples/templating/dist/
+
+      # - name: Fix permissions
+      #   run: |
+      #     chmod -v -R +rX "_site/" | while read line; do
+      #       echo "::warning title=Invalid file permissions automatically fixed::$line"
+      #     done
+
+      - name: Upload pages artifacts
+        uses: actions/upload-pages-artifact@v2
+
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
