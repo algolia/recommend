@@ -1,9 +1,7 @@
 import { Hit } from '@algolia/client-search';
+import { TrendingFacetHit } from '@algolia/recommend';
 
-export type FacetRecord = {
-  facetName: string;
-  facetValue: string;
-};
+export type FacetRecord = TrendingFacetHit<string>;
 
 type WithInsights<THit> = THit & {
   __position: string;

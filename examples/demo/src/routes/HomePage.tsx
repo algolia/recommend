@@ -25,8 +25,10 @@ export const HomePage: React.FC = () => {
   return (
     <Recommend recommendClient={recommendClient}>
       <TrendingFacets<FacetHit>
+        recommendClient={recommendClient}
         indexName={indexName}
         facetName="brand"
+        //  item is any -> this is a problem
         itemComponent={({ item }) => (
           <Facet
             hit={item}
