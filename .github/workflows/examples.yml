@@ -25,41 +25,9 @@ jobs:
         run: yarn build
 
       - name: Build example playgrounds
-        run: yarn build:playgrounds
+        run: yarn build:playgrounds -- -- --public-url=/recommend/pr-preview/pr-162/demo/dist/
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./examples/
-
-      # - uses: vimtor/action-zip@v1.1
-      #   with:
-      #     dest: _site/github-pages.zip
-      #     files: |
-      #       examples/index.html
-      #       examples/demo/dist/
-      #       examples/js-demo/dist/
-      #       examples/templating/dist/
-
-      # - name: Fix permissions
-      #   run: |
-      #     chmod -c -R +rX "_site/" | while read line; do
-      #       echo "::warning title=Invalid file permissions automatically fixed::$line"
-      #     done
-
-      # - name: Upload pages artifacts
-      #   uses: actions/upload-pages-artifact@v2
-
-  # deploy:
-  #   needs: build
-  #   permissions:
-  #     pages: write
-  #     id-token: write
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v3
