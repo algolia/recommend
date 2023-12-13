@@ -25,9 +25,9 @@ jobs:
         run: yarn build
 
       - name: Build example playgrounds
+        run: echo "SUB PATH IS $SUB_PATH" && yarn build:playgrounds -- -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/
         env:
           SUB_PATH: /recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/
-        run: yarn build:playgrounds -- -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
