@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Hit, Facet } from '../components';
 import { apiKey, appId, indexName } from '../config';
-import { FacetHit, ProductHit } from '../types';
+import { ProductHit } from '../types';
 
 import { useApplicationContext } from './Root';
 
@@ -24,24 +24,26 @@ export const HomePage: React.FC = () => {
 
   return (
     <Recommend recommendClient={recommendClient}>
-      <TrendingFacets<FacetHit>
+      <TrendingFacets<string>
         recommendClient={recommendClient}
         indexName={indexName}
         facetName="brand"
         //  item is any -> this is a problem
-        itemComponent={({ item }) => (
-          <Facet
-            hit={item}
-            insights={insights}
-            onSelect={(facetHits) => {
-              const isSameValue =
-                selectedFacetValue &&
-                facetHits.facetValue === selectedFacetValue.facetValue;
-              setSelectedFacetValue(isSameValue ? null : facetHits);
-            }}
-            indexName={indexName}
-          />
-        )}
+        itemComponent={({ item }) => {
+          return (
+            <Facet
+              hit={item}
+              insights={insights}
+              onSelect={(facetHits) => {
+                const isSameValue =
+                  selectedFacetValue &&
+                  facetHits.facetValue === selectedFacetValue.facetValue;
+                setSelectedFacetValue(isSameValue ? null : facetHits);
+              }}
+              indexName={indexName}
+            />
+          );
+        }}
         maxRecommendations={5}
         translations={{
           title: 'Trending Facet (brand)',
