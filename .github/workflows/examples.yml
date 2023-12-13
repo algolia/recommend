@@ -31,6 +31,8 @@ jobs:
 
       - name: Build react example
         run: yarn lerna exec 'yarn build -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/' --scope=\"'@algolia/recommend-react-example'\"
+        env:
+          SUB_PATH: /recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/
 
       - name: Build javascript example
         run: yarn lerna exec 'yarn build -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/js-demo/dist/' --scope=\"'@algolia/recommend-js-example'\"
