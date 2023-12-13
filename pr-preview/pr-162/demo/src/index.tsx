@@ -11,6 +11,8 @@ import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
 import './Recommend.css';
 
+const subPath = process.env.SUB_PATH;
+
 const router = createBrowserRouter(
   [
     {
@@ -30,7 +32,7 @@ const router = createBrowserRouter(
   ],
   {
     // needed for github pages subdirectory
-    basename: process.env.SUB_PATH ?? '/',
+    basename: subPath ?? '/',
   }
 );
 
