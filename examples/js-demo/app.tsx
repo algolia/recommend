@@ -6,6 +6,7 @@ import {
   frequentlyBoughtTogether,
   relatedProducts,
   lookingSimilar,
+  recommendedForYou,
 } from '@algolia/recommend-js';
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 import algoliasearch from 'algoliasearch';
@@ -95,6 +96,26 @@ autocomplete<ProductHit>({
       },
     ];
   },
+});
+
+recommendedForYou<ProductHit>({
+  container: '#recommendedForYou',
+  recommendClient,
+  indexName,
+  maxRecommendations: 15,
+  queryParameters: {
+    userToken: 'user-token-1',
+  },
+  itemComponent({ item }) {
+    return (
+      <RelatedItem
+        item={item}
+        insights={insights}
+        onSelect={updateReferenceItem}
+      />
+    );
+  },
+  view: (...props) => horizontalSlider(...props) || <div>Loading</div>,
 });
 
 function ReferenceItem({ item }: ReferenceItemProps) {
@@ -232,7 +253,6 @@ function renderRecommendations(selectedProduct: ProductHit) {
       );
     },
   });
-
   relatedProducts<ProductHit>({
     container: '#relatedProducts',
     recommendClient,
