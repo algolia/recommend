@@ -10,8 +10,12 @@ import {
 import { cx } from './utils';
 
 export function createFacetsView({ createElement, Fragment }: Renderer) {
-  return function FacetsView<TItem extends FacetEntry<any>>(
-    props: FacetsViewProps<TItem, RecommendTranslations, RecommendClassNames>
+  return function FacetsView<TFacetType>(
+    props: FacetsViewProps<
+      FacetEntry<TFacetType>,
+      RecommendTranslations,
+      RecommendClassNames
+    >
   ) {
     return (
       <div
@@ -20,7 +24,7 @@ export function createFacetsView({ createElement, Fragment }: Renderer) {
         <ol className={cx('auc-Recommend-list', props.classNames.list)}>
           {props.items.map((item) => (
             <li
-              key={item.facetValue}
+              key={`${item.facetValue}`}
               className={cx('auc-Recommend-item', props.classNames.item)}
             >
               <props.itemComponent
