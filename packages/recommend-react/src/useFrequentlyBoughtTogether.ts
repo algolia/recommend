@@ -20,9 +20,9 @@ export function useFrequentlyBoughtTogether<TObject>({
   threshold,
   transformItems: userTransformItems = (x) => x,
 }: UseFrequentlyBoughtTogetherProps<TObject>) {
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
-    recommendations: [],
-  });
+  const [recommendations, setRecommendations] = useState<
+    GetRecommendationsResult<TObject>['recommendations']
+  >([]);
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);
   const queryParameters = useStableValue(userQueryParameters);
@@ -74,7 +74,9 @@ export function useFrequentlyBoughtTogether<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          setResult(response as GetRecommendationsResult<TObject>);
+          setRecommendations(
+            response.recommendations as GetRecommendationsResult<TObject>['recommendations']
+          );
           setStatus('idle');
         },
       });
@@ -85,7 +87,7 @@ export function useFrequentlyBoughtTogether<TObject>({
       ...param,
       recommendClient: client,
     }).then((response) => {
-      setResult(response);
+      setRecommendations(response.recommendations);
       setStatus('idle');
     });
     return () => {};
@@ -103,7 +105,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   ]);
 
   return {
-    ...result,
+    recommendations,
     status,
   };
 }

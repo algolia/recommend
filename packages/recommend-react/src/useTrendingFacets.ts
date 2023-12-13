@@ -1,9 +1,5 @@
 import { TrendingModel } from '@algolia/recommend';
-import {
-  getTrendingFacets,
-  GetTrendingFacetsResult,
-} from '@algolia/recommend-core';
-// import { GetRecommendationsResult } from '@algolia/recommend-core/src';
+import { getTrendingFacets, TrendingFacet } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
 import { useRecommendContext, useRecommendClient } from './RecommendContext';
@@ -19,9 +15,9 @@ export function useTrendingFacets<TObject>({
   transformItems: userTransformItems = (x) => x,
   facetName,
 }: UseTrendingFacetsProps<TObject>) {
-  const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
-    recommendations: [],
-  });
+  const [recommendations, setRecommendations] = useState<
+    Array<TrendingFacet<TObject>>
+  >([]);
   const { status, setStatus } = useStatus('loading');
 
   const { hasProvider, register } = useRecommendContext();
@@ -44,29 +40,30 @@ export function useTrendingFacets<TObject>({
       transformItems: transformItemsRef.current,
     };
 
-    // to-do batching support
-    // if (hasProvider && isContextClient) {
-    //   const key = JSON.stringify(param);
-    //   return register({
-    //     key,
-    //     getParameters() {
-    //       return {
-    //         queries: [param],
-    //         keyPair: {
-    //           key,
-    //           value: 1,
-    //         },
-    //       };
-    //     },
-    //     onRequest() {
-    //       setStatus('loading');
-    //     },
-    //     onResult(response) {
-    //       setResult(response as GetRecommendationsResult<TObject>);
-    //       setStatus('idle');
-    //     },
-    //   });
-    // }
+    if (hasProvider && isContextClient) {
+      const key = JSON.stringify(param);
+      return register({
+        key,
+        getParameters() {
+          return {
+            queries: [param],
+            keyPair: {
+              key,
+              value: 1,
+            },
+          };
+        },
+        onRequest() {
+          setStatus('loading');
+        },
+        onResult(response) {
+          setRecommendations(
+            response.trendingFacets as Array<TrendingFacet<TObject>>
+          );
+          setStatus('idle');
+        },
+      });
+    }
 
     setStatus('loading');
     getTrendingFacets({
@@ -75,7 +72,7 @@ export function useTrendingFacets<TObject>({
       facetName,
       transformItems: transformItemsRef.current,
     }).then((response) => {
-      setResult(response);
+      setRecommendations(response.recommendations);
       setStatus('idle');
     });
     return () => {};
@@ -92,7 +89,7 @@ export function useTrendingFacets<TObject>({
   ]);
 
   return {
-    ...result,
+    recommendations,
     status,
   };
 }

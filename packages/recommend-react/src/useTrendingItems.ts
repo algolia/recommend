@@ -1,7 +1,7 @@
 import {
   BatchQuery,
+  GetRecommendationsResult,
   getTrendingItems,
-  GetTrendingItemsResult,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -22,9 +22,9 @@ export function useTrendingItems<TObject>({
   facetName,
   facetValue,
 }: UseTrendingItemsProps<TObject>) {
-  const [result, setResult] = useState<GetTrendingItemsResult<TObject>>({
-    recommendations: [],
-  });
+  const [recommendations, setRecommendations] = useState<
+    GetRecommendationsResult<TObject>['recommendations']
+  >([]);
   const { status, setStatus } = useStatus('loading');
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
@@ -69,7 +69,9 @@ export function useTrendingItems<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          setResult(response as GetTrendingItemsResult<TObject>);
+          setRecommendations(
+            response.recommendations as GetRecommendationsResult<TObject>['recommendations']
+          );
           setStatus('idle');
         },
       });
@@ -81,7 +83,7 @@ export function useTrendingItems<TObject>({
       recommendClient: client,
       transformItems: transformItemsRef.current,
     }).then((response) => {
-      setResult(response);
+      setRecommendations(response.recommendations);
       setStatus('idle');
     });
     return () => {};
@@ -101,7 +103,7 @@ export function useTrendingItems<TObject>({
   ]);
 
   return {
-    ...result,
+    recommendations,
     status,
   };
 }

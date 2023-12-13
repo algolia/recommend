@@ -25,16 +25,17 @@ export type GetBatchRecommendations<TObject> = {
   recommendClient: RecommendClient;
 };
 
-export type BatchRecommendations<TObject> = {
+export type BatchRecommendations<TObject, TFacet = string> = {
   recommendations: Array<ProductRecord<TObject>>;
+  trendingFacets: Array<TrendingFacet<TFacet>>;
 };
 
-export async function getBatchRecommendations<TObject>({
+export async function getBatchRecommendations<TObject, TFacet = string>({
   keys,
   queries,
   recommendClient,
 }: GetBatchRecommendations<TObject>): Promise<
-  Record<string, BatchRecommendations<TObject>>
+  Record<string, BatchRecommendations<TObject, TFacet>>
 > {
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
@@ -43,7 +44,7 @@ export async function getBatchRecommendations<TObject>({
   let prevChunks = 0;
   let allChunks = 0;
 
-  const results: Record<string, BatchRecommendations<TObject>> = {};
+  const results: Record<string, BatchRecommendations<TObject, TFacet>> = {};
 
   keys.forEach((keyPair) => {
     const { model } = JSON.parse(keyPair.key);
@@ -56,18 +57,15 @@ export async function getBatchRecommendations<TObject>({
     prevChunks += keyPair.value;
 
     let recommendations: Array<ProductRecord<ProductRecord<TObject>>> = [];
-
+    let trendingFacets: Array<TrendingFacet<TFacet>> = [];
     if (model === 'trending-facets') {
-      // to-do: support trending facets in batching
-      const recos = mapByScoreToRecommendations<TrendingFacet<TObject>>({
+      trendingFacets = mapByScoreToRecommendations<TrendingFacet<TFacet>>({
         maxRecommendations,
         hits: splitResult
           .map((res) => res.hits)
           .flat()
-          .map((hit) => (hit as unknown) as TrendingFacet<TObject>),
+          .map((hit) => (hit as unknown) as TrendingFacet<TFacet>),
       });
-      // eslint-disable-next-line no-console
-      console.log(recos);
     } else if (model === 'trending-items') {
       recommendations = mapByScoreToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
@@ -81,7 +79,7 @@ export async function getBatchRecommendations<TObject>({
       });
     }
     recommendations = transformItems(recommendations);
-    results[keyPair.key] = { recommendations };
+    results[keyPair.key] = { recommendations, trendingFacets };
   });
 
   return results;

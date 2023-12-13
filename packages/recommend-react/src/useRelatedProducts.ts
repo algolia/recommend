@@ -21,9 +21,9 @@ export function useRelatedProducts<TObject>({
   threshold,
   transformItems: userTransformItems = (x) => x,
 }: UseRelatedProductsProps<TObject>) {
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
-    recommendations: [],
-  });
+  const [recommendations, setRecommendations] = useState<
+    GetRecommendationsResult<TObject>['recommendations']
+  >([]);
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);
   const queryParameters = useStableValue(userQueryParameters);
@@ -78,7 +78,9 @@ export function useRelatedProducts<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          setResult(response as GetRecommendationsResult<TObject>);
+          setRecommendations(
+            response.recommendations as GetRecommendationsResult<TObject>['recommendations']
+          );
           setStatus('idle');
         },
       });
@@ -89,7 +91,7 @@ export function useRelatedProducts<TObject>({
       ...param,
       recommendClient: client,
     }).then((response) => {
-      setResult(response);
+      setRecommendations(response.recommendations);
       setStatus('idle');
     });
     return () => {};
@@ -108,7 +110,7 @@ export function useRelatedProducts<TObject>({
   ]);
 
   return {
-    ...result,
+    recommendations,
     status,
   };
 }
