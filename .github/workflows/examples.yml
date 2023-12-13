@@ -9,7 +9,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          # cache: 'yarn'
 
       - name: Install Yarn
         run: npm install -g yarn
@@ -24,12 +23,23 @@ jobs:
       - name: Build libraries
         run: yarn build
 
-      - name: Build example playgrounds
-        run: echo "SUB PATH IS $SUB_PATH" && yarn build:playgrounds -- -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/
+      - name: Build react example
+        run: yarn lerna exec 'yarn build -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/' --scope=\"'@algolia/recommend-react-example'\"
+
+      - name: Build javascript example
+        run: yarn lerna exec 'yarn build -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/js-demo/dist/' --scope=\"'@algolia/recommend-js-example'\"
         env:
-          SUB_PATH: /recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/
+          SUB_PATH: /recommend/pr-preview/pr-${{ github.event.number }}/js-demo/dist/
+
+      - name: Build templating example
+        run: yarn lerna exec 'yarn build -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/templating/dist/' --scope=\"'@algolia/recommend-templating-example'\"
+        env:
+          SUB_PATH: /recommend/pr-preview/pr-${{ github.event.number }}/templating/dist/
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./examples/
+
+
+yarn lerna exec 'yarn build -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/' --scope=\"'@algolia/recommend-react-example'\"
