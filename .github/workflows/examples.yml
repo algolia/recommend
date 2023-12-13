@@ -45,7 +45,7 @@ jobs:
           SUB_PATH: /recommend/pr-preview/pr-${{ github.event.number }}/templating/dist/
 
       - name: Deploy preview
-         if: ${{ github.repository == 'algolia/recommend' }}
+        if: ${{ github.repository == 'algolia/recommend' }}
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./examples/
