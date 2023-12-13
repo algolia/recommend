@@ -1,4 +1,3 @@
-// import { FacetEntry } from '@algolia/recommend-core';
 import React from 'react';
 import { InsightsClient } from 'search-insights';
 

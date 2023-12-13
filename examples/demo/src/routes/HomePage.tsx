@@ -28,7 +28,6 @@ export const HomePage: React.FC = () => {
         recommendClient={recommendClient}
         indexName={indexName}
         facetName="brand"
-        //  item is any -> this is a problem
         itemComponent={({ item }) => {
           return (
             <Facet
