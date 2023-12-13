@@ -4,7 +4,7 @@ import {
   TrendingQuery,
 } from '@algolia/recommend';
 
-import { ProductRecord, TrendingFacet } from './types';
+import { ProductRecord } from './types';
 import { mapByScoreToRecommendations, mapToRecommendations } from './utils';
 import { version } from './version';
 
@@ -55,10 +55,12 @@ export async function getBatchRecommendations<TObject>({
     const splitResult = response?.results?.slice(prevChunks, allChunks);
     prevChunks += keyPair.value;
 
-    let recommendations: Array<ProductRecord<ProductRecord<TObject>>>;
+    let recommendations: Array<ProductRecord<ProductRecord<TObject>>> = [];
 
-    if (model === 'trending-facets' || model === 'trending-items') {
-      recommendations = mapByScoreToRecommendations<TrendingFacet<TObject>>({
+    if (model === 'trending-facets') {
+      // to-do: support trending facets in batching
+    } else if (model === 'trending-items') {
+      recommendations = mapByScoreToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
         hits: splitResult.map((res) => res.hits).flat(),
       });

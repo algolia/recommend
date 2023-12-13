@@ -1,5 +1,3 @@
-export type TrendingFacet<TObject> = TObject & {
-  _score?: number;
-  facetName?: string;
-  facetValue?: string;
-};
+import { TrendingFacetHit } from '@algolia/recommend';
+
+export type TrendingFacet<TObject> = TrendingFacetHit<TObject>;
