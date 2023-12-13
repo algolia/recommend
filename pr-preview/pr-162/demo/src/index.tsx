@@ -11,22 +11,28 @@ import '@algolia/ui-components-horizontal-slider-theme';
 import './App.css';
 import './Recommend.css';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <Root />,
+      children: [
+        {
+          path: '/',
+          element: <HomePage />,
+        },
+        {
+          path: '/product/:id',
+          element: <ProductPage />,
+        },
+      ],
+    },
+  ],
   {
-    path: '/',
-    element: <Root />,
-    children: [
-      {
-        path: '/',
-        element: <HomePage />,
-      },
-      {
-        path: '/product/:id',
-        element: <ProductPage />,
-      },
-    ],
-  },
-]);
+    // needed for github pages subdirectory
+    basename: process.env.SUB_PATH ?? '/',
+  }
+);
 
 ReactDOM.render(
   <React.StrictMode>
