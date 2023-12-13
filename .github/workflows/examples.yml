@@ -40,6 +40,3 @@ jobs:
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./examples/
-
-
-yarn lerna exec 'yarn build -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/' --scope=\"'@algolia/recommend-react-example'\"
