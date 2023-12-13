@@ -20,7 +20,6 @@
     "playground-js:start": "yarn workspace @algolia/recommend-js-example start",
     "playground-templating:start": "yarn workspace @algolia/recommend-templating-example start",
     "playground:start": "yarn workspace @algolia/recommend-react-example start",
-    "build:playgrounds": "lerna run build --scope=\"'@algolia/recommend-react-example'\"",
     "prepare": "lerna run prepare --no-private",
     "release": "shipjs prepare",
     "test:size": "bundlesize",
