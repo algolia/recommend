@@ -10,7 +10,7 @@ import {
 import { cx } from './utils';
 
 export function createFacetsView({ createElement, Fragment }: Renderer) {
-  return function FacetsView<TItem extends FacetEntry>(
+  return function FacetsView<TItem extends FacetEntry<any>>(
     props: FacetsViewProps<TItem, RecommendTranslations, RecommendClassNames>
   ) {
     return (

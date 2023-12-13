@@ -15,7 +15,7 @@ export type HeaderComponentProps<TObject> = Renderer & ComponentProps<TObject>;
 
 export type ComponentProps<TObject> = {
   classNames: RecommendClassNames;
-  recommendations: TObject[];
+  recommendations: TObject[] | Array<FacetEntry<TObject>>;
   translations: RecommendTranslations;
 };
 
