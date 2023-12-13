@@ -10,6 +10,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Hit, Facet } from '../components';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 import { apiKey, appId, indexName } from '../config';
 import { FacetHit, ProductHit } from '../types';
 
@@ -25,27 +26,29 @@ export const HomePage: React.FC = () => {
 
   return (
     <Recommend recommendClient={recommendClient}>
-      <TrendingFacets<FacetHit>
-        indexName={indexName}
-        facetName="brand"
-        itemComponent={({ item }) => (
-          <Facet
-            hit={item}
-            insights={insights}
-            onSelect={(facetHits) => {
-              const isSameValue =
-                selectedFacetValue &&
-                facetHits.facetValue === selectedFacetValue.facetValue;
-              setSelectedFacetValue(isSameValue ? null : facetHits);
-            }}
-            indexName={indexName}
-          />
-        )}
-        maxRecommendations={5}
-        translations={{
-          title: 'Trending Facet (brand)',
-        }}
-      />
+      <ErrorBoundary>
+        <TrendingFacets<FacetHit>
+          indexName={indexName + '_xyz'}
+          facetName="brand"
+          itemComponent={({ item }) => (
+            <Facet
+              hit={item}
+              insights={insights}
+              onSelect={(facetHits) => {
+                const isSameValue =
+                  selectedFacetValue &&
+                  facetHits.facetValue === selectedFacetValue.facetValue;
+                setSelectedFacetValue(isSameValue ? null : facetHits);
+              }}
+              indexName={indexName}
+            />
+          )}
+          maxRecommendations={5}
+          translations={{
+            title: 'Trending Facet (brand)',
+          }}
+        />
+      </ErrorBoundary>
       <TrendingItems<ProductHit>
         indexName={indexName}
         facetName={selectedFacetValue ? 'brand' : undefined}

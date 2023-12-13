@@ -14,6 +14,7 @@ export type GetParametersResult<TObject> = {
 export type RecommendWidget<TObject> = {
   getParameters: () => GetParametersResult<any>;
   onResult: (value: BatchRecommendations<TObject>) => void;
+  onError: (error: Error) => void;
   onRequest: () => void;
   key: string;
   param: GetParametersResult<any>;

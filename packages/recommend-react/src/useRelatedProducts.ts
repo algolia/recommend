@@ -10,6 +10,7 @@ import { UseRelatedProductsProps } from './RelatedProducts';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
+import { useAsyncError } from './utils/useAsyncError';
 
 export function useRelatedProducts<TObject>({
   fallbackParameters: userFallbackParameters,
@@ -21,6 +22,7 @@ export function useRelatedProducts<TObject>({
   threshold,
   transformItems: userTransformItems = (x) => x,
 }: UseRelatedProductsProps<TObject>) {
+  const throwAsyncError = useAsyncError();
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -81,6 +83,9 @@ export function useRelatedProducts<TObject>({
           setResult(response as GetRecommendationsResult<TObject>);
           setStatus('idle');
         },
+        onError(error) {
+          throwAsyncError(error);
+        },
       });
     }
 
@@ -88,10 +93,12 @@ export function useRelatedProducts<TObject>({
     getRelatedProducts({
       ...param,
       recommendClient: client,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(throwAsyncError);
     return () => {};
   }, [
     client,
@@ -105,6 +112,7 @@ export function useRelatedProducts<TObject>({
     register,
     setStatus,
     threshold,
+    throwAsyncError,
   ]);
 
   return {

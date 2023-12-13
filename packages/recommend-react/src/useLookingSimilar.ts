@@ -10,6 +10,7 @@ import { useRecommendClient, useRecommendContext } from './RecommendContext';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
+import { useAsyncError } from './utils/useAsyncError';
 
 export function useLookingSimilar<TObject>({
   fallbackParameters: userFallbackParameters,
@@ -21,6 +22,7 @@ export function useLookingSimilar<TObject>({
   threshold,
   transformItems: userTransformItems = (x) => x,
 }: UseLookingSimilarProps<TObject>) {
+  const throwAsyncError = useAsyncError();
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -81,6 +83,9 @@ export function useLookingSimilar<TObject>({
           setResult(response as GetRecommendationsResult<TObject>);
           setStatus('idle');
         },
+        onError(error) {
+          throwAsyncError(error);
+        },
       });
     }
 
@@ -88,10 +93,12 @@ export function useLookingSimilar<TObject>({
     getLookingSimilar({
       ...param,
       recommendClient: client,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(throwAsyncError);
     return () => {};
   }, [
     client,
@@ -105,6 +112,7 @@ export function useLookingSimilar<TObject>({
     register,
     setStatus,
     threshold,
+    throwAsyncError,
   ]);
 
   return {

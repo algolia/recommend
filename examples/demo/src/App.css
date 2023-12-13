@@ -31,3 +31,11 @@ h3 {
   text-decoration: none;
   color: var(--auc-dark-color);
 }
+
+.error {
+  background-color: #ffc2c2;
+  padding: 16px;
+  margin: 16px;
+  border-radius: 4px;
+  border: 2px solid #fba3a3;
+}

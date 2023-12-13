@@ -10,6 +10,7 @@ import { UseTrendingItemsProps } from './TrendingItems';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
+import { useAsyncError } from './utils/useAsyncError';
 
 export function useTrendingItems<TObject>({
   fallbackParameters: userFallbackParameters,
@@ -22,6 +23,7 @@ export function useTrendingItems<TObject>({
   facetName,
   facetValue,
 }: UseTrendingItemsProps<TObject>) {
+  const throwAsyncError = useAsyncError();
   const [result, setResult] = useState<GetTrendingItemsResult<TObject>>({
     recommendations: [],
   });
@@ -72,6 +74,9 @@ export function useTrendingItems<TObject>({
           setResult(response as GetTrendingItemsResult<TObject>);
           setStatus('idle');
         },
+        onError(error) {
+          throwAsyncError(error);
+        },
       });
     }
 
@@ -80,10 +85,12 @@ export function useTrendingItems<TObject>({
       ...param,
       recommendClient: client,
       transformItems: transformItemsRef.current,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(throwAsyncError);
     return () => {};
   }, [
     fallbackParameters,
@@ -95,6 +102,7 @@ export function useTrendingItems<TObject>({
     threshold,
     facetName,
     facetValue,
+    throwAsyncError,
     hasProvider,
     isContextClient,
     register,

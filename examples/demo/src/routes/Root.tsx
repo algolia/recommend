@@ -4,6 +4,7 @@ import { Link, Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import insights, { InsightsClient } from 'search-insights';
 
 import { Autocomplete, getAlgoliaResults } from '../components/Autocomplete';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 import { apiKey, appId, indexName } from '../config';
 import { FacetHit, ProductHit } from '../types';
 
@@ -90,17 +91,19 @@ export const Root: React.FC = () => {
           ];
         }}
       />
-      <Outlet
-        context={[
-          {
-            insights,
-            selectedProduct,
-            setSelectedProduct,
-            selectedFacetValue,
-            setSelectedFacetValue,
-          },
-        ]}
-      />
+      <ErrorBoundary>
+        <Outlet
+          context={[
+            {
+              insights,
+              selectedProduct,
+              setSelectedProduct,
+              selectedFacetValue,
+              setSelectedFacetValue,
+            },
+          ]}
+        />
+      </ErrorBoundary>
     </div>
   );
 };

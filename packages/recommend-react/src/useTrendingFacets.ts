@@ -10,6 +10,7 @@ import { useRecommendContext, useRecommendClient } from './RecommendContext';
 import { UseTrendingFacetsProps } from './TrendingFacets';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
+import { useAsyncError } from './utils/useAsyncError';
 
 export function useTrendingFacets<TObject>({
   indexName,
@@ -19,6 +20,7 @@ export function useTrendingFacets<TObject>({
   transformItems: userTransformItems = (x) => x,
   facetName,
 }: UseTrendingFacetsProps<TObject>) {
+  const throwAsyncError = useAsyncError();
   const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
     recommendations: [],
   });
@@ -64,6 +66,9 @@ export function useTrendingFacets<TObject>({
           setResult(response as GetRecommendationsResult<TObject>);
           setStatus('idle');
         },
+        onError(error) {
+          throwAsyncError(error);
+        },
       });
     }
 
@@ -72,11 +77,14 @@ export function useTrendingFacets<TObject>({
       ...param,
       recommendClient: client,
       facetName,
+
       transformItems: transformItemsRef.current,
-    }).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
+    })
+      .then((response) => {
+        setResult(response);
+        setStatus('idle');
+      })
+      .catch(throwAsyncError);
     return () => {};
   }, [
     indexName,
@@ -85,6 +93,7 @@ export function useTrendingFacets<TObject>({
     setStatus,
     threshold,
     facetName,
+    throwAsyncError,
     hasProvider,
     isContextClient,
     register,

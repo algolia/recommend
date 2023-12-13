@@ -8,6 +8,7 @@ module.exports = {
     escapeString: true,
     printBasicPrototype: true,
   },
+  testMatch: ['**/?(*.)+(test).ts?(x)'],
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
