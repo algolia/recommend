@@ -3,7 +3,7 @@ import {
   getTrendingFacets,
   GetTrendingFacetsResult,
 } from '@algolia/recommend-core';
-import { GetRecommendationsResult } from '@algolia/recommend-core/src';
+// import { GetRecommendationsResult } from '@algolia/recommend-core/src';
 import { useEffect, useRef, useState } from 'react';
 
 import { useRecommendContext, useRecommendClient } from './RecommendContext';
@@ -44,28 +44,29 @@ export function useTrendingFacets<TObject>({
       transformItems: transformItemsRef.current,
     };
 
-    if (hasProvider && isContextClient) {
-      const key = JSON.stringify(param);
-      return register({
-        key,
-        getParameters() {
-          return {
-            queries: [param],
-            keyPair: {
-              key,
-              value: 1,
-            },
-          };
-        },
-        onRequest() {
-          setStatus('loading');
-        },
-        onResult(response) {
-          setResult(response as GetRecommendationsResult<TObject>);
-          setStatus('idle');
-        },
-      });
-    }
+    // to-do batching support
+    // if (hasProvider && isContextClient) {
+    //   const key = JSON.stringify(param);
+    //   return register({
+    //     key,
+    //     getParameters() {
+    //       return {
+    //         queries: [param],
+    //         keyPair: {
+    //           key,
+    //           value: 1,
+    //         },
+    //       };
+    //     },
+    //     onRequest() {
+    //       setStatus('loading');
+    //     },
+    //     onResult(response) {
+    //       setResult(response as GetRecommendationsResult<TObject>);
+    //       setStatus('idle');
+    //     },
+    //   });
+    // }
 
     setStatus('loading');
     getTrendingFacets({
