@@ -27,21 +27,19 @@ export const HomePage: React.FC = () => {
       <TrendingFacets<string>
         indexName={indexName}
         facetName="brand"
-        itemComponent={({ item }) => {
-          return (
-            <Facet
-              hit={item}
-              insights={insights}
-              onSelect={(facetHits) => {
-                const isSameValue =
-                  selectedFacetValue &&
-                  facetHits.facetValue === selectedFacetValue.facetValue;
-                setSelectedFacetValue(isSameValue ? null : facetHits);
-              }}
-              indexName={indexName}
-            />
-          );
-        }}
+        itemComponent={({ item }) => (
+          <Facet
+            hit={item}
+            insights={insights}
+            onSelect={(facetHits) => {
+              const isSameValue =
+                selectedFacetValue &&
+                facetHits.facetValue === selectedFacetValue.facetValue;
+              setSelectedFacetValue(isSameValue ? null : facetHits);
+            }}
+            indexName={indexName}
+          />
+        )}
         maxRecommendations={5}
         translations={{
           title: 'Trending Facet (brand)',
