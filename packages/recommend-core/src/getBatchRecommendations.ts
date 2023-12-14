@@ -59,13 +59,9 @@ export async function getBatchRecommendations<TObject, TFacet = string>({
     let recommendations: Array<ProductRecord<ProductRecord<TObject>>> = [];
     let trendingFacets: TrendingFacet[] = [];
     if (model === 'trending-facets') {
-      trendingFacets = mapByScoreToRecommendations<TrendingFacet>({
-        maxRecommendations,
-        hits: splitResult
-          .map((res) => res.hits)
-          .flat()
-          .map((hit) => (hit as unknown) as TrendingFacet),
-      });
+      trendingFacets = splitResult
+        .map((res) => (res.hits as unknown) as TrendingFacet[])
+        .flat();
     } else if (model === 'trending-items') {
       recommendations = mapByScoreToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
