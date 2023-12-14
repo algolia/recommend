@@ -3,6 +3,7 @@ import {
   Recommend,
   TrendingFacets,
   TrendingItems,
+  RecommendedForYou,
 } from '@algolia/recommend-react';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import React from 'react';
@@ -68,6 +69,24 @@ export const HomePage: React.FC = () => {
             selectedFacetValue ? `in ${selectedFacetValue.facetValue}` : ''
           }`,
         }}
+      />
+      <RecommendedForYou<ProductHit>
+        indexName={indexName}
+        maxRecommendations={15}
+        queryParameters={{
+          userToken: 'user-token-1',
+        }}
+        itemComponent={({ item }) => (
+          <Hit
+            hit={item}
+            insights={insights}
+            onSelect={(item) => {
+              setSelectedProduct(item);
+              navigate(`/product/${item.objectID}`);
+            }}
+          />
+        )}
+        fallbackComponent={() => <div>No recommendations</div>}
       />
     </Recommend>
   );
