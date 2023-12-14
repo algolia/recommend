@@ -1,16 +1,15 @@
-import { FacetEntry } from '@algolia/recommend-core';
+import { TrendingFacetHit } from '@algolia/recommend';
 
 import { Renderer } from './Renderer';
 
 export type FacetsViewProps<
-  TFacetType,
   TTranslations extends Record<string, string>,
   TClassNames extends Record<string, string>
 > = {
   classNames: TClassNames;
   itemComponent<TComponentProps extends Record<string, unknown> = {}>(
-    props: { item: FacetEntry<TFacetType> } & Renderer & TComponentProps
+    props: { item: TrendingFacetHit } & Renderer & TComponentProps
   ): JSX.Element;
-  items: Array<FacetEntry<TFacetType>>;
+  items: TrendingFacetHit[];
   translations: TTranslations;
 };

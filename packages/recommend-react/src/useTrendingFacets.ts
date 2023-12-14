@@ -7,17 +7,15 @@ import { UseTrendingFacetsProps } from './TrendingFacets';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
 
-export function useTrendingFacets<TObject>({
+export function useTrendingFacets({
   indexName,
   maxRecommendations,
   recommendClient,
   threshold,
   transformItems: userTransformItems = (x) => x,
   facetName,
-}: UseTrendingFacetsProps<TObject>) {
-  const [recommendations, setRecommendations] = useState<
-    Array<TrendingFacet<TObject>>
-  >([]);
+}: UseTrendingFacetsProps) {
+  const [recommendations, setRecommendations] = useState<TrendingFacet[]>([]);
   const { status, setStatus } = useStatus('loading');
 
   const { hasProvider, register } = useRecommendContext();
@@ -57,9 +55,7 @@ export function useTrendingFacets<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          setRecommendations(
-            response.trendingFacets as Array<TrendingFacet<TObject>>
-          );
+          setRecommendations(response.trendingFacets as TrendingFacet[]);
           setStatus('idle');
         },
       });

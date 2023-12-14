@@ -25,7 +25,7 @@ export const HomePage: React.FC = () => {
 
   return (
     <Recommend recommendClient={recommendClient}>
-      <TrendingFacets<string>
+      <TrendingFacets
         indexName={indexName}
         facetName="brand"
         itemComponent={({ item }) => (

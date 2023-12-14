@@ -4,7 +4,7 @@ import { TrendingFacet } from './types';
 import { mapByScoreToRecommendations } from './utils';
 import { version } from './version';
 
-export type TrendingFacetsProps<TObject> = {
+export type TrendingFacetsProps = {
   /**
    * The initialized Algolia recommend client.
    */
@@ -14,26 +14,23 @@ export type TrendingFacetsProps<TObject> = {
    *
    * It’s useful to add or remove items, change them, or reorder them.
    */
-  transformItems?: (
-    items: Array<TrendingFacet<TObject>>
-  ) => Array<TrendingFacet<TObject>>;
+  transformItems?: (items: TrendingFacet[]) => TrendingFacet[];
 };
 
-export type GetTrendingFacetsResult<TObject> = {
-  recommendations: Array<TrendingFacet<TObject>>;
+export type GetTrendingFacetsResult = {
+  recommendations: TrendingFacet[];
 };
 
-export type GetTrendingFacetsProps<TObject> = TrendingFacetsProps<TObject> &
-  TrendingFacetsQuery;
+export type GetTrendingFacetsProps = TrendingFacetsProps & TrendingFacetsQuery;
 
-export function getTrendingFacets<TObject>({
+export function getTrendingFacets({
   recommendClient,
   transformItems = (x) => x,
   indexName,
   maxRecommendations,
   threshold,
   facetName,
-}: GetTrendingFacetsProps<TObject>) {
+}: GetTrendingFacetsProps) {
   const query = {
     indexName,
     maxRecommendations,
@@ -44,9 +41,9 @@ export function getTrendingFacets<TObject>({
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
   return recommendClient
-    .getTrendingFacets<TObject>([query])
+    .getTrendingFacets([query])
     .then((response) =>
-      mapByScoreToRecommendations<TrendingFacet<TObject>>({
+      mapByScoreToRecommendations<TrendingFacet>({
         maxRecommendations,
         hits: response.results.map((result) => result.hits).flat(),
       })

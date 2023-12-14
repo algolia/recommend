@@ -1,15 +1,14 @@
+import { TrendingFacetHit } from '@algolia/recommend';
 import React from 'react';
 import { InsightsClient } from 'search-insights';
-
-import { FacetHit } from '../../types';
 
 import './style.css';
 
 type FacetProps = {
-  hit: FacetHit;
+  hit: TrendingFacetHit;
   indexName: string;
   insights: InsightsClient;
-  onSelect(hit: FacetHit): void;
+  onSelect(hit: TrendingFacetHit): void;
 };
 
 export function Facet({ hit, onSelect, indexName, insights }: FacetProps) {

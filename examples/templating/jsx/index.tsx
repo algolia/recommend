@@ -64,7 +64,7 @@ trendingItems<ProductHit>({
   },
 });
 
-trendingFacets<ProductHit>({
+trendingFacets({
   container: '#trendingFacets',
   recommendClient,
   indexName,

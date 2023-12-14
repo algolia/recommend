@@ -90,7 +90,7 @@ trendingItems<ProductHit>({
   },
 });
 
-trendingFacets<string>({
+trendingFacets({
   container: '#trendingFacets',
   recommendClient,
   indexName,

@@ -1,5 +1,4 @@
 /** @jsx createElement */
-import { FacetEntry } from '@algolia/recommend-core';
 
 import {
   RecommendClassNames,
@@ -10,12 +9,8 @@ import {
 import { cx } from './utils';
 
 export function createFacetsView({ createElement, Fragment }: Renderer) {
-  return function FacetsView<TFacetType>(
-    props: FacetsViewProps<
-      FacetEntry<TFacetType>,
-      RecommendTranslations,
-      RecommendClassNames
-    >
+  return function FacetsView(
+    props: FacetsViewProps<RecommendTranslations, RecommendClassNames>
   ) {
     return (
       <div

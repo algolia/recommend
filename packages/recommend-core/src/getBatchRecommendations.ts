@@ -27,7 +27,7 @@ export type GetBatchRecommendations<TObject> = {
 
 export type BatchRecommendations<TObject, TFacet = string> = {
   recommendations: Array<ProductRecord<TObject>>;
-  trendingFacets: Array<TrendingFacet<TFacet>>;
+  trendingFacets: TrendingFacet[];
 };
 
 export async function getBatchRecommendations<TObject, TFacet = string>({
@@ -57,14 +57,14 @@ export async function getBatchRecommendations<TObject, TFacet = string>({
     prevChunks += keyPair.value;
 
     let recommendations: Array<ProductRecord<ProductRecord<TObject>>> = [];
-    let trendingFacets: Array<TrendingFacet<TFacet>> = [];
+    let trendingFacets: TrendingFacet[] = [];
     if (model === 'trending-facets') {
-      trendingFacets = mapByScoreToRecommendations<TrendingFacet<TFacet>>({
+      trendingFacets = mapByScoreToRecommendations<TrendingFacet>({
         maxRecommendations,
         hits: splitResult
           .map((res) => res.hits)
           .flat()
-          .map((hit) => (hit as unknown) as TrendingFacet<TFacet>),
+          .map((hit) => (hit as unknown) as TrendingFacet),
       });
     } else if (model === 'trending-items') {
       recommendations = mapByScoreToRecommendations<ProductRecord<TObject>>({

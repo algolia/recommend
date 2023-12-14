@@ -34,7 +34,7 @@
     "dequal": "2.0.3"
   },
   "peerDependencies": {
-    "@algolia/recommend": "^4.21.1",
+    "@algolia/recommend": "^4.22.0",
     "react": ">= 16.8.0 < 19",
     "react-dom": ">= 16.8.0 < 19"
   }

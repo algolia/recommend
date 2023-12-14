@@ -6,6 +6,7 @@ import {
   frequentlyBoughtTogether,
   relatedProducts,
   lookingSimilar,
+  trendingFacets,
   recommendedForYou,
 } from '@algolia/recommend-js';
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
@@ -13,6 +14,7 @@ import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
 import insights from 'search-insights';
 
+import { Facet } from './Facet';
 import { RelatedItem } from './RelatedItem';
 import { ProductHit, ReferenceItemProps } from './types';
 
@@ -95,6 +97,26 @@ autocomplete<ProductHit>({
         },
       },
     ];
+  },
+});
+
+trendingFacets({
+  container: '#trendingFacets',
+  indexName,
+  recommendClient,
+  facetName: 'brand',
+  maxRecommendations: 5,
+  itemComponent({ item }) {
+    return <Facet hit={item} />;
+  },
+  view: (...props) => {
+    return (
+      <div className="Facets-Wrapper">
+        {props[0].items.map((item) => {
+          return <Facet key={item.facetValue} hit={item} />;
+        })}
+      </div>
+    );
   },
 });
 

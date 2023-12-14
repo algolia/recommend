@@ -35,3 +35,8 @@ h3 {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.Facets-Wrapper {
+  display: flex;
+  justify-content: space-around;
+}
