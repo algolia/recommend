@@ -1,4 +1,4 @@
-import { TrendingFacetHit } from '@algolia/recommend';
+import { TrendingFacet } from '@algolia/recommend-core';
 
 import { Renderer } from './Renderer';
 
@@ -8,8 +8,8 @@ export type FacetsViewProps<
 > = {
   classNames: TClassNames;
   itemComponent<TComponentProps extends Record<string, unknown> = {}>(
-    props: { item: TrendingFacetHit } & Renderer & TComponentProps
+    props: { item: TrendingFacet } & Renderer & TComponentProps
   ): JSX.Element;
-  items: TrendingFacetHit[];
+  items: TrendingFacet[];
   translations: TTranslations;
 };
