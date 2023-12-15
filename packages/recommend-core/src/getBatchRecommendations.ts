@@ -4,7 +4,7 @@ import {
   TrendingQuery,
 } from '@algolia/recommend';
 
-import { ProductRecord, TrendingFacet } from './types';
+import { TrendingFacetHit, ProductRecord } from './types';
 import { mapByScoreToRecommendations, mapToRecommendations } from './utils';
 import { version } from './version';
 
@@ -25,17 +25,17 @@ export type GetBatchRecommendations<TObject> = {
   recommendClient: RecommendClient;
 };
 
-export type BatchRecommendations<TObject, TFacet = string> = {
+export type BatchRecommendations<TObject> = {
   recommendations: Array<ProductRecord<TObject>>;
-  trendingFacets: TrendingFacet[];
+  trendingFacets: TrendingFacetHit[];
 };
 
-export async function getBatchRecommendations<TObject, TFacet = string>({
+export async function getBatchRecommendations<TObject>({
   keys,
   queries,
   recommendClient,
 }: GetBatchRecommendations<TObject>): Promise<
-  Record<string, BatchRecommendations<TObject, TFacet>>
+  Record<string, BatchRecommendations<TObject>>
 > {
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
@@ -44,7 +44,7 @@ export async function getBatchRecommendations<TObject, TFacet = string>({
   let prevChunks = 0;
   let allChunks = 0;
 
-  const results: Record<string, BatchRecommendations<TObject, TFacet>> = {};
+  const results: Record<string, BatchRecommendations<TObject>> = {};
 
   keys.forEach((keyPair) => {
     const { model } = JSON.parse(keyPair.key);
@@ -57,10 +57,10 @@ export async function getBatchRecommendations<TObject, TFacet = string>({
     prevChunks += keyPair.value;
 
     let recommendations: Array<ProductRecord<ProductRecord<TObject>>> = [];
-    let trendingFacets: TrendingFacet[] = [];
+    let trendingFacets: TrendingFacetHit[] = [];
     if (model === 'trending-facets') {
       trendingFacets = splitResult
-        .map((res) => (res.hits as unknown) as TrendingFacet[])
+        .map((res) => (res.hits as unknown) as TrendingFacetHit[])
         .flat();
     } else if (model === 'trending-items') {
       recommendations = mapByScoreToRecommendations<ProductRecord<TObject>>({
