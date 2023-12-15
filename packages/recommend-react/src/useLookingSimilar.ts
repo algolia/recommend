@@ -21,9 +21,9 @@ export function useLookingSimilar<TObject>({
   threshold,
   transformItems: userTransformItems = (x) => x,
 }: UseLookingSimilarProps<TObject>) {
-  const [recommendations, setRecommendations] = useState<
-    GetRecommendationsResult<TObject>['recommendations']
-  >([]);
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
+    recommendations: [],
+  });
   const { status, setStatus } = useStatus('loading');
   const objectIDs = useStableValue(userObjectIDs);
   const queryParameters = useStableValue(userQueryParameters);
@@ -78,9 +78,7 @@ export function useLookingSimilar<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          setRecommendations(
-            response.recommendations as GetRecommendationsResult<TObject>['recommendations']
-          );
+          setResult((response as unknown) as GetRecommendationsResult<TObject>);
           setStatus('idle');
         },
       });
@@ -91,7 +89,7 @@ export function useLookingSimilar<TObject>({
       ...param,
       recommendClient: client,
     }).then((response) => {
-      setRecommendations(response.recommendations);
+      setResult(response);
       setStatus('idle');
     });
     return () => {};
@@ -110,7 +108,7 @@ export function useLookingSimilar<TObject>({
   ]);
 
   return {
-    recommendations,
+    ...result,
     status,
   };
 }

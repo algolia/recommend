@@ -1,5 +1,8 @@
 import { TrendingModel } from '@algolia/recommend';
-import { getTrendingFacets, TrendingFacetHit } from '@algolia/recommend-core';
+import {
+  getTrendingFacets,
+  GetTrendingFacetsResult,
+} from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
 import { useRecommendContext, useRecommendClient } from './RecommendContext';
@@ -15,9 +18,9 @@ export function useTrendingFacets({
   transformItems: userTransformItems = (x) => x,
   facetName,
 }: UseTrendingFacetsProps) {
-  const [recommendations, setRecommendations] = useState<TrendingFacetHit[]>(
-    []
-  );
+  const [result, setResult] = useState<GetTrendingFacetsResult>({
+    recommendations: [],
+  });
   const { status, setStatus } = useStatus('loading');
 
   const { hasProvider, register } = useRecommendContext();
@@ -57,7 +60,7 @@ export function useTrendingFacets({
           setStatus('loading');
         },
         onResult(response) {
-          setRecommendations(response.trendingFacets as TrendingFacetHit[]);
+          setResult((response as unknown) as GetTrendingFacetsResult);
           setStatus('idle');
         },
       });
@@ -70,7 +73,7 @@ export function useTrendingFacets({
       facetName,
       transformItems: transformItemsRef.current,
     }).then((response) => {
-      setRecommendations(response.recommendations);
+      setResult(response);
       setStatus('idle');
     });
     return () => {};
@@ -87,7 +90,7 @@ export function useTrendingFacets({
   ]);
 
   return {
-    recommendations,
+    ...result,
     status,
   };
 }

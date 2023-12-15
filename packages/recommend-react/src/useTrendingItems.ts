@@ -22,9 +22,9 @@ export function useTrendingItems<TObject>({
   facetName,
   facetValue,
 }: UseTrendingItemsProps<TObject>) {
-  const [recommendations, setRecommendations] = useState<
-    GetRecommendationsResult<TObject>['recommendations']
-  >([]);
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
+    recommendations: [],
+  });
   const { status, setStatus } = useStatus('loading');
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
@@ -69,9 +69,7 @@ export function useTrendingItems<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          setRecommendations(
-            response.recommendations as GetRecommendationsResult<TObject>['recommendations']
-          );
+          setResult((response as unknown) as GetRecommendationsResult<TObject>);
           setStatus('idle');
         },
       });
@@ -83,7 +81,7 @@ export function useTrendingItems<TObject>({
       recommendClient: client,
       transformItems: transformItemsRef.current,
     }).then((response) => {
-      setRecommendations(response.recommendations);
+      setResult(response);
       setStatus('idle');
     });
     return () => {};
@@ -103,7 +101,7 @@ export function useTrendingItems<TObject>({
   ]);
 
   return {
-    recommendations,
+    ...result,
     status,
   };
 }

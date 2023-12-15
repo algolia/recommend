@@ -20,9 +20,9 @@ export function useRecommendedForYou<TObject>({
   threshold,
   transformItems: userTransformItems = (x) => x,
 }: UseRecommendedForYouProps<TObject>) {
-  const [recommendations, setRecommendations] = useState<
-    GetRecommendationsResult<TObject>['recommendations']
-  >([]);
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
+    recommendations: [],
+  });
   const { status, setStatus } = useStatus('loading');
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
@@ -76,9 +76,7 @@ export function useRecommendedForYou<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          setRecommendations(
-            response.recommendations as GetRecommendationsResult<TObject>['recommendations']
-          );
+          setResult((response as unknown) as GetRecommendationsResult<TObject>);
           setStatus('idle');
         },
       });
@@ -89,7 +87,7 @@ export function useRecommendedForYou<TObject>({
       ...param,
       recommendClient: client,
     }).then((response) => {
-      setRecommendations(response.recommendations);
+      setResult(response);
       setStatus('idle');
     });
     return () => {};
@@ -107,7 +105,7 @@ export function useRecommendedForYou<TObject>({
   ]);
 
   return {
-    recommendations,
+    ...result,
     status,
   };
 }
