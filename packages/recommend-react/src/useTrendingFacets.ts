@@ -23,7 +23,10 @@ export function useTrendingFacets({
   });
   const { status, setStatus } = useStatus('loading');
 
-  const { hasProvider, register } = useRecommendContext();
+  const {
+    hasProvider,
+    register,
+  } = useRecommendContext<GetTrendingFacetsResult>();
   const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
@@ -60,7 +63,7 @@ export function useTrendingFacets({
           setStatus('loading');
         },
         onResult(response) {
-          setResult((response as unknown) as GetTrendingFacetsResult);
+          setResult(response);
           setStatus('idle');
         },
       });

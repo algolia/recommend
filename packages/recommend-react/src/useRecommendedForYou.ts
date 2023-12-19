@@ -27,7 +27,9 @@ export function useRecommendedForYou<TObject>({
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const { hasProvider, register } = useRecommendContext();
+  const { hasProvider, register } = useRecommendContext<
+    GetRecommendationsResult<TObject>
+  >();
   const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
@@ -76,7 +78,7 @@ export function useRecommendedForYou<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          setResult((response as unknown) as GetRecommendationsResult<TObject>);
+          setResult(response);
           setStatus('idle');
         },
       });
