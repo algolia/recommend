@@ -53,8 +53,6 @@ export function getTrendingItems<TObject>({
     facetValue,
   };
 
-  console.log({ query });
-
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
   return recommendClient
@@ -71,8 +69,6 @@ export function getTrendingItems<TObject>({
       })
     )
     .then((hits) => {
-      console.log({ recommendClient });
-
       if (logRegion && userToken) {
         return personaliseRecommendations({
           apiKey:

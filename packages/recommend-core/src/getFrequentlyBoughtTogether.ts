@@ -1,6 +1,7 @@
 import { FrequentlyBoughtTogetherQuery } from '@algolia/recommend';
 
 import { RecommendationsProps } from './getRecommendations';
+import { personaliseRecommendations } from './personalisation';
 import { ProductRecord } from './types';
 import { mapToRecommendations } from './utils';
 import { version } from './version';
@@ -18,6 +19,8 @@ export function getFrequentlyBoughtTogether<TObject>({
   maxRecommendations,
   queryParameters,
   threshold,
+  logRegion,
+  userToken,
 }: GetFrequentlyBoughtTogetherProps<TObject>) {
   const queries = objectIDs.map((objectID) => ({
     indexName,
@@ -38,5 +41,18 @@ export function getFrequentlyBoughtTogether<TObject>({
         nrOfObjs: objectIDs.length,
       })
     )
+    .then((hits) => {
+      if (logRegion && userToken) {
+        return personaliseRecommendations({
+          apiKey:
+            recommendClient.transporter.queryParameters['x-algolia-api-key'],
+          appID: recommendClient.appId,
+          logRegion,
+          userToken,
+          hits,
+        });
+      }
+      return hits;
+    })
     .then((hits) => ({ recommendations: transformItems(hits) }));
 }

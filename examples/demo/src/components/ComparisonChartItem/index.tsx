@@ -57,6 +57,7 @@ export const ComparisonChartItem: React.FC<ChartItemProps<ProductHit>> = ({
 
             onSelect(item);
             insights('clickedObjectIDs', {
+              userToken: 'user-token-1',
               objectIDs: [item.objectID],
               eventName: 'Product Clicked',
               index: indexName,
@@ -76,6 +77,7 @@ export const ComparisonChartItem: React.FC<ChartItemProps<ProductHit>> = ({
                 event.stopPropagation();
                 event.preventDefault();
                 insights('convertedObjectIDsAfterSearch', {
+                  userToken: 'user-token-1',
                   eventName: 'Product Added To Cart',
                   objectIDs: [item.objectID],
                   index: indexName,

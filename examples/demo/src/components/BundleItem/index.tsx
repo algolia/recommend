@@ -24,6 +24,7 @@ export const BundleItem: React.FC<BundleItemProps<ProductHit>> = ({
 
         onSelect(item);
         insights('clickedObjectIDs', {
+          userToken: 'user-token-1',
           objectIDs: [item.objectID],
           eventName: 'Product Clicked',
           index: indexName,

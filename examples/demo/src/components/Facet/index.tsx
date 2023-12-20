@@ -21,6 +21,7 @@ export function Facet({ hit, onSelect, indexName, insights }: FacetProps) {
 
         onSelect(hit);
         insights('clickedFilters', {
+          userToken: 'user-token-1',
           index: indexName,
           eventName: 'Facet Clicked',
           filters: [`${hit.facetName}:${hit.facetValue}`],

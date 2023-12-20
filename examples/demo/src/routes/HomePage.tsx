@@ -51,7 +51,7 @@ export const HomePage: React.FC = () => {
         indexName={indexName}
         facetName={selectedFacetValue ? 'brand' : undefined}
         logRegion="eu"
-        userToken="foobar"
+        userToken="user-token-1"
         facetValue={
           selectedFacetValue ? selectedFacetValue.facetValue : undefined
         }

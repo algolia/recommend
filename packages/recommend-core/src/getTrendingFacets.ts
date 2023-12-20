@@ -1,5 +1,6 @@
 import { RecommendClient, TrendingFacetsQuery } from '@algolia/recommend';
 
+import { personaliseRecommendations } from './personalisation';
 import { TrendingFacet } from './types';
 import { mapByScoreToRecommendations } from './utils';
 import { version } from './version';
@@ -17,6 +18,9 @@ export type TrendingFacetsProps<TObject> = {
   transformItems?: (
     items: Array<TrendingFacet<TObject>>
   ) => Array<TrendingFacet<TObject>>;
+
+  userToken?: string;
+  logRegion?: string;
 };
 
 export type GetTrendingFacetsResult<TObject> = {
@@ -33,6 +37,8 @@ export function getTrendingFacets<TObject>({
   maxRecommendations,
   threshold,
   facetName,
+  logRegion,
+  userToken,
 }: GetTrendingFacetsProps<TObject>) {
   const query = {
     indexName,
@@ -52,5 +58,18 @@ export function getTrendingFacets<TObject>({
         hits: response.results.map((result) => result.hits).flat(),
       })
     )
+    .then((hits) => {
+      if (logRegion && userToken) {
+        return personaliseRecommendations({
+          apiKey:
+            recommendClient.transporter.queryParameters['x-algolia-api-key'],
+          appID: recommendClient.appId,
+          logRegion,
+          userToken,
+          hits,
+        });
+      }
+      return hits;
+    })
     .then((hits) => ({ recommendations: transformItems(hits) }));
 }

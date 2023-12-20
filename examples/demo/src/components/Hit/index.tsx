@@ -22,6 +22,7 @@ export function Hit({ hit, onSelect, insights }: HitProps) {
 
         onSelect(hit);
         insights('clickedObjectIDs', {
+          userToken: 'user-token-1',
           objectIDs: [hit.objectID],
           eventName: 'Product Clicked',
           index: indexName,
@@ -43,6 +44,7 @@ export function Hit({ hit, onSelect, insights }: HitProps) {
             event.stopPropagation();
             event.preventDefault();
             insights('convertedObjectIDsAfterSearch', {
+              userToken: 'user-token-1',
               eventName: 'Product Added To Cart',
               objectIDs: [hit.objectID],
               index: indexName,
