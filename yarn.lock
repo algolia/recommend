@@ -123,7 +123,7 @@
     "@algolia/requester-common" "4.21.1"
     "@algolia/transporter" "4.21.1"
 
-"@algolia/client-personalization@4.20.0", "@algolia/client-personalization@^4.20.0":
+"@algolia/client-personalization@4.20.0":
   version "4.20.0"
   resolved "https://registry.yarnpkg.com/@algolia/client-personalization/-/client-personalization-4.20.0.tgz#ca81308e8ad0db3b27458b78355f124f29657181"
   integrity sha512-N9+zx0tWOQsLc3K4PVRDV8GUeOLAY0i445En79Pr3zWB+m67V+n/8w4Kw1C5LlbHDDJcyhMMIlqezh6BEk7xAQ==
