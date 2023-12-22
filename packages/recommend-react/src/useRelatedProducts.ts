@@ -19,6 +19,7 @@ export function useRelatedProducts<TObject>({
   queryParameters: userQueryParameters,
   recommendClient,
   threshold,
+  experimental,
   transformItems: userTransformItems = (x) => x,
 }: UseRelatedProductsProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
@@ -47,6 +48,7 @@ export function useRelatedProducts<TObject>({
       objectIDs,
       queryParameters,
       threshold,
+      experimental,
       transformItems: transformItemsRef.current,
     };
 
@@ -104,6 +106,7 @@ export function useRelatedProducts<TObject>({
     queryParameters,
     register,
     setStatus,
+    experimental,
     threshold,
   ]);
 

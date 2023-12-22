@@ -1,6 +1,5 @@
 import algoliarecommend from '@algolia/recommend';
 import {
-  Recommend,
   TrendingFacets,
   TrendingItems,
   RecommendedForYou,
@@ -24,8 +23,9 @@ export const HomePage: React.FC = () => {
   ] = useApplicationContext();
 
   return (
-    <Recommend recommendClient={recommendClient}>
+    <>
       <TrendingFacets<FacetHit>
+        recommendClient={recommendClient}
         indexName={indexName}
         facetName="brand"
         itemComponent={({ item }) => (
@@ -47,11 +47,19 @@ export const HomePage: React.FC = () => {
         }}
       />
       <TrendingItems<ProductHit>
+        recommendClient={recommendClient}
         indexName={indexName}
         facetName={selectedFacetValue ? 'brand' : undefined}
         facetValue={
           selectedFacetValue ? selectedFacetValue.facetValue : undefined
         }
+        experimental={{
+          personalization: {
+            enabled: true,
+            region: 'eu',
+            userToken: 'user-token-1',
+          },
+        }}
         itemComponent={({ item }) => (
           <Hit
             hit={item}
@@ -71,6 +79,7 @@ export const HomePage: React.FC = () => {
         }}
       />
       <RecommendedForYou<ProductHit>
+        recommendClient={recommendClient}
         indexName={indexName}
         maxRecommendations={15}
         queryParameters={{
@@ -88,6 +97,6 @@ export const HomePage: React.FC = () => {
         )}
         fallbackComponent={() => <div>No recommendations</div>}
       />
-    </Recommend>
+    </>
   );
 };

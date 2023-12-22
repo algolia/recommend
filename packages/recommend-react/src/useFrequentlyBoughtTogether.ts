@@ -18,6 +18,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   queryParameters: userQueryParameters,
   recommendClient,
   threshold,
+  experimental,
   transformItems: userTransformItems = (x) => x,
 }: UseFrequentlyBoughtTogetherProps<TObject>) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
@@ -44,6 +45,7 @@ export function useFrequentlyBoughtTogether<TObject>({
       objectIDs,
       queryParameters,
       threshold,
+      experimental,
       transformItems: transformItemsRef.current,
     };
 
@@ -100,6 +102,7 @@ export function useFrequentlyBoughtTogether<TObject>({
     hasProvider,
     isContextClient,
     register,
+    experimental,
   ]);
 
   return {

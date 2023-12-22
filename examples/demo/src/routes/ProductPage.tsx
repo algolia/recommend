@@ -1,7 +1,6 @@
 import algoliarecommend from '@algolia/recommend';
 import {
   FrequentlyBoughtTogether,
-  Recommend,
   RelatedProducts,
   LookingSimilar,
 } from '@algolia/recommend-react';
@@ -49,7 +48,7 @@ export const ProductPage: React.FC = () => {
   }
 
   return (
-    <Recommend recommendClient={recommendClient}>
+    <>
       <div style={{ padding: '1rem 0' }}>
         <div
           className="Hit"
@@ -77,6 +76,7 @@ export const ProductPage: React.FC = () => {
         itemComponent={({ item }) => (
           <Hit hit={item} insights={insights} onSelect={setSelectedProduct} />
         )}
+        recommendClient={recommendClient}
         maxRecommendations={10}
         threshold={75}
         view={HorizontalSlider}
@@ -84,10 +84,25 @@ export const ProductPage: React.FC = () => {
           analytics: true,
           clickAnalytics: true,
         }}
+        experimental={{
+          personalization: {
+            enabled: true,
+            region: 'eu',
+            userToken,
+          },
+        }}
       />
       <FrequentlyBoughtTogether<ProductHit>
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
+        recommendClient={recommendClient}
+        experimental={{
+          personalization: {
+            enabled: true,
+            region: 'eu',
+            userToken: 'user-token-1',
+          },
+        }}
         itemComponent={({ item }) => (
           <BundleItem
             item={item}
@@ -144,9 +159,17 @@ export const ProductPage: React.FC = () => {
       <RelatedProducts<ProductHit>
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
+        recommendClient={recommendClient}
         itemComponent={({ item }) => (
           <Hit hit={item} insights={insights} onSelect={setSelectedProduct} />
         )}
+        experimental={{
+          personalization: {
+            enabled: true,
+            region: 'eu',
+            userToken: 'user-token-1',
+          },
+        }}
         maxRecommendations={10}
         view={HorizontalSlider}
         translations={{
@@ -169,6 +192,14 @@ export const ProductPage: React.FC = () => {
       <RelatedProducts<ProductHit>
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
+        recommendClient={recommendClient}
+        experimental={{
+          personalization: {
+            enabled: true,
+            region: 'eu',
+            userToken: 'user-token-1',
+          },
+        }}
         itemComponent={({ item }) => (
           <ComparisonChartItem
             item={item}
@@ -193,6 +224,6 @@ export const ProductPage: React.FC = () => {
           ],
         }}
       />
-    </Recommend>
+    </>
   );
 };
