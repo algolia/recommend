@@ -13,7 +13,7 @@ export function createTrendingFacetsComponent({
   createElement,
   Fragment,
 }: Renderer) {
-  return function TrendingFacets(props: TrendingComponentProps<{}>) {
+  return function TrendingFacets(props: TrendingComponentProps) {
     const translations: Required<RecommendTranslations> = {
       title: 'Trending facets',
       sliderLabel: 'Trending facets',
