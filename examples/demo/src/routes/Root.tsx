@@ -10,7 +10,7 @@ import { FacetHit, ProductHit } from '../types';
 const searchClient = algoliasearch(appId, apiKey);
 
 insights('init', { appId, apiKey });
-insights('setUserToken', 'user-token-1');
+insights('setUserToken', 'likes-gender-men');
 
 export const Root: React.FC = () => {
   const navigate = useNavigate();

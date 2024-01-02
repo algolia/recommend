@@ -9,7 +9,6 @@ import React from 'react';
 
 export type GetParametersResult<TObject> = {
   queries: Array<BatchQuery<TObject>>;
-  experimental?: Experimental;
   keyPair: BatchKeyPair;
 };
 
@@ -30,6 +29,10 @@ type RecommendContextType<TObject> = {
 export type RecommendProps = {
   children: React.ReactNode;
   recommendClient: RecommendClient;
+  /**
+   * Experimental features not covered by SLA and semantic versioning conventions.
+   */
+  experimental?: Experimental;
 };
 
 export const RecommendContext = React.createContext<

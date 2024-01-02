@@ -60,7 +60,6 @@ export function useTrendingItems<TObject>({
         getParameters() {
           return {
             queries: [param],
-            experimental,
             keyPair: {
               key,
               value: 1,

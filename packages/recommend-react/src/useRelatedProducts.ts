@@ -70,7 +70,6 @@ export function useRelatedProducts<TObject>({
         getParameters() {
           return {
             queries,
-            experimental,
             keyPair: {
               key,
               value: objectIDs.length,
