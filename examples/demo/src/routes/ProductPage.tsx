@@ -88,7 +88,7 @@ export const ProductPage: React.FC = () => {
           personalization: {
             enabled: true,
             region: 'eu',
-            userToken,
+            userToken: 'user-token-1',
           },
         }}
       />

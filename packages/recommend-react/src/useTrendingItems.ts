@@ -42,7 +42,7 @@ export function useTrendingItems<TObject>({
 
   useEffect(() => {
     const param: BatchQuery<TObject> = {
-      model: 'trending-items',
+      model: 'trending-items' as const,
       fallbackParameters,
       indexName,
       maxRecommendations,
@@ -50,7 +50,6 @@ export function useTrendingItems<TObject>({
       threshold,
       facetName,
       facetValue,
-      experimental,
       transformItems: transformItemsRef.current,
     };
 
@@ -61,6 +60,7 @@ export function useTrendingItems<TObject>({
         getParameters() {
           return {
             queries: [param],
+            experimental,
             keyPair: {
               key,
               value: 1,
@@ -80,6 +80,7 @@ export function useTrendingItems<TObject>({
     setStatus('loading');
     getTrendingItems({
       ...param,
+      experimental,
       recommendClient: client,
       transformItems: transformItemsRef.current,
     }).then((response) => {

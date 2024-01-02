@@ -4,7 +4,9 @@ import {
   TrendingQuery,
 } from '@algolia/recommend';
 
+import { getPersonalizationFilters } from './personalization';
 import { ProductRecord, TrendingFacet } from './types';
+import { Experimental } from './types/Experimental';
 import { mapByScoreToRecommendations, mapToRecommendations } from './utils';
 import { version } from './version';
 
@@ -23,22 +25,68 @@ export type GetBatchRecommendations<TObject> = {
   keys: BatchKeyPair[];
   queries: Array<BatchQuery<TObject>>;
   recommendClient: RecommendClient;
+  /**
+   * Experimental features not covered by SLA and semantic versioning conventions.
+   */
+  experimental?: Experimental;
 };
 
 export type BatchRecommendations<TObject> = {
   recommendations: Array<ProductRecord<TObject>>;
 };
 
+const isTrendingFacetsQuery = <TObject>(
+  query: BatchQuery<TObject>
+): query is TrendingQuery => {
+  return query.model === 'trending-facets';
+};
+
 export async function getBatchRecommendations<TObject>({
   keys,
   queries,
   recommendClient,
+  experimental,
 }: GetBatchRecommendations<TObject>): Promise<
   Record<string, BatchRecommendations<TObject>>
 > {
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
-  const response = await recommendClient.getRecommendations<TObject>(queries);
+  let _queries = queries;
+
+  /**
+   * Big block of duplicated code, but it is fine since it is experimental and will be ported to the API eventually.
+   * This is a temporary solution to get recommended personalization.
+   */
+  if (
+    experimental?.personalization?.enabled &&
+    experimental?.personalization?.region
+  ) {
+    const personalizationFilters = await getPersonalizationFilters({
+      apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
+      appId: recommendClient.appId,
+      region: experimental.personalization.region,
+      userToken: experimental.personalization.userToken,
+    });
+
+    _queries = queries.map((query) => {
+      if (isTrendingFacetsQuery<TObject>(query)) {
+        return query;
+      }
+
+      return {
+        ...query,
+        queryParameters: {
+          ...query.queryParameters,
+          optionalFilters: [
+            ...personalizationFilters,
+            ...(query.queryParameters?.optionalFilters ?? []),
+          ],
+        },
+      };
+    });
+  }
+
+  const response = await recommendClient.getRecommendations<TObject>(_queries);
 
   let prevChunks = 0;
   let allChunks = 0;

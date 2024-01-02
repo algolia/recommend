@@ -4,10 +4,12 @@ import {
   BatchRecommendations,
   BatchQuery,
 } from '@algolia/recommend-core';
+import { Experimental } from '@algolia/recommend-core/src/types/Experimental';
 import React from 'react';
 
 export type GetParametersResult<TObject> = {
   queries: Array<BatchQuery<TObject>>;
+  experimental?: Experimental;
   keyPair: BatchKeyPair;
 };
 
