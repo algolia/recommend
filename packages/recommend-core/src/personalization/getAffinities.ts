@@ -18,7 +18,9 @@ export const getAffinities = async ({
   appId,
 }: GetAffinities): Promise<AffinitiesResponse> => {
   const response = await fetch(
-    `https://personalization.${region}.algolia.com/1/profiles/personalization/${userToken}`,
+    `https://personalization.${region}.algolia.com/1/profiles/personalization/${encodeURIComponent(
+      userToken
+    )}`,
     {
       headers: {
         'Content-Type': 'application/json',
