@@ -20,7 +20,7 @@ import '@algolia/autocomplete-theme-classic';
 import '@algolia/ui-components-horizontal-slider-theme';
 
 const appId = '93MWK2GLFE';
-const apiKey = '63a2f2cf276ced37f901d8612ce5b40c';
+const apiKey = '9f51610affadbae8e687ce009418c497';
 const indexName = 'prod_ECOM';
 
 const searchClient = algoliasearch(appId, apiKey);
@@ -179,6 +179,13 @@ function renderRecommendations(selectedProduct: ProductHit) {
     recommendClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
+    experimental: {
+      personalization: {
+        enabled: true,
+        region: 'eu',
+        userToken: 'likes-gender-men',
+      },
+    },
     itemComponent({ item }) {
       return (
         <RelatedItem
