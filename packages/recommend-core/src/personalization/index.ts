@@ -6,6 +6,10 @@ type GetPersonalizationFilters = {
   region: string;
   apiKey: string;
   appId: string;
+  cache?: {
+    profileMinutes?: number;
+    strategyMinutes?: number;
+  };
 };
 
 export const getPersonalizationFilters = async ({
@@ -13,6 +17,7 @@ export const getPersonalizationFilters = async ({
   region,
   apiKey,
   appId,
+  cache,
 }: GetPersonalizationFilters) => {
   if (!userToken || !region || !apiKey || !appId) {
     return [];
@@ -20,8 +25,14 @@ export const getPersonalizationFilters = async ({
 
   try {
     const [affinities, strategy] = await Promise.all([
-      getAffinities({ userToken, apiKey, appId, region }),
-      getStrategy({ apiKey, appId, region }),
+      getAffinities({
+        userToken,
+        apiKey,
+        appId,
+        region,
+        cache: cache?.profileMinutes,
+      }),
+      getStrategy({ apiKey, appId, region, cache: cache?.strategyMinutes }),
     ]);
 
     // compute optional filters

@@ -20,8 +20,8 @@ export const getCachedValue = (params: any, ttl = 10) => {
 
     if (cached) {
       const obj = JSON.parse(cached);
-      const createdAt = getElapsedTime(obj._createdAt);
-      if (createdAt !== null && createdAt < ttl) {
+      const createdSince = getElapsedTime(obj._createdAt);
+      if (createdSince !== null && createdSince <= ttl) {
         return obj;
       }
     }

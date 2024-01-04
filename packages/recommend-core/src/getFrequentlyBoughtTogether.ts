@@ -36,6 +36,7 @@ export function getFrequentlyBoughtTogether<TObject>({
       appId: recommendClient.appId,
       region: experimental.personalization.region,
       userToken: experimental.personalization.userToken,
+      cache: experimental.personalization.cache,
     }).then((personalizationFilters) => {
       const queries = objectIDs.map((objectID) => ({
         indexName,

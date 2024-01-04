@@ -3,6 +3,7 @@ import { getCachedValue, setCachedValue } from './cache';
 type GetStrategy = {
   appId: string;
   apiKey: string;
+  cache?: number;
   region: string;
 };
 
@@ -23,8 +24,13 @@ const isStrategy = (object: any): object is StrategyResponse => {
   );
 };
 
-export const getStrategy = async ({ region, apiKey, appId }: GetStrategy) => {
-  const cached = getCachedValue({ region, apiKey, appId }, 30);
+export const getStrategy = async ({
+  region,
+  apiKey,
+  appId,
+  cache = 30,
+}: GetStrategy) => {
+  const cached = getCachedValue({ region, apiKey, appId }, cache);
   if (cached && isStrategy(cached)) {
     return cached;
   }

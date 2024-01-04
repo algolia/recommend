@@ -66,6 +66,7 @@ export async function getBatchRecommendations<TObject>({
       appId: recommendClient.appId,
       region: experimental.personalization.region,
       userToken: experimental.personalization.userToken,
+      cache: experimental.personalization.cache,
     });
 
     _queries = queries.map((query) => {

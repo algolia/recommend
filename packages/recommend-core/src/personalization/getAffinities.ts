@@ -5,6 +5,7 @@ type GetAffinities = {
   region: string;
   apiKey: string;
   appId: string;
+  cache?: number;
 };
 
 type AffinitiesResponse = {
@@ -27,8 +28,9 @@ export const getAffinities = async ({
   region,
   apiKey,
   appId,
+  cache = 10,
 }: GetAffinities): Promise<AffinitiesResponse> => {
-  const cached = getCachedValue({ userToken, region, apiKey, appId }, 10);
+  const cached = getCachedValue({ userToken, region, apiKey, appId }, cache);
   if (cached && isAffinities(cached)) {
     return cached;
   }
