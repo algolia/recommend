@@ -36,12 +36,15 @@ export const getPersonalizationFilters = async ({
     ]);
 
     // compute optional filters
+    const FALLBACK_WEIGHT = 100;
+    const facetsScoringMap = new Map(
+      strategy.facetsScoring.map((value) => [value.facetName, value.score])
+    );
+
     const optionalFilters = Object.entries(affinities.scores).flatMap(
       ([facet, values]) =>
         Object.entries(values).map(([value, score]) => {
-          const weight =
-            strategy.facetsScoring.find((value) => value.facetName === facet)
-              ?.score || 100;
+          const weight = facetsScoringMap.get(facet) ?? FALLBACK_WEIGHT;
           const weightedScore = Math.floor(score * (weight / 100));
           return `${facet}:${value}<score=${weightedScore}>`;
         })
