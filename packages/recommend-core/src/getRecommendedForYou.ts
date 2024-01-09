@@ -1,5 +1,5 @@
 import { Hit } from '@algolia/client-search';
-import { RecommendClient, RecommendedForYouQuery } from '@algolia/recommend';
+import { RecommendClient, RecommendedForYouParams } from '@algolia/recommend';
 
 import { version } from './version';
 
@@ -13,7 +13,7 @@ export type GetRecommendedForYouProps<TObject> = {
    * It’s useful to add or remove items, change them, or reorder them.
    */
   transformItems?: (items: Array<Hit<TObject>>) => Array<Hit<TObject>>;
-} & RecommendedForYouQuery;
+} & RecommendedForYouParams;
 
 export function getRecommendedForYou<TObject>({
   indexName,
@@ -25,7 +25,7 @@ export function getRecommendedForYou<TObject>({
 }: GetRecommendedForYouProps<TObject>) {
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
-  const queries: RecommendedForYouQuery[] = [
+  const queries: RecommendedForYouParams[] = [
     {
       indexName,
       threshold,

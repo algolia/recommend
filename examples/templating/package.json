@@ -10,8 +10,8 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@algolia/client-search": "4.22.0",
-    "@algolia/recommend": "4.22.0",
+    "@algolia/client-search": "4.22.1",
+    "@algolia/recommend": "4.22.1",
     "@algolia/recommend-js": "1.11.0",
     "@algolia/recommend-vdom": "1.11.0",
     "@algolia/ui-components-horizontal-slider-js": "1.2.1",
