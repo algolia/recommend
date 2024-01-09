@@ -1,10 +1,9 @@
 import { RecommendClient } from '@algolia/recommend';
 import {
   BatchKeyPair,
-  BatchRecommendations,
   BatchQuery,
+  Experimental,
 } from '@algolia/recommend-core';
-import { Experimental } from '@algolia/recommend-core/src/types/Experimental';
 import React from 'react';
 
 export type GetParametersResult<TObject> = {
@@ -12,16 +11,16 @@ export type GetParametersResult<TObject> = {
   keyPair: BatchKeyPair;
 };
 
-export type RecommendWidget<TObject> = {
+export type RecommendWidget<TResult> = {
   getParameters: () => GetParametersResult<any>;
-  onResult: (value: BatchRecommendations<TObject>) => void;
+  onResult: (value: TResult) => void;
   onRequest: () => void;
   key: string;
   param: GetParametersResult<any>;
 };
 
-type RecommendContextType<TObject> = {
-  register: (widget: Omit<RecommendWidget<TObject>, 'param'>) => () => void;
+type RecommendContextType<TResult> = {
+  register: (widget: Omit<RecommendWidget<TResult>, 'param'>) => () => void;
   hasProvider: boolean;
   recommendClient: RecommendClient;
 };
@@ -35,16 +34,15 @@ export type RecommendProps = {
   experimental?: Experimental;
 };
 
-export const RecommendContext = React.createContext<
-  RecommendContextType<unknown> // Not sure about using "unknown" here ?
->({
+export const RecommendContext = React.createContext<RecommendContextType<any>>({
   hasProvider: false,
-} as RecommendContextType<unknown>);
+} as RecommendContextType<any>);
 
 if (__DEV__) {
   RecommendContext.displayName = 'Recommend';
 }
-export const useRecommendContext = () => React.useContext(RecommendContext);
+export const useRecommendContext = <TResult,>() =>
+  React.useContext<RecommendContextType<TResult>>(RecommendContext);
 
 export const useRecommendClient = (
   recommendClient?: RecommendClient | null

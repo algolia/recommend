@@ -1,4 +1,4 @@
-import { FacetEntry, RecordWithObjectID } from '@algolia/recommend-core';
+import { RecordWithObjectID, TrendingFacetHit } from '@algolia/recommend-core';
 
 import { FacetsViewProps } from './FacetsViewProps';
 import { RecommendClassNames } from './RecommendClassNames';
@@ -54,24 +54,24 @@ export type RecommendComponentProps<
 };
 
 export type TrendingComponentProps<
-  TObject,
   TComponentProps extends Record<string, unknown> = {}
 > = {
   itemComponent(
-    props: ItemComponentProps<FacetEntry<TObject>> & TComponentProps
+    props: ItemComponentProps<TrendingFacetHit> & TComponentProps
   ): JSX.Element;
-  items: Array<FacetEntry<TObject>>;
+  items: TrendingFacetHit[];
   classNames?: RecommendClassNames;
-  children?(props: ChildrenProps<TObject> & TComponentProps): JSX.Element;
+  children?(
+    props: ChildrenProps<TrendingFacetHit> & TComponentProps
+  ): JSX.Element;
   fallbackComponent?(props: Renderer & TComponentProps): JSX.Element;
   headerComponent?(
-    props: HeaderComponentProps<TObject> & TComponentProps
+    props: HeaderComponentProps<TrendingFacetHit> & TComponentProps
   ): JSX.Element;
   status: RecommendStatus;
   translations?: RecommendTranslations;
   view?(
     props: FacetsViewProps<
-      FacetEntry<TObject>,
       Required<RecommendTranslations>,
       Record<string, string>
     > &

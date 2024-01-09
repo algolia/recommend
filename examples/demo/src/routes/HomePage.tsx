@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Hit, Facet } from '../components';
 import { apiKey, appId, indexName } from '../config';
-import { FacetHit, ProductHit } from '../types';
+import { ProductHit } from '../types';
 
 import { useApplicationContext } from './Root';
 
@@ -24,7 +24,7 @@ export const HomePage: React.FC = () => {
 
   return (
     <>
-      <TrendingFacets<FacetHit>
+      <TrendingFacets
         indexName={indexName}
         recommendClient={recommendClient}
         facetName="brand"

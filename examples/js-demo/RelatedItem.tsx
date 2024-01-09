@@ -11,12 +11,7 @@ export function RelatedItem({ item, insights, onSelect }: RelatedItemProps) {
       href={item.url}
       onClick={(event) => {
         event.preventDefault();
-
-        // eslint-disable-next-line no-console
-        console.log(item.objectID);
-
         onSelect(item);
-
         insights('clickedObjectIDs', {
           objectIDs: [item.objectID],
           eventName: 'Product Clicked',

@@ -24,8 +24,8 @@ const UncontrolledTrendingFacets = createTrendingFacetsComponent({
   Fragment,
 });
 
-function useTrendingFacets<TObject>(props: GetTrendingFacetsProps<TObject>) {
-  const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
+function useTrendingFacets(props: GetTrendingFacetsProps) {
+  const [result, setResult] = useState<GetTrendingFacetsResult>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
@@ -47,16 +47,14 @@ function useTrendingFacets<TObject>(props: GetTrendingFacetsProps<TObject>) {
 }
 
 type TrendingFacetsProps<
-  TObject,
   TComponentProps extends Record<string, unknown> = {}
-> = GetTrendingFacetsProps<TObject> &
-  Omit<TrendingFacetsVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
+> = GetTrendingFacetsProps &
+  Omit<TrendingFacetsVDOMProps<TComponentProps>, 'items' | 'status'>;
 
-function TrendingFacets<
-  TObject,
-  TComponentProps extends Record<string, unknown> = {}
->(props: TrendingFacetsProps<TObject, TComponentProps>) {
-  const { recommendations, status } = useTrendingFacets<TObject>(props);
+function TrendingFacets<TComponentProps extends Record<string, unknown> = {}>(
+  props: TrendingFacetsProps<TComponentProps>
+) {
+  const { recommendations, status } = useTrendingFacets(props);
 
   return (
     <UncontrolledTrendingFacets
@@ -66,7 +64,7 @@ function TrendingFacets<
     />
   );
 }
-export function trendingFacets<TObject>({
+export function trendingFacets({
   container,
   environment = window,
   itemComponent,
@@ -75,9 +73,9 @@ export function trendingFacets<TObject>({
   view,
   children,
   ...props
-}: TrendingFacetsProps<TObject, HTMLTemplate> & EnvironmentProps) {
+}: TrendingFacetsProps<HTMLTemplate> & EnvironmentProps) {
   const vnode = (
-    <TrendingFacets<TObject, HTMLTemplate>
+    <TrendingFacets<HTMLTemplate>
       {...props}
       view={view && withHtml(view)}
       itemComponent={itemComponent && withHtml(itemComponent)}

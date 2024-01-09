@@ -3,7 +3,6 @@ import {
   getTrendingFacets,
   GetTrendingFacetsResult,
 } from '@algolia/recommend-core';
-import { GetRecommendationsResult } from '@algolia/recommend-core/src';
 import { useEffect, useRef, useState } from 'react';
 
 import { useRecommendContext, useRecommendClient } from './RecommendContext';
@@ -11,20 +10,23 @@ import { UseTrendingFacetsProps } from './TrendingFacets';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
 
-export function useTrendingFacets<TObject>({
+export function useTrendingFacets({
   indexName,
   maxRecommendations,
   recommendClient,
   threshold,
   transformItems: userTransformItems = (x) => x,
   facetName,
-}: UseTrendingFacetsProps<TObject>) {
-  const [result, setResult] = useState<GetTrendingFacetsResult<TObject>>({
+}: UseTrendingFacetsProps) {
+  const [result, setResult] = useState<GetTrendingFacetsResult>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
 
-  const { hasProvider, register } = useRecommendContext();
+  const {
+    hasProvider,
+    register,
+  } = useRecommendContext<GetTrendingFacetsResult>();
   const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
@@ -61,7 +63,7 @@ export function useTrendingFacets<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          setResult(response as GetRecommendationsResult<TObject>);
+          setResult(response);
           setStatus('idle');
         },
       });

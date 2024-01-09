@@ -13,18 +13,16 @@ const UncontrolledTrendingFacets = createTrendingFacetsComponent({
   Fragment,
 });
 
-export type UseTrendingFacetsProps<TObject> = OptionalRecommendClient<
-  GetTrendingFacetsProps<TObject>
->;
+export type UseTrendingFacetsProps = OptionalRecommendClient<GetTrendingFacetsProps>;
 
-export type TrendingFacetsProps<TObject> = UseTrendingFacetsProps<TObject> &
+export type TrendingFacetsProps = UseTrendingFacetsProps &
   Omit<
-    TrendingFacetsVDOMProps<TObject>,
+    TrendingFacetsVDOMProps,
     'items' | 'status' | 'createElement' | 'Fragment'
   >;
 
-export function TrendingFacets<TObject>(props: TrendingFacetsProps<TObject>) {
-  const { recommendations, status } = useTrendingFacets<TObject>(props);
+export function TrendingFacets(props: TrendingFacetsProps) {
+  const { recommendations, status } = useTrendingFacets(props);
 
   return (
     <UncontrolledTrendingFacets
