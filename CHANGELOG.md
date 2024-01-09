@@ -1,3 +1,14 @@
+# [1.12.0](https://github.com/algolia/recommend/compare/v1.11.0...v1.12.0) (2024-01-09)
+
+
+### Bug Fixes
+
+* fix RecommendedForYou params ([#169](https://github.com/algolia/recommend/issues/169)) ([c228bf6](https://github.com/algolia/recommend/commit/c228bf6ec30a81058a1d36600dac8470bc8f6822))
+
+* update `trending-facets` types ([#163](https://github.com/algolia/recommend/pull/163)) ([9058e33](https://github.com/algolia/recommend/commit/9058e33f3d2d09f71862b834a65dcaf4e523a222))
+
+
+
 # [1.11.0](https://github.com/algolia/recommend/compare/v1.10.0...v1.11.0) (2023-12-13)
 
 
