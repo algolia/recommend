@@ -1,5 +1,9 @@
 import { RecommendClient } from '@algolia/recommend';
-import { BatchKeyPair, BatchQuery } from '@algolia/recommend-core';
+import {
+  BatchKeyPair,
+  BatchQuery,
+  Experimental,
+} from '@algolia/recommend-core';
 import React from 'react';
 
 export type GetParametersResult<TObject> = {
