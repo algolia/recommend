@@ -1,4 +1,4 @@
-import { RecommendationsQuery } from '@algolia/recommend';
+import { RecommendedForYouQuery } from '@algolia/recommend';
 import {
   getRecommendedForYou,
   GetRecommendationsResult,
@@ -51,15 +51,14 @@ export function useRecommendedForYou<TObject>({
 
     if (hasProvider && isContextClient) {
       const key = JSON.stringify(param);
-      const queries: RecommendationsQuery[] = [
+      const queries: RecommendedForYouQuery[] = [
         {
           indexName,
-          // @ts-expect-error
-          model: 'recommended-for-you',
           threshold,
           maxRecommendations,
           queryParameters,
           fallbackParameters,
+          model: 'recommended-for-you',
         },
       ];
 

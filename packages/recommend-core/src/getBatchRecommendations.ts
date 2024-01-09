@@ -2,6 +2,7 @@ import {
   RecommendClient,
   RecommendationsQuery,
   TrendingQuery,
+  RecommendedForYouQuery,
 } from '@algolia/recommend';
 
 import { getPersonalizationFilters } from './personalization';
@@ -15,7 +16,11 @@ export type BatchKeyPair = {
   value: number;
 };
 
-export type BatchQuery<TObject> = (RecommendationsQuery | TrendingQuery) & {
+export type BatchQuery<TObject> = (
+  | RecommendationsQuery
+  | TrendingQuery
+  | RecommendedForYouQuery
+) & {
   transformItems?: (
     items: Array<ProductRecord<TObject>>
   ) => Array<ProductRecord<TObject>>;
@@ -40,6 +45,12 @@ const isTrendingFacetsQuery = <TObject>(
   query: BatchQuery<TObject>
 ): query is TrendingQuery => {
   return query.model === 'trending-facets';
+};
+
+const isRecommendedForYouQuery = <TObject>(
+  query: BatchQuery<TObject>
+): query is RecommendedForYouQuery => {
+  return query.model === 'recommended-for-you';
 };
 
 export async function getBatchRecommendations<TObject>({
@@ -71,7 +82,10 @@ export async function getBatchRecommendations<TObject>({
     });
 
     _queries = queries.map((query) => {
-      if (isTrendingFacetsQuery<TObject>(query)) {
+      if (
+        isTrendingFacetsQuery<TObject>(query) ||
+        isRecommendedForYouQuery(query)
+      ) {
         return query;
       }
 
