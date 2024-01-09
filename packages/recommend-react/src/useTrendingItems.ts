@@ -1,7 +1,7 @@
 import {
   BatchQuery,
+  GetRecommendationsResult,
   getTrendingItems,
-  GetTrendingItemsResult,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -23,14 +23,16 @@ export function useTrendingItems<TObject>({
   facetValue,
   experimental,
 }: UseTrendingItemsProps<TObject>) {
-  const [result, setResult] = useState<GetTrendingItemsResult<TObject>>({
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
   const queryParameters = useStableValue(userQueryParameters);
   const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const { hasProvider, register } = useRecommendContext();
+  const { hasProvider, register } = useRecommendContext<
+    GetRecommendationsResult<TObject>
+  >();
   const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
@@ -70,7 +72,7 @@ export function useTrendingItems<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          setResult(response as GetTrendingItemsResult<TObject>);
+          setResult(response);
           setStatus('idle');
         },
       });

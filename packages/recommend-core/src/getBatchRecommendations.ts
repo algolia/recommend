@@ -5,7 +5,7 @@ import {
 } from '@algolia/recommend';
 
 import { getPersonalizationFilters } from './personalization';
-import { ProductRecord, TrendingFacet } from './types';
+import { ProductRecord, TrendingFacetHit } from './types';
 import { Experimental } from './types/Experimental';
 import { mapByScoreToRecommendations, mapToRecommendations } from './utils';
 import { version } from './version';
@@ -33,6 +33,7 @@ export type GetBatchRecommendations<TObject> = {
 
 export type BatchRecommendations<TObject> = {
   recommendations: Array<ProductRecord<TObject>>;
+  trendingFacets: TrendingFacetHit[];
 };
 
 const isTrendingFacetsQuery = <TObject>(
@@ -104,10 +105,14 @@ export async function getBatchRecommendations<TObject>({
     const splitResult = response?.results?.slice(prevChunks, allChunks);
     prevChunks += keyPair.value;
 
-    let recommendations: Array<ProductRecord<ProductRecord<TObject>>>;
-
-    if (model === 'trending-facets' || model === 'trending-items') {
-      recommendations = mapByScoreToRecommendations<TrendingFacet<TObject>>({
+    let recommendations: Array<ProductRecord<ProductRecord<TObject>>> = [];
+    let trendingFacets: TrendingFacetHit[] = [];
+    if (model === 'trending-facets') {
+      trendingFacets = splitResult
+        .map((res) => (res.hits as unknown) as TrendingFacetHit[])
+        .flat();
+    } else if (model === 'trending-items') {
+      recommendations = mapByScoreToRecommendations<ProductRecord<TObject>>({
         maxRecommendations,
         hits: splitResult.map((res) => res.hits).flat(),
       });
@@ -119,7 +124,7 @@ export async function getBatchRecommendations<TObject>({
       });
     }
     recommendations = transformItems(recommendations);
-    results[keyPair.key] = { recommendations };
+    results[keyPair.key] = { recommendations, trendingFacets };
   });
 
   return results;

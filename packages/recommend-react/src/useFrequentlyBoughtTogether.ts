@@ -28,7 +28,9 @@ export function useFrequentlyBoughtTogether<TObject>({
   const objectIDs = useStableValue(userObjectIDs);
   const queryParameters = useStableValue(userQueryParameters);
 
-  const { hasProvider, register } = useRecommendContext();
+  const { hasProvider, register } = useRecommendContext<
+    GetRecommendationsResult<TObject>
+  >();
   const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
@@ -76,7 +78,7 @@ export function useFrequentlyBoughtTogether<TObject>({
           setStatus('loading');
         },
         onResult(response) {
-          setResult(response as GetRecommendationsResult<TObject>);
+          setResult(response);
           setStatus('idle');
         },
       });

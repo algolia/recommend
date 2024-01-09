@@ -1,19 +1,18 @@
-import { ProductRecord } from '../types';
-
 import { sortBy } from './sortBy';
 
-type MapToRecommendations<TObject> = {
-  hits: Array<ProductRecord<TObject>>;
+type MapToRecommendations<THit> = {
+  hits: THit[];
   maxRecommendations?: number;
 };
 
-export function mapByScoreToRecommendations<TObject>({
-  hits,
-  maxRecommendations,
-}: MapToRecommendations<TObject>): Array<ProductRecord<TObject>> {
+export function mapByScoreToRecommendations<
+  THit extends {
+    _score?: number;
+  }
+>({ hits, maxRecommendations }: MapToRecommendations<THit>): THit[] {
   // Since recommendations from multiple indices are returned, we
   // need to sort them descending based on their score.
-  return sortBy<ProductRecord<TObject>>((a, b) => {
+  return sortBy<THit>((a, b) => {
     const scoreA = a._score || 0;
     const scoreB = b._score || 0;
 
