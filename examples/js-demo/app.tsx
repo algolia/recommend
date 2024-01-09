@@ -112,7 +112,7 @@ trendingFacets({
   view: (props) => {
     return (
       <div className="Facets-Wrapper">
-        {props[0].items.map((item) => {
+        {props?.[0]?.items?.map((item) => {
           return <Facet key={item.facetValue} hit={item} />;
         })}
       </div>

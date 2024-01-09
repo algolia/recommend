@@ -41,11 +41,11 @@ export function useRecommendedForYou<TObject>({
 
   useEffect(() => {
     const param = {
-      fallbackParameters,
       indexName,
-      maxRecommendations,
-      queryParameters,
       threshold,
+      queryParameters,
+      maxRecommendations,
+      fallbackParameters,
       transformItems: transformItemsRef.current,
     };
 
@@ -54,8 +54,8 @@ export function useRecommendedForYou<TObject>({
       const queries: RecommendationsQuery[] = [
         {
           indexName,
+          // @ts-expect-error
           model: 'recommended-for-you',
-          objectID: '',
           threshold,
           maxRecommendations,
           queryParameters,
