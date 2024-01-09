@@ -2,6 +2,7 @@ import {
   RecommendClient,
   RecommendationsQuery,
   TrendingQuery,
+  RecommendedForYouQuery,
 } from '@algolia/recommend';
 
 import { TrendingFacetHit, ProductRecord } from './types';
@@ -13,7 +14,11 @@ export type BatchKeyPair = {
   value: number;
 };
 
-export type BatchQuery<TObject> = (RecommendationsQuery | TrendingQuery) & {
+export type BatchQuery<TObject> = (
+  | RecommendationsQuery
+  | TrendingQuery
+  | RecommendedForYouQuery
+) & {
   transformItems?: (
     items: Array<ProductRecord<TObject>>
   ) => Array<ProductRecord<TObject>>;
