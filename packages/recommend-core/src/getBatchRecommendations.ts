@@ -70,8 +70,8 @@ export async function getBatchRecommendations<TObject>({
    * This is a temporary solution to get recommended personalization.
    */
   if (
-    experimental?.personalization?.enabled &&
-    experimental?.personalization?.region
+    experimental?.personalization?.region &&
+    experimental?.personalization?.userToken
   ) {
     const personalizationFilters = await getPersonalizationFilters({
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],

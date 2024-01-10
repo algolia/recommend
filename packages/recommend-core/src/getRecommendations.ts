@@ -58,8 +58,8 @@ export function getRecommendations<TObject>({
    * This is a temporary solution to get recommended personalization.
    */
   if (
-    experimental?.personalization?.enabled &&
-    experimental?.personalization?.region
+    experimental?.personalization?.region &&
+    experimental?.personalization?.userToken
   ) {
     return getPersonalizationFilters({
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],

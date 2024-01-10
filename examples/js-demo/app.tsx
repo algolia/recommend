@@ -203,7 +203,6 @@ function renderRecommendations(selectedProduct: ProductHit) {
     objectIDs: [selectedProduct.objectID],
     experimental: {
       personalization: {
-        enabled: true,
         region: 'eu',
         userToken: 'likes-gender-men',
       },

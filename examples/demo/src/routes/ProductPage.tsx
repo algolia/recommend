@@ -53,7 +53,6 @@ export const ProductPage: React.FC = () => {
       recommendClient={recommendClient}
       experimental={{
         personalization: {
-          enabled: true,
           region: 'eu',
           userToken: 'likes-gender-men',
         },
