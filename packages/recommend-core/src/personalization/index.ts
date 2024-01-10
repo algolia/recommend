@@ -24,7 +24,6 @@ export const getPersonalizationFilters = async ({
       getStrategy({ apiKey, appId, region }),
     ]);
 
-    // compute optional filters
     const optionalFilters = Object.entries(affinities.scores).flatMap(
       ([facet, values]) =>
         Object.entries(values).map(([value, score]) => {
