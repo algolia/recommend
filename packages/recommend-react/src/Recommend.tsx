@@ -1,9 +1,5 @@
 import { RecommendClient } from '@algolia/recommend';
-import {
-  BatchRecommendations,
-  getBatchRecommendations,
-  BatchQuery,
-} from '@algolia/recommend-core';
+import { getBatchRecommendations, BatchQuery } from '@algolia/recommend-core';
 import { dequal } from 'dequal';
 import React from 'react';
 
@@ -17,7 +13,7 @@ import { isPresent } from './utils/isPresent';
 
 type StateType<TObject> = {
   isDirty: number | null;
-  cache: Record<string, BatchRecommendations<TObject>>;
+  cache: Record<string, TObject>;
   widgets: Array<RecommendWidget<TObject>>;
   recommendClient: RecommendClient | null;
 };

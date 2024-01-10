@@ -1,32 +1,35 @@
-import { TrendingModel } from '@algolia/recommend';
+import { RecommendedForYouQuery } from '@algolia/recommend';
 import {
-  getTrendingFacets,
-  GetTrendingFacetsResult,
+  getRecommendedForYou,
+  GetRecommendationsResult,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRecommendContext, useRecommendClient } from './RecommendContext';
-import { UseTrendingFacetsProps } from './TrendingFacets';
+import { useRecommendClient, useRecommendContext } from './RecommendContext';
+import { UseRecommendedForYouProps } from './RecommendedForYou';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
+import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
 
-export function useTrendingFacets({
+export function useRecommendedForYou<TObject>({
+  fallbackParameters: userFallbackParameters,
   indexName,
   maxRecommendations,
+  queryParameters: userQueryParameters,
   recommendClient,
   threshold,
   transformItems: userTransformItems = (x) => x,
-  facetName,
-}: UseTrendingFacetsProps) {
-  const [result, setResult] = useState<GetTrendingFacetsResult>({
+}: UseRecommendedForYouProps<TObject>) {
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
+  const queryParameters = useStableValue(userQueryParameters);
+  const fallbackParameters = useStableValue(userFallbackParameters);
 
-  const {
-    hasProvider,
-    register,
-  } = useRecommendContext<GetTrendingFacetsResult>();
+  const { hasProvider, register } = useRecommendContext<
+    GetRecommendationsResult<TObject>
+  >();
   const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
@@ -38,21 +41,32 @@ export function useTrendingFacets({
 
   useEffect(() => {
     const param = {
-      model: 'trending-facets' as TrendingModel,
+      fallbackParameters,
       indexName,
-      facetName,
-      threshold,
       maxRecommendations,
+      queryParameters,
+      threshold,
       transformItems: transformItemsRef.current,
     };
 
     if (hasProvider && isContextClient) {
       const key = JSON.stringify(param);
+      const queries: RecommendedForYouQuery[] = [
+        {
+          indexName,
+          threshold,
+          maxRecommendations,
+          queryParameters,
+          fallbackParameters,
+          model: 'recommended-for-you',
+        },
+      ];
+
       return register({
         key,
         getParameters() {
           return {
-            queries: [param],
+            queries,
             keyPair: {
               key,
               value: 1,
@@ -70,26 +84,25 @@ export function useTrendingFacets({
     }
 
     setStatus('loading');
-    getTrendingFacets({
+    getRecommendedForYou({
       ...param,
       recommendClient: client,
-      facetName,
-      transformItems: transformItemsRef.current,
     }).then((response) => {
       setResult(response);
       setStatus('idle');
     });
     return () => {};
   }, [
-    indexName,
-    maxRecommendations,
     client,
+    fallbackParameters,
+    hasProvider,
+    indexName,
+    isContextClient,
+    maxRecommendations,
+    queryParameters,
+    register,
     setStatus,
     threshold,
-    facetName,
-    hasProvider,
-    isContextClient,
-    register,
   ]);
 
   return {

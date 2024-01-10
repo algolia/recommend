@@ -1,13 +1,13 @@
 /** @jsxRuntime classic */
 /** @jsx h */
 import {
-  getTrendingFacets,
-  GetTrendingFacetsProps,
-  GetTrendingFacetsResult,
+  getRecommendedForYou,
+  GetRecommendedForYouProps,
+  GetRecommendationsResult,
 } from '@algolia/recommend-core';
 import {
-  createTrendingFacetsComponent,
-  TrendingComponentProps as TrendingFacetsVDOMProps,
+  createRecommendedForYouComponent,
+  RecommendedForYouProps as RecommendedForYouVDOMProps,
 } from '@algolia/recommend-vdom';
 import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
@@ -19,13 +19,15 @@ import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStatus } from './useStatus';
 import { withHtml } from './utils';
 
-const UncontrolledTrendingFacets = createTrendingFacetsComponent({
+const UncontrolledRecommendedForYou = createRecommendedForYouComponent({
   createElement,
   Fragment,
 });
 
-function useTrendingFacets(props: GetTrendingFacetsProps) {
-  const [result, setResult] = useState<GetTrendingFacetsResult>({
+function useRecommendedForYou<TObject>(
+  props: GetRecommendedForYouProps<TObject>
+) {
+  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
   const { status, setStatus } = useStatus('loading');
@@ -34,7 +36,7 @@ function useTrendingFacets(props: GetTrendingFacetsProps) {
 
   useEffect(() => {
     setStatus('loading');
-    getTrendingFacets(props).then((response) => {
+    getRecommendedForYou(props).then((response) => {
       setResult(response);
       setStatus('idle');
     });
@@ -46,25 +48,31 @@ function useTrendingFacets(props: GetTrendingFacetsProps) {
   };
 }
 
-type TrendingFacetsProps<
+type RecommendedForYouProps<
+  TObject,
   TComponentProps extends Record<string, unknown> = {}
-> = GetTrendingFacetsProps &
-  Omit<TrendingFacetsVDOMProps<TComponentProps>, 'items' | 'status'>;
+> = GetRecommendedForYouProps<TObject> &
+  Omit<
+    RecommendedForYouVDOMProps<TObject, TComponentProps>,
+    'items' | 'status'
+  >;
 
-function TrendingFacets<TComponentProps extends Record<string, unknown> = {}>(
-  props: TrendingFacetsProps<TComponentProps>
-) {
-  const { recommendations, status } = useTrendingFacets(props);
+function RecommendedForYou<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+>(props: RecommendedForYouProps<TObject, TComponentProps>) {
+  const { recommendations, status } = useRecommendedForYou<TObject>(props);
 
   return (
-    <UncontrolledTrendingFacets
+    <UncontrolledRecommendedForYou
       {...props}
       items={recommendations}
       status={status}
     />
   );
 }
-export function trendingFacets({
+
+export function recommendedForYou<TObject>({
   container,
   environment = window,
   itemComponent,
@@ -73,9 +81,9 @@ export function trendingFacets({
   view,
   children,
   ...props
-}: TrendingFacetsProps<HTMLTemplate> & EnvironmentProps) {
+}: RecommendedForYouProps<TObject, HTMLTemplate> & EnvironmentProps) {
   const vnode = (
-    <TrendingFacets<HTMLTemplate>
+    <RecommendedForYou<TObject, HTMLTemplate>
       {...props}
       view={view && withHtml(view)}
       itemComponent={itemComponent && withHtml(itemComponent)}
@@ -85,7 +93,7 @@ export function trendingFacets({
       {children
         ? (childrenProps) => children({ ...childrenProps, html })
         : undefined}
-    </TrendingFacets>
+    </RecommendedForYou>
   );
 
   if (!container) {

@@ -2,21 +2,28 @@
 import { createDefaultChildrenComponent } from './DefaultChildren';
 import { createDefaultFallbackComponent } from './DefaultFallback';
 import { createDefaultHeaderComponent } from './DefaultHeader';
-import { createFacetsView } from './FacetsView';
+import { createListViewComponent } from './ListView';
 import {
+  RecommendComponentProps,
   RecommendTranslations,
   Renderer,
-  TrendingComponentProps,
 } from './types';
 
-export function createTrendingFacetsComponent({
+export type RecommendedForYouProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> = RecommendComponentProps<TObject, TComponentProps>;
+
+export function createRecommendedForYouComponent({
   createElement,
   Fragment,
 }: Renderer) {
-  return function TrendingFacets(props: TrendingComponentProps) {
+  return function RecommendedForYou<TObject>(
+    props: RecommendedForYouProps<TObject>
+  ) {
     const translations: Required<RecommendTranslations> = {
-      title: 'Trending facets',
-      sliderLabel: 'Trending facets',
+      title: 'Recommended For You',
+      sliderLabel: 'Recommended For You',
       ...props.translations,
     };
     const classNames = props.classNames ?? {};
@@ -33,7 +40,7 @@ export function createTrendingFacetsComponent({
       props.headerComponent ??
       createDefaultHeaderComponent({ createElement, Fragment });
     const ViewComponent =
-      props.view ?? createFacetsView({ createElement, Fragment });
+      props.view ?? createListViewComponent({ createElement, Fragment });
     const View = (viewProps: any) => (
       <ViewComponent
         classNames={classNames}

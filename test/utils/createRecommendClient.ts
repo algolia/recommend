@@ -83,6 +83,13 @@ export function createRecommendClient(
         )
       )
     ),
+    getRecommendedForYou: jest.fn((requests) =>
+      Promise.resolve(
+        createMultiSearchResponse(
+          ...requests.map(() => createSingleSearchResponse())
+        )
+      )
+    ),
     transporter: {
       userAgent: {
         value: '',

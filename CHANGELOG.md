@@ -1,3 +1,31 @@
+# [1.12.0](https://github.com/algolia/recommend/compare/v1.11.0...v1.12.0) (2024-01-09)
+
+
+### Bug Fixes
+
+* fix RecommendedForYou params ([#169](https://github.com/algolia/recommend/issues/169)) ([c228bf6](https://github.com/algolia/recommend/commit/c228bf6ec30a81058a1d36600dac8470bc8f6822))
+
+* update `trending-facets` types ([#163](https://github.com/algolia/recommend/pull/163)) ([9058e33](https://github.com/algolia/recommend/commit/9058e33f3d2d09f71862b834a65dcaf4e523a222))
+
+
+
+# [1.11.0](https://github.com/algolia/recommend/compare/v1.10.0...v1.11.0) (2023-12-13)
+
+
+### Bug Fixes
+
+* add to cart button propagation and css click ([#156](https://github.com/algolia/recommend/issues/156)) ([671670b](https://github.com/algolia/recommend/commit/671670b23529989c6138329bf6ab8d2bec926782))
+* Fix @algolia/recommend-react package description ([#154](https://github.com/algolia/recommend/issues/154)) ([01110a3](https://github.com/algolia/recommend/commit/01110a3db2aabc08b76289a850d96b0b4b91c956))
+* **react example:** allow linking to a specific product ([#157](https://github.com/algolia/recommend/issues/157)) ([0eb314a](https://github.com/algolia/recommend/commit/0eb314a76aae8337a4d5b6eab101917c9756b319))
+
+
+### Features
+
+* add recommended-for-you model ([#160](https://github.com/algolia/recommend/issues/160)) ([70a9e23](https://github.com/algolia/recommend/commit/70a9e239af75d1286c9479915f9ea9ef0d63b704))
+* **demo:** add comparison chart example ([#155](https://github.com/algolia/recommend/issues/155)) ([157350d](https://github.com/algolia/recommend/commit/157350db0ca15984aa7e2101ac73a1108e5cc767))
+
+
+
 # [1.10.0](https://github.com/algolia/recommend/compare/v1.9.0...v1.10.0) (2023-09-26)
 
 

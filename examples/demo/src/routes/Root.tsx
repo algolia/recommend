@@ -1,3 +1,4 @@
+import { TrendingFacetHit } from '@algolia/recommend';
 import algoliasearch from 'algoliasearch';
 import React from 'react';
 import { Link, Outlet, useNavigate, useOutletContext } from 'react-router-dom';
@@ -5,7 +6,7 @@ import insights, { InsightsClient } from 'search-insights';
 
 import { Autocomplete, getAlgoliaResults } from '../components/Autocomplete';
 import { apiKey, appId, indexName } from '../config';
-import { FacetHit, ProductHit } from '../types';
+import { ProductHit } from '../types';
 
 const searchClient = algoliasearch(appId, apiKey);
 
@@ -23,7 +24,7 @@ export const Root: React.FC = () => {
   const [
     selectedFacetValue,
     setSelectedFacetValue,
-  ] = React.useState<FacetHit | null>(null);
+  ] = React.useState<TrendingFacetHit | null>(null);
 
   return (
     <div className="container">
@@ -109,8 +110,8 @@ type ApplicationContextType = Array<{
   insights: InsightsClient;
   selectedProduct: ProductHit | null;
   setSelectedProduct: (hit: ProductHit | null) => void;
-  selectedFacetValue: FacetHit | null;
-  setSelectedFacetValue: (facet: FacetHit | null) => void;
+  selectedFacetValue: TrendingFacetHit | null;
+  setSelectedFacetValue: (facet: TrendingFacetHit | null) => void;
 }>;
 
 export function useApplicationContext() {

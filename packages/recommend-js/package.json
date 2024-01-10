@@ -1,6 +1,6 @@
 {
   "name": "@algolia/recommend-js",
-  "version": "1.10.0",
+  "version": "1.12.0",
   "license": "MIT",
   "homepage": "https://github.com/algolia/recommend",
   "repository": "algolia/recommend",
@@ -28,11 +28,11 @@
     "prepare": "yarn build:esm && yarn build:types"
   },
   "peerDependencies": {
-    "@algolia/recommend": "^4.19.1"
+    "@algolia/recommend": "^4.22.1"
   },
   "dependencies": {
-    "@algolia/recommend-core": "1.10.0",
-    "@algolia/recommend-vdom": "1.10.0",
+    "@algolia/recommend-core": "1.12.0",
+    "@algolia/recommend-vdom": "1.12.0",
     "htm": "^3.0.0",
     "preact": "^10.0.0"
   }
