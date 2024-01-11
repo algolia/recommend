@@ -17,7 +17,6 @@
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",
   "main": "dist/umd/index.js",
-  "experimental-personalization": "dist/umd/experimental-personalization/index.js",
   "unpkg": "dist/umd/index.js",
   "jsdelivr": "dist/umd/index.js",
   "sideEffects": false,
