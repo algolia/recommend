@@ -13,8 +13,9 @@ const UncontrolledLookingSimilar = createLookingSimilarComponent({
   Fragment,
 });
 
-export type UseLookingSimilarProps<TObject> = OptionalRecommendClient<
-  GetLookingSimilarProps<TObject>
+export type UseLookingSimilarProps<TObject> = Omit<
+  OptionalRecommendClient<GetLookingSimilarProps<TObject>>,
+  'experimental'
 >;
 
 export type LookingSimilarProps<TObject> = UseLookingSimilarProps<TObject> &

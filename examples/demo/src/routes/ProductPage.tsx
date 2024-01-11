@@ -3,8 +3,8 @@ import {
   FrequentlyBoughtTogether,
   RelatedProducts,
   LookingSimilar,
-  Recommend,
 } from '@algolia/recommend-react';
+import { Recommend } from '@algolia/recommend-react/dist/esm/experimental-personalization';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 import React, { useEffect } from 'react';

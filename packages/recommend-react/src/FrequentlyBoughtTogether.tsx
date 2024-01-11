@@ -15,8 +15,9 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
   }
 );
 
-export type UseFrequentlyBoughtTogetherProps<TObject> = OptionalRecommendClient<
-  GetFrequentlyBoughtTogetherProps<TObject>
+export type UseFrequentlyBoughtTogetherProps<TObject> = Omit<
+  OptionalRecommendClient<GetFrequentlyBoughtTogetherProps<TObject>>,
+  'experimental'
 >;
 
 export type FrequentlyBoughtTogetherProps<

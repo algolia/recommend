@@ -1,9 +1,6 @@
 import algoliarecommend from '@algolia/recommend';
-import {
-  TrendingFacets,
-  TrendingItems,
-  RecommendedForYou,
-} from '@algolia/recommend-react';
+import { TrendingFacets, RecommendedForYou } from '@algolia/recommend-react';
+import { TrendingItems } from '@algolia/recommend-react/dist/esm/experimental-personalization';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
