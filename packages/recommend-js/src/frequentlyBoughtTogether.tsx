@@ -53,7 +53,7 @@ function useFrequentlyBoughtTogether<TObject>(
 type FrequentlyBoughtTogetherProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
-> = GetFrequentlyBoughtTogetherProps<TObject> &
+> = Omit<GetFrequentlyBoughtTogetherProps<TObject>, 'experimental'> &
   Omit<
     FrequentlyBoughtTogetherVDOMProps<TObject, TComponentProps>,
     'items' | 'status'

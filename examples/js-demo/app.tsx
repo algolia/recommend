@@ -5,10 +5,10 @@ import algoliarecommend from '@algolia/recommend';
 import {
   frequentlyBoughtTogether,
   relatedProducts,
-  lookingSimilar,
   trendingFacets,
   recommendedForYou,
 } from '@algolia/recommend-js';
+import { lookingSimilar } from '@algolia/recommend-js/dist/esm/experimental-personalization';
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';

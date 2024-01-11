@@ -49,7 +49,7 @@ function useTrendingItems<TObject>(props: GetTrendingItemsProps<TObject>) {
 type TrendingItemsProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
-> = GetTrendingItemsProps<TObject> &
+> = Omit<GetTrendingItemsProps<TObject>, 'experimental'> &
   Omit<TrendingItemsVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
 
 function TrendingItems<
