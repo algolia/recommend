@@ -1,15 +1,10 @@
-import { Experimental } from '@algolia/recommend-core';
-
 import { UseRelatedProductsProps } from '../RelatedProducts';
-import { useRelatedProducts as hook } from '../useRelatedProducts';
+import { useRelatedProducts as useHook } from '../useRelatedProducts';
 
-type Props<TObject> = UseRelatedProductsProps<TObject> & {
-  /**
-   * Experimental features not covered by SLA and semantic versioning conventions.
-   */
-  experimental?: Experimental;
-};
+import { Personalization } from './types';
+
+type Props<TObject> = UseRelatedProductsProps<TObject> & Personalization;
 
 export function useRelatedProducts<TObject>(props: Props<TObject>) {
-  return hook(props);
+  return useHook(props);
 }

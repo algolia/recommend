@@ -1,8 +1,9 @@
 import { Experimental } from '@algolia/recommend-core';
+import React from 'react';
 
 import {
   LookingSimilarProps,
-  LookingSimilar as render,
+  LookingSimilar as Component,
 } from '../LookingSimilar';
 
 type Props<TObject> = LookingSimilarProps<TObject> & {
@@ -13,5 +14,5 @@ type Props<TObject> = LookingSimilarProps<TObject> & {
 };
 
 export function LookingSimilar<TObject>(props: Props<TObject>) {
-  return render(props);
+  return <Component {...props} />;
 }

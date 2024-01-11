@@ -1,15 +1,11 @@
-import { Experimental } from '@algolia/recommend-core';
-
 import { UseFrequentlyBoughtTogetherProps } from '../FrequentlyBoughtTogether';
-import { useFrequentlyBoughtTogether as hook } from '../useFrequentlyBoughtTogether';
+import { useFrequentlyBoughtTogether as useHook } from '../useFrequentlyBoughtTogether';
 
-type Props<TObject> = UseFrequentlyBoughtTogetherProps<TObject> & {
-  /**
-   * Experimental features not covered by SLA and semantic versioning conventions.
-   */
-  experimental?: Experimental;
-};
+import { Personalization } from './types';
+
+type Props<TObject> = UseFrequentlyBoughtTogetherProps<TObject> &
+  Personalization;
 
 export function useFrequentlyBoughtTogether<TObject>(props: Props<TObject>) {
-  return hook(props);
+  return useHook(props);
 }

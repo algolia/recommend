@@ -23,6 +23,7 @@ export function useTrendingItems<TObject>({
   facetValue,
   ...props
 }: UseTrendingItemsProps<TObject>) {
+  console.log('useTrendingItems', props);
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });

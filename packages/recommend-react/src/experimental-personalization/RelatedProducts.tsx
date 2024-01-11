@@ -1,8 +1,9 @@
 import { Experimental } from '@algolia/recommend-core';
+import React from 'react';
 
 import {
   RelatedProductsProps,
-  RelatedProducts as render,
+  RelatedProducts as Component,
 } from '../RelatedProducts';
 
 type Props<TObject> = RelatedProductsProps<TObject> & {
@@ -13,5 +14,5 @@ type Props<TObject> = RelatedProductsProps<TObject> & {
 };
 
 export function RelatedProducts<TObject>(props: Props<TObject>) {
-  return render(props);
+  return <Component {...props} />;
 }
