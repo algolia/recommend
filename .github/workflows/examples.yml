@@ -1,0 +1,51 @@
+name: Build and deploy examples
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: yarn-deps-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-deps-${{ hashFiles('yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Build libraries
+        run: yarn build
+
+      - name: Build react example
+        run: yarn lerna exec 'yarn build -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/' --scope=\"'@algolia/recommend-react-example'\"
+        env:
+          SUB_PATH: /recommend/pr-preview/pr-${{ github.event.number }}/demo/dist/
+
+      - name: Build javascript example
+        run: yarn lerna exec 'yarn build -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/js-demo/dist/' --scope=\"'@algolia/recommend-js-example'\"
+        env:
+          SUB_PATH: /recommend/pr-preview/pr-${{ github.event.number }}/js-demo/dist/
+
+      - name: Build templating example
+        run: yarn lerna exec 'yarn build -- --public-url=/recommend/pr-preview/pr-${{ github.event.number }}/templating/dist/' --scope=\"'@algolia/recommend-templating-example'\"
+        env:
+          SUB_PATH: /recommend/pr-preview/pr-${{ github.event.number }}/templating/dist/
+
+      - name: Deploy preview
+        if: ${{ github.repository == 'algolia/recommend' }}
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./examples/
