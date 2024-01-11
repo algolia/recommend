@@ -1,20 +1,22 @@
 /** @jsxRuntime classic */
 /** @jsx h */
-import { GetTrendingItemsProps } from '@algolia/recommend-core';
-import { TrendingItemsProps as TrendingItemsVDOMProps } from '@algolia/recommend-vdom';
 
-import { trendingItems as render } from '../trendingItems';
+import { TrendingItemsProps, trendingItems as render } from '../trendingItems';
 import { EnvironmentProps, HTMLTemplate } from '../types';
 
-type TrendingItemsProps<
-  TObject,
-  TComponentProps extends Record<string, unknown> = {}
-> = GetTrendingItemsProps<TObject> &
-  Omit<TrendingItemsVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
+import { Personalization } from './types';
+type Props<TObject> = TrendingItemsProps<TObject, HTMLTemplate> &
+  EnvironmentProps &
+  Personalization;
 
-export function trendingItems<TObject>({
-  experimental,
-  ...props
-}: TrendingItemsProps<TObject, HTMLTemplate> & EnvironmentProps) {
-  return render(props);
+export function trendingItems<TObject>({ ...props }: Props<TObject>) {
+  return render({
+    ...props,
+    experimental: {
+      personalization: {
+        userToken: props.userToken,
+        region: props.region,
+      },
+    },
+  });
 }

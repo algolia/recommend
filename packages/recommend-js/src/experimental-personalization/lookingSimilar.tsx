@@ -1,20 +1,25 @@
 /** @jsxRuntime classic */
 /** @jsx h */
-import { GetLookingSimilarProps } from '@algolia/recommend-core';
-import { LookingSimilarProps as LookingSimilarVDOMProps } from '@algolia/recommend-vdom';
-
-import { lookingSimilar as render } from '../lookingSimilar';
+import {
+  LookingSimilarProps,
+  lookingSimilar as render,
+} from '../lookingSimilar';
 import { EnvironmentProps, HTMLTemplate } from '../types';
 
-type LookingSimilarProps<
-  TObject,
-  TComponentProps extends Record<string, unknown> = {}
-> = GetLookingSimilarProps<TObject> &
-  Omit<LookingSimilarVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
+import { Personalization } from './types';
 
-export function lookingSimilar<TObject>({
-  experimental,
-  ...props
-}: LookingSimilarProps<TObject, HTMLTemplate> & EnvironmentProps) {
-  return render(props);
+type Props<TObject> = LookingSimilarProps<TObject, HTMLTemplate> &
+  EnvironmentProps &
+  Personalization;
+
+export function lookingSimilar<TObject>(props: Props<TObject>) {
+  return render<TObject>({
+    ...props,
+    experimental: {
+      personalization: {
+        userToken: props.userToken,
+        region: props.region,
+      },
+    },
+  });
 }

@@ -1,14 +1,28 @@
-import { Experimental } from '@algolia/recommend-core';
+import { createTrendingItemsComponent } from '@algolia/recommend-vdom';
+import React, { createElement, Fragment, memo } from 'react';
 
-import { TrendingItemsProps, TrendingItems as render } from '../TrendingItems';
+import { TrendingItemsProps } from '../TrendingItems';
 
-type Props<TObject> = TrendingItemsProps<TObject> & {
-  /**
-   * Experimental features not covered by SLA and semantic versioning conventions.
-   */
-  experimental?: Experimental;
-};
+import { Personalization } from './types';
+import { useTrendingItems } from './useTrendingItems';
 
-export function TrendingItems<TObject>(props: Props<TObject>) {
-  return render(props);
-}
+const UncontrolledTrendingItems = createTrendingItemsComponent({
+  createElement,
+  Fragment,
+});
+
+type Props<TObject> = TrendingItemsProps<TObject> & Personalization;
+
+export const TrendingItems = memo(function TrendingItems<TObject>(
+  props: Props<TObject>
+) {
+  const { recommendations, status } = useTrendingItems<TObject>(props);
+
+  return (
+    <UncontrolledTrendingItems
+      {...props}
+      items={recommendations}
+      status={status}
+    />
+  );
+});

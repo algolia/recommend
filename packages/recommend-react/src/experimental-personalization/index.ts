@@ -8,3 +8,9 @@ export * from './useRelatedProducts';
 export * from './useLookingSimilar';
 export * from './useTrendingItems';
 export * from './Recommend';
+
+// unmodified exports
+export * from '../RecommendedForYou';
+export * from '../TrendingFacets';
+export * from '../useRecommendedForYou';
+export * from '../useTrendingFacets';

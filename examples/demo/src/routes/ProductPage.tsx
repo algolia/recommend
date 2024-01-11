@@ -1,10 +1,11 @@
 import algoliarecommend from '@algolia/recommend';
 import {
+  Recommend,
   FrequentlyBoughtTogether,
   RelatedProducts,
   LookingSimilar,
-} from '@algolia/recommend-react';
-import { Recommend } from '@algolia/recommend-react/dist/esm/experimental-personalization';
+} from '@algolia/recommend-react/dist/esm/experimental-personalization';
+// import { FrequentlyBoughtTogether } from '@algolia/recommend-react/dist/esm/experimental-personalization';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 import React, { useEffect } from 'react';
@@ -49,15 +50,7 @@ export const ProductPage: React.FC = () => {
   }
 
   return (
-    <Recommend
-      recommendClient={recommendClient}
-      experimental={{
-        personalization: {
-          region: 'eu',
-          userToken: 'likes-gender-men',
-        },
-      }}
-    >
+    <Recommend recommendClient={recommendClient}>
       <div style={{ padding: '1rem 0' }}>
         <div
           className="Hit"
@@ -94,6 +87,7 @@ export const ProductPage: React.FC = () => {
         }}
       />
       <FrequentlyBoughtTogether<ProductHit>
+        recommendClient={recommendClient}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (
@@ -103,6 +97,8 @@ export const ProductPage: React.FC = () => {
             insights={insights}
           />
         )}
+        userToken="likes-gender-men"
+        region="eu"
         maxRecommendations={2}
         queryParameters={{
           analytics: true,

@@ -201,12 +201,8 @@ function renderRecommendations(selectedProduct: ProductHit) {
     recommendClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
-    experimental: {
-      personalization: {
-        region: 'eu',
-        userToken: 'likes-gender-men',
-      },
-    },
+    userToken: 'likes-gender-men',
+    region: 'eu',
     itemComponent({ item }) {
       return (
         <RelatedItem

@@ -1,23 +1,26 @@
 /** @jsxRuntime classic */
 /** @jsx h */
-import { GetFrequentlyBoughtTogetherProps } from '@algolia/recommend-core';
-import { FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherVDOMProps } from '@algolia/recommend-vdom';
 
-import { frequentlyBoughtTogether as render } from '../frequentlyBoughtTogether';
+import {
+  FrequentlyBoughtTogetherProps,
+  frequentlyBoughtTogether as render,
+} from '../frequentlyBoughtTogether';
 import { EnvironmentProps, HTMLTemplate } from '../types';
 
-type FrequentlyBoughtTogetherProps<
-  TObject,
-  TComponentProps extends Record<string, unknown> = {}
-> = GetFrequentlyBoughtTogetherProps<TObject> &
-  Omit<
-    FrequentlyBoughtTogetherVDOMProps<TObject, TComponentProps>,
-    'items' | 'status'
-  >;
+import { Personalization } from './types';
 
-export function frequentlyBoughtTogether<TObject>({
-  experimental,
-  ...props
-}: FrequentlyBoughtTogetherProps<TObject, HTMLTemplate> & EnvironmentProps) {
-  return render(props);
+type Props<TObject> = FrequentlyBoughtTogetherProps<TObject, HTMLTemplate> &
+  EnvironmentProps &
+  Personalization;
+
+export function frequentlyBoughtTogether<TObject>(props: Props<TObject>) {
+  return render({
+    ...props,
+    experimental: {
+      personalization: {
+        userToken: props.userToken,
+        region: props.region,
+      },
+    },
+  });
 }

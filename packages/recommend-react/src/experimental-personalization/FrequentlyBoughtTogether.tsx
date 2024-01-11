@@ -1,17 +1,14 @@
-import { Experimental } from '@algolia/recommend-core';
+import React from 'react';
 
 import {
   FrequentlyBoughtTogetherProps,
-  FrequentlyBoughtTogether as render,
+  FrequentlyBoughtTogether as Component,
 } from '../FrequentlyBoughtTogether';
 
-type Props<TObject> = FrequentlyBoughtTogetherProps<TObject> & {
-  /**
-   * Experimental features not covered by SLA and semantic versioning conventions.
-   */
-  experimental?: Experimental;
-};
+import { Personalization } from './types';
+
+type Props<TObject> = FrequentlyBoughtTogetherProps<TObject> & Personalization;
 
 export function FrequentlyBoughtTogether<TObject>(props: Props<TObject>) {
-  return render(props);
+  return <Component {...props} />;
 }
