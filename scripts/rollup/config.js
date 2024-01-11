@@ -39,7 +39,7 @@ export function createRollupConfig(pkg) {
     input: pkg.source,
     output: {
       banner: getBundleBanner(pkg),
-      file: pkg['umd:main'],
+      dir: pkg['umd:main'],
       format: 'umd',
       name: pkg.name,
       sourcemap: true,
