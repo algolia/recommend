@@ -34,26 +34,31 @@ const plugins = [
   }),
 ];
 
-export const createRollupConfig = (pkg) => {
-  const sources =
-    typeof pkg.source === 'string'
-      ? { [pkg['umd:main']]: pkg.source }
-      : Object.fromEntries(
-          Object.entries(pkg.source).map(([key, source]) => [pkg[key], source])
-        );
+export function createRollupConfig(pkg) {
+  const sources = {};
 
-  return Object.entries(sources).map(([file, source]) => ({
-    input: source,
-    output: {
-      banner: getBundleBanner(pkg),
-      file,
-      format: 'umd',
-      name: pkg.name,
-      sourcemap: true,
-    },
-    plugins,
-  }));
-};
+  if (typeof pkg.source === 'string') {
+    sources[pkg['umd:main']] = pkg.source;
+  } else {
+    Object.entries(pkg.source).forEach(([key, source]) => {
+      sources[pkg[`umd:${key}`]] = source;
+    });
+  }
+
+  return Object.entries(sources).map(([file, source]) => {
+    return {
+      input: source,
+      output: {
+        banner: getBundleBanner(pkg),
+        file,
+        format: 'umd',
+        name: pkg.name,
+        sourcemap: true,
+      },
+      plugins,
+    };
+  });
+}
 
 export function createRollupConfigForReact(pkg) {
   const configs = createRollupConfig(pkg);
