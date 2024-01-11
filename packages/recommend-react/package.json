@@ -9,7 +9,9 @@
     "name": "Algolia, Inc.",
     "url": "https://www.algolia.com"
   },
-  "source": "src/index.ts",
+  "source": {
+    "main": "src/index.ts"
+  },
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",
   "main": "dist/umd/index.js",
