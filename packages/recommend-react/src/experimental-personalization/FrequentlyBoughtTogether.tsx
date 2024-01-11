@@ -1,11 +1,10 @@
+import { Personalization } from '@algolia/recommend-core';
 import React from 'react';
 
 import {
   FrequentlyBoughtTogetherProps,
   FrequentlyBoughtTogether as Component,
 } from '../FrequentlyBoughtTogether';
-
-import { Personalization } from './types';
 
 type Props<TObject> = FrequentlyBoughtTogetherProps<TObject> & Personalization;
 

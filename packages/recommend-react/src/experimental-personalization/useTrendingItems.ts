@@ -1,7 +1,7 @@
+import { Personalization } from '@algolia/recommend-core';
+
 import { UseTrendingItemsProps } from '../TrendingItems';
 import { useTrendingItems as useHook } from '../useTrendingItems';
-
-import { Personalization } from './types';
 
 type Props<TObject> = UseTrendingItemsProps<TObject> & Personalization;
 

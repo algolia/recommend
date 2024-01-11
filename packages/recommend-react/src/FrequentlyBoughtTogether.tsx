@@ -16,7 +16,7 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
 );
 
 export type UseFrequentlyBoughtTogetherProps<TObject> = OptionalRecommendClient<
-  GetFrequentlyBoughtTogetherProps<TObject>
+  Omit<GetFrequentlyBoughtTogetherProps<TObject>, 'userToken' | 'region'>
 >;
 
 export type FrequentlyBoughtTogetherProps<
@@ -33,8 +33,6 @@ export function FrequentlyBoughtTogether<TObject>(
   const { recommendations, status } = useFrequentlyBoughtTogether<TObject>(
     props
   );
-
-  console.log('recommendations', recommendations);
 
   return (
     <UncontrolledFrequentlyBoughtTogether

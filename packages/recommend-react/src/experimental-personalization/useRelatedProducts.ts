@@ -1,7 +1,7 @@
+import { Personalization } from '@algolia/recommend-core';
+
 import { UseRelatedProductsProps } from '../RelatedProducts';
 import { useRelatedProducts as useHook } from '../useRelatedProducts';
-
-import { Personalization } from './types';
 
 type Props<TObject> = UseRelatedProductsProps<TObject> & Personalization;
 

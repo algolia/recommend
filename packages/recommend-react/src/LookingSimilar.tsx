@@ -14,7 +14,9 @@ const UncontrolledLookingSimilar = createLookingSimilarComponent({
 });
 
 export type UseLookingSimilarProps<TObject> = Omit<
-  OptionalRecommendClient<GetLookingSimilarProps<TObject>>,
+  OptionalRecommendClient<
+    Omit<GetLookingSimilarProps<TObject>, 'userToken' | 'region'>
+  >,
   'experimental'
 >;
 

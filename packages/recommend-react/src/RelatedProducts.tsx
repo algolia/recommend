@@ -14,7 +14,9 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
 });
 
 export type UseRelatedProductsProps<TObject> = Omit<
-  OptionalRecommendClient<GetRelatedProductsProps<TObject>>,
+  OptionalRecommendClient<
+    Omit<GetRelatedProductsProps<TObject>, 'userToken' | 'region'>
+  >,
   'experimental'
 >;
 

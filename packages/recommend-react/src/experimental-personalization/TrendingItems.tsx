@@ -1,11 +1,10 @@
+import { Personalization } from '@algolia/recommend-core';
 import React from 'react';
 
 import {
   TrendingItemsProps,
   TrendingItems as Component,
 } from '../TrendingItems';
-
-import { Personalization } from './types';
 
 type Props<TObject> = TrendingItemsProps<TObject> & Personalization;
 
