@@ -23,7 +23,9 @@ export function useTrendingItems<TObject>({
   facetValue,
   ...props
 }: UseTrendingItemsProps<TObject>) {
-  console.log('useTrendingItems', props);
+  // @ts-expect-error used for internal experimental-personalization
+  const { region, userToken } = props;
+
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -54,7 +56,6 @@ export function useTrendingItems<TObject>({
       facetName,
       facetValue,
       transformItems: transformItemsRef.current,
-      ...props,
     };
 
     if (hasProvider && isContextClient) {
@@ -82,8 +83,9 @@ export function useTrendingItems<TObject>({
 
     setStatus('loading');
     getTrendingItems({
+      region,
+      userToken,
       ...param,
-      ...props,
       recommendClient: client,
       transformItems: transformItemsRef.current,
     }).then((response) => {
@@ -104,7 +106,8 @@ export function useTrendingItems<TObject>({
     hasProvider,
     isContextClient,
     register,
-    props,
+    region,
+    userToken,
   ]);
 
   return {

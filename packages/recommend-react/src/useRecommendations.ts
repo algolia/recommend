@@ -26,6 +26,7 @@ export function useRecommendations<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseRecommendationsProps<TObject>) {
+  const { region, userToken } = props;
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -53,7 +54,8 @@ export function useRecommendations<TObject>({
       recommendClient,
       threshold,
       transformItems: transformItemsRef.current,
-      ...props,
+      region,
+      userToken,
     }).then((response) => {
       setResult(response);
       setStatus('idle');
@@ -68,7 +70,8 @@ export function useRecommendations<TObject>({
     recommendClient,
     setStatus,
     threshold,
-    props,
+    region,
+    userToken,
   ]);
 
   return {

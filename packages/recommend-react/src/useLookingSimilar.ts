@@ -22,6 +22,8 @@ export function useLookingSimilar<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseLookingSimilarProps<TObject>) {
+  // @ts-expect-error used for internal experimental-personalization
+  const { region, userToken } = props;
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -51,7 +53,6 @@ export function useLookingSimilar<TObject>({
       queryParameters,
       threshold,
       transformItems: transformItemsRef.current,
-      ...props,
     };
 
     if (hasProvider && isContextClient) {
@@ -90,6 +91,8 @@ export function useLookingSimilar<TObject>({
 
     setStatus('loading');
     getLookingSimilar({
+      region,
+      userToken,
       ...param,
       recommendClient: client,
     }).then((response) => {
@@ -109,7 +112,8 @@ export function useLookingSimilar<TObject>({
     register,
     setStatus,
     threshold,
-    props,
+    region,
+    userToken,
   ]);
 
   return {

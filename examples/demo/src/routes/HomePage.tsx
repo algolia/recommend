@@ -3,7 +3,7 @@ import {
   TrendingItems,
   TrendingFacets,
   RecommendedForYou,
-} from '@algolia/recommend-react/dist/umd/experimental-personalization';
+} from '@algolia/recommend-react/dist/esm/experimental-personalization';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';

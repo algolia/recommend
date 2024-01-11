@@ -21,6 +21,8 @@ export function useFrequentlyBoughtTogether<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseFrequentlyBoughtTogetherProps<TObject>) {
+  // @ts-expect-error used for internal experimental-personalization
+  const { region, userToken } = props;
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -48,7 +50,6 @@ export function useFrequentlyBoughtTogether<TObject>({
       queryParameters,
       threshold,
       transformItems: transformItemsRef.current,
-      ...props,
     };
 
     if (hasProvider && isContextClient) {
@@ -86,6 +87,8 @@ export function useFrequentlyBoughtTogether<TObject>({
 
     setStatus('loading');
     getFrequentlyBoughtTogether({
+      region,
+      userToken,
       ...param,
       recommendClient: client,
     }).then((response) => {
@@ -104,7 +107,8 @@ export function useFrequentlyBoughtTogether<TObject>({
     hasProvider,
     isContextClient,
     register,
-    props,
+    region,
+    userToken,
   ]);
 
   return {
