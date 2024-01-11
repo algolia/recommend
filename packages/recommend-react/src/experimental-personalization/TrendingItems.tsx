@@ -1,5 +1,5 @@
 import { createTrendingItemsComponent } from '@algolia/recommend-vdom';
-import React, { createElement, Fragment, memo } from 'react';
+import React, { createElement, Fragment } from 'react';
 
 import { TrendingItemsProps } from '../TrendingItems';
 
@@ -13,9 +13,8 @@ const UncontrolledTrendingItems = createTrendingItemsComponent({
 
 type Props<TObject> = TrendingItemsProps<TObject> & Personalization;
 
-export const TrendingItems = memo(function TrendingItems<TObject>(
-  props: Props<TObject>
-) {
+export function TrendingItems<TObject>(props: Props<TObject>) {
+  console.log('TrendingItems', props);
   const { recommendations, status } = useTrendingItems<TObject>(props);
 
   return (
@@ -25,4 +24,4 @@ export const TrendingItems = memo(function TrendingItems<TObject>(
       status={status}
     />
   );
-});
+}
