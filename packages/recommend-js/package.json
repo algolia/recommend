@@ -8,12 +8,8 @@
     "name": "Algolia, Inc.",
     "url": "https://www.algolia.com"
   },
-  "source": {
-    "main": "src/index.ts",
-    "experimental-personalization": "src/experimental-personalization/index.ts"
-  },
+  "source": "src/index.ts",
   "umd:main": "dist/umd/index.js",
-  "umd:experimental-personalization": "dist/umd/experimental-personalization/index.js",
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",
   "main": "dist/umd/index.js",

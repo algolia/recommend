@@ -35,14 +35,16 @@ const plugins = [
 ];
 
 export function createRollupConfig(pkg) {
-  const sources = {};
+  const sources = {
+    [pkg['umd:main']]: pkg.source,
+  };
 
-  if (typeof pkg.source === 'string') {
-    sources[pkg['umd:main']] = pkg.source;
-  } else {
-    Object.entries(pkg.source).forEach(([key, source]) => {
-      sources[pkg[`umd:${key}`]] = source;
-    });
+  if (
+    pkg.name === '@algolia/recommend-js' ||
+    pkg.name === '@algolia/recommend-react'
+  ) {
+    sources['dist/umd/experimental-personalization/index.js'] =
+      'src/experimental-personalization/index.ts';
   }
 
   return Object.entries(sources).map(([file, source]) => {
