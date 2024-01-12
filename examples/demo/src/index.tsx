@@ -12,7 +12,7 @@ import './App.css';
 import './Recommend.css';
 
 // needed for github pages subdirectory
-const basename = process.env.SUB_PATH ?? '/';
+const basename = process.env.SUB_PATH || '/';
 
 const router = createBrowserRouter(
   [
