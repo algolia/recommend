@@ -1,4 +1,4 @@
-import { getCachedValue, setCachedValue } from './cache';
+import { getCachedValue } from './cache';
 
 type GetStrategy = {
   appId: string;
@@ -51,6 +51,5 @@ export const getStrategy = async ({
     );
   }
   const result: StrategyResponse = await response.json();
-  setCachedValue({ region, apiKey, appId }, result);
   return result;
 };

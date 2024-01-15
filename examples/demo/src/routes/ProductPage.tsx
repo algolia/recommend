@@ -1,10 +1,10 @@
 import algoliarecommend from '@algolia/recommend';
 import {
+  Recommend,
   FrequentlyBoughtTogether,
   RelatedProducts,
   LookingSimilar,
-  Recommend,
-} from '@algolia/recommend-react';
+} from '@algolia/recommend-react/dist/esm/experimental-personalization';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 import React, { useEffect } from 'react';
@@ -51,13 +51,8 @@ export const ProductPage: React.FC = () => {
   return (
     <Recommend
       recommendClient={recommendClient}
-      experimental={{
-        personalization: {
-          enabled: true,
-          region: 'eu',
-          userToken: 'likes-gender-men',
-        },
-      }}
+      userToken="likes-gender-men"
+      region="eu"
     >
       <div style={{ padding: '1rem 0' }}>
         <div
@@ -95,6 +90,7 @@ export const ProductPage: React.FC = () => {
         }}
       />
       <FrequentlyBoughtTogether<ProductHit>
+        recommendClient={recommendClient}
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
         itemComponent={({ item }) => (

@@ -104,8 +104,8 @@ const reducer: React.Reducer<StateType<unknown>, Action<any>> = (
 export function Recommend<TObject>({
   recommendClient,
   children,
-  experimental,
-}: RecommendProps) {
+  ...props
+}: Omit<RecommendProps, 'experimental'>) {
   const [state, dispatch] = React.useReducer(reducer, {
     isDirty: null,
     cache: {},
@@ -136,7 +136,7 @@ export function Recommend<TObject>({
       recommendClient,
       queries,
       keys,
-      experimental,
+      ...props,
     }).then((result) => {
       Object.entries(result).forEach(([key, value]) => {
         state.widgets.forEach((widget) => {
@@ -155,7 +155,7 @@ export function Recommend<TObject>({
     state.widgets,
     state.cache,
     recommendClient,
-    experimental,
+    props,
   ]);
 
   const register = React.useCallback(

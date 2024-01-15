@@ -2,7 +2,7 @@ import { RecommendClient, TrendingItemsQuery } from '@algolia/recommend';
 
 import { getPersonalizationFilters } from './personalization';
 import { ProductRecord } from './types';
-import { Experimental } from './types/Experimental';
+import { Personalization } from './types/Personalization';
 import { mapByScoreToRecommendations, uniqBy } from './utils';
 import { version } from './version';
 
@@ -19,12 +19,7 @@ export type TrendingItemsProps<TObject> = {
   transformItems?: (
     items: Array<ProductRecord<TObject>>
   ) => Array<ProductRecord<TObject>>;
-
-  /**
-   * Experimental features not covered by SLA and semantic versioning conventions.
-   */
-  experimental?: Experimental;
-};
+} & Personalization;
 
 export type GetTrendingItemsResult<TObject> = {
   recommendations: Array<ProductRecord<TObject>>;
@@ -43,7 +38,8 @@ export function getTrendingItems<TObject>({
   threshold,
   facetName,
   facetValue,
-  experimental,
+  userToken,
+  region,
 }: GetTrendingItemsProps<TObject>) {
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
@@ -51,16 +47,14 @@ export function getTrendingItems<TObject>({
    * Big block of duplicated code, but it is fine since it is experimental and will be ported to the API eventually.
    * This is a temporary solution to get recommended personalization.
    */
-  if (
-    experimental?.personalization?.enabled &&
-    experimental?.personalization?.region
-  ) {
+  if (region && userToken) {
+    recommendClient.addAlgoliaAgent('personalization');
     return getPersonalizationFilters({
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appId: recommendClient.appId,
-      region: experimental.personalization.region,
-      userToken: experimental.personalization.userToken,
-      cache: experimental.personalization.cache,
+      region,
+      userToken,
+      // cache
     }).then((personalizationFilters) => {
       const query = {
         fallbackParameters,

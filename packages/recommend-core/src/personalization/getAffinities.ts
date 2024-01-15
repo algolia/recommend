@@ -1,4 +1,4 @@
-import { getCachedValue, setCachedValue } from './cache';
+import { getCachedValue } from './cache';
 
 type GetAffinities = {
   userToken: string;
@@ -54,6 +54,5 @@ export const getAffinities = async ({
   }
 
   const result: AffinitiesResponse = await response.json();
-  setCachedValue({ userToken, region, apiKey, appId }, result);
   return result;
 };

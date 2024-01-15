@@ -19,7 +19,8 @@ export function getFrequentlyBoughtTogether<TObject>({
   maxRecommendations,
   queryParameters,
   threshold,
-  experimental,
+  region,
+  userToken,
 }: GetFrequentlyBoughtTogetherProps<TObject>) {
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
@@ -27,16 +28,14 @@ export function getFrequentlyBoughtTogether<TObject>({
    * Big block of duplicated code, but it is fine since it is experimental and will be ported to the API eventually.
    * This is a temporary solution to get recommended personalization.
    */
-  if (
-    experimental?.personalization?.enabled &&
-    experimental?.personalization?.region
-  ) {
+  if (region && userToken) {
+    recommendClient.addAlgoliaAgent('personalization');
     return getPersonalizationFilters({
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appId: recommendClient.appId,
-      region: experimental.personalization.region,
-      userToken: experimental.personalization.userToken,
-      cache: experimental.personalization.cache,
+      region,
+      userToken,
+      // cache
     }).then((personalizationFilters) => {
       const queries = objectIDs.map((objectID) => ({
         indexName,
