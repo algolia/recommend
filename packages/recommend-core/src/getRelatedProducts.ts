@@ -28,6 +28,7 @@ export function getRelatedProducts<TObject>({
    * This is a temporary solution to get recommended personalization.
    */
   if (region && userToken) {
+    recommendClient.addAlgoliaAgent('personalization');
     return getPersonalizationFilters({
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appId: recommendClient.appId,
