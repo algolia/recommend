@@ -6,8 +6,9 @@ import {
   TrendingItems as TrendingItemsPrimitive,
 } from '../TrendingItems';
 
-export type TrendingItemsProps<TObject> = TrendingItemsPropsPrimitive<TObject> &
-  PersonalizationProps;
+export type TrendingItemsProps<TObject> =
+  | TrendingItemsPropsPrimitive<TObject>
+  | (TrendingItemsPropsPrimitive<TObject> & PersonalizationProps);
 
 export function TrendingItems<TObject>(props: TrendingItemsProps<TObject>) {
   return <TrendingItemsPrimitive {...props} />;

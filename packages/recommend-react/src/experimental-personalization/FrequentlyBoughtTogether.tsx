@@ -6,9 +6,9 @@ import {
   FrequentlyBoughtTogether as FrequentlyBoughtTogetherPrimitive,
 } from '../FrequentlyBoughtTogether';
 
-export type FrequentlyBoughtTogetherProps<
-  TObject
-> = FrequentlyBoughtTogetherPropsPrimitive<TObject> & PersonalizationProps;
+export type FrequentlyBoughtTogetherProps<TObject> =
+  | FrequentlyBoughtTogetherPropsPrimitive<TObject>
+  | (FrequentlyBoughtTogetherPropsPrimitive<TObject> & PersonalizationProps);
 
 export function FrequentlyBoughtTogether<TObject>(
   props: FrequentlyBoughtTogetherProps<TObject>

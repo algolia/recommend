@@ -6,9 +6,9 @@ import {
   RelatedProducts as RelatedProductsPrimitive,
 } from '../RelatedProducts';
 
-export type RelatedProductsProps<
-  TObject
-> = RelatedProductsPropsPrimitive<TObject> & PersonalizationProps;
+export type RelatedProductsProps<TObject> =
+  | RelatedProductsPropsPrimitive<TObject>
+  | (RelatedProductsPropsPrimitive<TObject> & PersonalizationProps);
 
 export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
   return <RelatedProductsPrimitive {...props} />;
