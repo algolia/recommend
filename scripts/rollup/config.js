@@ -35,31 +35,47 @@ const plugins = [
 ];
 
 export function createRollupConfig(pkg) {
-  return {
-    input: pkg.source,
-    output: {
-      banner: getBundleBanner(pkg),
-      file: pkg['umd:main'],
-      format: 'umd',
-      name: pkg.name,
-      sourcemap: true,
-    },
-    plugins,
+  const sources = {
+    [pkg['umd:main']]: pkg.source,
   };
+
+  if (
+    pkg.name === '@algolia/recommend-js' ||
+    pkg.name === '@algolia/recommend-react'
+  ) {
+    sources['dist/umd/experimental-personalization/index.js'] =
+      'src/experimental-personalization/index.ts';
+  }
+
+  return Object.entries(sources).map(([file, source]) => {
+    return {
+      input: source,
+      output: {
+        banner: getBundleBanner(pkg),
+        file,
+        format: 'umd',
+        name: pkg.name,
+        sourcemap: true,
+      },
+      plugins,
+    };
+  });
 }
 
 export function createRollupConfigForReact(pkg) {
-  const config = createRollupConfig(pkg);
+  const configs = createRollupConfig(pkg);
 
-  return {
-    ...config,
-    external: ['react', 'react-dom'],
-    output: {
-      ...config.output,
-      globals: {
-        react: 'React',
-        'react-dom': 'ReactDOM',
+  return configs.map((config) => {
+    return {
+      ...config,
+      external: ['react', 'react-dom'],
+      output: {
+        ...config.output,
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
       },
-    },
-  };
+    };
+  });
 }

@@ -19,9 +19,12 @@ export function useRelatedProducts<TObject>({
   queryParameters: userQueryParameters,
   recommendClient,
   threshold,
-  experimental,
   transformItems: userTransformItems = (x) => x,
+  ...props
 }: UseRelatedProductsProps<TObject>) {
+  // @ts-expect-error used for internal experimental-personalization
+  const { region, userToken } = props;
+
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -50,7 +53,6 @@ export function useRelatedProducts<TObject>({
       objectIDs,
       queryParameters,
       threshold,
-      experimental,
       transformItems: transformItemsRef.current,
     };
 
@@ -90,6 +92,8 @@ export function useRelatedProducts<TObject>({
 
     setStatus('loading');
     getRelatedProducts({
+      region,
+      userToken,
       ...param,
       recommendClient: client,
     }).then((response) => {
@@ -108,8 +112,9 @@ export function useRelatedProducts<TObject>({
     queryParameters,
     register,
     setStatus,
-    experimental,
     threshold,
+    region,
+    userToken,
   ]);
 
   return {

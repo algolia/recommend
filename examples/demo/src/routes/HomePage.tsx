@@ -1,9 +1,9 @@
 import algoliarecommend from '@algolia/recommend';
 import {
-  TrendingFacets,
   TrendingItems,
+  TrendingFacets,
   RecommendedForYou,
-} from '@algolia/recommend-react';
+} from '@algolia/recommend-react/dist/esm/experimental-personalization';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -47,14 +47,10 @@ export const HomePage: React.FC = () => {
         }}
       />
       <TrendingItems<ProductHit>
+        region="eu"
+        userToken="aaaa"
         indexName={indexName}
         recommendClient={recommendClient}
-        experimental={{
-          personalization: {
-            region: 'eu',
-            userToken: 'likes-gender-men',
-          },
-        }}
         facetName={selectedFacetValue ? 'brand' : undefined}
         facetValue={
           selectedFacetValue ? selectedFacetValue.facetValue : undefined

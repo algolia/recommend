@@ -13,8 +13,11 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
   Fragment,
 });
 
-export type UseRelatedProductsProps<TObject> = OptionalRecommendClient<
-  GetRelatedProductsProps<TObject>
+export type UseRelatedProductsProps<TObject> = Omit<
+  OptionalRecommendClient<
+    Omit<GetRelatedProductsProps<TObject>, 'userToken' | 'region'>
+  >,
+  'experimental'
 >;
 
 export type RelatedProductsProps<TObject> = UseRelatedProductsProps<TObject> &

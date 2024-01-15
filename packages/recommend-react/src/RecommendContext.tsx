@@ -1,9 +1,5 @@
 import { RecommendClient } from '@algolia/recommend';
-import {
-  BatchKeyPair,
-  BatchQuery,
-  Experimental,
-} from '@algolia/recommend-core';
+import { BatchKeyPair, BatchQuery } from '@algolia/recommend-core';
 import React from 'react';
 
 export type GetParametersResult<TObject> = {
@@ -28,10 +24,6 @@ type RecommendContextType<TResult> = {
 export type RecommendProps = {
   children: React.ReactNode;
   recommendClient: RecommendClient;
-  /**
-   * Experimental features not covered by SLA and semantic versioning conventions.
-   */
-  experimental?: Experimental;
 };
 
 export const RecommendContext = React.createContext<RecommendContextType<any>>({

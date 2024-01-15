@@ -13,8 +13,11 @@ const UncontrolledTrendingItems = createTrendingItemsComponent({
   Fragment,
 });
 
-export type UseTrendingItemsProps<TObject> = OptionalRecommendClient<
-  GetTrendingItemsProps<TObject>
+export type UseTrendingItemsProps<TObject> = Omit<
+  OptionalRecommendClient<
+    Omit<GetTrendingItemsProps<TObject>, 'userToken' | 'region'>
+  >,
+  'experimental'
 >;
 
 export type TrendingItemsProps<TObject> = UseTrendingItemsProps<TObject> &

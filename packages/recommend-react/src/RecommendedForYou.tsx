@@ -13,8 +13,9 @@ const UncontrolledRecommendedForYou = createRecommendedForYouComponent({
   Fragment,
 });
 
-export type UseRecommendedForYouProps<TObject> = OptionalRecommendClient<
-  GetRecommendedForYouProps<TObject>
+export type UseRecommendedForYouProps<TObject> = Omit<
+  OptionalRecommendClient<GetRecommendedForYouProps<TObject>>,
+  'experimental'
 >;
 
 export type RecommendedForYouProps<

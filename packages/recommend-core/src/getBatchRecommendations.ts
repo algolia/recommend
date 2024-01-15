@@ -7,7 +7,7 @@ import {
 
 import { getPersonalizationFilters } from './personalization';
 import { ProductRecord, TrendingFacetHit } from './types';
-import { Experimental } from './types/Experimental';
+import { Personalization } from './types/Personalization';
 import { mapByScoreToRecommendations, mapToRecommendations } from './utils';
 import { version } from './version';
 
@@ -30,11 +30,7 @@ export type GetBatchRecommendations<TObject> = {
   keys: BatchKeyPair[];
   queries: Array<BatchQuery<TObject>>;
   recommendClient: RecommendClient;
-  /**
-   * Experimental features not covered by SLA and semantic versioning conventions.
-   */
-  experimental?: Experimental;
-};
+} & Personalization;
 
 export type BatchRecommendations<TObject> = {
   recommendations: Array<ProductRecord<TObject>>;
@@ -57,7 +53,8 @@ export async function getBatchRecommendations<TObject>({
   keys,
   queries,
   recommendClient,
-  experimental,
+  region,
+  userToken,
 }: GetBatchRecommendations<TObject>): Promise<
   Record<string, BatchRecommendations<TObject>>
 > {
@@ -69,15 +66,12 @@ export async function getBatchRecommendations<TObject>({
    * Big block of duplicated code, but it is fine since it is experimental and will be ported to the API eventually.
    * This is a temporary solution to get recommended personalization.
    */
-  if (
-    experimental?.personalization?.region &&
-    experimental?.personalization?.userToken
-  ) {
+  if (region && userToken) {
     const personalizationFilters = await getPersonalizationFilters({
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appId: recommendClient.appId,
-      region: experimental.personalization.region,
-      userToken: experimental.personalization.userToken,
+      region,
+      userToken,
     });
 
     _queries = queries.map((query) => {

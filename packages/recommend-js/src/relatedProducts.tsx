@@ -46,10 +46,10 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
   };
 }
 
-type RelatedProductsProps<
+export type RelatedProductsProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
-> = GetRelatedProductsProps<TObject> &
+> = Omit<GetRelatedProductsProps<TObject>, 'userToken' | 'region'> &
   Omit<RelatedProductsVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
 
 function RelatedProducts<
