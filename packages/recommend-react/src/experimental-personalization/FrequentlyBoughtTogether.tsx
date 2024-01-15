@@ -1,13 +1,17 @@
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 import React from 'react';
 
 import {
-  FrequentlyBoughtTogetherProps,
-  FrequentlyBoughtTogether as Component,
+  FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherPropsPrimitive,
+  FrequentlyBoughtTogether as FrequentlyBoughtTogetherPrimitive,
 } from '../FrequentlyBoughtTogether';
 
-type Props<TObject> = FrequentlyBoughtTogetherProps<TObject> & Personalization;
+export type FrequentlyBoughtTogetherProps<
+  TObject
+> = FrequentlyBoughtTogetherPropsPrimitive<TObject> & PersonalizationProps;
 
-export function FrequentlyBoughtTogether<TObject>(props: Props<TObject>) {
-  return <Component {...props} />;
+export function FrequentlyBoughtTogether<TObject>(
+  props: FrequentlyBoughtTogetherProps<TObject>
+) {
+  return <FrequentlyBoughtTogetherPrimitive {...props} />;
 }

@@ -5,9 +5,9 @@ import {
   RecommendedForYouQuery,
 } from '@algolia/recommend';
 
-import { getPersonalizationFilters } from './personalization';
+import { getPersonalizationFilters, isPersonalized } from './personalization';
 import { ProductRecord, TrendingFacetHit } from './types';
-import { Personalization } from './types/Personalization';
+import { PersonalizationProps } from './types/PersonalizationProps';
 import { mapByScoreToRecommendations, mapToRecommendations } from './utils';
 import { version } from './version';
 
@@ -26,11 +26,15 @@ export type BatchQuery<TObject> = (
   ) => Array<ProductRecord<TObject>>;
 };
 
-export type GetBatchRecommendations<TObject> = {
+type _GetBatchRecommendations<TObject> = {
   keys: BatchKeyPair[];
   queries: Array<BatchQuery<TObject>>;
   recommendClient: RecommendClient;
-} & Personalization;
+};
+
+export type GetBatchRecommendations<TObject> =
+  | _GetBatchRecommendations<TObject>
+  | (_GetBatchRecommendations<TObject> & PersonalizationProps);
 
 export type BatchRecommendations<TObject> = {
   recommendations: Array<ProductRecord<TObject>>;
@@ -49,15 +53,11 @@ const isRecommendedForYouQuery = <TObject>(
   return query.model === 'recommended-for-you';
 };
 
-export async function getBatchRecommendations<TObject>({
-  keys,
-  queries,
-  recommendClient,
-  region,
-  userToken,
-}: GetBatchRecommendations<TObject>): Promise<
-  Record<string, BatchRecommendations<TObject>>
-> {
+export async function getBatchRecommendations<TObject>(
+  params: GetBatchRecommendations<TObject>
+): Promise<Record<string, BatchRecommendations<TObject>>> {
+  const { keys, queries, recommendClient } = params;
+
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
   let _queries = queries;
@@ -66,13 +66,13 @@ export async function getBatchRecommendations<TObject>({
    * Big block of duplicated code, but it is fine since it is experimental and will be ported to the API eventually.
    * This is a temporary solution to get recommended personalization.
    */
-  if (region && userToken) {
-    recommendClient.addAlgoliaAgent('personalization');
+  if (isPersonalized(params) && params.region && params.userToken) {
+    recommendClient.addAlgoliaAgent('experimental-personalization');
     const personalizationFilters = await getPersonalizationFilters({
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appId: recommendClient.appId,
-      region,
-      userToken,
+      region: params.region,
+      userToken: params.userToken,
     });
 
     _queries = queries.map((query) => {

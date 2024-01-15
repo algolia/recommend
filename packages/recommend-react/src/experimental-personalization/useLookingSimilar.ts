@@ -1,10 +1,14 @@
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 
-import { UseLookingSimilarProps } from '../LookingSimilar';
-import { useLookingSimilar as useHook } from '../useLookingSimilar';
+import { UseLookingSimilarProps as UseLookingSimilarPropsPrimitive } from '../LookingSimilar';
+import { useLookingSimilar as useLookingSimilarPrimitive } from '../useLookingSimilar';
 
-type Props<TObject> = UseLookingSimilarProps<TObject> & Personalization;
+export type UseLookingSimilarProps<
+  TObject
+> = UseLookingSimilarPropsPrimitive<TObject> & PersonalizationProps;
 
-export function useLookingSimilar<TObject>(props: Props<TObject>) {
-  return useHook(props);
+export function useLookingSimilar<TObject>(
+  props: UseLookingSimilarProps<TObject>
+) {
+  return useLookingSimilarPrimitive(props);
 }

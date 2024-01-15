@@ -1,11 +1,14 @@
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 
-import { UseFrequentlyBoughtTogetherProps } from '../FrequentlyBoughtTogether';
-import { useFrequentlyBoughtTogether as useHook } from '../useFrequentlyBoughtTogether';
+import { UseFrequentlyBoughtTogetherProps as UseFrequentlyBoughtTogetherPropsPrimitive } from '../FrequentlyBoughtTogether';
+import { useFrequentlyBoughtTogether as useFrequentlyBoughtTogetherPrimitive } from '../useFrequentlyBoughtTogether';
 
-type Props<TObject> = UseFrequentlyBoughtTogetherProps<TObject> &
-  Personalization;
+export type UseFrequentlyBoughtTogetherProps<
+  TObject
+> = UseFrequentlyBoughtTogetherPropsPrimitive<TObject> & PersonalizationProps;
 
-export function useFrequentlyBoughtTogether<TObject>(props: Props<TObject>) {
-  return useHook(props);
+export function useFrequentlyBoughtTogether<TObject>(
+  props: UseFrequentlyBoughtTogetherProps<TObject>
+) {
+  return useFrequentlyBoughtTogetherPrimitive(props);
 }

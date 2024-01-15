@@ -1,10 +1,14 @@
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 
-import { UseTrendingItemsProps } from '../TrendingItems';
-import { useTrendingItems as useHook } from '../useTrendingItems';
+import { UseTrendingItemsProps as UseTrendingItemsPropsPrimitive } from '../TrendingItems';
+import { useTrendingItems as useTrendingItemsPrimitive } from '../useTrendingItems';
 
-type Props<TObject> = UseTrendingItemsProps<TObject> & Personalization;
+export type UseTrendingItemsProps<
+  TObject
+> = UseTrendingItemsPropsPrimitive<TObject> & PersonalizationProps;
 
-export function useTrendingItems<TObject>(props: Props<TObject>) {
-  return useHook(props);
+export function useTrendingItems<TObject>(
+  props: UseTrendingItemsProps<TObject>
+) {
+  return useTrendingItemsPrimitive(props);
 }

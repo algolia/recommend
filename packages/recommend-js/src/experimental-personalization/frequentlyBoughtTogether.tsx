@@ -1,18 +1,23 @@
 /** @jsxRuntime classic */
 /** @jsx h */
 
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 
 import {
-  FrequentlyBoughtTogetherProps,
-  frequentlyBoughtTogether as render,
+  FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherPropsPrimitive,
+  frequentlyBoughtTogether as frequentlyBoughtTogetherPrimitive,
 } from '../frequentlyBoughtTogether';
 import { EnvironmentProps, HTMLTemplate } from '../types';
 
-type Props<TObject> = FrequentlyBoughtTogetherProps<TObject, HTMLTemplate> &
-  EnvironmentProps &
-  Personalization;
+export type FrequentlyBoughtTogetherProps<
+  TObject
+> = FrequentlyBoughtTogetherPropsPrimitive<TObject, HTMLTemplate> &
+  EnvironmentProps;
 
-export function frequentlyBoughtTogether<TObject>(props: Props<TObject>) {
-  return render<TObject>(props);
+export function frequentlyBoughtTogether<TObject>(
+  props:
+    | FrequentlyBoughtTogetherProps<TObject>
+    | (FrequentlyBoughtTogetherProps<TObject> & PersonalizationProps)
+) {
+  return frequentlyBoughtTogetherPrimitive<TObject>(props);
 }

@@ -1,13 +1,15 @@
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 import React from 'react';
 
 import {
-  RelatedProductsProps,
-  RelatedProducts as Component,
+  RelatedProductsProps as RelatedProductsPropsPrimitive,
+  RelatedProducts as RelatedProductsPrimitive,
 } from '../RelatedProducts';
 
-type Props<TObject> = RelatedProductsProps<TObject> & Personalization;
+export type RelatedProductsProps<
+  TObject
+> = RelatedProductsPropsPrimitive<TObject> & PersonalizationProps;
 
-export function RelatedProducts<TObject>(props: Props<TObject>) {
-  return <Component {...props} />;
+export function RelatedProducts<TObject>(props: RelatedProductsProps<TObject>) {
+  return <RelatedProductsPrimitive {...props} />;
 }

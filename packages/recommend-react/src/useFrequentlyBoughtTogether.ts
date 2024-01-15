@@ -5,6 +5,7 @@ import {
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
+import { getPersonalizedParams } from './experimental-personalization/getPersonalizedParams';
 import { UseFrequentlyBoughtTogetherProps } from './FrequentlyBoughtTogether';
 import { useRecommendContext, useRecommendClient } from './RecommendContext';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
@@ -21,8 +22,7 @@ export function useFrequentlyBoughtTogether<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseFrequentlyBoughtTogetherProps<TObject>) {
-  // @ts-expect-error used for internal experimental-personalization
-  const { region, userToken } = props;
+  const { region, userToken } = getPersonalizedParams(props);
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });

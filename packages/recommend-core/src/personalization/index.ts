@@ -1,3 +1,5 @@
+import { PersonalizationProps } from '../types';
+
 import { getAffinities } from './getAffinities';
 import { getStrategy } from './getStrategy';
 
@@ -14,7 +16,16 @@ export const getPersonalizationFilters = async ({
   apiKey,
   appId,
 }: GetPersonalizationFilters) => {
-  if (!userToken || !region || !apiKey || !appId) {
+  if (!region || !apiKey || !appId) {
+    throw new Error(
+      `[Algolia Recommend] parameters 'region', 'apiKey' and 'appId' are required to enable personalization.`
+    );
+  }
+  if (!userToken) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[Algolia Recommend] parameter 'userToken' is required to enable personalization.`
+    );
     return [];
   }
 
@@ -24,12 +35,15 @@ export const getPersonalizationFilters = async ({
       getStrategy({ apiKey, appId, region }),
     ]);
 
+    const FALLBACK_WEIGHT = 100;
+    const facetsScoringMap = new Map(
+      strategy.facetsScoring.map((value) => [value.facetName, value.score])
+    );
+
     const optionalFilters = Object.entries(affinities.scores).flatMap(
       ([facet, values]) =>
         Object.entries(values).map(([value, score]) => {
-          const weight =
-            strategy.facetsScoring.find((value) => value.facetName === facet)
-              ?.score || 100;
+          const weight = facetsScoringMap.get(facet) ?? FALLBACK_WEIGHT;
           const weightedScore = Math.floor(score * (weight / 100));
           return `${facet}:${value}<score=${weightedScore}>`;
         })
@@ -39,4 +53,11 @@ export const getPersonalizationFilters = async ({
   } catch (error) {
     return [];
   }
+};
+
+export const isPersonalized = (object: any): object is PersonalizationProps => {
+  return (
+    (object.region === 'eu' || object.region === 'us') &&
+    typeof object.userToken === 'string'
+  );
 };

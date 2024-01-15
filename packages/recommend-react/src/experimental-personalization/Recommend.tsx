@@ -1,16 +1,16 @@
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 import React from 'react';
 
 import { Recommend as ContextProvider } from '../Recommend';
-import { RecommendProps } from '../RecommendContext';
+import { RecommendProps as RecommendPropsPrimitive } from '../RecommendContext';
 
-type Props = RecommendProps & Personalization;
+export type RecommendProps = RecommendPropsPrimitive & PersonalizationProps;
 
 export function Recommend<TObject>({
   recommendClient,
   children,
   ...props
-}: Props) {
+}: RecommendProps) {
   return (
     <ContextProvider<TObject> recommendClient={recommendClient} {...props}>
       {children}

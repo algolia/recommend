@@ -1,17 +1,23 @@
 /** @jsxRuntime classic */
 /** @jsx h */
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 
 import {
-  LookingSimilarProps,
-  lookingSimilar as render,
+  LookingSimilarProps as LookingSimilarPropsPrimitive,
+  lookingSimilar as lookingSimilarPrimitive,
 } from '../lookingSimilar';
 import { EnvironmentProps, HTMLTemplate } from '../types';
 
-type Props<TObject> = LookingSimilarProps<TObject, HTMLTemplate> &
-  EnvironmentProps &
-  Personalization;
+export type LookingSimilarProps<TObject> = LookingSimilarPropsPrimitive<
+  TObject,
+  HTMLTemplate
+> &
+  EnvironmentProps;
 
-export function lookingSimilar<TObject>(props: Props<TObject>) {
-  return render<TObject>(props);
+export function lookingSimilar<TObject>(
+  props:
+    | LookingSimilarProps<TObject>
+    | (LookingSimilarProps<TObject> & PersonalizationProps)
+) {
+  return lookingSimilarPrimitive<TObject>(props);
 }
