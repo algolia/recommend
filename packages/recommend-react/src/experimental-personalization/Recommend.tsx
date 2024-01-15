@@ -6,9 +6,13 @@ import { RecommendProps } from '../RecommendContext';
 
 type Props = RecommendProps & Personalization;
 
-export function Recommend<TObject>({ recommendClient, children }: Props) {
+export function Recommend<TObject>({
+  recommendClient,
+  children,
+  ...props
+}: Props) {
   return (
-    <ContextProvider<TObject> recommendClient={recommendClient}>
+    <ContextProvider<TObject> recommendClient={recommendClient} {...props}>
       {children}
     </ContextProvider>
   );
