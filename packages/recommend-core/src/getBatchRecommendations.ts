@@ -55,6 +55,7 @@ export async function getBatchRecommendations<TObject>({
   recommendClient,
   region,
   userToken,
+  personalizationCache,
 }: GetBatchRecommendations<TObject>): Promise<
   Record<string, BatchRecommendations<TObject>>
 > {
@@ -73,7 +74,7 @@ export async function getBatchRecommendations<TObject>({
       appId: recommendClient.appId,
       region,
       userToken,
-      // cache
+      cache: personalizationCache,
     });
 
     _queries = queries.map((query) => {

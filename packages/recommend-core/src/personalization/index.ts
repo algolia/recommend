@@ -1,3 +1,5 @@
+import { Personalization } from '../types';
+
 import { getAffinities } from './getAffinities';
 import { getStrategy } from './getStrategy';
 
@@ -6,10 +8,7 @@ type GetPersonalizationFilters = {
   region: string;
   apiKey: string;
   appId: string;
-  cache?: {
-    profileMinutes?: number;
-    strategyMinutes?: number;
-  };
+  cache?: Personalization['personalizationCache'];
 };
 
 export const getPersonalizationFilters = async ({
@@ -30,9 +29,9 @@ export const getPersonalizationFilters = async ({
         apiKey,
         appId,
         region,
-        cache: cache?.profileMinutes,
+        cache: cache?.profileMs,
       }),
-      getStrategy({ apiKey, appId, region, cache: cache?.strategyMinutes }),
+      getStrategy({ apiKey, appId, region, cache: cache?.strategyMs }),
     ]);
 
     // compute optional filters

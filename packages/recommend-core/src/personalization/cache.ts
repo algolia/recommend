@@ -1,16 +1,10 @@
-const getElapsedTime = (createdAt: string) => {
-  if (!createdAt) {
-    return null;
-  }
-
-  const minutes = Math.floor(
-    Math.abs(new Date().valueOf() - Date.parse(createdAt).valueOf()) / 1000 / 60
-  );
-
-  return minutes;
+const getElapsedTimeMS = (createdAt: string) => {
+  const now = new Date();
+  const created = new Date(createdAt);
+  return now.getTime() - created.getTime();
 };
 
-export const getCachedValue = (params: any, ttl = 10) => {
+export const getCachedValue = (params: any, ttl: number) => {
   try {
     if (!window || !window.sessionStorage) {
       return null;
@@ -20,7 +14,7 @@ export const getCachedValue = (params: any, ttl = 10) => {
 
     if (cached) {
       const obj = JSON.parse(cached);
-      const createdSince = getElapsedTime(obj._createdAt);
+      const createdSince = getElapsedTimeMS(obj._createdAt);
       if (createdSince !== null && createdSince <= ttl) {
         return obj;
       }

@@ -20,6 +20,7 @@ export function getRelatedProducts<TObject>({
   threshold,
   region,
   userToken,
+  personalizationCache,
 }: GetRelatedProductsProps<TObject>) {
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
@@ -34,7 +35,7 @@ export function getRelatedProducts<TObject>({
       appId: recommendClient.appId,
       region,
       userToken,
-      // cache
+      cache: personalizationCache,
     }).then((personalizationFilters) => {
       const queries = objectIDs.map((objectID) => ({
         fallbackParameters,

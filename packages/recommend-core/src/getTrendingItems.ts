@@ -40,6 +40,7 @@ export function getTrendingItems<TObject>({
   facetValue,
   userToken,
   region,
+  personalizationCache,
 }: GetTrendingItemsProps<TObject>) {
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
@@ -54,7 +55,7 @@ export function getTrendingItems<TObject>({
       appId: recommendClient.appId,
       region,
       userToken,
-      // cache
+      cache: personalizationCache,
     }).then((personalizationFilters) => {
       const query = {
         fallbackParameters,

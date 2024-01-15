@@ -21,6 +21,7 @@ export function getFrequentlyBoughtTogether<TObject>({
   threshold,
   region,
   userToken,
+  personalizationCache,
 }: GetFrequentlyBoughtTogetherProps<TObject>) {
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
@@ -35,7 +36,7 @@ export function getFrequentlyBoughtTogether<TObject>({
       appId: recommendClient.appId,
       region,
       userToken,
-      // cache
+      cache: personalizationCache,
     }).then((personalizationFilters) => {
       const queries = objectIDs.map((objectID) => ({
         indexName,

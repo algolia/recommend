@@ -44,6 +44,7 @@ export function getRecommendations<TObject>({
   threshold,
   region,
   userToken,
+  personalizationCache,
 }: GetRecommendationsProps<TObject>): Promise<
   GetRecommendationsResult<TObject>
 > {
@@ -60,7 +61,7 @@ export function getRecommendations<TObject>({
       appId: recommendClient.appId,
       region,
       userToken,
-      // cache
+      cache: personalizationCache,
     }).then((personalizationFilters) => {
       const queries = objectIDs.map((objectID) => ({
         fallbackParameters,
