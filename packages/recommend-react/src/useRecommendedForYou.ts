@@ -41,11 +41,11 @@ export function useRecommendedForYou<TObject>({
 
   useEffect(() => {
     const param = {
-      indexName,
-      threshold,
-      queryParameters,
-      maxRecommendations,
       fallbackParameters,
+      indexName,
+      maxRecommendations,
+      queryParameters,
+      threshold,
       transformItems: transformItemsRef.current,
     };
 
