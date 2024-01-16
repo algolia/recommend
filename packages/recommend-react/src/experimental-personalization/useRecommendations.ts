@@ -1,12 +1,16 @@
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 
 import {
-  UseRecommendationsProps,
-  useRecommendations as useHook,
+  UseRecommendationsProps as UseRecommendationsPropsPrimitive,
+  useRecommendations as useRecommendationsPrimitive,
 } from '../useRecommendations';
 
-type Props<TObject> = UseRecommendationsProps<TObject> & Personalization;
+export type UseRecommendationsProps<TObject> =
+  | UseRecommendationsPropsPrimitive<TObject>
+  | (UseRecommendationsPropsPrimitive<TObject> & PersonalizationProps);
 
-export function useRecommendations<TObject>(props: Props<TObject>) {
-  return useHook(props);
+export function useRecommendations<TObject>(
+  props: UseRecommendationsProps<TObject>
+) {
+  return useRecommendationsPrimitive(props);
 }

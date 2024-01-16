@@ -1,13 +1,15 @@
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 import React from 'react';
 
 import {
-  LookingSimilarProps,
-  LookingSimilar as Component,
+  LookingSimilarProps as LookingSimilarPropsPrimitive,
+  LookingSimilar as LookingSimilarPrimitive,
 } from '../LookingSimilar';
 
-type Props<TObject> = LookingSimilarProps<TObject> & Personalization;
+export type LookingSimilarProps<TObject> =
+  | LookingSimilarPropsPrimitive<TObject>
+  | (LookingSimilarPropsPrimitive<TObject> & PersonalizationProps);
 
-export function LookingSimilar<TObject>(props: Props<TObject>) {
-  return <Component {...props} />;
+export function LookingSimilar<TObject>(props: LookingSimilarProps<TObject>) {
+  return <LookingSimilarPrimitive {...props} />;
 }

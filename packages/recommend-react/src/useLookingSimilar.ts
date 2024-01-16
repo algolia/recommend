@@ -5,6 +5,7 @@ import {
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
+import { getPersonalizedParams } from './experimental-personalization/getPersonalizedParams';
 import { UseLookingSimilarProps } from './LookingSimilar';
 import { useRecommendClient, useRecommendContext } from './RecommendContext';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
@@ -22,8 +23,7 @@ export function useLookingSimilar<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseLookingSimilarProps<TObject>) {
-  // @ts-expect-error used for internal experimental-personalization
-  const { region, userToken } = props;
+  const { region, userToken } = getPersonalizedParams(props);
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });

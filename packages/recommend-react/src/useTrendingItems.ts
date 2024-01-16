@@ -5,6 +5,7 @@ import {
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
+import { getPersonalizedParams } from './experimental-personalization/getPersonalizedParams';
 import { useRecommendContext, useRecommendClient } from './RecommendContext';
 import { UseTrendingItemsProps } from './TrendingItems';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
@@ -23,9 +24,7 @@ export function useTrendingItems<TObject>({
   facetValue,
   ...props
 }: UseTrendingItemsProps<TObject>) {
-  // @ts-expect-error used for internal experimental-personalization
-  const { region, userToken } = props;
-
+  const { region, userToken } = getPersonalizedParams(props);
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });

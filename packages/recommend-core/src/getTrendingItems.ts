@@ -1,12 +1,12 @@
 import { RecommendClient, TrendingItemsQuery } from '@algolia/recommend';
 
-import { getPersonalizationFilters } from './personalization';
+import { getPersonalizationFilters, isPersonalized } from './personalization';
 import { ProductRecord } from './types';
-import { Personalization } from './types/Personalization';
+import { PersonalizationProps } from './types/PersonalizationProps';
 import { mapByScoreToRecommendations, uniqBy } from './utils';
 import { version } from './version';
 
-export type TrendingItemsProps<TObject> = {
+export type _TrendingItemsProps<TObject> = {
   /**
    * The initialized Algolia recommend client.
    */
@@ -19,7 +19,11 @@ export type TrendingItemsProps<TObject> = {
   transformItems?: (
     items: Array<ProductRecord<TObject>>
   ) => Array<ProductRecord<TObject>>;
-} & Personalization;
+};
+
+export type TrendingItemsProps<TObject> =
+  | _TrendingItemsProps<TObject>
+  | (_TrendingItemsProps<TObject> & PersonalizationProps);
 
 export type GetTrendingItemsResult<TObject> = {
   recommendations: Array<ProductRecord<TObject>>;
@@ -28,34 +32,34 @@ export type GetTrendingItemsResult<TObject> = {
 export type GetTrendingItemsProps<TObject> = TrendingItemsProps<TObject> &
   TrendingItemsQuery;
 
-export function getTrendingItems<TObject>({
-  recommendClient,
-  transformItems = (x) => x,
-  fallbackParameters,
-  indexName,
-  maxRecommendations,
-  queryParameters,
-  threshold,
-  facetName,
-  facetValue,
-  userToken,
-  region,
-  personalizationCache,
-}: GetTrendingItemsProps<TObject>) {
+export function getTrendingItems<TObject>(
+  params: GetTrendingItemsProps<TObject>
+) {
+  const {
+    recommendClient,
+    transformItems = (x) => x,
+    fallbackParameters,
+    indexName,
+    maxRecommendations,
+    queryParameters,
+    threshold,
+    facetName,
+    facetValue,
+  } = params;
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
   /**
    * Big block of duplicated code, but it is fine since it is experimental and will be ported to the API eventually.
    * This is a temporary solution to get recommended personalization.
    */
-  if (region && userToken) {
-    recommendClient.addAlgoliaAgent('personalization');
+  if (isPersonalized(params) && params.region && params.userToken) {
+    recommendClient.addAlgoliaAgent('experimental-personalization');
     return getPersonalizationFilters({
       apiKey: recommendClient.transporter.queryParameters['x-algolia-api-key'],
       appId: recommendClient.appId,
-      region,
-      userToken,
-      cache: personalizationCache,
+      region: params.region,
+      userToken: params.userToken,
+      cache: params.personalizationCache,
     }).then((personalizationFilters) => {
       const query = {
         fallbackParameters,

@@ -1,15 +1,24 @@
 /** @jsxRuntime classic */
 /** @jsx h */
 
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 
-import { TrendingItemsProps, trendingItems as render } from '../trendingItems';
+import {
+  TrendingItemsProps as TrendingItemsPropsPrimitive,
+  trendingItems as trendingItemsPrimitive,
+} from '../trendingItems';
 import { EnvironmentProps, HTMLTemplate } from '../types';
 
-type Props<TObject> = TrendingItemsProps<TObject, HTMLTemplate> &
-  EnvironmentProps &
-  Personalization;
+export type TrendingItemsProps<TObject> = TrendingItemsPropsPrimitive<
+  TObject,
+  HTMLTemplate
+> &
+  EnvironmentProps;
 
-export function trendingItems<TObject>({ ...props }: Props<TObject>) {
-  return render<TObject>(props);
+export function trendingItems<TObject>({
+  ...props
+}:
+  | TrendingItemsProps<TObject>
+  | (TrendingItemsProps<TObject> & PersonalizationProps)) {
+  return trendingItemsPrimitive<TObject>(props);
 }

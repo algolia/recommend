@@ -49,7 +49,7 @@ function useTrendingItems<TObject>(props: GetTrendingItemsProps<TObject>) {
 export type TrendingItemsProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
-> = Omit<GetTrendingItemsProps<TObject>, 'userToken' | 'region'> &
+> = GetTrendingItemsProps<TObject> &
   Omit<TrendingItemsVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
 
 function TrendingItems<

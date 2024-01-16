@@ -1,13 +1,15 @@
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 import React from 'react';
 
 import {
-  TrendingItemsProps,
-  TrendingItems as Component,
+  TrendingItemsProps as TrendingItemsPropsPrimitive,
+  TrendingItems as TrendingItemsPrimitive,
 } from '../TrendingItems';
 
-type Props<TObject> = TrendingItemsProps<TObject> & Personalization;
+export type TrendingItemsProps<TObject> =
+  | TrendingItemsPropsPrimitive<TObject>
+  | (TrendingItemsPropsPrimitive<TObject> & PersonalizationProps);
 
-export function TrendingItems<TObject>(props: Props<TObject>) {
-  return <Component {...props} />;
+export function TrendingItems<TObject>(props: TrendingItemsProps<TObject>) {
+  return <TrendingItemsPrimitive {...props} />;
 }

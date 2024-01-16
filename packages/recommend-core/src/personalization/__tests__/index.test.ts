@@ -4,15 +4,47 @@ import { getPersonalizationFilters } from '../index';
 
 describe('personalization', () => {
   describe('getPersonalizationFilters', () => {
-    it('should return an empty array if any required parameter is missing', async () => {
+    it('should return an empty array if userToken parameter is missing', async () => {
+      jest.spyOn(console, 'warn').mockImplementation();
+
       const result = await getPersonalizationFilters({
         userToken: '',
-        region: '',
-        apiKey: '',
-        appId: '',
+        region: 'eu',
+        apiKey: '123465',
+        appId: '123456',
       });
 
+      // eslint-disable-next-line no-console
+      expect(console.warn).toHaveBeenCalledWith(
+        `[Algolia Recommend] parameter 'userToken' is required to enable personalization.`
+      );
       expect(result).toEqual([]);
+    });
+
+    it('should return an empty array if missing userToken', async () => {
+      await expect(
+        getPersonalizationFilters({
+          userToken: 'token',
+          region: '',
+          apiKey: '',
+          appId: '',
+        })
+      ).rejects.toThrow(
+        `[Algolia Recommend] parameters 'region', 'apiKey' and 'appId' are required to enable personalization.`
+      );
+    });
+
+    it('should throw an error if any required parameter is missing', async () => {
+      await expect(
+        getPersonalizationFilters({
+          userToken: 'token',
+          region: '',
+          apiKey: '',
+          appId: '',
+        })
+      ).rejects.toThrow(
+        `[Algolia Recommend] parameters 'region', 'apiKey' and 'appId' are required to enable personalization.`
+      );
     });
 
     it('should return the optional filters with weighted scores', async () => {

@@ -5,6 +5,7 @@ import {
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
+import { getPersonalizedParams } from './experimental-personalization/getPersonalizedParams';
 import { useAlgoliaAgent } from './useAlgoliaAgent';
 import { useStableValue } from './useStableValue';
 import { useStatus } from './useStatus';
@@ -26,7 +27,7 @@ export function useRecommendations<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseRecommendationsProps<TObject>) {
-  const { region, userToken } = props;
+  const { region, userToken } = getPersonalizedParams(props);
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });

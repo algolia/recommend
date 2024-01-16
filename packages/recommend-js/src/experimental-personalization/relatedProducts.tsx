@@ -1,18 +1,24 @@
 /** @jsxRuntime classic */
 /** @jsx h */
 
-import { Personalization } from '@algolia/recommend-core';
+import { PersonalizationProps } from '@algolia/recommend-core';
 
 import {
-  RelatedProductsProps,
-  relatedProducts as render,
+  RelatedProductsProps as RelatedProductsPropsPrimitive,
+  relatedProducts as relatedProductsPrimitive,
 } from '../relatedProducts';
 import { EnvironmentProps, HTMLTemplate } from '../types';
 
-type Props<TObject> = RelatedProductsProps<TObject, HTMLTemplate> &
-  EnvironmentProps &
-  Personalization;
+export type RelatedProductsProps<TObject> = RelatedProductsPropsPrimitive<
+  TObject,
+  HTMLTemplate
+> &
+  EnvironmentProps;
 
-export function relatedProducts<TObject>(props: Props<TObject>) {
-  return render<TObject>(props);
+export function relatedProducts<TObject>(
+  props:
+    | RelatedProductsProps<TObject>
+    | (RelatedProductsProps<TObject> & PersonalizationProps)
+) {
+  return relatedProductsPrimitive<TObject>(props);
 }

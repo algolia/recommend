@@ -49,7 +49,7 @@ function useLookingSimilar<TObject>(props: GetLookingSimilarProps<TObject>) {
 export type LookingSimilarProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
-> = Omit<GetLookingSimilarProps<TObject>, 'userToken' | 'region'> &
+> = GetLookingSimilarProps<TObject> &
   Omit<LookingSimilarVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
 
 function LookingSimilar<

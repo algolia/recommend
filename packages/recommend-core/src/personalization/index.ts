@@ -1,4 +1,4 @@
-import { Personalization } from '../types';
+import { PersonalizationProps } from '../types';
 
 import { getAffinities } from './getAffinities';
 import { getStrategy } from './getStrategy';
@@ -8,7 +8,7 @@ type GetPersonalizationFilters = {
   region: string;
   apiKey: string;
   appId: string;
-  cache?: Personalization['personalizationCache'];
+  cache?: PersonalizationProps['personalizationCache'];
 };
 
 export const getPersonalizationFilters = async ({
@@ -18,7 +18,16 @@ export const getPersonalizationFilters = async ({
   appId,
   cache,
 }: GetPersonalizationFilters) => {
-  if (!userToken || !region || !apiKey || !appId) {
+  if (!region || !apiKey || !appId) {
+    throw new Error(
+      `[Algolia Recommend] parameters 'region', 'apiKey' and 'appId' are required to enable personalization.`
+    );
+  }
+  if (!userToken) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[Algolia Recommend] parameter 'userToken' is required to enable personalization.`
+    );
     return [];
   }
 
@@ -34,7 +43,6 @@ export const getPersonalizationFilters = async ({
       getStrategy({ apiKey, appId, region, cache: cache?.strategyMs }),
     ]);
 
-    // compute optional filters
     const FALLBACK_WEIGHT = 100;
     const facetsScoringMap = new Map(
       strategy.facetsScoring.map((value) => [value.facetName, value.score])
@@ -53,4 +61,11 @@ export const getPersonalizationFilters = async ({
   } catch (error) {
     return [];
   }
+};
+
+export const isPersonalized = (object: any): object is PersonalizationProps => {
+  return (
+    (object.region === 'eu' || object.region === 'us') &&
+    typeof object.userToken === 'string'
+  );
 };
