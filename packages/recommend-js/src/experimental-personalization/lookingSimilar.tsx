@@ -3,21 +3,30 @@
 import {
   getLookingSimilar,
   GetLookingSimilarProps,
+  getPersonalizationFilters,
   GetRecommendationsResult,
+  isPersonalized,
+  PersonalizationProps,
 } from '@algolia/recommend-core';
-import {
-  createLookingSimilarComponent,
-  LookingSimilarProps as LookingSimilarVDOMProps,
-} from '@algolia/recommend-vdom';
+import { createLookingSimilarComponent } from '@algolia/recommend-vdom';
 import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
-import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps, HTMLTemplate } from './types';
-import { useAlgoliaAgent } from './useAlgoliaAgent';
-import { useStatus } from './useStatus';
-import { withHtml } from './utils';
+import { getHTMLElement } from '../getHTMLElement';
+import { LookingSimilarProps as LookingSimilarPropsPrimitive } from '../lookingSimilar';
+import { EnvironmentProps, HTMLTemplate } from '../types';
+import { useAlgoliaAgent } from '../useAlgoliaAgent';
+import { useStatus } from '../useStatus';
+import { withHtml } from '../utils';
+
+export type LookingSimilarProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> =
+  | LookingSimilarPropsPrimitive<TObject, TComponentProps>
+  | (LookingSimilarPropsPrimitive<TObject, TComponentProps> &
+      PersonalizationProps);
 
 const UncontrolledLookingSimilar = createLookingSimilarComponent({
   createElement,
@@ -34,6 +43,33 @@ function useLookingSimilar<TObject>(props: GetLookingSimilarProps<TObject>) {
 
   useEffect(() => {
     setStatus('loading');
+    if (isPersonalized(props)) {
+      props.recommendClient.addAlgoliaAgent('experimental-personalization');
+      getPersonalizationFilters({
+        apiKey:
+          props.recommendClient.transporter.queryParameters[
+            'x-algolia-api-key'
+          ],
+        appId: props.recommendClient.appId,
+        region: props.region,
+        userToken: props.userToken,
+      }).then((personalizationFilters) => {
+        getLookingSimilar({
+          ...props,
+          queryParameters: {
+            ...props.queryParameters,
+            optionalFilters: [
+              ...personalizationFilters,
+              ...(props.queryParameters?.optionalFilters ?? []),
+            ],
+          },
+        }).then((response) => {
+          setResult(response);
+          setStatus('idle');
+        });
+      });
+    }
+
     getLookingSimilar(props).then((response) => {
       setResult(response);
       setStatus('idle');
@@ -45,12 +81,6 @@ function useLookingSimilar<TObject>(props: GetLookingSimilarProps<TObject>) {
     status,
   };
 }
-
-export type LookingSimilarProps<
-  TObject,
-  TComponentProps extends Record<string, unknown> = {}
-> = GetLookingSimilarProps<TObject> &
-  Omit<LookingSimilarVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
 
 function LookingSimilar<
   TObject,

@@ -1,8 +1,11 @@
 /** @jsxRuntime classic */
 /** @jsx h */
+
 import {
   getTrendingItems,
-  GetTrendingItemsProps,
+  getPersonalizationFilters,
+  isPersonalized,
+  PersonalizationProps,
   GetRecommendationsResult,
 } from '@algolia/recommend-core';
 import {
@@ -13,11 +16,20 @@ import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
-import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps, HTMLTemplate } from './types';
-import { useAlgoliaAgent } from './useAlgoliaAgent';
-import { useStatus } from './useStatus';
-import { withHtml } from './utils';
+import { getHTMLElement } from '../getHTMLElement';
+import { TrendingItemsProps as TrendingItemsPropsPrimitive } from '../trendingItems';
+import { EnvironmentProps, HTMLTemplate } from '../types';
+import { useAlgoliaAgent } from '../useAlgoliaAgent';
+import { useStatus } from '../useStatus';
+import { withHtml } from '../utils';
+
+export type GetTrendingItemsProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> =
+  | TrendingItemsPropsPrimitive<TObject, TComponentProps>
+  | (TrendingItemsPropsPrimitive<TObject, TComponentProps> &
+      PersonalizationProps);
 
 const UncontrolledTrendingItems = createTrendingItemsComponent({
   createElement,
@@ -34,6 +46,34 @@ function useTrendingItems<TObject>(props: GetTrendingItemsProps<TObject>) {
 
   useEffect(() => {
     setStatus('loading');
+
+    if (isPersonalized(props)) {
+      props.recommendClient.addAlgoliaAgent('experimental-personalization');
+      getPersonalizationFilters({
+        apiKey:
+          props.recommendClient.transporter.queryParameters[
+            'x-algolia-api-key'
+          ],
+        appId: props.recommendClient.appId,
+        region: props.region,
+        userToken: props.userToken,
+      }).then((personalizationFilters) => {
+        return getTrendingItems({
+          ...props,
+          queryParameters: {
+            ...props.queryParameters,
+            optionalFilters: [
+              ...personalizationFilters,
+              ...(props.queryParameters?.optionalFilters ?? []),
+            ],
+          },
+        }).then((response) => {
+          setResult(response);
+          setStatus('idle');
+        });
+      });
+    }
+
     getTrendingItems(props).then((response) => {
       setResult(response);
       setStatus('idle');

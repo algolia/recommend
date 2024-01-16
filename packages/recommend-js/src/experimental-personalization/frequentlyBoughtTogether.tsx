@@ -4,20 +4,29 @@ import {
   getFrequentlyBoughtTogether,
   GetFrequentlyBoughtTogetherProps,
   GetRecommendationsResult,
+  isPersonalized,
+  getPersonalizationFilters,
+  PersonalizationProps,
 } from '@algolia/recommend-core';
-import {
-  createFrequentlyBoughtTogetherComponent,
-  FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherVDOMProps,
-} from '@algolia/recommend-vdom';
+import { createFrequentlyBoughtTogetherComponent } from '@algolia/recommend-vdom';
 import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
-import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps, HTMLTemplate } from './types';
-import { useAlgoliaAgent } from './useAlgoliaAgent';
-import { useStatus } from './useStatus';
-import { withHtml } from './utils';
+import { FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherPropsPrimitive } from '../frequentlyBoughtTogether';
+import { getHTMLElement } from '../getHTMLElement';
+import { EnvironmentProps, HTMLTemplate } from '../types';
+import { useAlgoliaAgent } from '../useAlgoliaAgent';
+import { useStatus } from '../useStatus';
+import { withHtml } from '../utils';
+
+type FrequentlyBoughtTogetherProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> =
+  | FrequentlyBoughtTogetherPropsPrimitive<TObject, TComponentProps>
+  | (FrequentlyBoughtTogetherPropsPrimitive<TObject, TComponentProps> &
+      PersonalizationProps);
 
 const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherComponent(
   {
@@ -38,6 +47,34 @@ function useFrequentlyBoughtTogether<TObject>(
 
   useEffect(() => {
     setStatus('loading');
+
+    if (isPersonalized(props)) {
+      props.recommendClient.addAlgoliaAgent('experimental-personalization');
+      getPersonalizationFilters({
+        apiKey:
+          props.recommendClient.transporter.queryParameters[
+            'x-algolia-api-key'
+          ],
+        appId: props.recommendClient.appId,
+        region: props.region,
+        userToken: props.userToken,
+      }).then((personalizationFilters) => {
+        return getFrequentlyBoughtTogether({
+          ...props,
+          queryParameters: {
+            ...props.queryParameters,
+            optionalFilters: [
+              ...personalizationFilters,
+              ...(props.queryParameters?.optionalFilters ?? []),
+            ],
+          },
+        }).then((response) => {
+          setResult(response);
+          setStatus('idle');
+        });
+      });
+    }
+
     getFrequentlyBoughtTogether(props).then((response) => {
       setResult(response);
       setStatus('idle');
@@ -49,15 +86,6 @@ function useFrequentlyBoughtTogether<TObject>(
     status,
   };
 }
-
-export type FrequentlyBoughtTogetherProps<
-  TObject,
-  TComponentProps extends Record<string, unknown> = {}
-> = GetFrequentlyBoughtTogetherProps<TObject> &
-  Omit<
-    FrequentlyBoughtTogetherVDOMProps<TObject, TComponentProps>,
-    'items' | 'status'
-  >;
 
 function FrequentlyBoughtTogether<
   TObject,

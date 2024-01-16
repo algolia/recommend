@@ -1,23 +1,33 @@
 /** @jsxRuntime classic */
 /** @jsx h */
+
 import {
+  getPersonalizationFilters,
+  isPersonalized,
+  PersonalizationProps,
   GetRecommendationsResult,
   getRelatedProducts,
   GetRelatedProductsProps,
 } from '@algolia/recommend-core';
-import {
-  createRelatedProductsComponent,
-  RelatedProductsProps as RelatedProductsVDOMProps,
-} from '@algolia/recommend-vdom';
+import { createRelatedProductsComponent } from '@algolia/recommend-vdom';
 import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
-import { getHTMLElement } from './getHTMLElement';
-import { EnvironmentProps, HTMLTemplate } from './types';
-import { useAlgoliaAgent } from './useAlgoliaAgent';
-import { useStatus } from './useStatus';
-import { withHtml } from './utils';
+import { getHTMLElement } from '../getHTMLElement';
+import { RelatedProductsProps as RelatedProductsPropsPrimitive } from '../relatedProducts';
+import { EnvironmentProps, HTMLTemplate } from '../types';
+import { useAlgoliaAgent } from '../useAlgoliaAgent';
+import { useStatus } from '../useStatus';
+import { withHtml } from '../utils';
+
+export type RelatedProductsProps<
+  TObject,
+  TComponentProps extends Record<string, unknown> = {}
+> =
+  | RelatedProductsPropsPrimitive<TObject, TComponentProps>
+  | (RelatedProductsPropsPrimitive<TObject, TComponentProps> &
+      PersonalizationProps);
 
 const UncontrolledRelatedProducts = createRelatedProductsComponent({
   createElement,
@@ -34,6 +44,34 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
 
   useEffect(() => {
     setStatus('loading');
+
+    if (isPersonalized(props)) {
+      props.recommendClient.addAlgoliaAgent('experimental-personalization');
+      getPersonalizationFilters({
+        apiKey:
+          props.recommendClient.transporter.queryParameters[
+            'x-algolia-api-key'
+          ],
+        appId: props.recommendClient.appId,
+        region: props.region,
+        userToken: props.userToken,
+      }).then((personalizationFilters) => {
+        return getRelatedProducts({
+          ...props,
+          queryParameters: {
+            ...props.queryParameters,
+            optionalFilters: [
+              ...personalizationFilters,
+              ...(props.queryParameters?.optionalFilters ?? []),
+            ],
+          },
+        }).then((response) => {
+          setResult(response);
+          setStatus('idle');
+        });
+      });
+    }
+
     getRelatedProducts(props).then((response) => {
       setResult(response);
       setStatus('idle');
@@ -45,12 +83,6 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
     status,
   };
 }
-
-export type RelatedProductsProps<
-  TObject,
-  TComponentProps extends Record<string, unknown> = {}
-> = GetRelatedProductsProps<TObject> &
-  Omit<RelatedProductsVDOMProps<TObject, TComponentProps>, 'items' | 'status'>;
 
 function RelatedProducts<
   TObject,

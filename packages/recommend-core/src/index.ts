@@ -6,4 +6,5 @@ export * from './getLookingSimilar';
 export * from './getTrendingFacets';
 export * from './getTrendingItems';
 export * from './getRecommendedForYou';
+export * from './personalization';
 export * from './types';
