@@ -68,12 +68,12 @@ function useLookingSimilar<TObject>(props: GetLookingSimilarProps<TObject>) {
           setStatus('idle');
         });
       });
+    } else {
+      getLookingSimilar(props).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
     }
-
-    getLookingSimilar(props).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
   }, [props, setStatus]);
 
   return {

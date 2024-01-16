@@ -70,12 +70,12 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
           setStatus('idle');
         });
       });
+    } else {
+      getRelatedProducts(props).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
     }
-
-    getRelatedProducts(props).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
   }, [props, setStatus]);
 
   return {

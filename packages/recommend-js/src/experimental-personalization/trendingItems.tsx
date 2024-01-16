@@ -72,12 +72,12 @@ function useTrendingItems<TObject>(props: GetTrendingItemsProps<TObject>) {
           setStatus('idle');
         });
       });
+    } else {
+      getTrendingItems(props).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
     }
-
-    getTrendingItems(props).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
   }, [props, setStatus]);
 
   return {

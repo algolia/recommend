@@ -73,12 +73,12 @@ function useFrequentlyBoughtTogether<TObject>(
           setStatus('idle');
         });
       });
+    } else {
+      getFrequentlyBoughtTogether(props).then((response) => {
+        setResult(response);
+        setStatus('idle');
+      });
     }
-
-    getFrequentlyBoughtTogether(props).then((response) => {
-      setResult(response);
-      setStatus('idle');
-    });
   }, [props, setStatus]);
 
   return {
