@@ -5,7 +5,7 @@ import {
   GetLookingSimilarProps,
   getPersonalizationFilters,
   GetRecommendationsResult,
-  isPersonalized,
+  isPersonalizationEnabled,
   PersonalizationProps,
 } from '@algolia/recommend-core';
 import { createLookingSimilarComponent } from '@algolia/recommend-vdom';
@@ -43,7 +43,7 @@ function useLookingSimilar<TObject>(props: GetLookingSimilarProps<TObject>) {
 
   useEffect(() => {
     setStatus('loading');
-    if (isPersonalized(props)) {
+    if (isPersonalizationEnabled(props)) {
       props.recommendClient.addAlgoliaAgent('experimental-personalization');
       getPersonalizationFilters({
         apiKey:

@@ -1,7 +1,7 @@
 import {
   getBatchRecommendations,
   getPersonalizationFilters,
-  isPersonalized,
+  isPersonalizationEnabled,
   PersonalizationProps,
 } from '@algolia/recommend-core';
 import React from 'react';
@@ -55,7 +55,7 @@ export function Recommend<TObject>({
   children,
   ...props
 }: RecommendProps) {
-  const { userToken, region } = isPersonalized(props)
+  const { userToken, region } = isPersonalizationEnabled(props)
     ? props
     : { userToken: undefined, region: undefined };
 
@@ -88,7 +88,7 @@ export function Recommend<TObject>({
 
       const personalizationProps: PersonalizationProps[] = queries
         .map((query) => {
-          if (isPersonalized(query)) {
+          if (isPersonalizationEnabled(query)) {
             return { userToken: query.userToken, region: query.region };
           }
           return null;
@@ -113,7 +113,7 @@ export function Recommend<TObject>({
           return query;
         }
 
-        const { _userToken, _region } = isPersonalized(query)
+        const { _userToken, _region } = isPersonalizationEnabled(query)
           ? { _userToken: query.userToken, _region: query.region }
           : { _userToken: userToken, _region: region };
         if (!_userToken || !_region) {

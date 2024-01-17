@@ -4,7 +4,7 @@ import {
   getFrequentlyBoughtTogether,
   GetFrequentlyBoughtTogetherProps,
   GetRecommendationsResult,
-  isPersonalized,
+  isPersonalizationEnabled,
   getPersonalizationFilters,
   PersonalizationProps,
 } from '@algolia/recommend-core';
@@ -48,7 +48,7 @@ function useFrequentlyBoughtTogether<TObject>(
   useEffect(() => {
     setStatus('loading');
 
-    if (isPersonalized(props)) {
+    if (isPersonalizationEnabled(props)) {
       props.recommendClient.addAlgoliaAgent('experimental-personalization');
       getPersonalizationFilters({
         apiKey:

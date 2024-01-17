@@ -4,7 +4,7 @@
 import {
   getTrendingItems,
   getPersonalizationFilters,
-  isPersonalized,
+  isPersonalizationEnabled,
   PersonalizationProps,
   GetRecommendationsResult,
 } from '@algolia/recommend-core';
@@ -47,7 +47,7 @@ function useTrendingItems<TObject>(props: GetTrendingItemsProps<TObject>) {
   useEffect(() => {
     setStatus('loading');
 
-    if (isPersonalized(props)) {
+    if (isPersonalizationEnabled(props)) {
       props.recommendClient.addAlgoliaAgent('experimental-personalization');
       getPersonalizationFilters({
         apiKey:

@@ -3,7 +3,7 @@
 
 import {
   getPersonalizationFilters,
-  isPersonalized,
+  isPersonalizationEnabled,
   PersonalizationProps,
   GetRecommendationsResult,
   getRelatedProducts,
@@ -45,7 +45,7 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
   useEffect(() => {
     setStatus('loading');
 
-    if (isPersonalized(props)) {
+    if (isPersonalizationEnabled(props)) {
       props.recommendClient.addAlgoliaAgent('experimental-personalization');
       getPersonalizationFilters({
         apiKey:

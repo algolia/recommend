@@ -3,7 +3,7 @@ import {
   getRecommendations,
   GetRecommendationsProps,
   GetRecommendationsResult,
-  isPersonalized,
+  isPersonalizationEnabled,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -25,7 +25,7 @@ export function useRecommendations<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseRecommendationsProps<TObject>) {
-  const { userToken, region } = isPersonalized(props)
+  const { userToken, region } = isPersonalizationEnabled(props)
     ? props
     : { userToken: undefined, region: undefined };
 
