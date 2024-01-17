@@ -97,6 +97,7 @@ export function createRecommendClient(
           return {};
         },
       },
+      queryParameters: {},
     } as any,
     ...args,
   };
