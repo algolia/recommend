@@ -30,7 +30,7 @@ function isRegistered<TObject>(
   return Boolean(widgets.find((w) => dequal(w.param, param)));
 }
 
-function getCacheKey<TObject>(queries: Array<BatchQuery<TObject>>) {
+export function getCacheKey<TObject>(queries: Array<BatchQuery<TObject>>) {
   return JSON.stringify(queries);
 }
 
@@ -41,7 +41,7 @@ function isCached<TObject>(
   return Boolean(cache[getCacheKey(queries)]);
 }
 
-function getCachedPrams<TObject>(
+export function getCachedPrams<TObject>(
   widgets: Array<RecommendWidget<TObject>>,
   cache: StateType<TObject>['cache']
 ) {
@@ -57,7 +57,9 @@ function getCachedPrams<TObject>(
     .filter(isPresent);
 }
 
-function getQueryKeys<TObject>(params: Array<GetParametersResult<TObject>>) {
+export function getQueryKeys<TObject>(
+  params: Array<GetParametersResult<TObject>>
+) {
   const queries = params
     .map((p) => p.queries)
     .reduce((a, b) => a.concat(b), []);
@@ -66,7 +68,7 @@ function getQueryKeys<TObject>(params: Array<GetParametersResult<TObject>>) {
 }
 
 // Not sure about using "unknown"/"any" here ?
-const reducer: React.Reducer<StateType<unknown>, Action<any>> = (
+export const reducer: React.Reducer<StateType<unknown>, Action<any>> = (
   state,
   action
 ) => {

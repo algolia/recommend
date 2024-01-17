@@ -4,7 +4,7 @@ import {
   Recommend,
   RelatedProducts,
   LookingSimilar,
-} from '@algolia/recommend-react';
+} from '@algolia/recommend-react/dist/esm/experimental-personalization';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import algoliasearch from 'algoliasearch';
 import React, { useEffect } from 'react';
@@ -88,6 +88,8 @@ export const ProductPage: React.FC = () => {
       <FrequentlyBoughtTogether<ProductHit>
         indexName={indexName}
         objectIDs={[selectedProduct.objectID]}
+        region="eu"
+        userToken="likes-gender-men"
         itemComponent={({ item }) => (
           <BundleItem
             item={item}

@@ -4,7 +4,7 @@ import {
   TrendingFacets,
   TrendingItems,
   RecommendedForYou,
-} from '@algolia/recommend-react';
+} from '@algolia/recommend-react/dist/esm/experimental-personalization';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +24,11 @@ export const HomePage: React.FC = () => {
   ] = useApplicationContext();
 
   return (
-    <Recommend recommendClient={recommendClient}>
+    <Recommend
+      recommendClient={recommendClient}
+      userToken="likes-gender-men"
+      region="eu"
+    >
       <TrendingFacets
         indexName={indexName}
         facetName="brand"
@@ -74,7 +78,7 @@ export const HomePage: React.FC = () => {
         indexName={indexName}
         maxRecommendations={15}
         queryParameters={{
-          userToken: 'user-token-1',
+          userToken: 'likes-gender-men',
         }}
         itemComponent={({ item }) => (
           <Hit
