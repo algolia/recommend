@@ -42,8 +42,8 @@ const getPersonalization = async (
   );
 
   const personalizationData = results.reduce((acc, result, index) => {
-    const { userToken } = personalizationProps[index];
-    acc[userToken] = result;
+    const { userToken, region } = personalizationProps[index];
+    acc[`${region}_${userToken}`] = result;
     return acc;
   }, {} as Record<string, string[]>);
 
@@ -113,8 +113,10 @@ export function Recommend<TObject>({
           return query;
         }
 
-        const _userToken = isPersonalized(query) ? query.userToken : userToken;
-        if (!_userToken) {
+        const { _userToken, _region } = isPersonalized(query)
+          ? { _userToken: query.userToken, _region: query.region }
+          : { _userToken: userToken, _region: region };
+        if (!_userToken || !_region) {
           return {
             ...query,
             userToken: undefined,
@@ -122,7 +124,8 @@ export function Recommend<TObject>({
           };
         }
 
-        const personalizationFilters = personalisation[_userToken];
+        const personalizationFilters =
+          personalisation[`${_region}_${_userToken}`];
 
         if (!personalizationFilters) {
           return {
