@@ -32,7 +32,7 @@ export const getAffinities = async ({
 
   if (!response.ok) {
     throw new Error(
-      `Failed to fetch personalisation affinities. Status: ${response.status}`
+      `Failed to fetch personalization affinities. Status: ${response.status}`
     );
   }
   const result: AffinitiesResponse = await response.json();

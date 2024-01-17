@@ -26,7 +26,7 @@ export const getStrategy = async ({ region, apiKey, appId }: GetStrategy) => {
 
   if (!response.ok) {
     throw new Error(
-      `Failed to fetch personalisation strategy. Status: ${response.status}`
+      `Failed to fetch personalization strategy. Status: ${response.status}`
     );
   }
   const result: StrategyResponse = await response.json();

@@ -14,15 +14,15 @@ export const getPersonalizationFilters = async ({
   apiKey,
   appId,
 }: GetPersonalizationFilters) => {
-  if (!region || !apiKey || !appId) {
+  if (!region) {
     throw new Error(
-      `[Algolia Recommend] parameters 'region', 'apiKey' and 'appId' are required to enable personalization.`
+      '[Algolia Recommend] parameter `region` is required to enable personalization.'
     );
   }
   if (!userToken) {
     // eslint-disable-next-line no-console
     console.warn(
-      `[Algolia Recommend] parameter 'userToken' is required to enable personalization.`
+      "[Algolia Recommend] Personalization couldn't be enabled because `userToken` is missing. Falling back to non-personalized recommendations."
     );
     return [];
   }
@@ -48,7 +48,12 @@ export const getPersonalizationFilters = async ({
     );
 
     return optionalFilters;
-  } catch (error) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    // eslint-disable-next-line no-console
+    console.error(
+      `[Algolia Recommend] Personalization couldn't be enabled. Falling back to non-personalized recommendations. Error: ${errorMessage}`
+    );
     return [];
   }
 };
