@@ -146,6 +146,10 @@ export function Recommend<TObject>({
         };
       });
 
+      if (Object.keys(personalisation).length > 0) {
+        recommendClient.addAlgoliaAgent('experimental-personalization');
+      }
+
       const result = await getBatchRecommendations<TObject>({
         recommendClient,
         queries: _queries,
