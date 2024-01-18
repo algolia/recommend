@@ -2,11 +2,8 @@
 /** @jsx h */
 
 import {
-  getTrendingItems,
-  getPersonalizationFilters,
   isPersonalizationEnabled,
   PersonalizationProps,
-  GetRecommendationsResult,
 } from '@algolia/recommend-core';
 import {
   createTrendingItemsComponent,
@@ -14,14 +11,17 @@ import {
 } from '@algolia/recommend-vdom';
 import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useMemo } from 'preact/hooks';
 
 import { getHTMLElement } from '../getHTMLElement';
-import { TrendingItemsProps as TrendingItemsPropsPrimitive } from '../trendingItems';
+import {
+  TrendingItemsProps as TrendingItemsPropsPrimitive,
+  useTrendingItems,
+} from '../trendingItems';
 import { EnvironmentProps, HTMLTemplate } from '../types';
-import { useAlgoliaAgent } from '../useAlgoliaAgent';
-import { useStatus } from '../useStatus';
 import { withHtml } from '../utils';
+
+import { usePersonalizationFilters } from './usePersonalizationFilters';
 
 export type GetTrendingItemsProps<
   TObject,
@@ -36,56 +36,6 @@ const UncontrolledTrendingItems = createTrendingItemsComponent({
   Fragment,
 });
 
-function useTrendingItems<TObject>(props: GetTrendingItemsProps<TObject>) {
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
-    recommendations: [],
-  });
-  const { status, setStatus } = useStatus('loading');
-
-  useAlgoliaAgent({ recommendClient: props.recommendClient });
-
-  useEffect(() => {
-    setStatus('loading');
-
-    if (isPersonalizationEnabled(props)) {
-      props.recommendClient.addAlgoliaAgent('experimental-personalization');
-      getPersonalizationFilters({
-        apiKey:
-          props.recommendClient.transporter.queryParameters[
-            'x-algolia-api-key'
-          ],
-        appId: props.recommendClient.appId,
-        region: props.region,
-        userToken: props.userToken,
-      }).then((personalizationFilters) => {
-        return getTrendingItems({
-          ...props,
-          queryParameters: {
-            ...props.queryParameters,
-            optionalFilters: [
-              ...personalizationFilters,
-              ...(props.queryParameters?.optionalFilters ?? []),
-            ],
-          },
-        }).then((response) => {
-          setResult(response);
-          setStatus('idle');
-        });
-      });
-    } else {
-      getTrendingItems(props).then((response) => {
-        setResult(response);
-        setStatus('idle');
-      });
-    }
-  }, [props, setStatus]);
-
-  return {
-    ...result,
-    status,
-  };
-}
-
 export type TrendingItemsProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
@@ -96,7 +46,40 @@ function TrendingItems<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 >(props: TrendingItemsProps<TObject, TComponentProps>) {
-  const { recommendations, status } = useTrendingItems<TObject>(props);
+  const { userToken, region } = isPersonalizationEnabled(props)
+    ? props
+    : { userToken: undefined, region: undefined };
+
+  const { personalizationFilters, filterStatus } = usePersonalizationFilters({
+    apiKey:
+      props.recommendClient.transporter.queryParameters['x-algolia-api-key'],
+    appId: props.recommendClient.appId,
+    userToken,
+    region,
+  });
+
+  useEffect(() => {
+    if (personalizationFilters.length > 0) {
+      props.recommendClient.addAlgoliaAgent('experimental-personalization');
+    }
+  }, [personalizationFilters.length, props.recommendClient]);
+
+  const params = useMemo(() => {
+    const indexName = filterStatus !== 'loading' ? props.indexName : '';
+    return {
+      ...props,
+      indexName,
+      queryParameters: {
+        ...props.queryParameters,
+        optionalFilters: [
+          ...personalizationFilters,
+          ...(props.queryParameters?.optionalFilters ?? []),
+        ],
+      },
+    };
+  }, [filterStatus, props, personalizationFilters]);
+
+  const { recommendations, status } = useTrendingItems<TObject>(params);
   return (
     <UncontrolledTrendingItems
       {...props}
