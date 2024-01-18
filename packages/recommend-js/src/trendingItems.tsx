@@ -24,7 +24,9 @@ const UncontrolledTrendingItems = createTrendingItemsComponent({
   Fragment,
 });
 
-function useTrendingItems<TObject>(props: GetTrendingItemsProps<TObject>) {
+export function useTrendingItems<TObject>(
+  props: GetTrendingItemsProps<TObject>
+) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
