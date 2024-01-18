@@ -49,6 +49,10 @@ export function getTrendingItems<TObject>({
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
+  if (!indexName) {
+    return Promise.resolve({ recommendations: [] });
+  }
+
   return recommendClient
     .getTrendingItems<TObject>([query])
     .then((response) =>
