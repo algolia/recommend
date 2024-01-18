@@ -2,7 +2,7 @@ import {
   getLookingSimilar,
   getPersonalizationFilters,
   GetRecommendationsResult,
-  isPersonalizationEnabled,
+  getPersonalizationProps,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -28,9 +28,7 @@ export function useLookingSimilar<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseLookingSimilarProps<TObject>) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const { userToken, region } = getPersonalizationProps(props);
 
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],

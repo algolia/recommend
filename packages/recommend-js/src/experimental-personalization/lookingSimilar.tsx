@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx h */
 import {
-  isPersonalizationEnabled,
+  getPersonalizationProps,
   PersonalizationProps,
 } from '@algolia/recommend-core';
 import { createLookingSimilarComponent } from '@algolia/recommend-vdom';
@@ -36,9 +36,7 @@ function LookingSimilar<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 >(props: LookingSimilarProps<TObject, TComponentProps>) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const { userToken, region } = getPersonalizationProps(props);
 
   const { personalizationFilters, filterStatus } = usePersonalizationFilters({
     apiKey:

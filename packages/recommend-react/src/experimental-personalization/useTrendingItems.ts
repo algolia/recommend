@@ -3,7 +3,7 @@ import {
   getPersonalizationFilters,
   GetRecommendationsResult,
   getTrendingItems,
-  isPersonalizationEnabled,
+  getPersonalizationProps,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -30,9 +30,7 @@ export function useTrendingItems<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseTrendingItemsProps<TObject>) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const { userToken, region } = getPersonalizationProps(props);
 
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],

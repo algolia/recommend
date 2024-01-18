@@ -1,7 +1,7 @@
 import {
   getRelatedProducts,
   GetRecommendationsResult,
-  isPersonalizationEnabled,
+  getPersonalizationProps,
   getPersonalizationFilters,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
@@ -28,9 +28,7 @@ export function useRelatedProducts<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseRelatedProductsProps<TObject>) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const { userToken, region } = getPersonalizationProps(props);
 
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],

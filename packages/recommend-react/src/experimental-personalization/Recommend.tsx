@@ -3,6 +3,7 @@ import {
   getPersonalizationFilters,
   isPersonalizationEnabled,
   PersonalizationProps,
+  getPersonalizationProps,
 } from '@algolia/recommend-core';
 import React from 'react';
 
@@ -55,9 +56,7 @@ export function Recommend<TObject>({
   children,
   ...props
 }: RecommendProps) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const { userToken, region } = getPersonalizationProps(props);
 
   const [state, dispatch] = React.useReducer(reducer, {
     isDirty: null,

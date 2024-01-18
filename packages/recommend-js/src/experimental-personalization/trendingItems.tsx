@@ -2,7 +2,7 @@
 /** @jsx h */
 
 import {
-  isPersonalizationEnabled,
+  getPersonalizationProps,
   PersonalizationProps,
 } from '@algolia/recommend-core';
 import {
@@ -46,9 +46,7 @@ function TrendingItems<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 >(props: TrendingItemsProps<TObject, TComponentProps>) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const { userToken, region } = getPersonalizationProps(props);
 
   const { personalizationFilters, filterStatus } = usePersonalizationFilters({
     apiKey:
