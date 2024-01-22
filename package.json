@@ -3,7 +3,7 @@
   "private": true,
   "license": "MIT",
   "engines": {
-    "node": ">=18.14 <19"
+    "node": "20.11"
   },
   "workspaces": [
     "packages/*",
@@ -22,7 +22,7 @@
     "playground:start": "yarn workspace @algolia/recommend-react-example start",
     "prepare": "lerna run prepare --no-private",
     "release": "shipjs prepare",
-    "test:size": "bundlesize",
+    "test:size": "bundlewatch --config bundlesize.config.json",
     "test:types": "tsc --noEmit",
     "test": "jest"
   },
@@ -48,7 +48,7 @@
     "@typescript-eslint/parser": "2.19.0",
     "babel-eslint": "10.1.0",
     "babel-plugin-inline-replace-variables": "1.3.1",
-    "bundlesize": "0.18.0",
+    "bundlewatch": "^0.3.3",
     "eslint": "6.8.0",
     "eslint-config-algolia": "15.0.0",
     "eslint-config-prettier": "6.15.0",

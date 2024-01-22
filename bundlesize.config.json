@@ -16,5 +16,8 @@
       "path": "packages/recommend-vdom/dist/umd/index.js",
       "maxSize": "1.50 kB"
     }
-  ]
+  ],
+  "ci": {
+    "trackBranches": ["next"]
+  }
 }
