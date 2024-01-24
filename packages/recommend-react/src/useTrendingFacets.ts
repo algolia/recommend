@@ -2,6 +2,7 @@ import { TrendingModel } from '@algolia/recommend';
 import {
   getTrendingFacets,
   GetTrendingFacetsResult,
+  BatchRecommendations,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -23,10 +24,9 @@ export function useTrendingFacets({
   });
   const { status, setStatus } = useStatus('loading');
 
-  const {
-    hasProvider,
-    register,
-  } = useRecommendContext<GetTrendingFacetsResult>();
+  const { hasProvider, register } = useRecommendContext<
+    BatchRecommendations<undefined>
+  >();
   const { client, isContextClient } = useRecommendClient(recommendClient);
 
   useAlgoliaAgent({ recommendClient: client });
@@ -63,7 +63,10 @@ export function useTrendingFacets({
           setStatus('loading');
         },
         onResult(response) {
-          setResult(response);
+          setResult({
+            ...response,
+            recommendations: response.trendingFacets,
+          });
           setStatus('idle');
         },
       });
