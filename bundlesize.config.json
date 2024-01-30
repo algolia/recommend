@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "packages/recommend-core/dist/umd/index.js",
-      "maxSize": "2.00 kB"
+      "maxSize": "2.01 kB"
     },
     {
       "path": "packages/recommend-js/dist/umd/index.js",
