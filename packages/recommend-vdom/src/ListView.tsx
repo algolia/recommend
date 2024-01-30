@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx createElement */
 import { RecordWithObjectID } from '@algolia/recommend-core';
 

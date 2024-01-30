@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx createElement */
 
 import { ChildrenProps, Renderer } from './types';
