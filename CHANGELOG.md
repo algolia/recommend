@@ -1,3 +1,12 @@
+# [1.13.0](https://github.com/algolia/recommend/compare/v1.12.1...v1.13.0) (2024-01-30)
+
+
+### Bug Fixes
+
+* Next.js 14 error "pragma cannot be set when runtime is automatic" [RECO-2015] ([#177](https://github.com/algolia/recommend/issues/177)) ([4616f25](https://github.com/algolia/recommend/commit/4616f254e3bc0a26b8c9dba83c2095d707eaa289))
+
+
+
 ## [1.12.1](https://github.com/algolia/recommend/compare/v1.12.0...v1.12.1) (2024-01-24)
 
 
