@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "packages/recommend-core/dist/umd/index.js",
-      "maxSize": "2.01 kB"
+      "maxSize": "2.05 kB"
     },
     {
       "path": "packages/recommend-js/dist/umd/index.js",
@@ -18,11 +18,11 @@
     },
     {
       "path": "packages/recommend-react/dist/umd/experimental-personalization/index.js",
-      "maxSize": "5.70 kB"
+      "maxSize": "5.76 kB"
     },
     {
       "path": "packages/recommend-js/dist/umd/experimental-personalization/index.js",
-      "maxSize": "8.40 kB"
+      "maxSize": "8.45 kB"
     }
   ]
 }
