@@ -7,13 +7,13 @@ import {
 } from '@algolia/recommend-core';
 import React from 'react';
 
+import { RecommendProps as RecommendPropsPrimitive } from '../RecommendContext';
 import {
   reducer,
   getQueryKeys,
   getCachedPrams,
   getCacheKey,
-} from '../Recommend';
-import { RecommendProps as RecommendPropsPrimitive } from '../RecommendContext';
+} from '../utils/context-helpers';
 import { isPresent } from '../utils/isPresent';
 
 import { useBetaWarning } from './beta-warning/useBetaWarning';
