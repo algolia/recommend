@@ -7,8 +7,8 @@ import {
   lookingSimilar,
   trendingFacets,
   recommendedForYou,
-} from '@algolia/recommend-js';
-import { frequentlyBoughtTogether } from '@algolia/recommend-js/dist/esm/experimental-personalization';
+  frequentlyBoughtTogether,
+} from '@algolia/recommend-js/dist/esm/experimental-personalization';
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
@@ -29,7 +29,7 @@ const searchClient = algoliasearch(appId, apiKey);
 const recommendClient = algoliarecommend(appId, apiKey);
 
 insights('init', { appId, apiKey });
-insights('setUserToken', 'user-token-1');
+insights('setUserToken', 'likes-gender-men');
 
 function updateReferenceItem(item: ProductHit) {
   render(
@@ -126,7 +126,7 @@ recommendedForYou<ProductHit>({
   indexName,
   maxRecommendations: 15,
   queryParameters: {
-    userToken: 'user-token-1',
+    userToken: 'likes-gender-men',
   },
   itemComponent({ item }) {
     return (
@@ -201,6 +201,8 @@ function renderRecommendations(selectedProduct: ProductHit) {
     recommendClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
+    region: 'eu',
+    userToken: 'likes-gender-men',
     itemComponent({ item }) {
       return (
         <RelatedItem
@@ -247,6 +249,8 @@ function renderRecommendations(selectedProduct: ProductHit) {
           recommendClient,
           indexName,
           objectIDs: [selectedProduct.objectID],
+          region: 'eu',
+          userToken: 'likes-gender-men',
           itemComponent({ item }) {
             return (
               <RelatedItem
@@ -282,6 +286,8 @@ function renderRecommendations(selectedProduct: ProductHit) {
     recommendClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
+    region: 'eu',
+    userToken: 'likes-gender-men',
     itemComponent({ item }) {
       return (
         <RelatedItem
