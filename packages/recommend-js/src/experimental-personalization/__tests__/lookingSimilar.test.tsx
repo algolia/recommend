@@ -9,12 +9,12 @@ import {
   createRecommendClient,
   hit,
 } from '../../../../../test/utils/createRecommendClient';
-import { frequentlyBoughtTogether } from '../frequentlyBoughtTogether';
+import { lookingSimilar } from '../lookingSimilar';
 
 function createMockedRecommendClient(recommendations: ObjectWithObjectID[]) {
   const recommendClient = createRecommendClient({
     addAlgoliaAgent: jest.fn(),
-    getFrequentlyBoughtTogether: jest.fn(() =>
+    getLookingSimilar: jest.fn(() =>
       Promise.resolve(
         createMultiSearchResponse({
           hits: recommendations,
@@ -37,7 +37,7 @@ jest.mock('@algolia/recommend-core', () => {
   };
 });
 
-describe('frequentlyBoughtTogether', () => {
+describe('lookingSimilar', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
   });
@@ -51,13 +51,13 @@ describe('frequentlyBoughtTogether', () => {
       'getPersonalizationFilters'
     );
 
-    const getFrequentlyBoughtTogetherSpy = jest
-      .spyOn(recommendCore, 'getFrequentlyBoughtTogether')
+    const getLookingSimilarSpy = jest
+      .spyOn(recommendCore, 'getLookingSimilar')
       .mockResolvedValue({ recommendations: [] });
 
     const container = document.createElement('div');
 
-    frequentlyBoughtTogether({
+    lookingSimilar({
       container,
       recommendClient,
       indexName: 'products',
@@ -67,10 +67,10 @@ describe('frequentlyBoughtTogether', () => {
     });
 
     await waitFor(() => {
-      expect(getFrequentlyBoughtTogetherSpy).toHaveBeenCalled();
+      expect(getLookingSimilarSpy).toHaveBeenCalled();
     });
 
-    expect(getFrequentlyBoughtTogetherSpy).toHaveBeenCalledWith(
+    expect(getLookingSimilarSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         indexName: 'products',
         objectIDs: ['D06270-9132-995'],
@@ -84,13 +84,13 @@ describe('frequentlyBoughtTogether', () => {
       .spyOn(recommendCore, 'getPersonalizationFilters')
       .mockResolvedValue(['filter1', 'filter2']);
 
-    const getFrequentlyBoughtTogetherSpy = jest
-      .spyOn(recommendCore, 'getFrequentlyBoughtTogether')
+    const getLookingSimilarSpy = jest
+      .spyOn(recommendCore, 'getLookingSimilar')
       .mockResolvedValue({ recommendations: [] });
 
     const container = document.createElement('div');
 
-    frequentlyBoughtTogether({
+    lookingSimilar({
       container,
       recommendClient,
       userToken: 'user_token',
@@ -105,10 +105,10 @@ describe('frequentlyBoughtTogether', () => {
     });
 
     await waitFor(() => {
-      expect(getFrequentlyBoughtTogetherSpy).toHaveBeenCalled();
+      expect(getLookingSimilarSpy).toHaveBeenCalled();
     });
 
-    expect(getFrequentlyBoughtTogetherSpy).toHaveBeenCalledWith(
+    expect(getLookingSimilarSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         indexName: 'products',
         objectIDs: ['D06270-9132-995'],

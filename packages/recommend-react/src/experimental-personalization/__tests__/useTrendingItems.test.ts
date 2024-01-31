@@ -7,11 +7,11 @@ import {
   createRecommendClient,
   hit,
 } from '../../../../../test/utils/createRecommendClient';
-import { useFrequentlyBoughtTogether } from '../useFrequentlyBoughtTogether';
+import { useTrendingItems } from '../useTrendingItems';
 
 function createMockedRecommendClient() {
   const recommendClient = createRecommendClient({
-    getFrequentlyBoughtTogether: jest.fn(() =>
+    getTrendingItems: jest.fn(() =>
       Promise.resolve(
         createMultiSearchResponse({
           hits: [hit],
@@ -34,26 +34,26 @@ jest.mock('@algolia/recommend-core', () => {
   };
 });
 
-describe('useFrequentlyBoughtTogether', () => {
+describe('useTrendingItems', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
   it('should not apply personalization when `userToken` and `region` are not provided', async () => {
     const { recommendClient } = createMockedRecommendClient();
-    const getFrequentlyBoughtTogetherSpy = jest
-      .spyOn(recommendCore, 'getFrequentlyBoughtTogether')
+    const getTrendingItemsSpy = jest
+      .spyOn(recommendCore, 'getTrendingItems')
       .mockResolvedValue({ recommendations: [hit] });
 
     const { result, waitForNextUpdate } = renderHook(() =>
-      useFrequentlyBoughtTogether({
+      useTrendingItems({
         indexName: 'test',
         recommendClient,
         threshold: 0,
-        objectIDs: ['testing'],
         queryParameters: {
           facetFilters: ['test'],
         },
+        suppressExperimentalWarning: true,
       })
     );
     await waitForNextUpdate();
@@ -61,10 +61,9 @@ describe('useFrequentlyBoughtTogether', () => {
       expect(result.current.recommendations).toEqual([hit]);
     });
 
-    expect(getFrequentlyBoughtTogetherSpy).toHaveBeenCalledWith(
+    expect(getTrendingItemsSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         indexName: 'test',
-        objectIDs: ['testing'],
         queryParameters: {
           facetFilters: ['test'],
         },
@@ -74,24 +73,24 @@ describe('useFrequentlyBoughtTogether', () => {
 
   it('should apply personalization when `userToken` and `region` are provided', async () => {
     const { recommendClient } = createMockedRecommendClient();
-    const getFrequentlyBoughtTogetherSpy = jest
-      .spyOn(recommendCore, 'getFrequentlyBoughtTogether')
+    const getTrendingItemsSpy = jest
+      .spyOn(recommendCore, 'getTrendingItems')
       .mockResolvedValue({ recommendations: [hit] });
     const getPersonalizationFiltersSpy = jest
       .spyOn(recommendCore, 'getPersonalizationFilters')
       .mockResolvedValue(['filter1', 'filter2']);
 
     const { result, waitForNextUpdate } = renderHook(() =>
-      useFrequentlyBoughtTogether({
+      useTrendingItems({
         indexName: 'test',
         recommendClient,
         threshold: 0,
-        objectIDs: ['testing'],
         userToken: 'user_token',
         region: 'eu',
         queryParameters: {
           facetFilters: ['test'],
         },
+        suppressExperimentalWarning: true,
       })
     );
     await waitForNextUpdate();
@@ -99,10 +98,9 @@ describe('useFrequentlyBoughtTogether', () => {
       expect(result.current.recommendations).toEqual([hit]);
     });
 
-    expect(getFrequentlyBoughtTogetherSpy).toHaveBeenCalledWith(
+    expect(getTrendingItemsSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         indexName: 'test',
-        objectIDs: ['testing'],
         queryParameters: {
           facetFilters: ['test'],
           optionalFilters: ['filter1', 'filter2'],
@@ -116,5 +114,30 @@ describe('useFrequentlyBoughtTogether', () => {
         region: 'eu',
       })
     );
+  });
+
+  it('should show beta warning message', async () => {
+    const { recommendClient } = createMockedRecommendClient();
+    jest.spyOn(console, 'warn').mockImplementation();
+
+    const { waitForNextUpdate } = renderHook(() =>
+      useTrendingItems({
+        indexName: 'test',
+        recommendClient,
+        threshold: 0,
+        queryParameters: {
+          facetFilters: ['test'],
+        },
+        suppressExperimentalWarning: false,
+      })
+    );
+    await waitForNextUpdate();
+    await waitFor(() => {
+      // eslint-disable-next-line no-console
+      expect(console.warn)
+        .toHaveBeenCalledWith(`[Recommend] Personalized Recommendations are experimental and subject to change.
+If you have any feedback, please let us know at https://github.com/algolia/recommend/issues/new/choose
+(To disable this warning, pass 'suppressExperimentalWarning' to TrendingItems)`);
+    });
   });
 });

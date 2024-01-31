@@ -1,3 +1,27 @@
+# [1.13.0](https://github.com/algolia/recommend/compare/v1.12.1...v1.13.0) (2024-01-30)
+
+
+### Bug Fixes
+
+* Next.js 14 error "pragma cannot be set when runtime is automatic" [RECO-2015] ([#177](https://github.com/algolia/recommend/issues/177)) ([4616f25](https://github.com/algolia/recommend/commit/4616f254e3bc0a26b8c9dba83c2095d707eaa289))
+
+
+
+## [1.12.1](https://github.com/algolia/recommend/compare/v1.12.0...v1.12.1) (2024-01-24)
+
+
+### Bug Fixes
+
+* codesandbox build errors ([#173](https://github.com/algolia/recommend/issues/173)) ([6146397](https://github.com/algolia/recommend/commit/61463972d71eabe071a08e5cb3f7bf9fd7b084e2))
+* trending-facets batch integration ([#179](https://github.com/algolia/recommend/issues/179)) ([335b966](https://github.com/algolia/recommend/commit/335b9661396080e74798a35214f493bc020db1df))
+
+
+### Features
+
+* add github pages auto-deploy ([#162](https://github.com/algolia/recommend/issues/162)) ([e6d1010](https://github.com/algolia/recommend/commit/e6d1010552513f439ceadc3eea68fe4eaa6ffb8b))
+
+
+
 # [1.12.0](https://github.com/algolia/recommend/compare/v1.11.0...v1.12.0) (2024-01-09)
 
 

@@ -29,6 +29,10 @@ export function getRelatedProducts<TObject>({
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
+  if (queries.length === 0) {
+    return Promise.resolve({ recommendations: [] });
+  }
+
   return recommendClient
     .getRelatedProducts<TObject>(queries)
     .then((response) =>

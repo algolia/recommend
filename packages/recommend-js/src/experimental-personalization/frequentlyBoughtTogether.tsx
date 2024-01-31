@@ -1,24 +1,24 @@
 /** @jsxRuntime classic */
 /** @jsx h */
 import {
-  getFrequentlyBoughtTogether,
-  GetFrequentlyBoughtTogetherProps,
-  GetRecommendationsResult,
-  isPersonalizationEnabled,
-  getPersonalizationFilters,
+  getPersonalizationProps,
   PersonalizationProps,
 } from '@algolia/recommend-core';
 import { createFrequentlyBoughtTogetherComponent } from '@algolia/recommend-vdom';
 import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useMemo } from 'preact/hooks';
 
-import { FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherPropsPrimitive } from '../frequentlyBoughtTogether';
+import {
+  FrequentlyBoughtTogetherProps as FrequentlyBoughtTogetherPropsPrimitive,
+  useFrequentlyBoughtTogether,
+} from '../frequentlyBoughtTogether';
 import { getHTMLElement } from '../getHTMLElement';
 import { EnvironmentProps, HTMLTemplate } from '../types';
-import { useAlgoliaAgent } from '../useAlgoliaAgent';
-import { useStatus } from '../useStatus';
 import { withHtml } from '../utils';
+
+import { useBetaWarning } from './beta-warning/useBetaWarning';
+import { usePersonalizationFilters } from './usePersonalizationFilters';
 
 type FrequentlyBoughtTogetherProps<
   TObject,
@@ -35,64 +35,49 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
   }
 );
 
-function useFrequentlyBoughtTogether<TObject>(
-  props: GetFrequentlyBoughtTogetherProps<TObject>
-) {
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
-    recommendations: [],
-  });
-  const { status, setStatus } = useStatus('loading');
-
-  useAlgoliaAgent({ recommendClient: props.recommendClient });
-
-  useEffect(() => {
-    setStatus('loading');
-
-    if (isPersonalizationEnabled(props)) {
-      props.recommendClient.addAlgoliaAgent('experimental-personalization');
-      getPersonalizationFilters({
-        apiKey:
-          props.recommendClient.transporter.queryParameters[
-            'x-algolia-api-key'
-          ],
-        appId: props.recommendClient.appId,
-        region: props.region,
-        userToken: props.userToken,
-      }).then((personalizationFilters) => {
-        return getFrequentlyBoughtTogether({
-          ...props,
-          queryParameters: {
-            ...props.queryParameters,
-            optionalFilters: [
-              ...personalizationFilters,
-              ...(props.queryParameters?.optionalFilters ?? []),
-            ],
-          },
-        }).then((response) => {
-          setResult(response);
-          setStatus('idle');
-        });
-      });
-    } else {
-      getFrequentlyBoughtTogether(props).then((response) => {
-        setResult(response);
-        setStatus('idle');
-      });
-    }
-  }, [props, setStatus]);
-
-  return {
-    ...result,
-    status,
-  };
-}
-
 function FrequentlyBoughtTogether<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 >(props: FrequentlyBoughtTogetherProps<TObject, TComponentProps>) {
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
+
+  const { personalizationFilters, filterStatus } = usePersonalizationFilters({
+    apiKey:
+      props.recommendClient.transporter.queryParameters['x-algolia-api-key'],
+    appId: props.recommendClient.appId,
+    userToken,
+    region,
+  });
+
+  useBetaWarning(suppressExperimentalWarning, 'frequentlyBoughtTogether');
+
+  useEffect(() => {
+    if (personalizationFilters.length > 0) {
+      props.recommendClient.addAlgoliaAgent('experimental-personalization');
+    }
+  }, [personalizationFilters.length, props.recommendClient]);
+
+  const params = useMemo(() => {
+    const objectIDs = filterStatus !== 'loading' ? props.objectIDs : [];
+    return {
+      ...props,
+      objectIDs,
+      queryParameters: {
+        ...props.queryParameters,
+        optionalFilters: [
+          ...personalizationFilters,
+          ...(props.queryParameters?.optionalFilters ?? []),
+        ],
+      },
+    };
+  }, [filterStatus, props, personalizationFilters]);
+
   const { recommendations, status } = useFrequentlyBoughtTogether<TObject>(
-    props
+    params
   );
 
   return (

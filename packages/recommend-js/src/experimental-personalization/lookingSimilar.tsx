@@ -1,24 +1,24 @@
 /** @jsxRuntime classic */
 /** @jsx h */
 import {
-  getLookingSimilar,
-  GetLookingSimilarProps,
-  getPersonalizationFilters,
-  GetRecommendationsResult,
-  isPersonalizationEnabled,
+  getPersonalizationProps,
   PersonalizationProps,
 } from '@algolia/recommend-core';
 import { createLookingSimilarComponent } from '@algolia/recommend-vdom';
 import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useMemo } from 'preact/hooks';
 
 import { getHTMLElement } from '../getHTMLElement';
-import { LookingSimilarProps as LookingSimilarPropsPrimitive } from '../lookingSimilar';
+import {
+  LookingSimilarProps as LookingSimilarPropsPrimitive,
+  useLookingSimilar,
+} from '../lookingSimilar';
 import { EnvironmentProps, HTMLTemplate } from '../types';
-import { useAlgoliaAgent } from '../useAlgoliaAgent';
-import { useStatus } from '../useStatus';
 import { withHtml } from '../utils';
+
+import { useBetaWarning } from './beta-warning/useBetaWarning';
+import { usePersonalizationFilters } from './usePersonalizationFilters';
 
 export type LookingSimilarProps<
   TObject,
@@ -33,60 +33,48 @@ const UncontrolledLookingSimilar = createLookingSimilarComponent({
   Fragment,
 });
 
-function useLookingSimilar<TObject>(props: GetLookingSimilarProps<TObject>) {
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
-    recommendations: [],
-  });
-  const { status, setStatus } = useStatus('loading');
-
-  useAlgoliaAgent({ recommendClient: props.recommendClient });
-
-  useEffect(() => {
-    setStatus('loading');
-    if (isPersonalizationEnabled(props)) {
-      props.recommendClient.addAlgoliaAgent('experimental-personalization');
-      getPersonalizationFilters({
-        apiKey:
-          props.recommendClient.transporter.queryParameters[
-            'x-algolia-api-key'
-          ],
-        appId: props.recommendClient.appId,
-        region: props.region,
-        userToken: props.userToken,
-      }).then((personalizationFilters) => {
-        getLookingSimilar({
-          ...props,
-          queryParameters: {
-            ...props.queryParameters,
-            optionalFilters: [
-              ...personalizationFilters,
-              ...(props.queryParameters?.optionalFilters ?? []),
-            ],
-          },
-        }).then((response) => {
-          setResult(response);
-          setStatus('idle');
-        });
-      });
-    } else {
-      getLookingSimilar(props).then((response) => {
-        setResult(response);
-        setStatus('idle');
-      });
-    }
-  }, [props, setStatus]);
-
-  return {
-    ...result,
-    status,
-  };
-}
-
 function LookingSimilar<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 >(props: LookingSimilarProps<TObject, TComponentProps>) {
-  const { recommendations, status } = useLookingSimilar<TObject>(props);
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
+
+  const { personalizationFilters, filterStatus } = usePersonalizationFilters({
+    apiKey:
+      props.recommendClient.transporter.queryParameters['x-algolia-api-key'],
+    appId: props.recommendClient.appId,
+    userToken,
+    region,
+  });
+
+  useBetaWarning(suppressExperimentalWarning, 'lookingSimilar');
+
+  useEffect(() => {
+    if (personalizationFilters.length > 0) {
+      props.recommendClient.addAlgoliaAgent('experimental-personalization');
+    }
+  }, [personalizationFilters.length, props.recommendClient]);
+
+  const params = useMemo(() => {
+    const objectIDs = filterStatus !== 'loading' ? props.objectIDs : [];
+    return {
+      ...props,
+      objectIDs,
+      queryParameters: {
+        ...props.queryParameters,
+        optionalFilters: [
+          ...personalizationFilters,
+          ...(props.queryParameters?.optionalFilters ?? []),
+        ],
+      },
+    };
+  }, [filterStatus, props, personalizationFilters]);
+
+  const { recommendations, status } = useLookingSimilar<TObject>(params);
 
   return (
     <UncontrolledLookingSimilar

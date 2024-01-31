@@ -9,12 +9,12 @@ import {
   createRecommendClient,
   hit,
 } from '../../../../../test/utils/createRecommendClient';
-import { frequentlyBoughtTogether } from '../frequentlyBoughtTogether';
+import { trendingItems } from '../trendingItems';
 
 function createMockedRecommendClient(recommendations: ObjectWithObjectID[]) {
   const recommendClient = createRecommendClient({
     addAlgoliaAgent: jest.fn(),
-    getFrequentlyBoughtTogether: jest.fn(() =>
+    getTrendingItems: jest.fn(() =>
       Promise.resolve(
         createMultiSearchResponse({
           hits: recommendations,
@@ -37,7 +37,7 @@ jest.mock('@algolia/recommend-core', () => {
   };
 });
 
-describe('frequentlyBoughtTogether', () => {
+describe('trendingItems', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
   });
@@ -51,29 +51,27 @@ describe('frequentlyBoughtTogether', () => {
       'getPersonalizationFilters'
     );
 
-    const getFrequentlyBoughtTogetherSpy = jest
-      .spyOn(recommendCore, 'getFrequentlyBoughtTogether')
+    const getTrendingItemsSpy = jest
+      .spyOn(recommendCore, 'getTrendingItems')
       .mockResolvedValue({ recommendations: [] });
 
     const container = document.createElement('div');
 
-    frequentlyBoughtTogether({
+    trendingItems({
       container,
       recommendClient,
       indexName: 'products',
-      objectIDs: ['D06270-9132-995'],
       itemComponent: ({ item }) => <Fragment>{item.objectID}</Fragment>,
       suppressExperimentalWarning: true,
     });
 
     await waitFor(() => {
-      expect(getFrequentlyBoughtTogetherSpy).toHaveBeenCalled();
+      expect(getTrendingItemsSpy).toHaveBeenCalled();
     });
 
-    expect(getFrequentlyBoughtTogetherSpy).toHaveBeenCalledWith(
+    expect(getTrendingItemsSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         indexName: 'products',
-        objectIDs: ['D06270-9132-995'],
       })
     );
     expect(getPersonalizationFiltersSpy).not.toHaveBeenCalled();
@@ -84,19 +82,18 @@ describe('frequentlyBoughtTogether', () => {
       .spyOn(recommendCore, 'getPersonalizationFilters')
       .mockResolvedValue(['filter1', 'filter2']);
 
-    const getFrequentlyBoughtTogetherSpy = jest
-      .spyOn(recommendCore, 'getFrequentlyBoughtTogether')
+    const getTrendingItemsSpy = jest
+      .spyOn(recommendCore, 'getTrendingItems')
       .mockResolvedValue({ recommendations: [] });
 
     const container = document.createElement('div');
 
-    frequentlyBoughtTogether({
+    trendingItems({
       container,
       recommendClient,
       userToken: 'user_token',
       region: 'eu',
       indexName: 'products',
-      objectIDs: ['D06270-9132-995'],
       queryParameters: {
         analytics: true,
       },
@@ -105,13 +102,12 @@ describe('frequentlyBoughtTogether', () => {
     });
 
     await waitFor(() => {
-      expect(getFrequentlyBoughtTogetherSpy).toHaveBeenCalled();
+      expect(getTrendingItemsSpy).toHaveBeenCalled();
     });
 
-    expect(getFrequentlyBoughtTogetherSpy).toHaveBeenCalledWith(
+    expect(getTrendingItemsSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         indexName: 'products',
-        objectIDs: ['D06270-9132-995'],
         queryParameters: {
           analytics: true,
           optionalFilters: ['filter1', 'filter2'],
@@ -124,5 +120,39 @@ describe('frequentlyBoughtTogether', () => {
         region: 'eu',
       })
     );
+  });
+
+  it('should show beta warning message', async () => {
+    jest
+      .spyOn(recommendCore, 'getPersonalizationFilters')
+      .mockResolvedValue(['filter1', 'filter2']);
+
+    jest
+      .spyOn(recommendCore, 'getTrendingItems')
+      .mockResolvedValue({ recommendations: [] });
+    jest.spyOn(console, 'warn').mockImplementation();
+
+    const container = document.createElement('div');
+
+    trendingItems({
+      container,
+      recommendClient,
+      userToken: 'user_token',
+      region: 'eu',
+      indexName: 'products',
+      queryParameters: {
+        analytics: true,
+      },
+      itemComponent: ({ item }) => <Fragment>{item.objectID}</Fragment>,
+      suppressExperimentalWarning: false,
+    });
+
+    await waitFor(() => {
+      // eslint-disable-next-line no-console
+      expect(console.warn)
+        .toHaveBeenCalledWith(`[Recommend] Personalized Recommendations are experimental and subject to change.
+If you have any feedback, please let us know at https://github.com/algolia/recommend/issues/new/choose
+(To disable this warning, pass 'suppressExperimentalWarning' to trendingItems)`);
+    });
   });
 });

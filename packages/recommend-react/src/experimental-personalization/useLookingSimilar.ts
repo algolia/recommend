@@ -2,7 +2,7 @@ import {
   getLookingSimilar,
   getPersonalizationFilters,
   GetRecommendationsResult,
-  isPersonalizationEnabled,
+  getPersonalizationProps,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -10,6 +10,7 @@ import { useAlgoliaAgent } from '../useAlgoliaAgent';
 import { useStableValue } from '../useStableValue';
 import { useStatus } from '../useStatus';
 
+import { useBetaWarning } from './beta-warning/useBetaWarning';
 import { UseLookingSimilarProps } from './LookingSimilar';
 import {
   GetParametersResult,
@@ -28,9 +29,11 @@ export function useLookingSimilar<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseLookingSimilarProps<TObject>) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
 
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
@@ -51,6 +54,8 @@ export function useLookingSimilar<TObject>({
   useEffect(() => {
     transformItemsRef.current = userTransformItems;
   }, [userTransformItems]);
+
+  useBetaWarning(suppressExperimentalWarning, 'LookingSimilar');
 
   useEffect(() => {
     const param = {

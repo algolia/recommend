@@ -1,7 +1,7 @@
 import {
   getRelatedProducts,
   GetRecommendationsResult,
-  isPersonalizationEnabled,
+  getPersonalizationProps,
   getPersonalizationFilters,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
@@ -10,6 +10,7 @@ import { useAlgoliaAgent } from '../useAlgoliaAgent';
 import { useStableValue } from '../useStableValue';
 import { useStatus } from '../useStatus';
 
+import { useBetaWarning } from './beta-warning/useBetaWarning';
 import {
   useRecommendContext,
   useRecommendClient,
@@ -28,9 +29,11 @@ export function useRelatedProducts<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseRelatedProductsProps<TObject>) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
 
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
@@ -51,6 +54,8 @@ export function useRelatedProducts<TObject>({
   useEffect(() => {
     transformItemsRef.current = userTransformItems;
   }, [userTransformItems]);
+
+  useBetaWarning(suppressExperimentalWarning, 'RelatedProducts');
 
   useEffect(() => {
     const param = {

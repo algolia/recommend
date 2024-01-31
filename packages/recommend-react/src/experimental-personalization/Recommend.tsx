@@ -3,18 +3,20 @@ import {
   getPersonalizationFilters,
   isPersonalizationEnabled,
   PersonalizationProps,
+  getPersonalizationProps,
 } from '@algolia/recommend-core';
 import React from 'react';
 
+import { RecommendProps as RecommendPropsPrimitive } from '../RecommendContext';
 import {
   reducer,
   getQueryKeys,
   getCachedPrams,
   getCacheKey,
-} from '../Recommend';
-import { RecommendProps as RecommendPropsPrimitive } from '../RecommendContext';
+} from '../utils/context-helpers';
 import { isPresent } from '../utils/isPresent';
 
+import { useBetaWarning } from './beta-warning/useBetaWarning';
 import { GetParametersResult, RecommendContext } from './RecommendContext';
 import { isRecommendedForYouQuery, isTrendingFacetsQuery } from './types';
 
@@ -55,9 +57,11 @@ export function Recommend<TObject>({
   children,
   ...props
 }: RecommendProps) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
 
   const [state, dispatch] = React.useReducer(reducer, {
     isDirty: null,
@@ -65,6 +69,8 @@ export function Recommend<TObject>({
     widgets: [],
     recommendClient,
   });
+
+  useBetaWarning(suppressExperimentalWarning, '<Recommend>');
 
   React.useEffect(() => {
     (async () => {

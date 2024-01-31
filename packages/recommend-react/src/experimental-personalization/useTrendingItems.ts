@@ -3,7 +3,7 @@ import {
   getPersonalizationFilters,
   GetRecommendationsResult,
   getTrendingItems,
-  isPersonalizationEnabled,
+  getPersonalizationProps,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -11,6 +11,7 @@ import { useAlgoliaAgent } from '../useAlgoliaAgent';
 import { useStableValue } from '../useStableValue';
 import { useStatus } from '../useStatus';
 
+import { useBetaWarning } from './beta-warning/useBetaWarning';
 import {
   useRecommendContext,
   useRecommendClient,
@@ -30,9 +31,11 @@ export function useTrendingItems<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseTrendingItemsProps<TObject>) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
 
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
@@ -52,6 +55,8 @@ export function useTrendingItems<TObject>({
   useEffect(() => {
     transformItemsRef.current = userTransformItems;
   }, [userTransformItems]);
+
+  useBetaWarning(suppressExperimentalWarning, 'TrendingItems');
 
   useEffect(() => {
     const param: BatchQuery<TObject> = {

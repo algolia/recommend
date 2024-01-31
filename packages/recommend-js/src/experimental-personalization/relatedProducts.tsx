@@ -2,24 +2,24 @@
 /** @jsx h */
 
 import {
-  getPersonalizationFilters,
-  isPersonalizationEnabled,
+  getPersonalizationProps,
   PersonalizationProps,
-  GetRecommendationsResult,
-  getRelatedProducts,
-  GetRelatedProductsProps,
 } from '@algolia/recommend-core';
 import { createRelatedProductsComponent } from '@algolia/recommend-vdom';
 import { html } from 'htm/preact';
 import { createElement, Fragment, h, render } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useMemo } from 'preact/hooks';
 
 import { getHTMLElement } from '../getHTMLElement';
-import { RelatedProductsProps as RelatedProductsPropsPrimitive } from '../relatedProducts';
+import {
+  RelatedProductsProps as RelatedProductsPropsPrimitive,
+  useRelatedProducts,
+} from '../relatedProducts';
 import { EnvironmentProps, HTMLTemplate } from '../types';
-import { useAlgoliaAgent } from '../useAlgoliaAgent';
-import { useStatus } from '../useStatus';
 import { withHtml } from '../utils';
+
+import { useBetaWarning } from './beta-warning/useBetaWarning';
+import { usePersonalizationFilters } from './usePersonalizationFilters';
 
 export type RelatedProductsProps<
   TObject,
@@ -34,61 +34,48 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
   Fragment,
 });
 
-function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
-  const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
-    recommendations: [],
-  });
-  const { status, setStatus } = useStatus('loading');
-
-  useAlgoliaAgent({ recommendClient: props.recommendClient });
-
-  useEffect(() => {
-    setStatus('loading');
-
-    if (isPersonalizationEnabled(props)) {
-      props.recommendClient.addAlgoliaAgent('experimental-personalization');
-      getPersonalizationFilters({
-        apiKey:
-          props.recommendClient.transporter.queryParameters[
-            'x-algolia-api-key'
-          ],
-        appId: props.recommendClient.appId,
-        region: props.region,
-        userToken: props.userToken,
-      }).then((personalizationFilters) => {
-        return getRelatedProducts({
-          ...props,
-          queryParameters: {
-            ...props.queryParameters,
-            optionalFilters: [
-              ...personalizationFilters,
-              ...(props.queryParameters?.optionalFilters ?? []),
-            ],
-          },
-        }).then((response) => {
-          setResult(response);
-          setStatus('idle');
-        });
-      });
-    } else {
-      getRelatedProducts(props).then((response) => {
-        setResult(response);
-        setStatus('idle');
-      });
-    }
-  }, [props, setStatus]);
-
-  return {
-    ...result,
-    status,
-  };
-}
-
 function RelatedProducts<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 >(props: RelatedProductsProps<TObject, TComponentProps>) {
-  const { recommendations, status } = useRelatedProducts<TObject>(props);
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
+
+  const { personalizationFilters, filterStatus } = usePersonalizationFilters({
+    apiKey:
+      props.recommendClient.transporter.queryParameters['x-algolia-api-key'],
+    appId: props.recommendClient.appId,
+    userToken,
+    region,
+  });
+
+  useBetaWarning(suppressExperimentalWarning, 'relatedProducts');
+
+  useEffect(() => {
+    if (personalizationFilters.length > 0) {
+      props.recommendClient.addAlgoliaAgent('experimental-personalization');
+    }
+  }, [personalizationFilters.length, props.recommendClient]);
+
+  const params = useMemo(() => {
+    const objectIDs = filterStatus !== 'loading' ? props.objectIDs : [];
+    return {
+      ...props,
+      objectIDs,
+      queryParameters: {
+        ...props.queryParameters,
+        optionalFilters: [
+          ...personalizationFilters,
+          ...(props.queryParameters?.optionalFilters ?? []),
+        ],
+      },
+    };
+  }, [filterStatus, props, personalizationFilters]);
+
+  const { recommendations, status } = useRelatedProducts<TObject>(params);
 
   return (
     <UncontrolledRelatedProducts

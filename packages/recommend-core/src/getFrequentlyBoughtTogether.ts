@@ -29,6 +29,10 @@ export function getFrequentlyBoughtTogether<TObject>({
 
   recommendClient.addAlgoliaAgent('recommend-core', version);
 
+  if (queries.length === 0) {
+    return Promise.resolve({ recommendations: [] });
+  }
+
   return recommendClient
     .getFrequentlyBoughtTogether<TObject>(queries)
     .then((response) =>

@@ -1,9 +1,10 @@
 import {
   getPersonalizationFilters,
   getRecommendations,
-  GetRecommendationsProps,
+  GetRecommendationsProps as GetRecommendationsPropsPrimitive,
   GetRecommendationsResult,
-  isPersonalizationEnabled,
+  getPersonalizationProps,
+  PersonalizationProps,
 } from '@algolia/recommend-core';
 import { useEffect, useRef, useState } from 'react';
 
@@ -11,7 +12,11 @@ import { useAlgoliaAgent } from '../useAlgoliaAgent';
 import { useStableValue } from '../useStableValue';
 import { useStatus } from '../useStatus';
 
-export type UseRecommendationsProps<TObject> = GetRecommendationsProps<TObject>;
+import { useBetaWarning } from './beta-warning/useBetaWarning';
+
+export type UseRecommendationsProps<TObject> =
+  | GetRecommendationsPropsPrimitive<TObject>
+  | (GetRecommendationsPropsPrimitive<TObject> & PersonalizationProps);
 
 export function useRecommendations<TObject>({
   fallbackParameters: userFallbackParameters,
@@ -25,9 +30,11 @@ export function useRecommendations<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseRecommendationsProps<TObject>) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
 
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
@@ -43,6 +50,8 @@ export function useRecommendations<TObject>({
   useEffect(() => {
     transformItemsRef.current = userTransformItems;
   }, [userTransformItems]);
+
+  useBetaWarning(suppressExperimentalWarning, 'useRecommendations');
 
   useEffect(() => {
     setStatus('loading');
