@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx createElement */
 import { createDefaultChildrenComponent } from './DefaultChildren';
 import { createDefaultFallbackComponent } from './DefaultFallback';
