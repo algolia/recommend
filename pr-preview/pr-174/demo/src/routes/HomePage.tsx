@@ -1,6 +1,5 @@
 import algoliarecommend from '@algolia/recommend';
 import {
-  Recommend,
   TrendingFacets,
   TrendingItems,
   RecommendedForYou,
