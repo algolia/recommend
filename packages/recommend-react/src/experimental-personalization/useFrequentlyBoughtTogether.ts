@@ -10,6 +10,7 @@ import { useAlgoliaAgent } from '../useAlgoliaAgent';
 import { useStableValue } from '../useStableValue';
 import { useStatus } from '../useStatus';
 
+import { useBetaWarning } from './beta-warning/useBetaWarning';
 import { UseFrequentlyBoughtTogetherProps } from './FrequentlyBoughtTogether';
 import {
   useRecommendContext,
@@ -27,7 +28,11 @@ export function useFrequentlyBoughtTogether<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseFrequentlyBoughtTogetherProps<TObject>) {
-  const { userToken, region } = getPersonalizationProps(props);
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
 
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
@@ -47,6 +52,8 @@ export function useFrequentlyBoughtTogether<TObject>({
   useEffect(() => {
     transformItemsRef.current = userTransformItems;
   }, [userTransformItems]);
+
+  useBetaWarning(suppressExperimentalWarning, 'FrequentlyBoughtTogether');
 
   useEffect(() => {
     const param = {

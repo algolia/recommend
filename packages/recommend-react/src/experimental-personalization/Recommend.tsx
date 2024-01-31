@@ -16,6 +16,7 @@ import {
 import { RecommendProps as RecommendPropsPrimitive } from '../RecommendContext';
 import { isPresent } from '../utils/isPresent';
 
+import { useBetaWarning } from './beta-warning/useBetaWarning';
 import { GetParametersResult, RecommendContext } from './RecommendContext';
 import { isRecommendedForYouQuery, isTrendingFacetsQuery } from './types';
 
@@ -56,7 +57,11 @@ export function Recommend<TObject>({
   children,
   ...props
 }: RecommendProps) {
-  const { userToken, region } = getPersonalizationProps(props);
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
 
   const [state, dispatch] = React.useReducer(reducer, {
     isDirty: null,
@@ -64,6 +69,8 @@ export function Recommend<TObject>({
     widgets: [],
     recommendClient,
   });
+
+  useBetaWarning(suppressExperimentalWarning, '<Recommend>');
 
   React.useEffect(() => {
     (async () => {

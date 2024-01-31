@@ -14,11 +14,13 @@ export const getPersonalizationProps = (props: any) => {
     return {
       region: props.region,
       userToken: props.userToken,
+      suppressExperimentalWarning: Boolean(props.suppressExperimentalWarning),
     };
   }
 
   return {
     region: undefined,
     userToken: undefined,
+    suppressExperimentalWarning: Boolean(props.suppressExperimentalWarning),
   };
 };

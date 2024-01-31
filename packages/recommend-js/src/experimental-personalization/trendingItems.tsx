@@ -21,6 +21,7 @@ import {
 import { EnvironmentProps, HTMLTemplate } from '../types';
 import { withHtml } from '../utils';
 
+import { useBetaWarning } from './beta-warning/useBetaWarning';
 import { usePersonalizationFilters } from './usePersonalizationFilters';
 
 export type GetTrendingItemsProps<
@@ -46,7 +47,11 @@ function TrendingItems<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 >(props: TrendingItemsProps<TObject, TComponentProps>) {
-  const { userToken, region } = getPersonalizationProps(props);
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
 
   const { personalizationFilters, filterStatus } = usePersonalizationFilters({
     apiKey:
@@ -55,6 +60,8 @@ function TrendingItems<
     userToken,
     region,
   });
+
+  useBetaWarning(suppressExperimentalWarning, 'trendingItems');
 
   useEffect(() => {
     if (personalizationFilters.length > 0) {

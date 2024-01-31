@@ -54,6 +54,7 @@ describe('useLookingSimilar', () => {
         queryParameters: {
           facetFilters: ['test'],
         },
+        suppressExperimentalWarning: true,
       })
     );
     await waitForNextUpdate();
@@ -92,6 +93,7 @@ describe('useLookingSimilar', () => {
         queryParameters: {
           facetFilters: ['test'],
         },
+        suppressExperimentalWarning: true,
       })
     );
     await waitForNextUpdate();

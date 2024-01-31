@@ -53,6 +53,7 @@ describe('useTrendingItems', () => {
         queryParameters: {
           facetFilters: ['test'],
         },
+        suppressExperimentalWarning: true,
       })
     );
     await waitForNextUpdate();
@@ -89,6 +90,7 @@ describe('useTrendingItems', () => {
         queryParameters: {
           facetFilters: ['test'],
         },
+        suppressExperimentalWarning: true,
       })
     );
     await waitForNextUpdate();
@@ -112,5 +114,30 @@ describe('useTrendingItems', () => {
         region: 'eu',
       })
     );
+  });
+
+  it('should show beta warning message', async () => {
+    const { recommendClient } = createMockedRecommendClient();
+    jest.spyOn(console, 'warn').mockImplementation();
+
+    const { waitForNextUpdate } = renderHook(() =>
+      useTrendingItems({
+        indexName: 'test',
+        recommendClient,
+        threshold: 0,
+        queryParameters: {
+          facetFilters: ['test'],
+        },
+        suppressExperimentalWarning: false,
+      })
+    );
+    await waitForNextUpdate();
+    await waitFor(() => {
+      // eslint-disable-next-line no-console
+      expect(console.warn)
+        .toHaveBeenCalledWith(`[Recommend] Personalized Recommendations are experimental and subject to change.
+If you have any feedback, please let us know at https://github.com/algolia/recommend/issues/new/choose
+(To disable this warning, pass 'suppressExperimentalWarning' to TrendingItems)`);
+    });
   });
 });

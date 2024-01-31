@@ -11,6 +11,7 @@ import { useAlgoliaAgent } from '../useAlgoliaAgent';
 import { useStableValue } from '../useStableValue';
 import { useStatus } from '../useStatus';
 
+import { useBetaWarning } from './beta-warning/useBetaWarning';
 import {
   useRecommendContext,
   useRecommendClient,
@@ -30,7 +31,11 @@ export function useTrendingItems<TObject>({
   transformItems: userTransformItems = (x) => x,
   ...props
 }: UseTrendingItemsProps<TObject>) {
-  const { userToken, region } = getPersonalizationProps(props);
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
 
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
@@ -50,6 +55,8 @@ export function useTrendingItems<TObject>({
   useEffect(() => {
     transformItemsRef.current = userTransformItems;
   }, [userTransformItems]);
+
+  useBetaWarning(suppressExperimentalWarning, 'TrendingItems');
 
   useEffect(() => {
     const param: BatchQuery<TObject> = {

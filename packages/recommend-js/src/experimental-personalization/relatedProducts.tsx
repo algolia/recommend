@@ -2,7 +2,7 @@
 /** @jsx h */
 
 import {
-  isPersonalizationEnabled,
+  getPersonalizationProps,
   PersonalizationProps,
 } from '@algolia/recommend-core';
 import { createRelatedProductsComponent } from '@algolia/recommend-vdom';
@@ -18,6 +18,7 @@ import {
 import { EnvironmentProps, HTMLTemplate } from '../types';
 import { withHtml } from '../utils';
 
+import { useBetaWarning } from './beta-warning/useBetaWarning';
 import { usePersonalizationFilters } from './usePersonalizationFilters';
 
 export type RelatedProductsProps<
@@ -37,9 +38,11 @@ function RelatedProducts<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 >(props: RelatedProductsProps<TObject, TComponentProps>) {
-  const { userToken, region } = isPersonalizationEnabled(props)
-    ? props
-    : { userToken: undefined, region: undefined };
+  const {
+    userToken,
+    region,
+    suppressExperimentalWarning,
+  } = getPersonalizationProps(props);
 
   const { personalizationFilters, filterStatus } = usePersonalizationFilters({
     apiKey:
@@ -48,6 +51,8 @@ function RelatedProducts<
     userToken,
     region,
   });
+
+  useBetaWarning(suppressExperimentalWarning, 'relatedProducts');
 
   useEffect(() => {
     if (personalizationFilters.length > 0) {

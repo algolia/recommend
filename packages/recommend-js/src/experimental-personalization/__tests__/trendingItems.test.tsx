@@ -62,6 +62,7 @@ describe('trendingItems', () => {
       recommendClient,
       indexName: 'products',
       itemComponent: ({ item }) => <Fragment>{item.objectID}</Fragment>,
+      suppressExperimentalWarning: true,
     });
 
     await waitFor(() => {
@@ -97,6 +98,7 @@ describe('trendingItems', () => {
         analytics: true,
       },
       itemComponent: ({ item }) => <Fragment>{item.objectID}</Fragment>,
+      suppressExperimentalWarning: true,
     });
 
     await waitFor(() => {
@@ -118,5 +120,39 @@ describe('trendingItems', () => {
         region: 'eu',
       })
     );
+  });
+
+  it('should show beta warning message', async () => {
+    jest
+      .spyOn(recommendCore, 'getPersonalizationFilters')
+      .mockResolvedValue(['filter1', 'filter2']);
+
+    jest
+      .spyOn(recommendCore, 'getTrendingItems')
+      .mockResolvedValue({ recommendations: [] });
+    jest.spyOn(console, 'warn').mockImplementation();
+
+    const container = document.createElement('div');
+
+    trendingItems({
+      container,
+      recommendClient,
+      userToken: 'user_token',
+      region: 'eu',
+      indexName: 'products',
+      queryParameters: {
+        analytics: true,
+      },
+      itemComponent: ({ item }) => <Fragment>{item.objectID}</Fragment>,
+      suppressExperimentalWarning: false,
+    });
+
+    await waitFor(() => {
+      // eslint-disable-next-line no-console
+      expect(console.warn)
+        .toHaveBeenCalledWith(`[Recommend] Personalized Recommendations are experimental and subject to change.
+If you have any feedback, please let us know at https://github.com/algolia/recommend/issues/new/choose
+(To disable this warning, pass 'suppressExperimentalWarning' to trendingItems)`);
+    });
   });
 });

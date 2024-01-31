@@ -55,6 +55,7 @@ describe('useRecommendations', () => {
         queryParameters: {
           facetFilters: ['test'],
         },
+        suppressExperimentalWarning: true,
       })
     );
     await waitForNextUpdate();
@@ -94,6 +95,7 @@ describe('useRecommendations', () => {
         queryParameters: {
           facetFilters: ['test'],
         },
+        suppressExperimentalWarning: true,
       })
     );
     await waitForNextUpdate();

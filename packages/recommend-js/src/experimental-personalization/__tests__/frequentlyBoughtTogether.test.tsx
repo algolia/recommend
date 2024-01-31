@@ -63,6 +63,7 @@ describe('frequentlyBoughtTogether', () => {
       indexName: 'products',
       objectIDs: ['D06270-9132-995'],
       itemComponent: ({ item }) => <Fragment>{item.objectID}</Fragment>,
+      suppressExperimentalWarning: true,
     });
 
     await waitFor(() => {
@@ -100,6 +101,7 @@ describe('frequentlyBoughtTogether', () => {
         analytics: true,
       },
       itemComponent: ({ item }) => <Fragment>{item.objectID}</Fragment>,
+      suppressExperimentalWarning: true,
     });
 
     await waitFor(() => {
