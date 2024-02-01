@@ -3,12 +3,12 @@
 import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
 import algoliarecommend from '@algolia/recommend';
 import {
-  relatedProducts,
   lookingSimilar,
   trendingFacets,
   recommendedForYou,
   frequentlyBoughtTogether,
-} from '@algolia/recommend-js/dist/esm/experimental-personalization';
+} from '@algolia/recommend-js';
+import { relatedProducts } from '@algolia/recommend-js/dist/esm/experimental-personalization';
 import { horizontalSlider } from '@algolia/ui-components-horizontal-slider-js';
 import algoliasearch from 'algoliasearch';
 import { h, render } from 'preact';
@@ -201,8 +201,6 @@ function renderRecommendations(selectedProduct: ProductHit) {
     recommendClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
-    region: 'eu',
-    userToken: 'likes-gender-men',
     itemComponent({ item }) {
       return (
         <RelatedItem
@@ -227,8 +225,6 @@ function renderRecommendations(selectedProduct: ProductHit) {
     recommendClient,
     indexName,
     objectIDs: [selectedProduct.objectID],
-    region: 'eu',
-    userToken: 'likes-gender-men',
     itemComponent({ item }) {
       return (
         <RelatedItem
