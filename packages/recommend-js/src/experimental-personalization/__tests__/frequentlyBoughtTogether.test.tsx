@@ -41,9 +41,6 @@ describe('frequentlyBoughtTogether', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
   });
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
 
   it('should not apply personalization when `userToken` and `region` are not provided', async () => {
     const getPersonalizationFiltersSpy = jest.spyOn(
