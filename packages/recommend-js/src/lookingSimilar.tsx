@@ -24,7 +24,9 @@ const UncontrolledLookingSimilar = createLookingSimilarComponent({
   Fragment,
 });
 
-function useLookingSimilar<TObject>(props: GetLookingSimilarProps<TObject>) {
+export function useLookingSimilar<TObject>(
+  props: GetLookingSimilarProps<TObject>
+) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -46,7 +48,7 @@ function useLookingSimilar<TObject>(props: GetLookingSimilarProps<TObject>) {
   };
 }
 
-type LookingSimilarProps<
+export type LookingSimilarProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 > = GetLookingSimilarProps<TObject> &

@@ -1,10 +1,6 @@
 import algoliarecommend from '@algolia/recommend';
-import {
-  Recommend,
-  TrendingFacets,
-  TrendingItems,
-  RecommendedForYou,
-} from '@algolia/recommend-react';
+import { TrendingFacets, RecommendedForYou } from '@algolia/recommend-react';
+import { TrendingItems } from '@algolia/recommend-react/dist/esm/experimental-personalization';
 import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -24,8 +20,9 @@ export const HomePage: React.FC = () => {
   ] = useApplicationContext();
 
   return (
-    <Recommend recommendClient={recommendClient}>
+    <>
       <TrendingFacets
+        recommendClient={recommendClient}
         indexName={indexName}
         facetName="brand"
         itemComponent={({ item }) => (
@@ -47,11 +44,15 @@ export const HomePage: React.FC = () => {
         }}
       />
       <TrendingItems<ProductHit>
+        recommendClient={recommendClient}
         indexName={indexName}
         facetName={selectedFacetValue ? 'brand' : undefined}
         facetValue={
           selectedFacetValue ? selectedFacetValue.facetValue : undefined
         }
+        userToken="likes-gender-men"
+        region="eu"
+        suppressExperimentalWarning={true}
         itemComponent={({ item }) => (
           <Hit
             hit={item}
@@ -71,10 +72,11 @@ export const HomePage: React.FC = () => {
         }}
       />
       <RecommendedForYou<ProductHit>
+        recommendClient={recommendClient}
         indexName={indexName}
         maxRecommendations={15}
         queryParameters={{
-          userToken: 'user-token-1',
+          userToken: 'likes-gender-men',
         }}
         itemComponent={({ item }) => (
           <Hit
@@ -88,6 +90,6 @@ export const HomePage: React.FC = () => {
         )}
         fallbackComponent={() => <div>No recommendations</div>}
       />
-    </Recommend>
+    </>
   );
 };

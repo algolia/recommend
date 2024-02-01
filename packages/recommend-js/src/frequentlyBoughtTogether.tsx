@@ -26,7 +26,7 @@ const UncontrolledFrequentlyBoughtTogether = createFrequentlyBoughtTogetherCompo
   }
 );
 
-function useFrequentlyBoughtTogether<TObject>(
+export function useFrequentlyBoughtTogether<TObject>(
   props: GetFrequentlyBoughtTogetherProps<TObject>
 ) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
@@ -50,7 +50,7 @@ function useFrequentlyBoughtTogether<TObject>(
   };
 }
 
-type FrequentlyBoughtTogetherProps<
+export type FrequentlyBoughtTogetherProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 > = GetFrequentlyBoughtTogetherProps<TObject> &

@@ -24,7 +24,9 @@ const UncontrolledRelatedProducts = createRelatedProductsComponent({
   Fragment,
 });
 
-function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
+export function useRelatedProducts<TObject>(
+  props: GetRelatedProductsProps<TObject>
+) {
   const [result, setResult] = useState<GetRecommendationsResult<TObject>>({
     recommendations: [],
   });
@@ -46,7 +48,7 @@ function useRelatedProducts<TObject>(props: GetRelatedProductsProps<TObject>) {
   };
 }
 
-type RelatedProductsProps<
+export type RelatedProductsProps<
   TObject,
   TComponentProps extends Record<string, unknown> = {}
 > = GetRelatedProductsProps<TObject> &
