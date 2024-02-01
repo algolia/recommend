@@ -24,5 +24,8 @@
       "path": "packages/recommend-js/dist/umd/experimental-personalization/index.js",
       "maxSize": "8.45 kB"
     }
-  ]
+  ],
+  "ci": {
+    "trackBranches": ["next"]
+  }
 }
