@@ -1,3 +1,12 @@
+# [1.14.0](https://github.com/algolia/recommend/compare/v1.13.0...v1.14.0) (2024-02-01)
+
+
+### Features
+
+* Add Personalized Recommendations (experimental) ([#174](https://github.com/algolia/recommend/issues/174)) ([9ed2bfc](https://github.com/algolia/recommend/commit/9ed2bfcb0bac44466284dd65a3fc60107da3b461))
+
+
+
 # [1.13.0](https://github.com/algolia/recommend/compare/v1.12.1...v1.13.0) (2024-01-30)
 
 
