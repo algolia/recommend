@@ -1,4 +1,7 @@
-import { FrequentlyBoughtTogetherQuery } from '@algolia/recommend';
+import {
+  FrequentlyBoughtTogetherQuery,
+  RecommendationsQuery,
+} from '@algolia/recommend';
 
 import { RecommendationsProps } from './getRecommendations';
 import { ProductRecord } from './types';
@@ -10,18 +13,23 @@ import { version } from './version';
 export type GetFrequentlyBoughtTogetherProps<
   TObject
 > = RecommendationsProps<TObject> &
-  Omit<FrequentlyBoughtTogetherQuery, 'objectID'>;
+  Omit<FrequentlyBoughtTogetherQuery, 'objectID'> & {
+    // add fallback parameters manually as it is not supported in @algolia/recommend v4
+    fallbackParameters?: RecommendationsQuery['fallbackParameters'];
+  };
 
 export function getFrequentlyBoughtTogether<TObject>({
   objectIDs,
   recommendClient,
   transformItems = (x) => x,
+  fallbackParameters,
   indexName,
   maxRecommendations,
   queryParameters,
   threshold,
 }: GetFrequentlyBoughtTogetherProps<TObject>) {
   const queries = objectIDs.map((objectID) => ({
+    fallbackParameters,
     indexName,
     maxRecommendations,
     objectID,

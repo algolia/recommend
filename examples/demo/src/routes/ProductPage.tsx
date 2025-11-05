@@ -103,6 +103,9 @@ export const ProductPage: React.FC = () => {
             ? [`brand:${selectedFacetValue}`]
             : [],
         }}
+        fallbackParameters={{
+          facetFilters: [`brand:${selectedProduct.brand}`],
+        }}
         view={({ itemComponent, items }) => (
           <BundleView
             currentItem={selectedProduct}
