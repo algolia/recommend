@@ -239,6 +239,9 @@ function renderRecommendations(selectedProduct: ProductHit) {
       analytics: true,
       clickAnalytics: true,
     },
+    fallbackParameters: {
+      facetFilters: [`brand:${selectedProduct.brand}`],
+    },
     fallbackComponent() {
       return (
         relatedProducts<ProductHit>({
