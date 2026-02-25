@@ -20,7 +20,7 @@
     "preact": "10.13.2"
   },
   "devDependencies": {
-    "@babel/core": "7.21.4",
+    "@babel/core": "7.23.2",
     "@babel/runtime": "7.21.0",
     "parcel": "2.8.3"
   }

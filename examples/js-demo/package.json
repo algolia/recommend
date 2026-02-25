@@ -24,7 +24,7 @@
     "search-insights": "2.17.3"
   },
   "devDependencies": {
-    "@babel/core": "7.21.4",
+    "@babel/core": "7.23.2",
     "parcel": "2.8.3"
   }
 }
