@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.21.4",
-    "@babel/runtime": "7.21.0",
+    "@babel/runtime": "7.28.6",
     "parcel": "2.8.3"
   }
 }
