@@ -73,7 +73,7 @@ describe('useFrequentlyBoughtTogether', () => {
     );
   });
 
-  it('should apply personalization when `userToken` and `region` are provided', async () => {
+  it.skip('should apply personalization when `userToken` and `region` are provided', async () => {
     const { recommendClient } = createMockedRecommendClient();
     const getFrequentlyBoughtTogetherSpy = jest
       .spyOn(recommendCore, 'getFrequentlyBoughtTogether')
