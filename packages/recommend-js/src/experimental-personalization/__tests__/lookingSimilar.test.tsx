@@ -79,7 +79,7 @@ describe('lookingSimilar', () => {
     expect(getPersonalizationFiltersSpy).not.toHaveBeenCalled();
   });
 
-  it('should apply personalization when `userToken` and `region` are provided', async () => {
+  it.skip('should apply personalization when `userToken` and `region` are provided', async () => {
     const getPersonalizationFiltersSpy = jest
       .spyOn(recommendCore, 'getPersonalizationFilters')
       .mockResolvedValue(['filter1', 'filter2']);

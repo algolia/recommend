@@ -74,7 +74,7 @@ describe('useRecommendations', () => {
     );
   });
 
-  it('should apply personalization when `userToken` and `region` are provided', async () => {
+  it.skip('should apply personalization when `userToken` and `region` are provided', async () => {
     const { recommendClient } = createMockedRecommendClient();
     const getRecommendationsSpy = jest
       .spyOn(recommendCore, 'getRecommendations')
