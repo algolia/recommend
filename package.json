@@ -26,6 +26,9 @@
     "test:types": "tsc --noEmit",
     "test": "jest"
   },
+  "resolutions": {
+    "@babel/traverse": "^7.23.2"
+  },
   "devDependencies": {
     "@algolia/client-search": "4.9.1",
     "@babel/cli": "^7.28.6",
@@ -61,7 +64,7 @@
     "eslint-plugin-react-hooks": "4.2.0",
     "events": "^3.1.0",
     "https-browserify": "^1.0.0",
-    "jest": "29.4.3",
+    "jest": "29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-fail-on-console": "^3.0.2",
     "jest-watch-typeahead": "^2.2.2",
