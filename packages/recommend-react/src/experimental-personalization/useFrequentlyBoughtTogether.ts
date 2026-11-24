@@ -66,7 +66,12 @@ export function useFrequentlyBoughtTogether<TObject>({
     };
 
     if (hasProvider && isContextClient) {
-      const key = JSON.stringify(param);
+      const key = JSON.stringify({
+        model: 'bought-together',
+        ...param,
+        userToken,
+        region,
+      });
       const queries: GetParametersResult<TObject>['queries'] = objectIDs.map(
         (objectID: string) => ({
           indexName,
