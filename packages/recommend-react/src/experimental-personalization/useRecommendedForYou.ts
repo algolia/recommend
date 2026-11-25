@@ -51,7 +51,7 @@ export function useRecommendedForYou<TObject>({
     };
 
     if (hasProvider && isContextClient) {
-      const key = JSON.stringify(param);
+      const key = JSON.stringify({ model: 'recommended-for-you', ...param });
       const queries: RecommendedForYouQuery[] = [
         {
           indexName,

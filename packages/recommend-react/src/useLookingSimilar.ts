@@ -53,7 +53,7 @@ export function useLookingSimilar<TObject>({
     };
 
     if (hasProvider && isContextClient) {
-      const key = JSON.stringify(param);
+      const key = JSON.stringify({ model: 'looking-similar', ...param });
       const queries = objectIDs.map(
         (objectID: string): RecommendationsQuery => ({
           indexName,

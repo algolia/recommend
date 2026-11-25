@@ -1,5 +1,6 @@
 import { RecommendModel } from '@algolia/recommend';
 import { render, waitFor } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 import React, { StrictMode } from 'react';
 import '@testing-library/jest-dom';
 
@@ -11,6 +12,8 @@ import {
 import { RelatedProducts, FrequentlyBoughtTogether } from '../index';
 import { Recommend } from '../Recommend';
 import { useRecommendContext } from '../RecommendContext';
+import { useFrequentlyBoughtTogether } from '../useFrequentlyBoughtTogether';
+import { useRelatedProducts } from '../useRelatedProducts';
 
 function createMockedRecommendClient() {
   const recommendClient = createRecommendClient({
@@ -274,6 +277,49 @@ describe('Recommend', () => {
           objectID: '5555',
         },
       ]);
+    });
+  });
+
+  it('keeps results separate for models queried with identical parameters', async () => {
+    const recommendClient = createRecommendClient({
+      getRecommendations: jest.fn((queries: Array<{ model: string }>) =>
+        Promise.resolve(
+          createMultiSearchResponse(
+            ...queries.map((query) => ({
+              hits: [{ ...hit, objectID: query.model }],
+            }))
+          )
+        )
+      ),
+    });
+
+    const { result } = renderHook(
+      () => ({
+        related: useRelatedProducts({
+          indexName: 'index',
+          objectIDs: ['1234'],
+        }),
+        boughtTogether: useFrequentlyBoughtTogether({
+          indexName: 'index',
+          objectIDs: ['1234'],
+        }),
+      }),
+      {
+        wrapper: ({ children }) => (
+          <Recommend recommendClient={recommendClient}>{children}</Recommend>
+        ),
+      }
+    );
+
+    await waitFor(() => {
+      expect(
+        result.current.related.recommendations.map((item) => item.objectID)
+      ).toEqual(['related-products']);
+      expect(
+        result.current.boughtTogether.recommendations.map(
+          (item) => item.objectID
+        )
+      ).toEqual(['bought-together']);
     });
   });
 });
