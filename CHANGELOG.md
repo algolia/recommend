@@ -1,3 +1,20 @@
+## <small>1.16.1 (2026-11-25)</small>
+
+* fix: avoid cross-model widget cache collision (#214) ([76f901d](https://github.com/algolia/recommend/commit/76f901d)), closes [#214](https://github.com/algolia/recommend/issues/214)
+* security: update critical dependencies (#212) ([f8db6f2](https://github.com/algolia/recommend/commit/f8db6f2)), closes [#212](https://github.com/algolia/recommend/issues/212)
+* chore: security updates (#198) ([2d6c436](https://github.com/algolia/recommend/commit/2d6c436)), closes [#198](https://github.com/algolia/recommend/issues/198)
+* chore: security updates (#201) ([aae01df](https://github.com/algolia/recommend/commit/aae01df)), closes [#201](https://github.com/algolia/recommend/issues/201)
+* chore: security updates (#206) ([3dd7e74](https://github.com/algolia/recommend/commit/3dd7e74)), closes [#206](https://github.com/algolia/recommend/issues/206)
+* chore: security updates (#208) ([a1325b3](https://github.com/algolia/recommend/commit/a1325b3)), closes [#208](https://github.com/algolia/recommend/issues/208)
+* chore: security updates (#209) ([b7fd480](https://github.com/algolia/recommend/commit/b7fd480)), closes [#209](https://github.com/algolia/recommend/issues/209)
+* chore: upgrade Babel packages to fix build after jest 30 upgrade (#211) ([58eb7a0](https://github.com/algolia/recommend/commit/58eb7a0)), closes [#211](https://github.com/algolia/recommend/issues/211)
+* chore(deps): bump the npm_and_yarn group across 1 directory with 12 updates (#203) ([ee80694](https://github.com/algolia/recommend/commit/ee80694)), closes [#203](https://github.com/algolia/recommend/issues/203)
+* chore(deps): bump the npm_and_yarn group across 1 directory with 3 updates (#205) ([e337a1b](https://github.com/algolia/recommend/commit/e337a1b)), closes [#205](https://github.com/algolia/recommend/issues/205)
+* chore(deps): bump the npm_and_yarn group across 2 directories with 1 update (#207) ([55cf00d](https://github.com/algolia/recommend/commit/55cf00d)), closes [#207](https://github.com/algolia/recommend/issues/207)
+* feat: add fallbackParameters support to FBT (#196) ([7e4cb39](https://github.com/algolia/recommend/commit/7e4cb39)), closes [#196](https://github.com/algolia/recommend/issues/196)
+
+
+
 # [1.16.0](https://github.com/algolia/recommend/compare/v1.15.0...v1.16.0) (2024-12-18)
 
 
